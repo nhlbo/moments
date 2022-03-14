@@ -12,7 +12,7 @@ import com.example.moments.ui.custom_classes.CustomEditText
 import com.google.android.material.textfield.TextInputLayout
 
 
-class LoginActivityView : AppCompatActivity() {
+class LoginActivityView : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
