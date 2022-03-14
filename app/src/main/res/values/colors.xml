@@ -12,4 +12,18 @@
     <color name="light_gray">#F2F2F2</color>
     <color name="dark_gray">#6F6F6F</color>
 
+    <!-- Base application theme. -->
+    <!-- solid's color for edit text. -->
+    <color name="edit_text_default_solid">#F2F2F2</color>
+    <color name="edit_text_focused_solid">#FFFFFF</color>
+    <color name="edit_text_error_solid">#0DE52B67</color>
+    <!-- stroke's color for edit text -->
+    <color name="edit_text_focused_stroke">#9B40BF</color>
+    <color name="edit_text_error_stroke">#E52B67</color>
+
+    <!-- text colors -->
+    <color name="primary_text_color">#000000</color>
+    <color name="secondary_text_color">#676767</color>
+
+    <!-- -->
 </resources>
