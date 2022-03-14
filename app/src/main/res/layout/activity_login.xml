@@ -23,7 +23,7 @@
         android:layout_marginTop="50dp"
         android:fontFamily="@font/gothic_bold"
         android:text="Welcome back,"
-        android:textSize="23sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
