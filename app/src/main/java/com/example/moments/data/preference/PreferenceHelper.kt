@@ -7,10 +7,10 @@ import com.example.moments.di.PreferenceInfo
 import com.example.moments.util.AppConstants
 import javax.inject.Inject
 
-class Preference @Inject constructor(
+class PreferenceHelper @Inject constructor(
     context: Context,
     @PreferenceInfo private val prefFileName: String
-) : IPreference {
+) : IPreferenceHelper {
     companion object {
         private val PREF_KEY_USER_LOGGED_IN_MODE = "PREF_KEY_USER_LOGGED_IN_MODE"
         private val PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID"

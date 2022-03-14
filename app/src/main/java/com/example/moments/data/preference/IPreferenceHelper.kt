@@ -2,7 +2,7 @@ package com.example.moments.data.preference
 
 import com.example.moments.util.AppConstants
 
-interface IPreference {
+interface IPreferenceHelper {
     fun getCurrentUserLoggedInMode(): Int
 
     fun setCurrentUserLoggedInMode(mode: AppConstants.LoggedInMode)
