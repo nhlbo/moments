@@ -9,7 +9,7 @@ import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 
 
-class LoginActivityView : AppCompatActivity() {
+class LoginActivityView : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

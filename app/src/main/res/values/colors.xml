@@ -27,6 +27,6 @@
 
     <!-- button colors -->
     <color name="primary_btn_color">#3197E9</color>
-    <color name="second_btn_color">#F2F2F2</color>
+    <color name="secondary_btn_color">#F2F2F2</color>
     <color name="addition_btn_color">#DC143C</color>
 </resources>
