@@ -21,7 +21,7 @@
         style="@style/Theme.Moments.TextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:text="Welcome back,"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -39,13 +39,13 @@
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <EditText
+    <com.example.moments.ui.custom_classes.CustomEditText
         android:id="@+id/editTextTextPersonName"
         style="@style/Theme.Moments.EditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="30dp"
         android:background="@drawable/edit_text_background"
         android:ems="10"
@@ -69,28 +69,21 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutTextInput"
-        android:layout_width="match_parent"
+        style="@style/Theme.Moments.TextInputLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="30dp"
-        app:boxBackgroundColor="#FFF"
-        app:boxStrokeColor="#FFF"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:passwordToggleDrawable="@drawable/show_password_selector"
-        app:passwordToggleEnabled="false">
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.example.moments.ui.custom_classes.CustomEditText
             android:id="@+id/editTextValue"
             style="@style/Theme.Moments.EditText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginBottom="8dp"
             android:hint="Password"
+            android:imeOptions="actionNext"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -102,6 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Login with Google"
+        app:icon="@drawable/ic_google"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"

@@ -16,7 +16,7 @@
         <item name="buttonStyle">@style/Theme.Moments.Button</item>
         <item name="android:textViewStyle">@style/Theme.Moments.TextView</item>
     </style>
-
+    <!-- TextView style -->
     <style name="Theme.Moments.TextView" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/gothic_regular</item>
         <item name="android:textColor">@color/primary_text_color</item>
@@ -34,17 +34,22 @@
         <item name="android:textColor">@color/secondary_text_color</item>
     </style>
 
+    <style name="Theme.Moments.TextView.HelperText" parent="Theme.Moments.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/crimson</item>
+    </style>
+    <!-- EditText style -->
     <style name="Theme.Moments.EditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_background</item>
-        <item name="android:padding">15dp</item>
         <item name="android:fontFamily">@font/gothic_regular</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/primary_text_color</item>
         <item name="android:textColorHint">@color/secondary_text_color</item>
+        <item name="android:padding">15dp</item>
         <item name="strokeWidth">5dp</item>
         <item name="android:left">30dp</item>
     </style>
-
+    <!-- Button style -->
     <style name="Theme.Moments.Button" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/btn_background</item>
         <item name="android:textAllCaps">false</item>
@@ -61,8 +66,22 @@
 
     <style name="Theme.Moments.ButtonVariant2" parent="Theme.Moments.Button">
         <item name="backgroundTint">@color/addition_btn_color</item>
-        <item name="icon">@drawable/ic_logo</item>
-        <item name="iconSize">20dp</item>
-        <item name="iconPadding">-20dp</item>
+        <item name="iconTint">@color/white</item>
+        <item name="iconSize">25dp</item>
+        <item name="iconPadding">-25dp</item>
+    </style>
+    <!-- TextInputLayout style -->
+    <style name="Theme.Moments.TextInputLayout" parent="Widget.Design.TextInputLayout">
+        <item name="boxBackgroundColor">#FFF</item>
+        <item name="boxStrokeColor">#FFF</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="passwordToggleEnabled">true</item>
+        <item name="passwordToggleTint">@color/secondary_text_color</item>
+        <item name="passwordToggleDrawable">@drawable/show_password_selector</item>
+        <item name="errorEnabled">false</item>
+        <item name="errorTextColor">@color/crimson</item>
+        <item name="errorTextAppearance">@style/Theme.Moments.TextView.HelperText</item>
     </style>
 </resources>
