@@ -1,12 +1,12 @@
 package com.example.moments.ui.base
 
-import com.example.moments.data.preference.IPreference
+import com.example.moments.data.preference.IPreferenceHelper
 import com.example.moments.util.AppConstants
 
 open class BaseInteractor() : IBaseInteractor {
-    protected lateinit var preferenceHelper: IPreference
+    protected lateinit var preferenceHelper: IPreferenceHelper
 
-    constructor(preferenceHelper: IPreference) : this() {
+    constructor(preferenceHelper: IPreferenceHelper) : this() {
         this.preferenceHelper = preferenceHelper
     }
 
