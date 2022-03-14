@@ -2,6 +2,7 @@ package com.example.moments.ui.start
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import javax.inject.Inject
@@ -31,7 +32,7 @@ class StartActivityView : BaseActivity(), IStartActivityView {
     }
 
     override fun openMainActivity() {
-        TODO("Not yet implemented")
+        Log.d("Main_Activity", "Open Main Activity!!!!!")
     }
 
     override fun openLoginActivity() {
