@@ -15,6 +15,7 @@
         <item name="editTextStyle">@style/Theme.Moments.EditText</item>
         <item name="buttonStyle">@style/Theme.Moments.Button</item>
     </style>
+
     <style name="Theme.Moments.EditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_background</item>
         <item name="android:padding">15dp</item>
@@ -25,6 +26,7 @@
         <item name="strokeWidth">5dp</item>
         <item name="android:left">30dp</item>
     </style>
+
     <style name="Theme.Moments.Button" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/btn_background</item>
         <item name="backgroundTint">@color/primary_btn_color</item>
@@ -43,4 +45,19 @@
         <item name="iconSize">20dp</item>
         <item name="iconPadding">-20dp</item>
     </style>
+
+    <style name="Theme.Moments.ButtonContinue" parent="Theme.Moments.Button">
+        <item name="icon">@drawable/ic_continue_arrow</item>
+        <item name="iconSize">20dp</item>
+        <item name="iconPadding">-20dp</item>
+    </style>
+
+    <style name="Theme.Moments.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Moments.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Moments.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
