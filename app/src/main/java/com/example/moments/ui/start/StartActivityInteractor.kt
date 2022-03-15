@@ -7,7 +7,7 @@ import javax.inject.Inject
 class StartActivityInteractor @Inject constructor(preferenceHelper: PreferenceHelper) :BaseInteractor(preferenceHelper), IStartActivityInteractor {
 
     override fun isUserLoggedIn(): Boolean {
-        return true
+        return false
     }
 
     override fun performUserLogout() {

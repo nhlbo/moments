@@ -1,10 +1,12 @@
 package com.example.moments.ui.start
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.login.LoginActivityView
 import javax.inject.Inject
 
 class StartActivityView : BaseActivity(), IStartActivityView {
@@ -36,6 +38,8 @@ class StartActivityView : BaseActivity(), IStartActivityView {
     }
 
     override fun openLoginActivity() {
-        TODO("Not yet implemented")
+        val i: Intent = Intent(this, LoginActivityView::class.java)
+        startActivity(i)
+        finish()
     }
 }

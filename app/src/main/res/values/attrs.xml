@@ -3,4 +3,21 @@
     <declare-styleable name="edit_text_state">
         <attr name="state_error" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="icon_theme">
+        <attr name="icon_search" format="reference"/>
+        <attr name="icon_home" format="reference"/>
+        <attr name="icon_heart" format="reference"/>
+        <attr name="icon_profile" format="reference"/>
+        <attr name="icon_video" format="reference"/>
+        <attr name="icon_comment" format="reference"/>
+        <attr name="icon_share" format="reference"/>
+        <attr name="icon_setting" format="reference"/>
+        <attr name="icon_option" format="reference"/>
+        <attr name="icon_arrow" format="reference"/>
+        <attr name="icon_arrow_reverse" format="reference"/>
+        <attr name="icon_eye" format="reference"/>
+        <attr name="icon_eye_closed" format="reference"/>
+        <attr name="icon_clear" format="reference"/>
+    </declare-styleable>
+
 </resources>

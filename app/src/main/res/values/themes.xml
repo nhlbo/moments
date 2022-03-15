@@ -15,6 +15,7 @@
         <item name="editTextStyle">@style/Theme.Moments.EditText</item>
         <item name="buttonStyle">@style/Theme.Moments.Button</item>
         <item name="android:textViewStyle">@style/Theme.Moments.TextView</item>
+        <item name="android:drawableTint">@color/crimson</item>
     </style>
     <!-- TextView style -->
     <style name="Theme.Moments.TextView" parent="Widget.AppCompat.TextView">
@@ -77,11 +78,31 @@
         <item name="strokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="hintEnabled">false</item>
-        <item name="passwordToggleEnabled">true</item>
-        <item name="passwordToggleTint">@color/secondary_text_color</item>
-        <item name="passwordToggleDrawable">@drawable/show_password_selector</item>
         <item name="errorEnabled">false</item>
         <item name="errorTextColor">@color/crimson</item>
         <item name="errorTextAppearance">@style/Theme.Moments.TextView.HelperText</item>
+    </style>
+    <style name="Theme.Moments.TextInputLayout.Password" parent="Theme.Moments.TextInputLayout">
+        <item name="passwordToggleEnabled">true</item>
+        <item name="passwordToggleTint">@color/secondary_text_color</item>
+        <item name="passwordToggleDrawable">@drawable/show_password_selector</item>
+    </style>
+
+    <!-- Image tint-->
+    <style name="IconTint" parent="@style/Theme.AppCompat">
+        <item name="icon_search">@drawable/ic_search</item>
+        <item name="icon_home">@drawable/ic_home</item>
+        <item name="icon_heart">@drawable/ic_heart_outline</item>
+        <item name="icon_profile">@drawable/ic_user</item>
+        <item name="icon_video">@drawable/ic_video</item>
+        <item name="icon_comment">@drawable/ic_message_square</item>
+        <item name="icon_share">@drawable/ic_share</item>
+        <item name="icon_setting">@drawable/ic_settings</item>
+        <item name="icon_option">@drawable/ic_more_vertical</item>
+        <item name="icon_arrow">@drawable/ic_arrow_right</item>
+        <item name="icon_arrow_reverse">@drawable/ic_arrow_left</item>
+        <item name="icon_eye">@drawable/ic_hide_password</item>
+        <item name="icon_eye_closed">@drawable/ic_show_password</item>
+        <item name="icon_clear">@drawable/ic_search</item>
     </style>
 </resources>
