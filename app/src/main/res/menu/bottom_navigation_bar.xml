@@ -14,4 +14,7 @@
         android:icon="@drawable/ic_user"
         android:title="@string/profile"
         android:visible="true"/>
+    <item
+        android:icon="@drawable/default_avatar"
+        android:title="Item" />
 </menu>
