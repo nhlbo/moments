@@ -3,15 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/newsFeedActivityView">
-    <activity
-        android:id="@+id/profileActivityView"
-        android:name="com.example.moments.ui.viewProfile.ViewProfileActivityView"
-        android:label="activity_view_profile"
-        tools:layout="@layout/activity_view_profile" />
-    <activity
-        android:id="@+id/newsFeedActivityView"
-        android:name="com.example.moments.ui.newsFeed.NewsFeedActivityView"
-        android:label="NewsFeedActivityView"
-        tools:layout="@layout/activity_news_feed" />
+    app:startDestination="@id/newsFeedFragmentView">
+    <fragment
+        android:id="@+id/newsFeedFragmentView"
+        android:name="com.example.moments.ui.newsFeed.NewsFeedFragmentView"
+        android:label="NewsFeedFragmentView" />
+    <fragment
+        android:id="@+id/profileFragmentView"
+        android:name="com.example.moments.ui.viewProfile.ProfileFragmentView"
+        android:label="ProfileFragmentView" />
 </navigation>
