@@ -12,4 +12,12 @@
         android:id="@+id/profileFragmentView"
         android:name="com.example.moments.ui.viewProfile.ProfileFragmentView"
         android:label="ProfileFragmentView" />
+    <fragment
+        android:id="@+id/notificationFragmentView"
+        android:name="com.example.moments.ui.notification.NotificationFragmentView"
+        android:label="NotificationFragmentView" />
+    <fragment
+        android:id="@+id/searchFragmentView"
+        android:name="com.example.moments.ui.search.SearchFragmentView"
+        android:label="SearchFragmentView" />
 </navigation>
