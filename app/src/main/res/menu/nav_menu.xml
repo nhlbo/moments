@@ -14,6 +14,13 @@
         android:icon="@drawable/ic_search"
         android:visible="true"
         android:enabled="true"/>
+
+    <item android:id="@+id/momentsFragmentView"
+        android:title="Moments"
+        android:icon="@drawable/ic_video"
+        android:visible="true"
+        android:enabled="true"/>
+
     <item
         android:id="@+id/notificationFragmentView"
         android:title="Notify"

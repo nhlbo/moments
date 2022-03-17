@@ -9,15 +9,19 @@
         android:name="com.example.moments.ui.newsFeed.NewsFeedFragmentView"
         android:label="NewsFeedFragmentView" />
     <fragment
-        android:id="@+id/profileFragmentView"
-        android:name="com.example.moments.ui.viewProfile.ProfileFragmentView"
-        android:label="ProfileFragmentView" />
+        android:id="@+id/searchFragmentView"
+        android:name="com.example.moments.ui.search.SearchFragmentView"
+        android:label="SearchFragmentView" />
+    <fragment
+        android:id="@+id/momentsFragmentView"
+        android:name="com.example.moments.ui.moments.MomentsFragmentView"
+        android:label="MomentsFragmentView" />
     <fragment
         android:id="@+id/notificationFragmentView"
         android:name="com.example.moments.ui.notification.NotificationFragmentView"
         android:label="NotificationFragmentView" />
     <fragment
-        android:id="@+id/searchFragmentView"
-        android:name="com.example.moments.ui.search.SearchFragmentView"
-        android:label="SearchFragmentView" />
+        android:id="@+id/profileFragmentView"
+        android:name="com.example.moments.ui.viewProfile.ProfileFragmentView"
+        android:label="ProfileFragmentView" />
 </navigation>

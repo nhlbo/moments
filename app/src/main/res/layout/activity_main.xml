@@ -8,7 +8,7 @@
     tools:visibility="visible">
 
 
-    <androidx.fragment.app.FragmentContainerView
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"

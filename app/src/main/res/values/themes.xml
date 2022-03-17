@@ -14,7 +14,9 @@
         <!-- Customize your theme here. -->
         <item name="editTextStyle">@style/Theme.Moments.EditText</item>
         <item name="buttonStyle">@style/Theme.Moments.Button</item>
+        <item name="imageButtonStyle">@style/Theme.Moments.ImageButton</item>
         <item name="android:textViewStyle">@style/Theme.Moments.TextView</item>
+        <item name="bottomNavigationStyle">@style/Theme.Moments.NavigationBar</item>
     </style>
     <!-- TextView style -->
     <style name="Theme.Moments.TextView" parent="Widget.AppCompat.TextView">
@@ -70,6 +72,12 @@
         <item name="iconSize">25dp</item>
         <item name="iconPadding">-25dp</item>
     </style>
+
+    <!-- Image Button style -->
+    <style name="Theme.Moments.ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
     <!-- TextInputLayout style -->
     <style name="Theme.Moments.TextInputLayout" parent="Widget.Design.TextInputLayout">
         <item name="boxBackgroundColor">#FFF</item>
@@ -105,11 +113,11 @@
         <item name="icon_clear">@drawable/ic_search</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/crimson</item>
-        <item name="colorPrimaryDark">@color/bleu_de_france</item>
-        <item name="colorAccent">@color/white</item>
+    <style name="Theme.Moments.NavigationBar" parent="Widget.Design.BottomNavigationView">
+        <item name="backgroundTint">@color/white</item>
+        <item name="itemRippleColor">@null</item>
+        <item name="itemBackground">@null</item>
     </style>
+
 
 </resources>

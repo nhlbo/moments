@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moments">
         <activity
+            android:name=".ui.moments.MomentsActivityView"
+            android:exported="false" />
+        <activity
             android:name=".ui.notification.NotificationActivityView"
             android:exported="false" />
         <activity
@@ -28,6 +31,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.main.MainActivityView"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

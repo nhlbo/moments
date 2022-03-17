@@ -92,7 +92,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        style="@style/Theme.Moments.TextInputLayout"
+        style="@style/Theme.Moments.TextInputLayout.Password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -107,12 +107,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
-        style="@style/Theme.Moments.TextInputLayout"
+        style="@style/Theme.Moments.TextInputLayout.Password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Repeat password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
