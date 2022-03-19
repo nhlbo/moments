@@ -18,5 +18,4 @@ open class BaseInteractor() : IBaseInteractor {
         it.setCurrentUserEmail(null)
         it.setCurrentUserLoggedInMode(AppConstants.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT)
     }
-
 }

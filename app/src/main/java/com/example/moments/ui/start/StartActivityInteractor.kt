@@ -9,8 +9,4 @@ class StartActivityInteractor @Inject constructor(preferenceHelper: PreferenceHe
     override fun isUserLoggedIn(): Boolean {
         return false
     }
-
-    override fun performUserLogout() {
-        TODO("Not yet implemented")
-    }
 }

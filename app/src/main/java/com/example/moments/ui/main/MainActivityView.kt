@@ -2,24 +2,20 @@ package com.example.moments.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.example.moments.ui.custom_classes.ViewPagerAdapter
 import com.example.moments.ui.moments.MomentsFragmentView
-import com.example.moments.ui.newsFeed.NewsFeedFragmentView
+import com.example.moments.ui.feed.FeedFragmentView
 import com.example.moments.ui.notification.NotificationFragmentView
 import com.example.moments.ui.search.SearchFragmentView
 import com.example.moments.ui.viewProfile.ProfileFragmentView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.lang.Integer.min
 import java.util.*
-import kotlin.math.max
 
 class MainActivityView : AppCompatActivity() {
     //5 main fragments
-    private lateinit var newsFeedActivity: NewsFeedFragmentView
+    private lateinit var feedActivity: FeedFragmentView
     private lateinit var searchActivity: SearchFragmentView
     private lateinit var momentsFragmentView: MomentsFragmentView
     private lateinit var notificationActivity: NotificationFragmentView
@@ -42,7 +38,7 @@ class MainActivityView : AppCompatActivity() {
         initViewPager()
 
         //init four main fragments
-        newsFeedActivity = NewsFeedFragmentView()
+        feedActivity = FeedFragmentView()
         searchActivity = SearchFragmentView()
         momentsFragmentView = MomentsFragmentView()
         notificationActivity = NotificationFragmentView()
@@ -70,7 +66,7 @@ class MainActivityView : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
 
         //add 5 main fragments to adapter
-        adapter.addFragment(newsFeedActivity, "NewsfeedTab")
+        adapter.addFragment(feedActivity, "NewsfeedTab")
         adapter.addFragment(searchActivity, "SearchTab")
         adapter.addFragment(momentsFragmentView, "Moments")
         adapter.addFragment(notificationActivity, "NotificationTab")

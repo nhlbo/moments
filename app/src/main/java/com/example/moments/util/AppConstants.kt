@@ -1,14 +1,14 @@
 package com.example.moments.util
 
 object AppConstants {
-    internal val APP_DB_NAME = "mindorks_mvp.db"
-    internal val PREF_NAME = "mindorks_pref"
-    internal val SEED_DATABASE_QUESTIONS = "seed/questions.json"
-    internal val SEED_DATABASE_OPTIONS = "seed/options.json"
+    internal val PREF_NAME = "momments_pref"
     internal val EMPTY_EMAIL_ERROR = 1001
     internal val INVALID_EMAIL_ERROR = 1002
     internal val EMPTY_PASSWORD_ERROR = 1003
     internal val LOGIN_FAILURE = 1004
+    internal val EMPTY_USERNAME_ERROR = 1005
+    internal val CONFIRM_PASSWORD_NOT_MATCH_ERROR = 1006
+    internal val INVALID_PASSWORD_ERROR = 1007
     internal val NULL_INDEX = -1L
 
     enum class LoggedInMode constructor(val type: Int) {

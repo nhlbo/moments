@@ -6,7 +6,7 @@
     app:startDestination="@id/newsFeedFragmentView">
     <fragment
         android:id="@+id/newsFeedFragmentView"
-        android:name="com.example.moments.ui.newsFeed.NewsFeedFragmentView"
+        android:name="com.example.moments.ui.feed.FeedFragmentView"
         android:label="NewsFeedFragmentView" />
     <fragment
         android:id="@+id/searchFragmentView"
