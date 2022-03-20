@@ -1,4 +1,4 @@
-package com.example.moments.ui.viewProfile
+package com.example.moments.ui.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

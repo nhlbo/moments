@@ -22,6 +22,6 @@
         android:label="NotificationFragmentView" />
     <fragment
         android:id="@+id/profileFragmentView"
-        android:name="com.example.moments.ui.viewProfile.ProfileFragmentView"
+        android:name="com.example.moments.ui.profile.ProfileFragmentView"
         android:label="ProfileFragmentView" />
 </navigation>

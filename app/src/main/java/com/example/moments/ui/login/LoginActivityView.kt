@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.forgetPassword.stepOne.ForgetPasswordActivityStepOneView
 import com.example.moments.ui.sign_up.SignUpActivityView
 import com.example.moments.util.AppConstants
 import kotlinx.android.synthetic.main.activity_login.*
@@ -36,6 +37,11 @@ class LoginActivityView : BaseActivity(), ILoginActivityView {
 
     override fun openFeedActivity() {
 
+    }
+
+    override fun openForgotPasswordActivity() {
+        val intent: Intent = Intent(this, ForgetPasswordActivityStepOneView::class.java)
+        startActivity(intent)
     }
 
     override fun showValidationMessage(errorCode: Int) {
@@ -71,9 +77,14 @@ class LoginActivityView : BaseActivity(), ILoginActivityView {
                 etPassword.text.toString()
             )
         }
-        btnGoogleLogin.setOnClickListener { presenter.onGoogleLoginClicked() }
+        btnGoogleLogin.setOnClickListener {
+            presenter.onGoogleLoginClicked()
+        }
         btnGoToSignUp.setOnClickListener {
             presenter.onGoToSignUpClicked()
+        }
+        tvForgetPassword.setOnClickListener {
+            presenter.onGoToForgotPasswordClicked()
         }
     }
 }

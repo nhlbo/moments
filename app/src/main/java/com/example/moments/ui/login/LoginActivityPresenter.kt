@@ -27,4 +27,8 @@ class LoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInteracto
     override fun onGoToSignUpClicked() {
         getView()?.openSignUpActivity()
     }
+
+    override fun onGoToForgotPasswordClicked() {
+        getView()?.openForgotPasswordActivity()
+    }
 }

@@ -9,6 +9,7 @@ import io.reactivex.Observable
 interface ILoginActivityView : IBaseView {
     fun openSignUpActivity()
     fun openFeedActivity()
+    fun openForgotPasswordActivity()
     fun showValidationMessage(errorCode: Int)
 }
 
@@ -17,6 +18,7 @@ interface ILoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInte
     fun onServerLoginClicked(email: String, password: String)
     fun onGoogleLoginClicked()
     fun onGoToSignUpClicked()
+    fun onGoToForgotPasswordClicked()
 }
 
 interface ILoginActivityInteractor : IBaseInteractor {

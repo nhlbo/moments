@@ -1,4 +1,4 @@
-package com.example.moments.ui.viewProfile
+package com.example.moments.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater

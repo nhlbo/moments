@@ -9,7 +9,7 @@ import com.example.moments.ui.moments.MomentsFragmentView
 import com.example.moments.ui.feed.FeedFragmentView
 import com.example.moments.ui.notification.NotificationFragmentView
 import com.example.moments.ui.search.SearchFragmentView
-import com.example.moments.ui.viewProfile.ProfileFragmentView
+import com.example.moments.ui.profile.ProfileFragmentView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
 

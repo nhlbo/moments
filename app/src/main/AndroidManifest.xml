@@ -15,6 +15,15 @@
             android:name=".ui.moments.MomentsActivityView"
             android:exported="false" />
         <activity
+            android:name=".ui.forgetPassword.stepOne.ForgetPasswordActivityStepOneView"
+            android:exported="false" />
+        <activity
+            android:name=".ui.forgetPassword.stepTwo.ForgetPasswordActivityStepTwoView"
+            android:exported="false" />
+        <activity
+            android:name=".ui.forgetPassword.stepThree.ForgetPasswordActivityStepThreeView"
+            android:exported="false" />
+        <activity
             android:name=".ui.notification.NotificationActivityView"
             android:exported="false" />
         <activity

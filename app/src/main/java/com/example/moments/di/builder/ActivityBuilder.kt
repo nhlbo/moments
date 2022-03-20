@@ -1,5 +1,9 @@
 package com.example.moments.di.builder
 
+import com.example.moments.ui.forgetPassword.stepOne.ForgetPasswordActivityStepOneModule
+import com.example.moments.ui.forgetPassword.stepOne.ForgetPasswordActivityStepOneView
+import com.example.moments.ui.forgetPassword.stepTwo.ForgetPasswordActivityStepTwoModule
+import com.example.moments.ui.forgetPassword.stepTwo.ForgetPasswordActivityStepTwoView
 import com.example.moments.ui.login.LoginActivityModule
 import com.example.moments.ui.login.LoginActivityView
 import com.example.moments.ui.sign_up.SignUpActivityModule
@@ -20,4 +24,10 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(SignUpActivityModule::class)])
     abstract fun bindSignUpActivity(): SignUpActivityView
+
+    @ContributesAndroidInjector(modules = [(ForgetPasswordActivityStepOneModule::class)])
+    abstract fun bindForgetPasswordActivityStepOne(): ForgetPasswordActivityStepOneView
+
+    @ContributesAndroidInjector(modules = [(ForgetPasswordActivityStepTwoModule::class)])
+    abstract fun bindForgetPasswordActivityStepTwo(): ForgetPasswordActivityStepTwoView
 }
