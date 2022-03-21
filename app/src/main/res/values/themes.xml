@@ -51,6 +51,14 @@
         <item name="strokeWidth">5dp</item>
         <item name="android:left">30dp</item>
     </style>
+
+    <!--EditTextChatBox-->
+    <style name="Theme.Moments.ChatEditText" parent="Theme.Moments.EditText">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
     <!-- Button style -->
     <style name="Theme.Moments.Button" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/btn_background</item>
@@ -120,10 +128,17 @@
         <item name="icon_clear">@drawable/ic_search</item>
     </style>
 
+    <!-- Navigation bar -->
     <style name="Theme.Moments.NavigationBar" parent="Widget.Design.BottomNavigationView">
         <item name="backgroundTint">@color/white</item>
         <item name="itemRippleColor">@null</item>
         <item name="itemBackground">@null</item>
+    </style>
+
+    <!--Chat box-->
+    <style name="Theme.Moments.ChatBox" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">100dp</item>
+        <item name="cardBackgroundColor">#E5E5E5</item>
     </style>
 
 
