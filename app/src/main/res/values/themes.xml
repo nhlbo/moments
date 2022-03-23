@@ -137,9 +137,13 @@
 
     <!--Chat box-->
     <style name="Theme.Moments.ChatBox" parent="Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">100dp</item>
+        <item name="cardCornerRadius">50dp</item>
         <item name="cardBackgroundColor">#E5E5E5</item>
     </style>
 
+    <style name="Theme.Moments.ChatMessageBox" parent="Theme.Moments.ChatBox">
+        <item name="cardCornerRadius">18dp</item>
+        <item name="cardBackgroundColor">@color/primary_btn_color</item>
+    </style>
 
 </resources>
