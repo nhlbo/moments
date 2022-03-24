@@ -20,6 +20,14 @@ class SignUpActivityView : BaseActivity(), ISignUpActivityView {
         setOnClickListener()
     }
 
+    override fun onFragmentAttached() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFragmentDetached(tag: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun openLoginActivity() {
         finish()
     }

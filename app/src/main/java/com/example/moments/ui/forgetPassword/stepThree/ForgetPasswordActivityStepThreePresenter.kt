@@ -15,8 +15,11 @@ class ForgetPasswordActivityStepThreePresenter<V : IForgetPasswordActivityStepTh
     compositeDisposable = disposable
 ),
     IForgetPasswordActivityStepThreePresenter<V, I> {
-    override fun onForgetPasswordStepThreeContinueClicked(newPassword: String, confirmNewPassword: String) {
+    override fun onForgetPasswordStepThreeContinueClicked(
+        newPassword: String,
+        confirmNewPassword: String
+    ) {
+        // validate password
+        getView()?.openLoginActivity()
     }
-
-
 }

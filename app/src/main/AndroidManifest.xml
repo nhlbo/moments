@@ -19,9 +19,11 @@
             android:exported="false" />
         <activity
             android:name=".ui.forgetPassword.stepTwo.ForgetPasswordActivityStepTwoView"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".ui.forgetPassword.stepThree.ForgetPasswordActivityStepThreeView"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".ui.notification.NotificationActivityView"

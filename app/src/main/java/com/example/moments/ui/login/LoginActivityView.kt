@@ -30,6 +30,14 @@ class LoginActivityView : BaseActivity(), ILoginActivityView {
         super.onDestroy()
     }
 
+    override fun onFragmentAttached() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFragmentDetached(tag: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun openSignUpActivity() {
         val intent: Intent = Intent(this, SignUpActivityView::class.java)
         startActivity(intent)

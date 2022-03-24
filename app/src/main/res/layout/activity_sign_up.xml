@@ -60,7 +60,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_logo" />
 
-    <com.example.moments.ui.custom_classes.CustomEditText
+    <com.example.moments.ui.customClasses.CustomEditText
         android:id="@+id/etSignUpEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <com.example.moments.ui.custom_classes.CustomEditText
+    <com.example.moments.ui.customClasses.CustomEditText
         android:id="@+id/etSignUpUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
         app:layout_constraintStart_toStartOf="@+id/etSignUpUsername"
         app:layout_constraintTop_toBottomOf="@+id/etSignUpUsername">
 
-        <com.example.moments.ui.custom_classes.CustomEditText
+        <com.example.moments.ui.customClasses.CustomEditText
             android:id="@+id/etSignUpPassword"
             style="@style/Theme.Moments.EditText"
             android:layout_width="match_parent"
@@ -121,7 +121,7 @@
         app:layout_constraintStart_toStartOf="@+id/textInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
-        <com.example.moments.ui.custom_classes.CustomEditText
+        <com.example.moments.ui.customClasses.CustomEditText
             android:id="@+id/etSignUpConfirmPassword"
             style="@style/Theme.Moments.EditText"
             android:layout_width="match_parent"

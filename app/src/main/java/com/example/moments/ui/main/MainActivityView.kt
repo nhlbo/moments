@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
-import com.example.moments.ui.custom_classes.ViewPagerAdapter
+import com.example.moments.ui.customClasses.ViewPagerAdapter
 import com.example.moments.ui.moments.MomentsFragmentView
 import com.example.moments.ui.feed.FeedFragmentView
 import com.example.moments.ui.notification.NotificationFragmentView

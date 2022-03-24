@@ -25,6 +25,14 @@ class StartActivityView : BaseActivity(), IStartActivityView {
         super.onDestroy()
     }
 
+    override fun onFragmentAttached() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFragmentDetached(tag: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun showProgress() {
         TODO("Not yet implemented")
     }

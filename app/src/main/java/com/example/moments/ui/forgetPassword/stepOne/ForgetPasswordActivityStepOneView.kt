@@ -20,6 +20,14 @@ class ForgetPasswordActivityStepOneView : BaseActivity(), IForgetPasswordActivit
         setOnClickListener()
     }
 
+    override fun onFragmentAttached() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFragmentDetached(tag: String) {
+        TODO("Not yet implemented")
+    }
+
     private fun setOnClickListener() {
         btnForgetPasswordStepOneContinue.setOnClickListener {
             presenter.onForgetPasswordStepOneContinueClicked(etForgetPasswordEmail.text.toString())

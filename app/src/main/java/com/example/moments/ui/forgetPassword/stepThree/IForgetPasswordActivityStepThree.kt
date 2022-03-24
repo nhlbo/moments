@@ -5,7 +5,7 @@ import com.example.moments.ui.base.IBasePresenter
 import com.example.moments.ui.base.IBaseView
 
 interface IForgetPasswordActivityStepThreeView : IBaseView {
-    fun openForgetPasswordActivityStepThree()
+    fun openLoginActivity()
     fun showValidationMessage(errorCode: Int)
 }
 
