@@ -90,7 +90,9 @@
 
     <!-- Image Button style -->
     <style name="Theme.Moments.ImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
     </style>
 
     <!-- TextInputLayout style -->

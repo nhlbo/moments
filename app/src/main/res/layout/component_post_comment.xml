@@ -24,8 +24,8 @@
 
     <ImageButton
         android:id="@+id/imageButton9"
-        android:layout_width="16dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView23"
         app:layout_constraintTop_toBottomOf="@+id/textView23"
@@ -52,9 +52,9 @@
         android:text="Reply"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/textView25"
         app:layout_constraintStart_toEndOf="@+id/textView25"
-        app:layout_constraintTop_toTopOf="@+id/imageButton9"
+        app:layout_constraintTop_toTopOf="@+id/textView25"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
@@ -66,7 +66,7 @@
         android:text="1 like"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton9"
         app:layout_constraintStart_toEndOf="@+id/imageButton9"
         app:layout_constraintTop_toTopOf="@+id/imageButton9" />
 
@@ -79,8 +79,8 @@
         android:text="1h ago"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/textView26"
         app:layout_constraintStart_toEndOf="@+id/textView26"
-        app:layout_constraintTop_toTopOf="@+id/imageButton9" />
+        app:layout_constraintTop_toTopOf="@+id/textView26" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
