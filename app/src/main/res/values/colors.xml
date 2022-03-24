@@ -29,4 +29,7 @@
     <color name="primary_btn_color">#3197E9</color>
     <color name="secondary_btn_color">#F2F2F2</color>
     <color name="addition_btn_color">#DC143C</color>
+
+    <color name="gradient_start">#F344F7</color>
+    <color name="gradient_end">#9B40BF</color>
 </resources>
