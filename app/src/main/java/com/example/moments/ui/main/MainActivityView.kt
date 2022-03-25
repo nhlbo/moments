@@ -3,9 +3,11 @@ package com.example.moments.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
+import com.example.moments.ui.custom_classes.FragmentChangeListener
 import com.example.moments.ui.custom_classes.ViewPagerAdapter
 import com.example.moments.ui.moments.MomentsFragmentView
 import com.example.moments.ui.newsFeed.NewsFeedFragmentView
@@ -13,11 +15,9 @@ import com.example.moments.ui.notification.NotificationFragmentView
 import com.example.moments.ui.search.SearchFragmentView
 import com.example.moments.ui.viewProfile.ProfileFragmentView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.lang.Integer.min
 import java.util.*
-import kotlin.math.max
 
-class MainActivityView : AppCompatActivity() {
+class MainActivityView : AppCompatActivity(), FragmentChangeListener {
     //5 main fragments
     private lateinit var newsFeedActivity: NewsFeedFragmentView
     private lateinit var searchActivity: SearchFragmentView
@@ -137,5 +137,13 @@ class MainActivityView : AppCompatActivity() {
 
     private fun replaceFragment(index:Int){
         viewPager.setCurrentItem(index,false)
+    }
+
+    override fun replaceFragment(fragment: Fragment?) {
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentContainerView, fragment!!, fragment.toString())
+        fragmentTransaction.addToBackStack(fragment.toString())
+        fragmentTransaction.commit()
     }
 }
