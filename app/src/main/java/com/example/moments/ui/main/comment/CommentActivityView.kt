@@ -1,12 +1,12 @@
-package com.example.moments.ui.chat
+package com.example.moments.ui.main.comment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.moments.R
 
-class ChatActivityView : AppCompatActivity() {
+class CommentActivityView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
+        setContentView(R.layout.activity_comment)
     }
 }

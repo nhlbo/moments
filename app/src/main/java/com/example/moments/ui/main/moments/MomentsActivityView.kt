@@ -1,12 +1,12 @@
-package com.example.moments.ui.search
+package com.example.moments.ui.main.moments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.moments.R
 
-class SearchActivityView : AppCompatActivity() {
+class MomentsActivityView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(R.layout.activity_moments)
     }
 }

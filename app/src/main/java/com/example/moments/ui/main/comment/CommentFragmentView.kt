@@ -1,4 +1,4 @@
-package com.example.moments.ui.viewProfile
+package com.example.moments.ui.main.comment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,37 +7,33 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.moments.R
-import com.example.moments.ui.comment.CommentFragmentView
-import com.example.moments.ui.custom_classes.FragmentChangeListener
 
-class ProfileFragmentView : Fragment(R.layout.activity_view_profile) {
+class CommentFragmentView : Fragment() {
     private var toolBar: Toolbar? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_view_profile, container, false)
+        return inflater.inflate(R.layout.activity_comment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolBar = getView()?.findViewById(R.id.profile_header_toolbar)
-        toolBar?.inflateMenu(R.menu.header_profile)
-        toolBar?.title = "Your profile"
+
+        toolBar = getView()?.findViewById(R.id.comment_header_toolBar)
+        toolBar?.title = "Comments"
+        toolBar?.setNavigationOnClickListener {
+            //TODO return newsfeed
+        }
         onItemSelected()
     }
 
     private fun onItemSelected() {
         toolBar?.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.profileSettingBtn -> {
+                R.id.sharePostBtn -> {
                     // Navigate to settings screen
-                    true
-                }
-                R.id.storyBtn -> {
-                    // Save profile changes
-
                     true
                 }
                 else -> false

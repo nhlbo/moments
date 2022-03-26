@@ -1,4 +1,4 @@
-package com.example.moments.ui.notification
+package com.example.moments.ui.main.notification
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -4,16 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.chat.ChatActivityView">
+    tools:context=".ui.main.chat.ChatActivityView">
 
-    <include
-        android:id="@+id/include3"
-        layout="@layout/header_chat"
-        android:layout_width="0dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/chat_activity_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorSecondary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/header_chat"
+        app:navigationIcon="@drawable/ic_arrow_left" >
+
+        <include
+            android:id="@+id/view_info_others_btn"
+            layout="@layout/header_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            tools:layout_editor_absoluteX="72dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
@@ -21,7 +36,7 @@
         app:layout_constraintBottom_toTopOf="@+id/include4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include3">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -1,13 +1,12 @@
-package com.example.moments.ui.newsFeed
+package com.example.moments.ui.main.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.moments.R
 
-
-class NewsFeedActivityView : AppCompatActivity() {
+class SearchActivityView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_feed)
+        setContentView(R.layout.activity_search)
     }
 }
