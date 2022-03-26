@@ -32,7 +32,7 @@
             android:name=".ui.main.MainActivityView"
             android:exported="false" />
         <activity
-            android:name=".ui.sign_up.SignUpActivityView"
+            android:name=".ui.signUp.SignUpActivityView"
             android:exported="false" />
         <activity
             android:name=".ui.feed.FeedActivityView"

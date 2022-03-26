@@ -1,4 +1,4 @@
-package com.example.moments.ui.sign_up
+package com.example.moments.ui.signUp
 
 import com.example.moments.data.preference.PreferenceHelper
 import com.example.moments.ui.base.BaseInteractor

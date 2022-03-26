@@ -1,4 +1,4 @@
-package com.example.moments.ui.sign_up
+package com.example.moments.ui.signUp
 
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider

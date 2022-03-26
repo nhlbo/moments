@@ -7,7 +7,7 @@ import android.widget.Toast
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.forgetPassword.stepOne.ForgetPasswordActivityStepOneView
-import com.example.moments.ui.sign_up.SignUpActivityView
+import com.example.moments.ui.signUp.SignUpActivityView
 import com.example.moments.util.AppConstants
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
