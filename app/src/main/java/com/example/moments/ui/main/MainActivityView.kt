@@ -46,9 +46,10 @@ class MainActivityView : AppCompatActivity(), onChildFragmentClick {
     }
 
     override fun onBackPressed() {
-        bottomNavigationController = homeFragmentView.getController()
-        if(!bottomNavigationController.popBackStack()){
+        if (viewPager.currentItem == 0) {
             super.onBackPressed()
+        } else {
+            viewPager.currentItem = viewPager.currentItem - 1
         }
     }
 

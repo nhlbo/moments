@@ -42,6 +42,8 @@ class HomeFragmentView : Fragment(){
         val navHostFragment = childFragmentManager.findFragmentById(R.id.navigateFragmentsContainer) as NavHostFragment
         controller = navHostFragment.navController
         parentViewPager = activity?.findViewById(R.id.fragmentContainerView)!!
+
+
         bottomNavigationView = result.findViewById(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(controller)
         controller.addOnDestinationChangedListener { _, destination, _ ->

@@ -6,12 +6,14 @@ import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.example.moments.ui.main.comment.CommentFragmentView
 import com.example.moments.ui.custom_classes.FragmentChangeListener
 
 class NewsFeedFragmentView : Fragment() {
     private var toolBar: Toolbar? = null
+    private lateinit var parentViewPager: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +28,8 @@ class NewsFeedFragmentView : Fragment() {
         toolBar = getView()?.findViewById(R.id.newsfeed_header_bar)
         toolBar?.inflateMenu(R.menu.header_newsfeeds)
         onItemSelected()
+        parentViewPager = activity?.findViewById(R.id.fragmentContainerView)!!
+
     }
 
     private fun onItemSelected() {
@@ -37,8 +41,7 @@ class NewsFeedFragmentView : Fragment() {
                 }
                 R.id.msgBtn -> {
                     // Save profile changes
-                    Log.d("current",findNavController().currentDestination.toString())
-                    findNavController().navigate(R.id.chatFragmentView)
+                    parentViewPager.currentItem+=1
                     true
                 }
                 else -> false
