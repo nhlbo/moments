@@ -8,8 +8,8 @@ import com.example.moments.ui.forgetPassword.stepTwo.ForgetPasswordActivityStepT
 import com.example.moments.ui.forgetPassword.stepTwo.ForgetPasswordActivityStepTwoView
 import com.example.moments.ui.login.LoginActivityModule
 import com.example.moments.ui.login.LoginActivityView
-import com.example.moments.ui.sign_up.SignUpActivityModule
-import com.example.moments.ui.sign_up.SignUpActivityView
+import com.example.moments.ui.signUp.SignUpActivityModule
+import com.example.moments.ui.signUp.SignUpActivityView
 import com.example.moments.ui.start.StartActivityModule
 import com.example.moments.ui.start.StartActivityView
 import dagger.Module
