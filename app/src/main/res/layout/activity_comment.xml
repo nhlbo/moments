@@ -7,7 +7,7 @@
     tools:context=".ui.main.comment.CommentActivityView">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/comment_header_toolBar"
+        android:id="@+id/tbCommentHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSecondary"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comment_header_toolBar" />
+        app:layout_constraintTop_toBottomOf="@+id/tbCommentHeader" />
 
     <ExpandableListView
         android:id="@+id/lvExp"

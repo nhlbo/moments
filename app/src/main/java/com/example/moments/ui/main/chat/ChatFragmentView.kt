@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import com.example.moments.R
 
 class ChatFragmentView : Fragment() {
@@ -19,7 +16,7 @@ class ChatFragmentView : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.activity_chat, container, false)
-        toolbar = view.findViewById(R.id.chat_activity_toolbar)
+        toolbar = view.findViewById(R.id.tbChatActivity)
         return view
     }
 

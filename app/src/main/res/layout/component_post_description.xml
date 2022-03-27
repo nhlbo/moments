@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circular_avatar_comment"
+        android:id="@+id/btnAvatarComment"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
@@ -23,16 +23,16 @@
         app:srcCompat="@drawable/default_avatar" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/tvCommentDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Description"
-        app:layout_constraintStart_toEndOf="@+id/circular_avatar_comment"
-        app:layout_constraintTop_toTopOf="@+id/circular_avatar_comment" />
+        app:layout_constraintStart_toEndOf="@+id/btnAvatarComment"
+        app:layout_constraintTop_toTopOf="@+id/btnAvatarComment" />
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/tvCommentTime"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,6 +40,6 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+        app:layout_constraintStart_toStartOf="@+id/tvCommentDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvCommentDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

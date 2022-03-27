@@ -7,7 +7,7 @@
     android:paddingVertical="5dp">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circularImg01"
+        android:id="@+id/btnAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:civ_border="true"
@@ -19,26 +19,26 @@
         app:srcCompat="@drawable/default_avatar" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/tvUsername"
         style="@style/Theme.Moments.TextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Son Tran"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/circularImg01"
-        app:layout_constraintTop_toTopOf="@+id/circularImg01" />
+        app:layout_constraintStart_toEndOf="@+id/btnAvatar"
+        app:layout_constraintTop_toTopOf="@+id/btnAvatar" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/tvHashtag"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="\@son tran"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/circularImg01"
-        app:layout_constraintStart_toStartOf="@+id/textView20"
-        app:layout_constraintTop_toBottomOf="@+id/textView20"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAvatar"
+        app:layout_constraintStart_toStartOf="@+id/tvUsername"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsername"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
