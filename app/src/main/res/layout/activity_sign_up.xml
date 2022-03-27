@@ -4,31 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.sign_up.SignUpActivityView">
+    tools:context=".ui.signUp.SignUpActivityView">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnSignUp"
         style="@style/Theme.Moments.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Create account"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName3"
+        app:layout_constraintEnd_toEndOf="@+id/etSignUpUsername"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3"
+        app:layout_constraintStart_toStartOf="@+id/etSignUpUsername"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnGoToLogin"
         style="@style/Theme.Moments.ButtonVariant1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Login"
-        app:layout_constraintEnd_toEndOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="@+id/btnSignUp"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintStart_toStartOf="@+id/btnSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -60,8 +60,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_logo" />
 
-    <com.example.moments.ui.custom_classes.CustomEditText
-        android:id="@+id/editTextTextPersonName2"
+    <com.example.moments.ui.customClasses.CustomEditText
+        android:id="@+id/etSignUpEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -69,14 +69,14 @@
         android:layout_marginEnd="30dp"
         android:ems="10"
         android:hint="Email"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <com.example.moments.ui.custom_classes.CustomEditText
-        android:id="@+id/editTextTextPersonName3"
+    <com.example.moments.ui.customClasses.CustomEditText
+        android:id="@+id/etSignUpUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -88,30 +88,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpEmail" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        style="@style/Theme.Moments.TextInputLayout"
+        style="@style/Theme.Moments.TextInputLayout.Password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName3"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3">
+        app:layout_constraintEnd_toEndOf="@+id/etSignUpUsername"
+        app:layout_constraintStart_toStartOf="@+id/etSignUpUsername"
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpUsername">
 
-        <com.example.moments.ui.custom_classes.CustomEditText
-            android:id="@+id/customEditText"
+        <com.example.moments.ui.customClasses.CustomEditText
+            android:id="@+id/etSignUpPassword"
             style="@style/Theme.Moments.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Password" />
+            android:hint="Password"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
-        style="@style/Theme.Moments.TextInputLayout"
+        style="@style/Theme.Moments.TextInputLayout.Password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -120,13 +121,14 @@
         app:layout_constraintStart_toStartOf="@+id/textInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
-        <com.example.moments.ui.custom_classes.CustomEditText
-            android:id="@+id/customEditText2"
+        <com.example.moments.ui.customClasses.CustomEditText
+            android:id="@+id/etSignUpConfirmPassword"
             style="@style/Theme.Moments.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Repeat password" />
+            android:hint="Repeat password"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

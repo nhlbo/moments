@@ -1,20 +1,98 @@
 package com.example.moments.ui.login
 
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
-import androidx.core.widget.addTextChangedListener
+import android.widget.Toast
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
-import com.example.moments.ui.custom_classes.CustomEditText
-import com.google.android.material.textfield.TextInputLayout
+import com.example.moments.ui.forgetPassword.stepOne.ForgetPasswordActivityStepOneView
+import com.example.moments.ui.signUp.SignUpActivityView
+import com.example.moments.util.AppConstants
+import kotlinx.android.synthetic.main.activity_login.*
+import javax.inject.Inject
 
 
-class LoginActivityView : BaseActivity() {
+class LoginActivityView : BaseActivity(), ILoginActivityView {
+
+    @Inject
+    lateinit var presenter: ILoginActivityPresenter<ILoginActivityView, ILoginActivityInteractor>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        presenter.onAttach(this)
+        setOnClickListener()
+    }
+
+    override fun onDestroy() {
+        presenter.onDetach()
+        super.onDestroy()
+    }
+
+    override fun onFragmentAttached() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFragmentDetached(tag: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun openSignUpActivity() {
+        val intent: Intent = Intent(this, SignUpActivityView::class.java)
+        startActivity(intent)
+    }
+
+    override fun openFeedActivity() {
+
+    }
+
+    override fun openForgotPasswordActivity() {
+        val intent: Intent = Intent(this, ForgetPasswordActivityStepOneView::class.java)
+        startActivity(intent)
+    }
+
+    override fun showValidationMessage(errorCode: Int) {
+        when (errorCode) {
+            AppConstants.EMPTY_EMAIL_ERROR -> Toast.makeText(
+                this,
+                getString(R.string.empty_email_error_message),
+                Toast.LENGTH_LONG
+            ).show()
+            AppConstants.INVALID_EMAIL_ERROR -> Toast.makeText(
+                this,
+                getString(R.string.invalid_email_error_message),
+                Toast.LENGTH_LONG
+            ).show()
+            AppConstants.EMPTY_PASSWORD_ERROR -> Toast.makeText(
+                this,
+                getString(R.string.empty_password_error_message),
+                Toast.LENGTH_LONG
+            ).show()
+            AppConstants.LOGIN_FAILURE -> Toast.makeText(
+                this,
+                getString(R.string.login_failure),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+
+    private fun setOnClickListener() {
+        btnServerLogin.setOnClickListener {
+            presenter.onServerLoginClicked(
+                etEmail.text.toString(),
+                etPassword.text.toString()
+            )
+        }
+        btnGoogleLogin.setOnClickListener {
+            presenter.onGoogleLoginClicked()
+        }
+        btnGoToSignUp.setOnClickListener {
+            presenter.onGoToSignUpClicked()
+        }
+        tvForgetPassword.setOnClickListener {
+            presenter.onGoToForgotPasswordClicked()
+        }
     }
 }

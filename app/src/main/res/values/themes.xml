@@ -2,19 +2,21 @@
     <!-- Base application theme. -->
     <style name="Theme.Moments" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/dark_gray</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/crimson</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="editTextStyle">@style/Theme.Moments.EditText</item>
         <item name="buttonStyle">@style/Theme.Moments.Button</item>
+        <item name="imageButtonStyle">@style/Theme.Moments.ImageButton</item>
         <item name="android:textViewStyle">@style/Theme.Moments.TextView</item>
+        <item name="bottomNavigationStyle">@style/Theme.Moments.NavigationBar</item>
     </style>
     <!-- TextView style -->
     <style name="Theme.Moments.TextView" parent="Widget.AppCompat.TextView">
@@ -49,14 +51,23 @@
         <item name="strokeWidth">5dp</item>
         <item name="android:left">30dp</item>
     </style>
+
+    <!--EditTextChatBox-->
+    <style name="Theme.Moments.ChatEditText" parent="Theme.Moments.EditText">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
     <!-- Button style -->
     <style name="Theme.Moments.Button" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/btn_background</item>
         <item name="android:textAllCaps">false</item>
         <item name="backgroundTint">@color/primary_btn_color</item>
-        <item name="android:height">40dp</item>
+<!--        <item name="android:height">40dp</item>-->
         <item name="android:fontFamily">@font/gothic_regular</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Theme.Moments.ButtonVariant1" parent="Theme.Moments.Button">
@@ -70,6 +81,20 @@
         <item name="iconSize">25dp</item>
         <item name="iconPadding">-25dp</item>
     </style>
+
+    <style name="Theme.Moments.ThinButton" parent="Theme.Moments.Button">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <!-- Image Button style -->
+    <style name="Theme.Moments.ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+    </style>
+
     <!-- TextInputLayout style -->
     <style name="Theme.Moments.TextInputLayout" parent="Widget.Design.TextInputLayout">
         <item name="boxBackgroundColor">#FFF</item>
@@ -77,11 +102,32 @@
         <item name="strokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="hintEnabled">false</item>
-        <item name="passwordToggleEnabled">true</item>
-        <item name="passwordToggleTint">@color/secondary_text_color</item>
-        <item name="passwordToggleDrawable">@drawable/show_password_selector</item>
         <item name="errorEnabled">false</item>
         <item name="errorTextColor">@color/crimson</item>
         <item name="errorTextAppearance">@style/Theme.Moments.TextView.HelperText</item>
     </style>
+    <style name="Theme.Moments.TextInputLayout.Password" parent="Theme.Moments.TextInputLayout">
+        <item name="passwordToggleEnabled">true</item>
+        <item name="passwordToggleTint">@color/secondary_text_color</item>
+        <item name="passwordToggleDrawable">@drawable/show_password_selector</item>
+    </style>
+
+    <!-- Navigation bar -->
+    <style name="Theme.Moments.NavigationBar" parent="Widget.Design.BottomNavigationView">
+        <item name="backgroundTint">@color/white</item>
+        <item name="itemRippleColor">@null</item>
+        <item name="itemBackground">@null</item>
+    </style>
+
+    <!--Chat box-->
+    <style name="Theme.Moments.ChatBox" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">50dp</item>
+        <item name="cardBackgroundColor">#E5E5E5</item>
+    </style>
+
+    <style name="Theme.Moments.ChatMessageBox" parent="Theme.Moments.ChatBox">
+        <item name="cardCornerRadius">18dp</item>
+        <item name="cardBackgroundColor">@color/primary_btn_color</item>
+    </style>
+
 </resources>

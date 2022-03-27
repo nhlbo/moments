@@ -10,4 +10,14 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+
+    <string name="empty_email_error_message">empty_email_error_message</string>
+    <string name="invalid_email_error_message">invalid_email_error_message</string>
+    <string name="empty_password_error_message">empty_password_error_message</string>
+    <string name="empty_username_error_message">empty_username_error_message</string>
+    <string name="confirm_password_not_match_error_message">confirm_password_not_match_error_message</string>
+    <string name="invalid_password_error_message">invalid_password_error_message</string>
+    <string name="login_failure">login_failure</string>
 </resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/newsfeedFragmentView"
+        android:title="Home"
+        android:icon="@drawable/ic_home"
+        android:visible="true"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/searchFragmentView"
+        android:title="Search"
+        android:icon="@drawable/ic_search"
+        android:visible="true"
+        android:enabled="true"/>
+
+    <item android:id="@+id/momentsFragmentView"
+        android:title="Moments"
+        android:icon="@drawable/ic_video"
+        android:visible="true"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/notificationFragmentView"
+        android:title="Notify"
+        android:icon="@drawable/ic_heart_outline"
+        android:visible="true"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/profileFragmentView"
+        android:title="Profile"
+        android:icon="@drawable/ic_user"
+        android:visible="true"
+        android:enabled="true"/>
+
+</menu>
