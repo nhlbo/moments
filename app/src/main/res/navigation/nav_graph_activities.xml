@@ -3,25 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/newsFeedFragmentView">
+    app:startDestination="@id/newsfeedFragmentView">
     <fragment
-        android:id="@+id/newsFeedFragmentView"
-        android:name="com.example.moments.ui.feed.FeedFragmentView"
-        android:label="NewsFeedFragmentView" />
+        android:id="@+id/newsfeedFragmentView"
+        android:name="com.example.moments.ui.main.newsFeed.NewsFeedFragmentView"
+        android:label="NewsFeedFragmentView">
+        <action
+            android:id="@+id/action_newsfeedFragmentView_to_chatFragmentView"
+            app:destination="@id/chatFragmentView" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragmentView"
-        android:name="com.example.moments.ui.search.SearchFragmentView"
+        android:name="com.example.moments.ui.main.search.SearchFragmentView"
         android:label="SearchFragmentView" />
     <fragment
         android:id="@+id/momentsFragmentView"
-        android:name="com.example.moments.ui.moments.MomentsFragmentView"
+        android:name="com.example.moments.ui.main.moments.MomentsFragmentView"
         android:label="MomentsFragmentView" />
     <fragment
         android:id="@+id/notificationFragmentView"
-        android:name="com.example.moments.ui.notification.NotificationFragmentView"
+        android:name="com.example.moments.ui.main.notification.NotificationFragmentView"
         android:label="NotificationFragmentView" />
     <fragment
         android:id="@+id/profileFragmentView"
-        android:name="com.example.moments.ui.profile.ProfileFragmentView"
+        android:name="com.example.moments.ui.main.viewProfile.ProfileFragmentView"
         android:label="ProfileFragmentView" />
+    <fragment
+        android:id="@+id/chatFragmentView"
+        android:name="com.example.moments.ui.main.chat.ChatFragmentView"
+        android:label="ChatFragmentView" />
 </navigation>

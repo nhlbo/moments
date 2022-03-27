@@ -2,13 +2,13 @@
     <!-- Base application theme. -->
     <style name="Theme.Moments" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/dark_gray</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/crimson</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
@@ -51,6 +51,14 @@
         <item name="strokeWidth">5dp</item>
         <item name="android:left">30dp</item>
     </style>
+
+    <!--EditTextChatBox-->
+    <style name="Theme.Moments.ChatEditText" parent="Theme.Moments.EditText">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
     <!-- Button style -->
     <style name="Theme.Moments.Button" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/btn_background</item>
@@ -82,7 +90,9 @@
 
     <!-- Image Button style -->
     <style name="Theme.Moments.ImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
     </style>
 
     <!-- TextInputLayout style -->
@@ -102,29 +112,22 @@
         <item name="passwordToggleDrawable">@drawable/show_password_selector</item>
     </style>
 
-    <!-- Image tint-->
-    <style name="IconTint" parent="@style/Theme.AppCompat">
-        <item name="icon_search">@drawable/ic_search</item>
-        <item name="icon_home">@drawable/ic_home</item>
-        <item name="icon_heart">@drawable/ic_heart_outline</item>
-        <item name="icon_profile">@drawable/ic_user</item>
-        <item name="icon_video">@drawable/ic_video</item>
-        <item name="icon_comment">@drawable/ic_message_square</item>
-        <item name="icon_share">@drawable/ic_share</item>
-        <item name="icon_setting">@drawable/ic_settings</item>
-        <item name="icon_option">@drawable/ic_more_vertical</item>
-        <item name="icon_arrow">@drawable/ic_arrow_right</item>
-        <item name="icon_arrow_reverse">@drawable/ic_arrow_left</item>
-        <item name="icon_eye">@drawable/ic_hide_password</item>
-        <item name="icon_eye_closed">@drawable/ic_show_password</item>
-        <item name="icon_clear">@drawable/ic_search</item>
-    </style>
-
+    <!-- Navigation bar -->
     <style name="Theme.Moments.NavigationBar" parent="Widget.Design.BottomNavigationView">
         <item name="backgroundTint">@color/white</item>
         <item name="itemRippleColor">@null</item>
         <item name="itemBackground">@null</item>
     </style>
 
+    <!--Chat box-->
+    <style name="Theme.Moments.ChatBox" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">50dp</item>
+        <item name="cardBackgroundColor">#E5E5E5</item>
+    </style>
+
+    <style name="Theme.Moments.ChatMessageBox" parent="Theme.Moments.ChatBox">
+        <item name="cardCornerRadius">18dp</item>
+        <item name="cardBackgroundColor">@color/primary_btn_color</item>
+    </style>
 
 </resources>

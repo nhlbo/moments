@@ -8,15 +8,28 @@
     android:nestedScrollingEnabled="true"
     android:scrollbars="vertical"
     app:layout_scrollFlags="scroll"
-    tools:context=".ui.profile.ViewProfileActivityView">
+    tools:context=".ui.main.viewProfile.ViewProfileActivityView">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/profile_header_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSecondary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_editProfile" />
 
@@ -24,16 +37,20 @@
         android:id="@+id/btn_editProfile"
         style="@style/Theme.Moments.ButtonVariant1"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:paddingTop="-6dp"
-        android:paddingBottom="-6dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
         android:text="Edit Profile"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/textView7"
@@ -51,7 +68,7 @@
         android:fontFamily="@font/gothic_light"
         android:text="\@son.tran"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/btn_editProfile"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
@@ -93,7 +110,7 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:clickable="true"
         android:text="Following"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
@@ -133,25 +150,16 @@
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/imageView4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         app:civ_border_color="@android:color/transparent"
         app:civ_border_width="1dp"
         app:civ_shadow="true"
         app:civ_shadow_color="#FFFFFF"
         app:civ_shadow_radius="2dp"
         app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/include2"
+        app:layout_constraintTop_toBottomOf="@+id/profile_header_toolbar"
         app:srcCompat="@drawable/default_avatar"
         tools:ignore="MissingClass" />
-
-    <include
-        android:id="@+id/include2"
-        layout="@layout/header_profile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/storyBtn"
+        android:icon="@drawable/ic_plus_square"
+        android:orderInCategory="0"
+        android:title="plus_square"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/msgBtn"
+        android:icon="@drawable/ic_message_circle"
+        android:orderInCategory="1"
+        android:title="message"
+        app:showAsAction="always" />
+</menu>

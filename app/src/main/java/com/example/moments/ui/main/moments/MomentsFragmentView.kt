@@ -1,4 +1,4 @@
-package com.example.moments.ui.notification
+package com.example.moments.ui.main.moments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.moments.R
 
-class NotificationFragmentView : Fragment(R.layout.activity_notification) {
+class MomentsFragmentView : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_notification, container, false)
+        return inflater.inflate(R.layout.activity_moments, container, false)
     }
+
+    override fun toString(): String = "momentFragment"
 }

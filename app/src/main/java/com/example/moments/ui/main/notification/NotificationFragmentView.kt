@@ -1,4 +1,4 @@
-package com.example.moments.ui.search
+package com.example.moments.ui.main.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.moments.R
 
-class SearchFragmentView : Fragment(R.layout.activity_search) {
+class NotificationFragmentView : Fragment(R.layout.activity_notification) {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_search, container, false)
+        return inflater.inflate(R.layout.activity_notification, container, false)
     }
+
+    override fun toString(): String = "notificationFragment"
 }
