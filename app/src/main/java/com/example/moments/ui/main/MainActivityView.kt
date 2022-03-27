@@ -3,27 +3,12 @@ package com.example.moments.ui.main
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
-import com.example.moments.ui.custom_classes.CustomViewPager
-import com.example.moments.ui.custom_classes.FragmentChangeListener
-import com.example.moments.ui.custom_classes.ViewPagerAdapter
-import com.example.moments.ui.custom_classes.onChildFragmentClick
+import com.example.moments.ui.customClasses.ViewPagerAdapter
+import com.example.moments.ui.customClasses.onChildFragmentClick
 import com.example.moments.ui.main.chat.ChatFragmentView
-import com.example.moments.ui.main.moments.MomentsFragmentView
-import com.example.moments.ui.main.newsFeed.NewsFeedFragmentView
-import com.example.moments.ui.main.notification.NotificationFragmentView
-import com.example.moments.ui.main.search.SearchFragmentView
-import com.example.moments.ui.main.viewProfile.ProfileFragmentView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.util.*
 
 class MainActivityView : AppCompatActivity(), onChildFragmentClick {
     // navigation bar and page viewer

@@ -1,4 +1,4 @@
-package com.example.moments.ui.custom_classes
+package com.example.moments.ui.customClasses
 
 import androidx.fragment.app.Fragment
 

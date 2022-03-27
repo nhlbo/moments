@@ -1,15 +1,11 @@
 package com.example.moments.ui.main.newsFeed
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
-import com.example.moments.ui.main.comment.CommentFragmentView
-import com.example.moments.ui.custom_classes.FragmentChangeListener
 
 class NewsFeedFragmentView : Fragment() {
     private var toolBar: Toolbar? = null

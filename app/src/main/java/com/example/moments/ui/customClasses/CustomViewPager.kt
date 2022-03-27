@@ -1,4 +1,4 @@
-package com.example.moments.ui.custom_classes
+package com.example.moments.ui.customClasses
 
 import android.content.Context
 import android.util.AttributeSet
