@@ -6,13 +6,9 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class StartActivityPresenter<V : IStartActivityView, I : IStartActivityInteractor> @Inject internal constructor(
-    interactor: I,
-    schedulerProvider: SchedulerProvider,
-    disposable: CompositeDisposable
+    interactor: I
 ) : BasePresenter<V, I>(
-    interactor = interactor,
-    schedulerProvider = schedulerProvider,
-    compositeDisposable = disposable
+    interactor = interactor
 ),
     IStartActivityPresenter<V, I> {
 

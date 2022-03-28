@@ -25,10 +25,4 @@ class AppModule {
     @Provides
     @PreferenceInfo
     internal fun provideprefFileName(): String = AppConstants.PREF_NAME
-
-    @Provides
-    internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
-
-    @Provides
-    internal fun provideSchedulerProvider(): SchedulerProvider = SchedulerProvider()
 }
