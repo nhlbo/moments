@@ -9,8 +9,7 @@ interface IForgetPasswordActivityStepThreeView : IBaseView {
     fun showValidationMessage(errorCode: Int)
 }
 
-interface IForgetPasswordActivityStepThreeInteractor : IBaseInteractor {
-}
+interface IForgetPasswordActivityStepThreeInteractor : IBaseInteractor
 
 interface IForgetPasswordActivityStepThreePresenter<V : IForgetPasswordActivityStepThreeView, I : IForgetPasswordActivityStepThreeInteractor> :
     IBasePresenter<V, I> {

@@ -6,9 +6,14 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class SignUpActivityPresenter<V : ISignUpActivityView, I : ISignUpActivityInteractor> @Inject internal constructor(
-    interactor: I
+    interactor: I,
+    schedulerProvider: SchedulerProvider,
+    disposable: CompositeDisposable
+
 ) : BasePresenter<V, I>(
-    interactor = interactor
+    interactor = interactor,
+    schedulerProvider = schedulerProvider,
+    compositeDisposable = disposable
 ),
     ISignUpActivityPresenter<V, I> {
     override fun onSignUpClicked(

@@ -3,10 +3,12 @@ package com.example.moments.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.forgetPassword.stepOne.ForgetPasswordActivityStepOneView
+import com.example.moments.ui.main.MainActivityView
 import com.example.moments.ui.signUp.SignUpActivityView
 import com.example.moments.util.AppConstants
 import kotlinx.android.synthetic.main.activity_login.*
@@ -23,6 +25,7 @@ class LoginActivityView : BaseActivity(), ILoginActivityView {
         setContentView(R.layout.activity_login)
         presenter.onAttach(this)
         setOnClickListener()
+        presenter.listenToAuthStateChange()
     }
 
     override fun onDestroy() {
@@ -43,8 +46,10 @@ class LoginActivityView : BaseActivity(), ILoginActivityView {
         startActivity(intent)
     }
 
-    override fun openFeedActivity() {
-
+    override fun openMainActivity() {
+        val intent: Intent = Intent(this, MainActivityView::class.java)
+        startActivity(intent)
+        finishAffinity()
     }
 
     override fun openForgotPasswordActivity() {

@@ -1,12 +1,12 @@
 package com.example.moments.ui.start
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.login.LoginActivityView
+import com.example.moments.ui.main.MainActivityView
 import javax.inject.Inject
 
 class StartActivityView : BaseActivity(), IStartActivityView {
@@ -42,7 +42,8 @@ class StartActivityView : BaseActivity(), IStartActivityView {
     }
 
     override fun openMainActivity() {
-        Log.d("Main_Activity", "Open Main Activity!!!!!")
+        val intent: Intent = Intent(this, MainActivityView::class.java)
+        startActivity(intent)
     }
 
     override fun openLoginActivity() {

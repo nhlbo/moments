@@ -6,9 +6,14 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class StartActivityPresenter<V : IStartActivityView, I : IStartActivityInteractor> @Inject internal constructor(
-    interactor: I
+    interactor: I,
+    schedulerProvider: SchedulerProvider,
+    disposable: CompositeDisposable
+
 ) : BasePresenter<V, I>(
-    interactor = interactor
+    interactor = interactor,
+    schedulerProvider = schedulerProvider,
+    compositeDisposable = disposable
 ),
     IStartActivityPresenter<V, I> {
 
@@ -18,7 +23,7 @@ class StartActivityPresenter<V : IStartActivityView, I : IStartActivityInteracto
     }
 
     private fun decideActivityToOpen() = getView()?.let {
-        if (isUserLoggedIn()){
+        if (isUserLoggedIn()) {
             it.openMainActivity()
         } else {
             it.openLoginActivity()

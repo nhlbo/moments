@@ -10,7 +10,7 @@ interface IForgetPasswordActivityStepOneView : IBaseView {
 }
 
 interface IForgetPasswordActivityStepOneInteractor : IBaseInteractor {
-    fun doRequestForgetPassword(email:String)
+    fun doRequestForgetPassword(email: String)
 }
 
 interface IForgetPasswordActivityStepOnePresenter<V : IForgetPasswordActivityStepOneView, I : IForgetPasswordActivityStepOneInteractor> :

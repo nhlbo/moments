@@ -6,9 +6,13 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class ForgetPasswordActivityStepOnePresenter<V : IForgetPasswordActivityStepOneView, I : IForgetPasswordActivityStepOneInteractor> @Inject internal constructor(
-    interactor: I
+    interactor: I,
+    schedulerProvider: SchedulerProvider,
+    disposable: CompositeDisposable
 ) : BasePresenter<V, I>(
-    interactor = interactor
+    interactor = interactor,
+    schedulerProvider = schedulerProvider,
+    compositeDisposable = disposable
 ),
     IForgetPasswordActivityStepOnePresenter<V, I> {
     override fun onForgetPasswordStepOneContinueClicked(email: String) {

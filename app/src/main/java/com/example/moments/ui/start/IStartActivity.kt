@@ -12,7 +12,5 @@ interface IStartActivityView : IBaseView {
 interface IStartActivityInteractor : IBaseInteractor
 
 interface IStartActivityPresenter<V : IStartActivityView, I : IStartActivityInteractor> :
-    IBasePresenter<V, I>{
-
-    }
+    IBasePresenter<V, I>
 

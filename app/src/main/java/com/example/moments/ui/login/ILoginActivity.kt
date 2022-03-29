@@ -4,17 +4,19 @@ import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
 import com.example.moments.ui.base.IBaseView
 import com.example.moments.util.AppConstants
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 interface ILoginActivityView : IBaseView {
     fun openSignUpActivity()
-    fun openFeedActivity()
+    fun openMainActivity()
     fun openForgotPasswordActivity()
     fun showValidationMessage(errorCode: Int)
 }
 
 interface ILoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInteractor> :
     IBasePresenter<V, I> {
+    fun listenToAuthStateChange()
     fun onServerLoginClicked(email: String, password: String)
     fun onGoogleLoginClicked()
     fun onGoToSignUpClicked()
@@ -22,7 +24,8 @@ interface ILoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInte
 }
 
 interface ILoginActivityInteractor : IBaseInteractor {
-    fun doServerLogin(email: String, password: String): Observable<Any>
+    fun observeAuthStateChange(): Observable<Boolean>
+    fun doServerLogin(email: String, password: String): Completable
     fun doGoogleLogin(): Observable<Any>
-    fun updateUserInSharedPref(loginResponse: Any, loggedInMode: AppConstants.LoggedInMode)
+    fun updateUserLoginStatus(loggedInMode: AppConstants.LoggedInMode)
 }

@@ -26,7 +26,7 @@ class MainActivityView : AppCompatActivity(), onChildFragmentClick {
         initViewPager()
         //init four main fragments
 
-       // setCurrentFragment(newsFeedActivity)
+        // setCurrentFragment(newsFeedActivity)
         //setupViewPager()
     }
 
@@ -51,14 +51,14 @@ class MainActivityView : AppCompatActivity(), onChildFragmentClick {
 //        //set adapter to page view
 //    }
 
-    private fun initViewPager(){
+    private fun initViewPager() {
         viewPager = findViewById(R.id.fragmentContainerView)
         val list = listOf(homeFragmentView, chatFragmentView)
-        viewPager.adapter = ViewPagerAdapter(list,supportFragmentManager, lifecycle)
+        viewPager.adapter = ViewPagerAdapter(list, supportFragmentManager, lifecycle)
     }
 
     override fun onChildButtonClicked(view: View?) {
-        when(view?.id){
+        when (view?.id) {
             R.id.msgBtn -> viewPager.currentItem + 1
         }
     }

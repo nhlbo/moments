@@ -1,19 +1,40 @@
 package com.example.moments.ui.login
 
 import com.example.moments.ui.base.BasePresenter
+import com.example.moments.util.AppConstants
 import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class LoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInteractor> @Inject internal constructor(
-    interactor: I
+    interactor: I,
+    schedulerProvider: SchedulerProvider,
+    disposable: CompositeDisposable
 ) : BasePresenter<V, I>(
-    interactor = interactor
+    interactor = interactor,
+    schedulerProvider = schedulerProvider,
+    compositeDisposable = disposable
 ),
     ILoginActivityPresenter<V, I> {
 
     override fun onServerLoginClicked(email: String, password: String) {
-        TODO("Not yet implemented")
+        when {
+            email.isEmpty() -> getView()?.showValidationMessage(AppConstants.EMPTY_EMAIL_ERROR)
+            password.isEmpty() -> getView()?.showValidationMessage(AppConstants.EMPTY_PASSWORD_ERROR)
+            else -> {
+//                getView()?.showProgress()
+                interactor?.let {
+                    compositeDisposable.add(
+                        it.doServerLogin(email, password)
+                            .compose(schedulerProvider.ioToMainCompletableScheduler())
+                            .subscribe({
+                            }, {
+                                getView()?.showCustomToastMessage(it.localizedMessage)
+                            })
+                    )
+                }
+            }
+        }
     }
 
     override fun onGoogleLoginClicked() {
@@ -26,5 +47,23 @@ class LoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInteracto
 
     override fun onGoToForgotPasswordClicked() {
         getView()?.openForgotPasswordActivity()
+    }
+
+    override fun listenToAuthStateChange() {
+        interactor?.let {
+            compositeDisposable.add(
+                it.observeAuthStateChange()
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                    .subscribe({ authState ->
+//                        getView()?.hideProgress()
+                        if (authState === true) {
+                            interactor?.updateUserLoginStatus(AppConstants.LoggedInMode.LOGGED_IN_MODE_EMAIL)
+                            getView()?.openMainActivity()
+                        }
+                    }, {
+                        err -> println(err)
+                    })
+            )
+        }
     }
 }

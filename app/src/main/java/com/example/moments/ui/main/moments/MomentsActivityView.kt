@@ -1,7 +1,7 @@
 package com.example.moments.ui.main.moments
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.moments.R
 
 class MomentsActivityView : AppCompatActivity() {

@@ -1,8 +1,8 @@
 package com.example.moments.ui.signUp
 
-import com.example.moments.R
 import android.os.Bundle
 import android.widget.Toast
+import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.util.AppConstants
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -33,7 +33,7 @@ class SignUpActivityView : BaseActivity(), ISignUpActivityView {
     }
 
     override fun showValidationMessage(errorCode: Int) {
-        when(errorCode){
+        when (errorCode) {
             AppConstants.EMPTY_EMAIL_ERROR -> Toast.makeText(
                 this,
                 getString(R.string.empty_email_error_message),
@@ -47,11 +47,6 @@ class SignUpActivityView : BaseActivity(), ISignUpActivityView {
             AppConstants.EMPTY_PASSWORD_ERROR -> Toast.makeText(
                 this,
                 getString(R.string.empty_password_error_message),
-                Toast.LENGTH_LONG
-            ).show()
-            AppConstants.EMPTY_USERNAME_ERROR -> Toast.makeText(
-                this,
-                getString(R.string.empty_username_error_message),
                 Toast.LENGTH_LONG
             ).show()
             AppConstants.CONFIRM_PASSWORD_NOT_MATCH_ERROR -> Toast.makeText(

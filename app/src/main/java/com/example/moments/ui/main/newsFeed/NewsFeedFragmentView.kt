@@ -1,7 +1,9 @@
 package com.example.moments.ui.main.newsFeed
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -37,7 +39,7 @@ class NewsFeedFragmentView : Fragment() {
                 }
                 R.id.msgBtn -> {
                     // Save profile changes
-                    parentViewPager.currentItem+=1
+                    parentViewPager.currentItem += 1
                     true
                 }
                 else -> false

@@ -1,7 +1,6 @@
 package com.example.moments.ui.forgetPassword.stepThree
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
@@ -39,7 +38,7 @@ class ForgetPasswordActivityStepThreeView : BaseActivity(), IForgetPasswordActiv
         TODO("Not yet implemented")
     }
 
-    private fun setOnClickListener(){
+    private fun setOnClickListener() {
         btnForgetPasswordStepThreeContinue.setOnClickListener {
             presenter.onForgetPasswordStepThreeContinueClicked(
                 etForgetPasswordStepThreePassword.text.toString(),

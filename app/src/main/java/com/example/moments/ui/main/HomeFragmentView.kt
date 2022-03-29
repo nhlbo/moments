@@ -12,10 +12,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.button.MaterialButtonToggleGroup
 
 
-class HomeFragmentView : Fragment(){
+class HomeFragmentView : Fragment() {
     private lateinit var parentViewPager: ViewPager2
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var controller: NavController
@@ -28,9 +27,10 @@ class HomeFragmentView : Fragment(){
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        try{
+        try {
             mOnButtonClickListener = context as OnButtonClickListener
-        }catch(e: ClassCastException){ }
+        } catch (e: ClassCastException) {
+        }
     }
 
     override fun onCreateView(
@@ -39,7 +39,8 @@ class HomeFragmentView : Fragment(){
         savedInstanceState: Bundle?
     ): View {
         val result: View = inflater.inflate(R.layout.activity_home, container, false)
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.navigateFragmentsContainer) as NavHostFragment
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.navigateFragmentsContainer) as NavHostFragment
         controller = navHostFragment.navController
         parentViewPager = activity?.findViewById(R.id.fragmentContainerView)!!
 
@@ -53,15 +54,15 @@ class HomeFragmentView : Fragment(){
         return result
     }
 
-    private fun initNavigationBar(){
-        bottomNavigationView.setOnItemSelectedListener{
+    private fun initNavigationBar() {
+        bottomNavigationView.setOnItemSelectedListener {
             run {
                 when (it.itemId) {
                     R.id.newsfeedFragmentView -> {
                         parentViewPager.isUserInputEnabled = true
                         true
                     }
-                    else ->{
+                    else -> {
                         parentViewPager.isUserInputEnabled = false
                         false
                     }
