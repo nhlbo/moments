@@ -1,9 +1,11 @@
 package com.example.moments.ui.signUp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.main.MainActivityView
 import com.example.moments.util.AppConstants
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import javax.inject.Inject
@@ -29,7 +31,9 @@ class SignUpActivityView : BaseActivity(), ISignUpActivityView {
     }
 
     override fun openLoginActivity() {
-        finish()
+        val intent: Intent = Intent(this, MainActivityView::class.java)
+        startActivity(intent)
+        finishAffinity()
     }
 
     override fun showValidationMessage(errorCode: Int) {

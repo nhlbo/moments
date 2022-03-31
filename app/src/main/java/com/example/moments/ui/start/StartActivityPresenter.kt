@@ -30,8 +30,5 @@ class StartActivityPresenter<V : IStartActivityView, I : IStartActivityInteracto
         }
     }
 
-    private fun isUserLoggedIn(): Boolean {
-        interactor?.let { return it.isUserLoggedIn() }
-        return false
-    }
+    private fun isUserLoggedIn(): Boolean = interactor!!.isUserLoggedIn()
 }

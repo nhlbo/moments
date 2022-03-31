@@ -28,6 +28,7 @@ class LoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInteracto
                         it.doServerLogin(email, password)
                             .compose(schedulerProvider.ioToMainCompletableScheduler())
                             .subscribe({
+                                getView()?.openMainActivity()
                             }, {
                                 getView()?.showCustomToastMessage(it.localizedMessage)
                             })
@@ -47,23 +48,5 @@ class LoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInteracto
 
     override fun onGoToForgotPasswordClicked() {
         getView()?.openForgotPasswordActivity()
-    }
-
-    override fun listenToAuthStateChange() {
-        interactor?.let {
-            compositeDisposable.add(
-                it.observeAuthStateChange()
-                    .compose(schedulerProvider.ioToMainObservableScheduler())
-                    .subscribe({ authState ->
-//                        getView()?.hideProgress()
-                        if (authState === true) {
-                            interactor?.updateUserLoginStatus(AppConstants.LoggedInMode.LOGGED_IN_MODE_EMAIL)
-                            getView()?.openMainActivity()
-                        }
-                    }, {
-                        err -> println(err)
-                    })
-            )
-        }
     }
 }

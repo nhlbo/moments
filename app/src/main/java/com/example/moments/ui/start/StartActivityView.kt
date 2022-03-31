@@ -2,7 +2,6 @@ package com.example.moments.ui.start
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.login.LoginActivityView

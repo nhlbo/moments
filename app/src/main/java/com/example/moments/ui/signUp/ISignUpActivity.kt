@@ -3,7 +3,7 @@ package com.example.moments.ui.signUp
 import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
 import com.example.moments.ui.base.IBaseView
-import io.reactivex.Observable
+import io.reactivex.Completable
 
 interface ISignUpActivityView : IBaseView {
     fun openLoginActivity()
@@ -11,7 +11,7 @@ interface ISignUpActivityView : IBaseView {
 }
 
 interface ISignUpActivityInteractor : IBaseInteractor {
-    fun doSignUp(email: String, username: String, password: String): Observable<Any>
+    fun doSignUp(email: String, username: String, password: String): Completable
 }
 
 interface ISignUpActivityPresenter<V : ISignUpActivityView, I : ISignUpActivityInteractor> :
