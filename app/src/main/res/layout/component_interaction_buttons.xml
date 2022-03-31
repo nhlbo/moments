@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <ToggleButton
-        android:id="@+id/radioButton"
+        android:id="@+id/btnLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autoSizeMinTextSize="0dp"
@@ -24,30 +24,30 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <ImageButton
-        android:id="@+id/imageButton12"
+        android:id="@+id/btnComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radioButton"
+        app:layout_constraintStart_toEndOf="@+id/btnLike"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_message_square"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageButton
-        android:id="@+id/imageButton14"
+        android:id="@+id/btnShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton12"
+        app:layout_constraintStart_toEndOf="@+id/btnComment"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_share"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ToggleButton
-        android:id="@+id/radioButton2"
+        android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"

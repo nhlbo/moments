@@ -7,7 +7,7 @@
     android:padding="4dp">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/view"
+        android:id="@+id/ivAvatarFollowNotification"
         android:layout_width="wrap_content"
         android:layout_height="@android:dimen/app_icon_size"
         app:civ_border="true"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/default_avatar" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/tvContentFollow"
         style="@style/Theme.Moments.TextView.HelperText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:textColor="@color/primary_text_color"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/ivAvatarFollowNotification"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.484" />
 
@@ -41,12 +41,12 @@
         android:text="2w"
         android:textColor="@color/secondary_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView17"
+        app:layout_constraintStart_toEndOf="@+id/tvContentFollow"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.487" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/btnAcceptFollow"
         style="@style/Theme.Moments.ThinButton"
         android:layout_width="wrap_content"
         android:text="Accept"

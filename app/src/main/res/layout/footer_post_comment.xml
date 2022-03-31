@@ -7,20 +7,20 @@
     android:padding="5dp">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circularImageView"
+        android:id="@+id/ivAvatarPostComment"
         android:layout_width="35dp"
         android:layout_height="35dp"
         app:civ_border="true"
         app:civ_border_color_end="@color/gradient_start"
         app:civ_border_color_start="@color/gradient_end"
         app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName4"
+        app:layout_constraintBottom_toBottomOf="@+id/etCommentBox"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName4"
+        app:layout_constraintTop_toTopOf="@+id/etCommentBox"
         app:srcCompat="@drawable/default_avatar" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/etCommentBox"
         style="@style/Theme.Moments.ChatBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -31,14 +31,14 @@
         android:padding="8dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button8"
+        app:layout_constraintEnd_toStartOf="@+id/btnPostComment"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/circularImageView"
+        app:layout_constraintStart_toEndOf="@+id/ivAvatarPostComment"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/btnPostComment"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@android:color/transparent"
