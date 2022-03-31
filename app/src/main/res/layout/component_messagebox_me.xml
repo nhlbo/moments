@@ -24,7 +24,7 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/text_gchat_message_me"
+                android:id="@+id/tvMessageBoxFromMe"
                 style="@style/Theme.Moments.TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

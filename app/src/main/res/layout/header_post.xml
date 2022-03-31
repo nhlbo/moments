@@ -7,7 +7,7 @@
     android:padding="6dp">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circularImageView2"
+        android:id="@+id/ivAvatarHeaderPost"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:civ_border_color="@color/dark_gray"
@@ -24,8 +24,8 @@
         android:layout_marginStart="8dp"
         android:text="lostin.paris"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/circularImageView2"
-        app:layout_constraintTop_toTopOf="@+id/circularImageView2" />
+        app:layout_constraintStart_toEndOf="@+id/ivAvatarHeaderPost"
+        app:layout_constraintTop_toTopOf="@+id/ivAvatarHeaderPost" />
 
     <TextView
         android:id="@+id/textView27"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HCMC, Vietnam"
-        app:layout_constraintBottom_toBottomOf="@+id/circularImageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/ivAvatarHeaderPost"
         app:layout_constraintStart_toStartOf="@+id/textView18" />
 
     <ImageButton
@@ -44,5 +44,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_more_vertical"
-        tools:ignore="TouchTargetSizeCheck" />
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

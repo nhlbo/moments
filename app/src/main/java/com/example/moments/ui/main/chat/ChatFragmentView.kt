@@ -16,7 +16,7 @@ class ChatFragmentView : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.activity_chat, container, false)
-        toolbar = view.findViewById(R.id.chat_activity_toolbar)
+        toolbar = view.findViewById(R.id.tbChatActivity)
         return view
     }
 

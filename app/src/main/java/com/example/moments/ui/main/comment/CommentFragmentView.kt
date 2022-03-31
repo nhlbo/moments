@@ -21,7 +21,7 @@ class CommentFragmentView : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolBar = getView()?.findViewById(R.id.comment_header_toolBar)
+        toolBar = getView()?.findViewById(R.id.tbCommentHeader)
         toolBar?.title = "Comments"
         toolBar?.setNavigationOnClickListener {
             //TODO return newsfeed

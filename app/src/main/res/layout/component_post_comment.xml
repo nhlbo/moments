@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circular_avatar_comment"
+        android:id="@+id/ivAvatartPostComment"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
@@ -23,27 +23,27 @@
         app:srcCompat="@drawable/default_avatar" />
 
     <ImageButton
-        android:id="@+id/imageButton9"
+        android:id="@+id/imageLikePostComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/textView23"
+        app:layout_constraintStart_toStartOf="@+id/tvDescriptionPostComment"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionPostComment"
         app:srcCompat="@drawable/ic_heart_outline_react"
         tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/tvDescriptionPostComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Description"
         android:textStyle="normal"
-        app:layout_constraintStart_toEndOf="@+id/circular_avatar_comment"
-        app:layout_constraintTop_toTopOf="@+id/circular_avatar_comment" />
+        app:layout_constraintStart_toEndOf="@+id/ivAvatartPostComment"
+        app:layout_constraintTop_toTopOf="@+id/ivAvatartPostComment" />
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/tvReplyComment"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,13 +52,13 @@
         android:text="Reply"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView25"
-        app:layout_constraintStart_toEndOf="@+id/textView25"
-        app:layout_constraintTop_toTopOf="@+id/textView25"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCommentLikeNumber"
+        app:layout_constraintStart_toEndOf="@+id/tvCommentLikeNumber"
+        app:layout_constraintTop_toTopOf="@+id/tvCommentLikeNumber"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/tvCommentLikeNumber"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,12 +66,12 @@
         android:text="1 like"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton9"
-        app:layout_constraintStart_toEndOf="@+id/imageButton9"
-        app:layout_constraintTop_toTopOf="@+id/imageButton9" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageLikePostComment"
+        app:layout_constraintStart_toEndOf="@+id/imageLikePostComment"
+        app:layout_constraintTop_toTopOf="@+id/imageLikePostComment" />
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/ivTimePostComment"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,8 +79,8 @@
         android:text="1h ago"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView26"
-        app:layout_constraintStart_toEndOf="@+id/textView26"
-        app:layout_constraintTop_toTopOf="@+id/textView26" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvReplyComment"
+        app:layout_constraintStart_toEndOf="@+id/tvReplyComment"
+        app:layout_constraintTop_toTopOf="@+id/tvReplyComment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circularImg03"
+        android:id="@+id/ivAvatarMessageBoxFromOthers"
         android:layout_width="40dp"
         android:layout_height="50dp"
         android:layout_gravity="start"
@@ -28,7 +28,7 @@
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
-        app:layout_constraintStart_toEndOf="@+id/circularImg03"
+        app:layout_constraintStart_toEndOf="@+id/ivAvatarMessageBoxFromOthers"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -40,7 +40,7 @@
             android:visibility="visible">
 
             <TextView
-                android:id="@+id/text_gchat_message_me"
+                android:id="@+id/tvMessageBoxFromOthers"
                 style="@style/Theme.Moments.TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
