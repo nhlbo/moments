@@ -24,8 +24,8 @@ class LoginActivityView : BaseActivity(), ILoginActivityView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         presenter.onAttach(this)
-        setOnClickListener()
         presenter.listenToAuthStateChange()
+        setOnClickListener()
     }
 
     override fun onDestroy() {

@@ -18,7 +18,6 @@ class BaseApplication : Application(), HasAndroidInjector {
 
 
     override fun onCreate() {
-        Log.d("1", "2")
         super.onCreate()
         DaggerAppComponent.builder()
             .application(this)
