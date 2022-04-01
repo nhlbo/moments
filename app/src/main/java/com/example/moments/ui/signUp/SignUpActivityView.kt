@@ -22,6 +22,11 @@ class SignUpActivityView : BaseActivity(), ISignUpActivityView {
         setOnClickListener()
     }
 
+    override fun onDestroy() {
+        presenter.onDetach()
+        super.onDestroy()
+    }
+
     override fun onFragmentAttached() {
         TODO("Not yet implemented")
     }

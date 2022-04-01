@@ -1,6 +1,8 @@
 package com.example.moments.data.firebase
 
+import com.example.moments.data.model.User
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.QuerySnapshot
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -24,7 +26,5 @@ interface IFirebaseHelper {
 
     fun performPasswordResetRequest(email: String): Completable
 
-    fun performVerifyResetPasswordConfirmationCode(code: String): Single<String>
-
-    fun performConfirmResetPassword(code: String, newPassword: String): Completable
+    fun performQueryUserByUsername(username: String): Single<QuerySnapshot>
 }

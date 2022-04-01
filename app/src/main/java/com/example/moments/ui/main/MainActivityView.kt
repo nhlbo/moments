@@ -30,6 +30,7 @@ class MainActivityView : AppCompatActivity(), onChildFragmentClick {
         //setupViewPager()
     }
 
+
     override fun onBackPressed() {
         if (viewPager.currentItem == 0) {
             super.onBackPressed()

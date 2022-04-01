@@ -18,6 +18,11 @@ class ForgetPasswordActivityView : BaseActivity(), IForgetPasswordActivityView {
         setOnClickListener()
     }
 
+    override fun onDestroy() {
+        presenter.onDetach()
+        super.onDestroy()
+    }
+
     override fun onFragmentAttached() {
         TODO("Not yet implemented")
     }

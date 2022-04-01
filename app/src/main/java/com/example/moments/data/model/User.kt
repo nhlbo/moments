@@ -1,7 +1,9 @@
 package com.example.moments.data.model
 
 data class User(
-    val username: String,
-    val email: String,
-    val avatar: String = ""
+    var username: String = "",
+    var email: String = "",
+    var avatar: String = "",
+    var followingCount: Int = 0,
+    var followerCount: Int = 0
 )

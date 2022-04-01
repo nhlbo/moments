@@ -1,5 +1,7 @@
 package com.example.moments.ui.start
 
+import android.util.Log
+import com.example.moments.data.model.User
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
