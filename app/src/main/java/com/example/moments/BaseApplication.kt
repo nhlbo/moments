@@ -1,7 +1,6 @@
 package com.example.moments
 
 import android.app.Application
-import android.util.Log
 import com.example.moments.di.component.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -18,7 +17,6 @@ class BaseApplication : Application(), HasAndroidInjector {
 
 
     override fun onCreate() {
-        Log.d("1", "2")
         super.onCreate()
         DaggerAppComponent.builder()
             .application(this)
