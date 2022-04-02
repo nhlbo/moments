@@ -7,12 +7,14 @@ import com.example.moments.data.firebase.IFirebaseHelper
 import com.example.moments.data.preference.IPreferenceHelper
 import com.example.moments.data.preference.PreferenceHelper
 import com.example.moments.di.FirebaseAuthInstance
+import com.example.moments.di.FirebaseCloudStorageInstance
 import com.example.moments.di.FirebaseFirestoreInstance
 import com.example.moments.di.PreferenceInfo
 import com.example.moments.util.AppConstants
 import com.example.moments.util.SchedulerProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -46,6 +48,11 @@ class AppModule {
     @FirebaseFirestoreInstance
     internal fun provideFirebaseFirestoreInstance(): FirebaseFirestore =
         FirebaseFirestore.getInstance()
+
+    @Provides
+    @FirebaseCloudStorageInstance
+    internal fun provideFirebaseCloudStorageInstance(): FirebaseStorage =
+        FirebaseStorage.getInstance()
 
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
