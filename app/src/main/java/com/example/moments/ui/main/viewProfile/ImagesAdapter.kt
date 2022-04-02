@@ -12,6 +12,7 @@ import com.example.moments.R
 class ImagesAdapter (var context: Context, private val imagesList : List<String>) :
     RecyclerView.Adapter<ImagesAdapter.ViewHolder>() {
     var onItemClick: ((String) -> Unit)? = null
+
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val img: ImageView =listItemView.findViewById(R.id.ivImageProfile)
         init {
@@ -27,7 +28,7 @@ class ImagesAdapter (var context: Context, private val imagesList : List<String>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val img : String = imagesList.get(position)
+        val img : String = imagesList[position]
         Glide.with(context).load(img).into(holder.img)
     }
 
