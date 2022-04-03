@@ -30,6 +30,6 @@
         android:label="ProfileFragmentView" />
     <fragment
         android:id="@+id/chatFragmentView"
-        android:name="com.example.moments.ui.main.chat.ChatFragmentView"
+        android:name="com.example.moments.ui.main.chat.MessageFragmentView"
         android:label="ChatFragmentView" />
 </navigation>

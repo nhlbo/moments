@@ -8,20 +8,20 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.example.moments.ui.customClasses.ViewPagerAdapter
 import com.example.moments.ui.customClasses.onChildFragmentClick
-import com.example.moments.ui.main.chat.ChatFragmentView
+import com.example.moments.ui.main.message.MessageFragmentView
 
 class MainActivityView : AppCompatActivity(), onChildFragmentClick {
     // navigation bar and page viewer
     private lateinit var viewPager: ViewPager2
     private lateinit var homeFragmentView: HomeFragmentView
-    private lateinit var chatFragmentView: ChatFragmentView
+    private lateinit var messageFragmentView: MessageFragmentView
     private lateinit var bottomNavigationController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         homeFragmentView = HomeFragmentView()
-        chatFragmentView = ChatFragmentView()
+        messageFragmentView = MessageFragmentView()
         //View pager for displaying fragments
         initViewPager()
         //init four main fragments
@@ -30,12 +30,15 @@ class MainActivityView : AppCompatActivity(), onChildFragmentClick {
         //setupViewPager()
     }
 
+    fun selectIndex(newIndex: Int) {
+        viewPager.currentItem = newIndex
+    }
 
     override fun onBackPressed() {
         if (viewPager.currentItem == 0) {
             super.onBackPressed()
         } else {
-            viewPager.currentItem = viewPager.currentItem - 1
+            selectIndex(viewPager.currentItem - 1)
         }
     }
 
@@ -54,7 +57,7 @@ class MainActivityView : AppCompatActivity(), onChildFragmentClick {
 
     private fun initViewPager() {
         viewPager = findViewById(R.id.fragmentContainerView)
-        val list = listOf(homeFragmentView, chatFragmentView)
+        val list = listOf(homeFragmentView, messageFragmentView)
         viewPager.adapter = ViewPagerAdapter(list, supportFragmentManager, lifecycle)
     }
 
