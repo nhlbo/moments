@@ -8,7 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.moments.R
 
-class ChatFragmentView : Fragment() {
+class MessageFragmentView : Fragment() {
     private lateinit var toolbar: Toolbar
     override fun onCreateView(
         inflater: LayoutInflater,
