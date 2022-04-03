@@ -1,6 +1,7 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
+import android.util.Log
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.di.FirebaseAuthInstance
@@ -8,10 +9,7 @@ import com.example.moments.di.FirebaseCloudStorageInstance
 import com.example.moments.di.FirebaseFirestoreInstance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storageMetadata
 import io.reactivex.Completable
@@ -54,13 +52,14 @@ class FirebaseHelper @Inject constructor(
     ): Completable =
         Completable.create { emitter ->
             firebaseFirestore.collection("user").whereEqualTo("username", username)
-                .get().addOnCompleteListener { task ->
+                .get()
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        if (task.result == null) {
+                        if (task.result.isEmpty) { // un-used username
                             firebaseAuth.createUserWithEmailAndPassword(email, password)
                                 .addOnSuccessListener { authTask ->
                                     firebaseFirestore.collection("user")
-                                        .document(getCurrentUser()!!.uid)
+                                        .document(getCurrentUserId())
                                         .set(User(username, email))
                                         .addOnSuccessListener {
                                             emitter.onComplete()
@@ -109,10 +108,25 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performRequestFollowUser(userId: String): Completable =
+    override fun performFollowUser(userId: String): Completable =
         Completable.create { emitter ->
-            firebaseFirestore.document("/requestFollow/$userId/user/${getCurrentUser()!!.uid}")
-                .set(1)
+            firebaseFirestore.document("/user/$userId").get()
+                .addOnSuccessListener { snapshot ->
+                    firebaseFirestore.document("/user/${getCurrentUserId()}/following/$userId")
+                        .set(hashMapOf("accepted" to !(snapshot?.data!!["private"] as Boolean)))
+                        .addOnSuccessListener {
+                            emitter.onComplete()
+                        }
+                        .addOnFailureListener {
+                            emitter.onError(it)
+                        }
+                }
+        }
+
+    override fun performAcceptFollower(userId: String): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.document("/user/$userId/following/${getCurrentUserId()}")
+                .update("accepted", true)
                 .addOnSuccessListener {
                     emitter.onComplete()
                 }
@@ -121,20 +135,34 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performAcceptFollower(requestId: String): Completable {
-        TODO("Not yet implemented")
-    }
+    override fun performQueryFeedPost(): Single<QuerySnapshot> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("user/${getCurrentUserId()}/following")
+                .whereEqualTo("accepted", true)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    val listUserFollowing: List<DocumentReference> =
+                        querySnapshot.map { firebaseFirestore.document("/user/${it.id}") }
+                    firebaseFirestore.collection("post")
+                        .whereIn("creatorId", listUserFollowing)
+                        .get()
+                        .addOnSuccessListener {
+                            for(document in it.documents){
+                                Log.d("feed", document.data.toString())
+                            }
+                            emitter.onSuccess(it)
+                        }
+                }
+        }
 
-    override fun performQueryFeedPost(): Single<QuerySnapshot> {
-        TODO("Not yet implemented")
-    }
+    override fun getCurrentUserId(): String = getCurrentUser()!!.uid
 
-    override fun performLikePost(creatorId: String, postId: String): Completable =
+    override fun performLikePost(postId: String): Completable =
         Completable.create { emitter ->
-            firebaseFirestore.document("/post/$creatorId/userPost/$postId/like/${getCurrentUser()!!.uid}")
-                .set(1)
+            firebaseFirestore.document("/post/$postId/like/${getCurrentUserId()}")
+                .set(hashMapOf("type" to "like"))// can be change to another various reactions type
                 .addOnSuccessListener {
-                    firebaseFirestore.document("/post/$creatorId/userPost/$postId")
+                    firebaseFirestore.document("/post/$postId")
                         .update("likeCount", FieldValue.increment(1))
                         .addOnSuccessListener {
                             emitter.onComplete()
@@ -145,12 +173,12 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performUnlikePost(creatorId: String, postId: String): Completable =
+    override fun performUnlikePost(postId: String): Completable =
         Completable.create { emitter ->
-            firebaseFirestore.document("/post/$creatorId/userPost/$postId/like/${getCurrentUser()!!.uid}")
+            firebaseFirestore.document("/post/$postId/like/${getCurrentUserId()}")
                 .delete()
                 .addOnSuccessListener {
-                    firebaseFirestore.document("/post/$creatorId/userPost/$postId")
+                    firebaseFirestore.document("/post/$postId")
                         .update("likeCount", FieldValue.increment(-1))
                         .addOnSuccessListener {
                             emitter.onComplete()
@@ -165,8 +193,8 @@ class FirebaseHelper @Inject constructor(
         Observable.create { emitter ->
             val ref = firebaseStorage.reference
             for (media in listMedia) {
-                ref.child("images/${UUID.randomUUID()}.png")
-                    .putBytes(media, storageMetadata { contentType = "image/png" })
+                ref.child("images/${UUID.randomUUID()}.jpeg")
+                    .putBytes(media, storageMetadata { contentType = "image/jpeg" })
                     .continueWithTask { task ->
                         if (!task.isSuccessful) {
                             task.exception?.let {
@@ -188,12 +216,18 @@ class FirebaseHelper @Inject constructor(
         media: ArrayList<String>
     ): Single<DocumentSnapshot> =
         Single.create { emitter ->
-            firebaseFirestore.collection("post")
-                .document(getCurrentUser()!!.uid)
-                .collection("userPost")
-                .add(Post(caption, media))
-                .addOnSuccessListener {
-                    emitter.onSuccess(it.get().result)
+            firebaseFirestore.collection("/post")
+                .add(
+                    Post(
+                        firebaseFirestore.document("/user/${getCurrentUserId()}"),
+                        caption,
+                        media
+                    )
+                )
+                .addOnSuccessListener { docRef ->
+                    docRef.get().addOnSuccessListener { docSnapshot ->
+                        emitter.onSuccess(docSnapshot)
+                    }
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
@@ -202,10 +236,7 @@ class FirebaseHelper @Inject constructor(
 
     override fun performDeletePost(postId: String): Completable =
         Completable.create { emitter ->
-            firebaseFirestore.collection("post")
-                .document(getCurrentUser()!!.uid)
-                .collection("userPost")
-                .document(postId)
+            firebaseFirestore.document("/user/${getCurrentUserId()}/post/$postId")
                 .delete()
                 .addOnSuccessListener {
                     emitter.onComplete()

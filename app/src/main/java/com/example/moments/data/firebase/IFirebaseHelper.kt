@@ -22,6 +22,8 @@ interface IFirebaseHelper {
 
     fun getCurrentUser(): FirebaseUser?
 
+    fun getCurrentUserId(): String
+
     fun isUserLoggedIn(): Boolean
 
     fun performLogout()
@@ -30,15 +32,15 @@ interface IFirebaseHelper {
 
     fun performQueryUserByUsername(username: String): Single<QuerySnapshot>
 
-    fun performRequestFollowUser(userId: String): Completable
+    fun performFollowUser(userId: String): Completable
 
-    fun performAcceptFollower(requestId: String): Completable
+    fun performAcceptFollower(userId: String): Completable
 
     fun performQueryFeedPost(): Single<QuerySnapshot>
 
-    fun performLikePost(creatorId: String, postId: String): Completable
+    fun performLikePost(postId: String): Completable
 
-    fun performUnlikePost(creatorId: String, postId: String): Completable
+    fun performUnlikePost(postId: String): Completable
 
     fun performDeletePost(postId: String): Completable
 
