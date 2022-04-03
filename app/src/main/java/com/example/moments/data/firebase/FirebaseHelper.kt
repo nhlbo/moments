@@ -56,7 +56,7 @@ class FirebaseHelper @Inject constructor(
             firebaseFirestore.collection("user").whereEqualTo("username", username)
                 .get().addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        if (task.result == null) {
+                        if (task.result.isEmpty) {
                             firebaseAuth.createUserWithEmailAndPassword(email, password)
                                 .addOnSuccessListener { authTask ->
                                     firebaseFirestore.collection("user")
