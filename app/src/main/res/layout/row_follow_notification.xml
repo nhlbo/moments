@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.484" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/tvTimeFollowNotification"
         style="@style/Theme.Moments.TextView.HelperText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

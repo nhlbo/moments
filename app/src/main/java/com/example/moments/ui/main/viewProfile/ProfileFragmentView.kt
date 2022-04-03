@@ -31,6 +31,7 @@ class ProfileFragmentView : Fragment(R.layout.activity_view_profile) {
         toolBar?.title = "Your profile"
         onItemSelected()
     }
+
     private fun initRecyclerView(view: View?) {
         val imageList = arrayListOf<String>()
         imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic1.png?alt=media&token=4fdd9b9a-5109-4f88-8ac7-82f47a1c0f68")
@@ -38,11 +39,12 @@ class ProfileFragmentView : Fragment(R.layout.activity_view_profile) {
         imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic3.png?alt=media&token=272b593d-eb42-4251-b88f-10c4aae740b3")
         imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
 
-        val recyclerView= view?.findViewById<RecyclerView>(R.id.rcMediaGrid)
-        recyclerView?.layoutManager= GridLayoutManager(activity,3)
-        var adapter = context?.let { ImagesAdapter(it,imageList) }
-        recyclerView?.adapter=adapter
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.rcMediaGrid)
+        recyclerView?.layoutManager = GridLayoutManager(activity, 3)
+        var adapter = context?.let { ImagesAdapter(it, imageList) }
+        recyclerView?.adapter = adapter
     }
+
     private fun onItemSelected() {
         toolBar?.setOnMenuItemClickListener {
             when (it.itemId) {
