@@ -7,6 +7,7 @@ import com.example.moments.data.model.User
 import com.example.moments.di.FirebaseAuthInstance
 import com.example.moments.di.FirebaseCloudStorageInstance
 import com.example.moments.di.FirebaseFirestoreInstance
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
@@ -147,7 +148,7 @@ class FirebaseHelper @Inject constructor(
                         .whereIn("creatorId", listUserFollowing)
                         .get()
                         .addOnSuccessListener {
-                            for(document in it.documents){
+                            for (document in it.documents) {
                                 Log.d("feed", document.data.toString())
                             }
                             emitter.onSuccess(it)
@@ -183,6 +184,71 @@ class FirebaseHelper @Inject constructor(
                         .addOnSuccessListener {
                             emitter.onComplete()
                         }
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryLikedPostUser(postId: String): Single<List<DocumentSnapshot>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("/post/$postId/like").get()
+                .addOnSuccessListener { likedPosts ->
+                    val res: MutableList<DocumentSnapshot> = mutableListOf()
+                    for (post in likedPosts.documents) {
+                        firebaseFirestore.document("/user/${post.id}").get()
+                            .addOnSuccessListener {
+                                res.add(it)
+                            }
+                    }
+                    emitter.onSuccess(res.toList())
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performBookmarkPost(postId: String): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.document("/user/${getCurrentUserId()}/bookmark/$postId")
+                .set(hashMapOf("createdAt" to Timestamp.now()))
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performUnBookmarkPost(postId: String): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.document("/user/${getCurrentUserId()}/bookmark/$postId")
+                .delete()
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryBookmarkPost(): Single<List<DocumentSnapshot>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("/user/${getCurrentUserId()}/bookmark")
+                .orderBy("createdAt", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener { bookmarkedPosts ->
+                    val res: MutableList<DocumentSnapshot> = mutableListOf()
+                    for (post in bookmarkedPosts.documents) {
+                        firebaseFirestore.document("/post/${post.id}")
+                            .get()
+                            .addOnSuccessListener {
+                                if (it.exists()) {
+                                    res.add(it)
+                                }
+                            }
+                    }
+                    emitter.onSuccess(res.toList())
                 }
                 .addOnFailureListener {
                     emitter.onError(it)

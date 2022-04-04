@@ -42,9 +42,17 @@ interface IFirebaseHelper {
 
     fun performUnlikePost(postId: String): Completable
 
+    fun performQueryLikedPostUser(postId: String): Single<List<DocumentSnapshot>>
+
     fun performDeletePost(postId: String): Completable
 
     fun performUploadMedia(listMedia: ArrayList<ByteArray>): Observable<Uri>
 
     fun performAddPost(caption: String, media: ArrayList<String>): Single<DocumentSnapshot>
+
+    fun performBookmarkPost(postId: String): Completable
+
+    fun performUnBookmarkPost(postId: String): Completable
+
+    fun performQueryBookmarkPost(): Single<List<DocumentSnapshot>>
 }
