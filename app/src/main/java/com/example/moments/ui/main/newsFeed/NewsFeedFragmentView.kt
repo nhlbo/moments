@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
+import com.example.moments.ui.main.comment.CommentFragmentView
 
 class NewsFeedFragmentView : Fragment() {
     private var toolBar: Toolbar? = null
@@ -35,6 +36,7 @@ class NewsFeedFragmentView : Fragment() {
             when (it.itemId) {
                 R.id.storyBtn -> {
                     // Navigate to settings screen
+                    switchFragment(CommentFragmentView())
                     true
                 }
                 R.id.msgBtn -> {
@@ -45,6 +47,13 @@ class NewsFeedFragmentView : Fragment() {
                 else -> false
             }
         }
+    }
+
+    private fun switchFragment(fragment: Fragment){
+        activity?.supportFragmentManager?.beginTransaction()!!
+            .replace(R.id.navigateFragmentsContainer, fragment,fragment.toString())
+            .addToBackStack(fragment.toString())
+            .commit()
     }
 
     override fun toString(): String = "newsfeedFragment"
