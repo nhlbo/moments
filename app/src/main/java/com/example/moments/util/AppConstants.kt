@@ -17,4 +17,6 @@ object AppConstants {
         LOGGED_IN_MODE_EMAIL(1),
         LOGGED_IN_MODE_GOOGLE(2)
     }
+
+    internal val validChar = listOf('_','.')
 }

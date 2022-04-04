@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSecondary"
     tools:context=".ui.main.chat.ChatActivityView">
 
     <androidx.appcompat.widget.Toolbar
@@ -17,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/header_chat"
-        app:navigationIcon="@drawable/ic_arrow_left" >
+        app:navigationIcon="@drawable/ic_arrow_left">
 
         <include
             android:id="@+id/btnViewInfoOthers"

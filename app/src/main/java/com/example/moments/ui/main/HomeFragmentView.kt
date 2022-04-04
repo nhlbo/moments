@@ -1,6 +1,7 @@
 package com.example.moments.ui.main
 
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,13 +43,18 @@ class HomeFragmentView : Fragment() {
         val navHostFragment =
             childFragmentManager.findFragmentById(R.id.navigateFragmentsContainer) as NavHostFragment
         controller = navHostFragment.navController
-        parentViewPager = activity?.findViewById(R.id.fragmentContainerView)!!
+        parentViewPager = activity?.findViewById(R.id.fragmentViewPager)!!
 
 
         bottomNavigationView = result.findViewById(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(controller)
         controller.addOnDestinationChangedListener { _, destination, _ ->
             parentViewPager.isUserInputEnabled = destination.id == R.id.newsfeedFragmentView
+            if(destination.id == R.id.commentFragmentView
+                ||destination.id == R.id.chatFragmentView) {
+                bottomNavigationView.visibility = View.GONE
+            }
+            else bottomNavigationView.visibility = View.VISIBLE
         }
         //initNavigationBar()
         return result

@@ -47,6 +47,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/primary_text_color</item>
         <item name="android:textColorHint">@color/secondary_text_color</item>
+        <item name="android:textCursorDrawable">@null</item>
         <item name="android:padding">15dp</item>
         <item name="strokeWidth">5dp</item>
         <item name="android:left">30dp</item>
@@ -80,6 +81,11 @@
         <item name="iconTint">@color/white</item>
         <item name="iconSize">25dp</item>
         <item name="iconPadding">-25dp</item>
+    </style>
+
+    <style name="Theme.Moments.ButtonMoments" parent="Theme.Moments.Button">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="background">@drawable/btn_thin_background</item>
     </style>
 
     <style name="Theme.Moments.ThinButton" parent="Theme.Moments.Button">

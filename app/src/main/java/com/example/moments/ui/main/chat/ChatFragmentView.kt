@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.moments.R
 
 class ChatFragmentView : Fragment() {
@@ -24,7 +25,7 @@ class ChatFragmentView : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         toolbar.setNavigationOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            findNavController().popBackStack()
         }
     }
 }

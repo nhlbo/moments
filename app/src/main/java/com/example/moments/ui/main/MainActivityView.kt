@@ -14,14 +14,14 @@ class MainActivityView : AppCompatActivity(), onChildFragmentClick {
     // navigation bar and page viewer
     private lateinit var viewPager: ViewPager2
     private lateinit var homeFragmentView: HomeFragmentView
-    private lateinit var chatFragmentView: ChatFragmentView
+    private lateinit var subActivitiesFragmentView: SubActivitiesFragmentView
     private lateinit var bottomNavigationController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         homeFragmentView = HomeFragmentView()
-        chatFragmentView = ChatFragmentView()
+        subActivitiesFragmentView = SubActivitiesFragmentView()
         //View pager for displaying fragments
         initViewPager()
         //init four main fragments
@@ -53,8 +53,8 @@ class MainActivityView : AppCompatActivity(), onChildFragmentClick {
 //    }
 
     private fun initViewPager() {
-        viewPager = findViewById(R.id.fragmentContainerView)
-        val list = listOf(homeFragmentView, chatFragmentView)
+        viewPager = findViewById(R.id.fragmentViewPager)
+        val list = listOf(homeFragmentView, subActivitiesFragmentView)
         viewPager.adapter = ViewPagerAdapter(list, supportFragmentManager, lifecycle)
     }
 
