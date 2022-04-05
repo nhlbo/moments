@@ -37,6 +37,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
@@ -71,4 +75,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 
+    // recycler view
+    implementation 'com.github.lisawray.groupie:groupie:2.9.0'
+
+    // image cache
+    implementation 'com.squareup.picasso:picasso:2.8'
 }
