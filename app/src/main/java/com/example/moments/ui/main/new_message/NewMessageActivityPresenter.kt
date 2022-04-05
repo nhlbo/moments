@@ -17,7 +17,7 @@ class NewMessageActivityPresenter<V : INewMessageActivityView, I : INewMessageAc
 ),
     INewMessageActivityPresenter<V, I> {
 
-//    override fun onServerNewMessageClicked(email: String, password: String) {
+    //    override fun onServerNewMessageClicked(email: String, password: String) {
 //        when {
 //            email.isEmpty() -> getView()?.showValidationMessage(AppConstants.EMPTY_EMAIL_ERROR)
 //            password.isEmpty() -> getView()?.showValidationMessage(AppConstants.EMPTY_PASSWORD_ERROR)
@@ -36,4 +36,17 @@ class NewMessageActivityPresenter<V : INewMessageActivityView, I : INewMessageAc
 //            }
 //        }
 //    }
+    override fun onQueryFollowingUser() {
+        interactor?.let {
+            compositeDisposable.add(
+                it.doQueryFollowingUser()
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.addUsers(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
 }
