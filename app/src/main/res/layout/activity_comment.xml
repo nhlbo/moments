@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.comment.CommentActivityView">
+    tools:context=".ui.main.comment.CommentActivityView"
+    android:background="?attr/colorSecondary">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbCommentHeader"
@@ -17,25 +18,48 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_left" />
+        app:navigationIcon="@drawable/ic_arrow_left" >
 
-    <include
-        android:id="@+id/include7"
-        layout="@layout/component_post_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbCommentHeader" />
+        <TextView
+            style="@style/Theme.Moments.TextView.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Comments" />
+    </androidx.appcompat.widget.Toolbar>
 
-    <ExpandableListView
-        android:id="@+id/lvExp"
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="false"
         app:layout_constraintBottom_toTopOf="@+id/include8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include7" />
+        app:layout_constraintTop_toBottomOf="@+id/tbCommentHeader">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/include7"
+                layout="@layout/component_post_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.example.moments.ui.customClasses.NonScrollExpandableListView
+                android:id="@+id/elv_comment_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:childDivider="@null"
+                android:childIndicatorLeft="16dp"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:groupIndicator="@null" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <include
         android:id="@+id/include8"

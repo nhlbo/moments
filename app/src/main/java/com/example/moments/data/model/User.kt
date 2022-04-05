@@ -5,5 +5,6 @@ data class User(
     var email: String = "",
     var avatar: String = "",
     var followingCount: Int = 0,
-    var followerCount: Int = 0
+    var followerCount: Int = 0,
+    var private: Boolean = false
 )

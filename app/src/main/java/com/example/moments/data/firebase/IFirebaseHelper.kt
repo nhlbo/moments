@@ -22,27 +22,39 @@ interface IFirebaseHelper {
 
     fun getCurrentUser(): FirebaseUser?
 
+    fun getCurrentUserId(): String
+
     fun isUserLoggedIn(): Boolean
 
     fun performLogout()
 
     fun performPasswordResetRequest(email: String): Completable
 
-    fun performQueryUserByUsername(username: String): Single<QuerySnapshot>
+    fun performQueryUserByUsername(username: String):  Single<List<DocumentSnapshot>>
 
-    fun performRequestFollowUser(userId: String): Completable
+    fun performFollowUser(userId: String): Completable
 
-    fun performAcceptFollower(requestId: String): Completable
+    fun performAcceptFollower(userId: String): Completable
 
     fun performQueryFeedPost(): Single<QuerySnapshot>
 
-    fun performLikePost(creatorId: String, postId: String): Completable
+    fun performLikePost(postId: String): Completable
 
-    fun performUnlikePost(creatorId: String, postId: String): Completable
+    fun performUnlikePost(postId: String): Completable
+
+    fun performQueryLikedPostUser(postId: String): Single<List<DocumentSnapshot>>
 
     fun performDeletePost(postId: String): Completable
 
     fun performUploadMedia(listMedia: ArrayList<ByteArray>): Observable<Uri>
 
     fun performAddPost(caption: String, media: ArrayList<String>): Single<DocumentSnapshot>
+
+    fun performBookmarkPost(postId: String): Completable
+
+    fun performUnBookmarkPost(postId: String): Completable
+
+    fun performQueryBookmarkPost(): Single<List<DocumentSnapshot>>
+
+    fun performQueryFollowingUser():  Single<List<DocumentSnapshot>>
 }

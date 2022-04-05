@@ -6,13 +6,13 @@
     android:layout_height="wrap_content">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/ivAvatartPostComment"
+        android:id="@+id/ivAvatarPostCommentOther"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:adjustViewBounds="false"
 
+        android:adjustViewBounds="false"
         android:cropToPadding="false"
         android:scaleType="centerInside"
         app:civ_border_color_end="@color/gradient_start"
@@ -22,16 +22,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/default_avatar" />
 
-    <ImageButton
-        android:id="@+id/imageLikePostComment"
+    <ToggleButton
+        android:id="@+id/toggleLikePostCommentBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoSizeMinTextSize="0dp"
+        android:background="@android:color/transparent"
+        android:button="@drawable/toggle_comment_react_btn"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:textAppearance="@null"
+        android:textOff="@null"
+        android:textOn="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvDescriptionPostComment"
         app:layout_constraintTop_toBottomOf="@+id/tvDescriptionPostComment"
-        app:srcCompat="@drawable/ic_heart_outline_react"
         tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/tvDescriptionPostComment"
         android:layout_width="wrap_content"
@@ -39,8 +45,8 @@
         android:layout_marginStart="8dp"
         android:text="Description"
         android:textStyle="normal"
-        app:layout_constraintStart_toEndOf="@+id/ivAvatartPostComment"
-        app:layout_constraintTop_toTopOf="@+id/ivAvatartPostComment" />
+        app:layout_constraintStart_toEndOf="@+id/ivAvatarPostCommentOther"
+        app:layout_constraintTop_toTopOf="@+id/ivAvatarPostCommentOther" />
 
     <TextView
         android:id="@+id/tvReplyComment"
@@ -66,12 +72,12 @@
         android:text="1 like"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageLikePostComment"
-        app:layout_constraintStart_toEndOf="@+id/imageLikePostComment"
-        app:layout_constraintTop_toTopOf="@+id/imageLikePostComment" />
+        app:layout_constraintBottom_toBottomOf="@+id/toggleLikePostCommentBtn"
+        app:layout_constraintStart_toEndOf="@+id/toggleLikePostCommentBtn"
+        app:layout_constraintTop_toTopOf="@+id/toggleLikePostCommentBtn" />
 
     <TextView
-        android:id="@+id/ivTimePostComment"
+        android:id="@+id/tvTimePostComment"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

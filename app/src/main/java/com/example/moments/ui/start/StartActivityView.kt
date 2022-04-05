@@ -17,7 +17,6 @@ class StartActivityView : BaseActivity(), IStartActivityView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
         presenter.onAttach(this)
-//        presenter.test()
     }
 
     override fun onDestroy() {
