@@ -15,7 +15,6 @@ import javax.inject.Inject
 
 
 class LoginActivityView : BaseActivity(), ILoginActivityView {
-
     @Inject
     lateinit var presenter: ILoginActivityPresenter<ILoginActivityView, ILoginActivityInteractor>
 

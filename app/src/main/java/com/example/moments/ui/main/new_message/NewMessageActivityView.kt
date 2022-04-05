@@ -1,37 +1,68 @@
 package com.example.moments.ui.main.message
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.example.moments.R
-import com.example.moments.ui.login.ILoginActivityInteractor
-import com.example.moments.ui.login.ILoginActivityPresenter
-import com.example.moments.ui.login.ILoginActivityView
+import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.main.chat.ChatActivityView
+import com.example.moments.ui.main.new_message.INewMessageActivityInteractor
+import com.example.moments.ui.main.new_message.INewMessageActivityPresenter
+import com.example.moments.ui.main.new_message.INewMessageActivityView
+import com.google.firebase.firestore.DocumentSnapshot
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_new_message.*
+import kotlinx.android.synthetic.main.user_row_new_message.view.*
 import javax.inject.Inject
 
 
-class NewMessageActivityView : AppCompatActivity() {
+class NewMessageActivityView : BaseActivity(), INewMessageActivityView {
+    @Inject
+    lateinit var presenter: INewMessageActivityPresenter<INewMessageActivityView, INewMessageActivityInteractor>
+
+    private val adapter = GroupieAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
 
+        presenter.onAttach(this)
+        presenter.onQueryFollowingUser()
+
         setSupportActionBar(tbNewMessageActivity)
         tbNewMessageActivity.setNavigationOnClickListener { finish() }
 
-        val adapter = GroupieAdapter()
-//        adapter.add(UserItemNewMessage())
-//        adapter.add(UserItemNewMessage())
-//        adapter.add(UserItemNewMessage())
+        adapter.setOnItemClickListener { item, view ->
+            val intent = Intent(this, ChatActivityView::class.java)
+            startActivity(intent)
+        }
         rvNewMessage.adapter = adapter
+    }
+
+    override fun onFragmentAttached() {
+    }
+
+    override fun onFragmentDetached(tag: String) {
+    }
+
+    override fun addUsers(users: List<DocumentSnapshot>) {
+        for (user in users) {
+            adapter.add(
+                UserItemNewMessage(
+                    user.id,
+                    user.data?.get("fullname") as String,
+                    user.data?.get("username") as String
+                )
+            )
+        }
     }
 }
 
-class UserItemNewMessage : Item<GroupieViewHolder>() {
+class UserItemNewMessage(val userId: String, val fullname: String, val username: String) :
+    Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        viewHolder.itemView.tvFullNameNewMessage.text = fullname
+        viewHolder.itemView.tvUsernameNewMessage.text = username
     }
 
     override fun getLayout(): Int {
