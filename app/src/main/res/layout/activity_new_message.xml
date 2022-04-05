@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.message.MessageFragmentView">
+    tools:context=".ui.main.message.NewMessageActivityView">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbMessageActivity"
+        android:id="@+id/tbNewMessageActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSecondary"
@@ -16,15 +16,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/header_message"
-        app:navigationIcon="@drawable/ic_arrow_left" />
+        app:navigationIcon="@drawable/ic_arrow_left"
+        app:title="New Message" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMessage"
+        android:id="@+id/rvNewMessage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbMessageActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/tbNewMessageActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
