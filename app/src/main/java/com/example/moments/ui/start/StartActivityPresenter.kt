@@ -1,7 +1,6 @@
 package com.example.moments.ui.start
 
 import android.util.Log
-import com.example.moments.data.model.User
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -21,7 +20,22 @@ class StartActivityPresenter<V : IStartActivityView, I : IStartActivityInteracto
 
     override fun onAttach(view: V?) {
         super.onAttach(view)
+//        test()
         decideActivityToOpen()
+    }
+
+    override fun test() {
+        interactor?.let {
+            compositeDisposable.add(
+                it.test()
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.openMainActivity()
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
     }
 
     private fun decideActivityToOpen() = getView()?.let {
