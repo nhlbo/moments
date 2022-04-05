@@ -30,7 +30,7 @@ interface IFirebaseHelper {
 
     fun performPasswordResetRequest(email: String): Completable
 
-    fun performQueryUserByUsername(username: String): Single<QuerySnapshot>
+    fun performQueryUserByUsername(username: String):  Single<List<DocumentSnapshot>>
 
     fun performFollowUser(userId: String): Completable
 
@@ -55,4 +55,6 @@ interface IFirebaseHelper {
     fun performUnBookmarkPost(postId: String): Completable
 
     fun performQueryBookmarkPost(): Single<List<DocumentSnapshot>>
+
+    fun performQueryFollowingUser():  Single<List<DocumentSnapshot>>
 }

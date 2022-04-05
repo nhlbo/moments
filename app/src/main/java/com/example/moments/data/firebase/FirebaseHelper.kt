@@ -96,13 +96,13 @@ class FirebaseHelper @Inject constructor(
 
     override fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
 
-    override fun performQueryUserByUsername(username: String): Single<QuerySnapshot> =
+    override fun performQueryUserByUsername(username: String): Single<List<DocumentSnapshot>> =
         Single.create { emitter ->
             firebaseFirestore.collection("user")
                 .whereGreaterThanOrEqualTo("username", username)
                 .get()
                 .addOnSuccessListener { documents ->
-                    emitter.onSuccess(documents)
+                    emitter.onSuccess(documents.documents.toList())
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
@@ -120,6 +120,19 @@ class FirebaseHelper @Inject constructor(
                         }
                         .addOnFailureListener {
                             emitter.onError(it)
+                        }
+                }
+        }
+
+    override fun performQueryFollowingUser(): Single<List<DocumentSnapshot>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("/user/${getCurrentUserId()}/following").get()
+                .addOnSuccessListener { followingUser ->
+                    val listIdFollowing = followingUser.documents.map { it.id }
+                    firebaseFirestore.collection("/user")
+                        .whereIn(FieldPath.documentId(), listIdFollowing).get()
+                        .addOnSuccessListener { listUserDetail ->
+                            emitter.onSuccess(listUserDetail.documents.toList())
                         }
                 }
         }
