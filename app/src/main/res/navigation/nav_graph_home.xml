@@ -10,10 +10,10 @@
         android:label="NewsFeedFragmentView" >
         <action
             android:id="@+id/action_newsFeedFragmentView_to_chatFragmentView"
-            app:destination="@id/chatFragmentView" />
+            app:destination="@id/messageFragmentView" />
     </fragment>
     <fragment
-        android:id="@+id/chatFragmentView"
-        android:name="com.example.moments.ui.main.chat.MessageFragmentView"
-        android:label="ChatFragmentView" />
+        android:id="@+id/messageFragmentView"
+        android:name="com.example.moments.ui.main.message.MessageFragmentView"
+        android:label="MessageFragmentView" />
 </navigation>

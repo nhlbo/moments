@@ -71,9 +71,12 @@
         <entry key="..\:/bin/Study/Y3/HK2/Android/Moments/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.225" />
         <entry key="app/src/main/res/drawable-v24/edit_text_background.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/btn_background.xml" value="0.178" />
+        <entry key="app/src/main/res/drawable/chat_background.xml" value="0.178" />
+        <entry key="app/src/main/res/drawable/chat_right_background.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/edit_text_background_default.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/edit_text_background_focused.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/gradient_border.xml" value="0.178" />
+        <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/ic_heart_outline_react.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.178" />
@@ -86,14 +89,17 @@
         <entry key="app/src/main/res/drawable/toggle_indicator_selector.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/toggle_react_btn.xml" value="0.178" />
         <entry key="app/src/main/res/drawable/toggle_save_btn.xml" value="0.178" />
-        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.41139240506329117" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/activity_message.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/activity_new_message.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_news_feed.xml" value="0.3864447086801427" />
         <entry key="app/src/main/res/layout/activity_people_list.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout/chat_left_row.xml" value="0.30842391304347827" />
+        <entry key="app/src/main/res/layout/chat_right_row.xml" value="0.25" />
         <entry key="app/src/main/res/layout/component_post.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/footer_chat_textbox.xml" value="0.30842391304347827" />
         <entry key="app/src/main/res/layout/header_chat.xml" value="0.5" />
         <entry key="app/src/main/res/layout/header_post.xml" value="0.33" />
         <entry key="app/src/main/res/layout/user_row_new_message.xml" value="0.75" />

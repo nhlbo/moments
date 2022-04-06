@@ -1,13 +1,12 @@
-package com.example.moments.ui.main.message
+package com.example.moments.ui.main.new_message
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.example.moments.R
+import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.main.chat.ChatActivityView
-import com.example.moments.ui.main.new_message.INewMessageActivityInteractor
-import com.example.moments.ui.main.new_message.INewMessageActivityPresenter
-import com.example.moments.ui.main.new_message.INewMessageActivityView
 import com.google.firebase.firestore.DocumentSnapshot
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -21,6 +20,10 @@ class NewMessageActivityView : BaseActivity(), INewMessageActivityView {
     @Inject
     lateinit var presenter: INewMessageActivityPresenter<INewMessageActivityView, INewMessageActivityInteractor>
 
+    companion object {
+        const val USER_KEY = "USER_KEY"
+    }
+
     private val adapter = GroupieAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +36,11 @@ class NewMessageActivityView : BaseActivity(), INewMessageActivityView {
         tbNewMessageActivity.setNavigationOnClickListener { finish() }
 
         adapter.setOnItemClickListener { item, view ->
-            val intent = Intent(this, ChatActivityView::class.java)
+            val intent = Intent(view.context, ChatActivityView::class.java)
+            val userItem = item as UserItemNewMessage
+            intent.putExtra(USER_KEY, userItem.user)
             startActivity(intent)
+            finish()
         }
         rvNewMessage.adapter = adapter
     }
@@ -45,24 +51,18 @@ class NewMessageActivityView : BaseActivity(), INewMessageActivityView {
     override fun onFragmentDetached(tag: String) {
     }
 
-    override fun addUsers(users: List<DocumentSnapshot>) {
+    override fun addUsers(users: List<User>) {
         for (user in users) {
-            adapter.add(
-                UserItemNewMessage(
-                    user.id,
-                    user.data?.get("fullname") as String,
-                    user.data?.get("username") as String
-                )
-            )
+            adapter.add(UserItemNewMessage(user))
         }
     }
 }
 
-class UserItemNewMessage(val userId: String, val fullname: String, val username: String) :
+class UserItemNewMessage(val user: User) :
     Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.tvFullNameNewMessage.text = fullname
-        viewHolder.itemView.tvUsernameNewMessage.text = username
+        viewHolder.itemView.tvFullNameNewMessage.text = user.fullname
+        viewHolder.itemView.tvUsernameNewMessage.text = user.username
     }
 
     override fun getLayout(): Int {

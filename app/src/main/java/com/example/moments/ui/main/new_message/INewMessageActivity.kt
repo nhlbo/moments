@@ -1,13 +1,13 @@
 package com.example.moments.ui.main.new_message
 
+import com.example.moments.data.model.User
 import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
 import com.example.moments.ui.base.IBaseView
-import com.google.firebase.firestore.DocumentSnapshot
 import io.reactivex.Single
 
 interface INewMessageActivityView : IBaseView {
-    fun addUsers(users: List<DocumentSnapshot>)
+    fun addUsers(users: List<User>)
 }
 
 interface INewMessageActivityPresenter<V : INewMessageActivityView, I : INewMessageActivityInteractor> :
@@ -16,5 +16,5 @@ interface INewMessageActivityPresenter<V : INewMessageActivityView, I : INewMess
 }
 
 interface INewMessageActivityInteractor : IBaseInteractor {
-    fun doQueryFollowingUser(): Single<List<DocumentSnapshot>>
+    fun doQueryFollowingUser(): Single<List<User>>
 }

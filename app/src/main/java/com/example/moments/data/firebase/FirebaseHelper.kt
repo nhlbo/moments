@@ -11,6 +11,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storageMetadata
 import io.reactivex.Completable
@@ -124,7 +125,7 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryFollowingUser(): Single<List<DocumentSnapshot>> =
+    override fun performQueryFollowingUser(): Single<List<User>> =
         Single.create { emitter ->
             firebaseFirestore.collection("/user/${getCurrentUserId()}/following").get()
                 .addOnSuccessListener { followingUser ->
@@ -132,7 +133,7 @@ class FirebaseHelper @Inject constructor(
                     firebaseFirestore.collection("/user")
                         .whereIn(FieldPath.documentId(), listIdFollowing).get()
                         .addOnSuccessListener { listUserDetail ->
-                            emitter.onSuccess(listUserDetail.documents.toList())
+                            emitter.onSuccess(listUserDetail.toObjects())
                         }
                 }
         }
