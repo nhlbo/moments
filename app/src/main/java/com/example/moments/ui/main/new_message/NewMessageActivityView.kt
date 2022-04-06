@@ -1,13 +1,11 @@
-package com.example.moments.ui.main.message
+package com.example.moments.ui.main.new_message
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.main.chat.ChatActivityView
-import com.example.moments.ui.main.new_message.INewMessageActivityInteractor
-import com.example.moments.ui.main.new_message.INewMessageActivityPresenter
-import com.example.moments.ui.main.new_message.INewMessageActivityView
 import com.google.firebase.firestore.DocumentSnapshot
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -33,8 +31,9 @@ class NewMessageActivityView : BaseActivity(), INewMessageActivityView {
         tbNewMessageActivity.setNavigationOnClickListener { finish() }
 
         adapter.setOnItemClickListener { item, view ->
-            val intent = Intent(this, ChatActivityView::class.java)
+            val intent = Intent(view.context, ChatActivityView::class.java)
             startActivity(intent)
+            finish()
         }
         rvNewMessage.adapter = adapter
     }
