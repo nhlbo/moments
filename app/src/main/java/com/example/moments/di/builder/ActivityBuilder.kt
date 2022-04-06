@@ -4,7 +4,7 @@ import com.example.moments.ui.forgetPassword.ForgetPasswordActivityModule
 import com.example.moments.ui.forgetPassword.ForgetPasswordActivityView
 import com.example.moments.ui.login.LoginActivityModule
 import com.example.moments.ui.login.LoginActivityView
-import com.example.moments.ui.main.message.NewMessageActivityView
+import com.example.moments.ui.main.new_message.NewMessageActivityView
 import com.example.moments.ui.main.new_message.NewMessageActivityModule
 import com.example.moments.ui.signUp.SignUpActivityModule
 import com.example.moments.ui.signUp.SignUpActivityView
