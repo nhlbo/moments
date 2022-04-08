@@ -1,11 +1,13 @@
 package com.example.moments.data.model
 
 import android.os.Parcelable
+import com.google.firebase.firestore.DocumentId
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class User(
-    var id: String = "",
+    @DocumentId
+    val id: String = "",
     var username: String = "",
     var email: String = "",
     var fullname: String = "",
