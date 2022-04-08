@@ -1,6 +1,7 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
+import com.example.moments.data.model.Message
 import com.example.moments.data.model.User
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
@@ -31,7 +32,7 @@ interface IFirebaseHelper {
 
     fun performPasswordResetRequest(email: String): Completable
 
-    fun performQueryUserByUsername(username: String):  Single<List<DocumentSnapshot>>
+    fun performQueryUserByUsername(username: String): Single<List<DocumentSnapshot>>
 
     fun performFollowUser(userId: String): Completable
 
@@ -58,4 +59,6 @@ interface IFirebaseHelper {
     fun performQueryBookmarkPost(): Single<List<DocumentSnapshot>>
 
     fun performQueryFollowingUser(): Single<List<User>>
+
+    fun performSendMessage(message: Message): Completable
 }

@@ -7,7 +7,7 @@
     android:paddingVertical="2dp">
 
     <TextView
-        android:id="@+id/tvChatLeft"
+        android:id="@+id/tvChatRight"
         style="@style/Theme.Moments.TextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

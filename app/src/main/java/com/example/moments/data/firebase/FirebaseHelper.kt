@@ -2,6 +2,7 @@ package com.example.moments.data.firebase
 
 import android.net.Uri
 import android.util.Log
+import com.example.moments.data.model.Message
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.di.FirebaseAuthInstance
@@ -318,6 +319,18 @@ class FirebaseHelper @Inject constructor(
         Completable.create { emitter ->
             firebaseFirestore.document("/user/${getCurrentUserId()}/post/$postId")
                 .delete()
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performSendMessage(message: Message): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.collection("/message")
+                .add(message)
                 .addOnSuccessListener {
                     emitter.onComplete()
                 }
