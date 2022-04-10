@@ -7,7 +7,7 @@
     android:paddingVertical="2dp">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/btnAvatarChat"
+        android:id="@+id/imgAvatarChatLeft"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:civ_border="true"
@@ -30,7 +30,7 @@
         android:paddingHorizontal="20dp"
         android:paddingVertical="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnAvatarChat"
+        app:layout_constraintStart_toEndOf="@+id/imgAvatarChatLeft"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.moments.ui.main.chat
 
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.Message
 import com.example.moments.data.model.User
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class ChatActivityView : BaseActivity(), IChatActivityView {
     @Inject
     lateinit var presenter: IChatActivityPresenter<IChatActivityView, IChatActivityInteractor>
+    lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +30,14 @@ class ChatActivityView : BaseActivity(), IChatActivityView {
         setSupportActionBar(tbChatActivity)
         supportActionBar?.title = null
         tbChatActivity.setNavigationOnClickListener { finish() }
-        val user = intent.getParcelableExtra<User>(NewMessageActivityView.USER_KEY)
-        tvUsernameToolbarChat.text = user?.username
+        user = intent.getParcelableExtra<User>(NewMessageActivityView.USER_KEY)!!
+        tvUsernameToolbarChat.text = user.username
+        Glide.with(this).load(user.avatar).into(imgChatAvatar)
 
         presenter.onPerformListenToMessage()
 
         btnSendChat.setOnClickListener {
-            val toId = user!!.id
+            val toId = user.id
             presenter.onPerformSendMessage(
                 Message(
                     "",
@@ -60,17 +63,18 @@ class ChatActivityView : BaseActivity(), IChatActivityView {
             if (message.fromId == presenter.getCurrentUserId()) {
                 adapter.add(ChatRightItem(message.text))
             } else {
-                adapter.add(ChatLeftItem(message.text))
+                adapter.add(ChatLeftItem(message.text, user))
             }
         }
         rvChat.adapter = adapter
     }
 }
 
-class ChatLeftItem(val text: String) :
+class ChatLeftItem(val text: String, val user: User) :
     Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.tvChatRight.text = text
+        Glide.with(viewHolder.itemView).load(user.avatar).into(viewHolder.itemView.imgAvatarChatLeft)
     }
 
     override fun getLayout(): Int {
