@@ -61,4 +61,6 @@ interface IFirebaseHelper {
     fun performQueryFollowingUser(): Single<List<User>>
 
     fun performSendMessage(message: Message): Completable
+
+    fun performListenToMessage(): Observable<List<Message>>
 }

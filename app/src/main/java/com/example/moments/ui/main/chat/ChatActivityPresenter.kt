@@ -23,7 +23,6 @@ class ChatActivityPresenter<V : IChatActivityView, I : IChatActivityInteractor> 
                 it.doPerformSendMessage(message)
                     .compose(schedulerProvider.ioToMainCompletableScheduler())
                     .subscribe({
-                        getView()?.addMessage(message)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })
@@ -32,4 +31,18 @@ class ChatActivityPresenter<V : IChatActivityView, I : IChatActivityInteractor> 
     }
 
     override fun getCurrentUserId(): String = interactor?.getCurrentUserId().toString()
+
+    override fun onPerformListenToMessage() {
+        interactor?.let {
+            compositeDisposable.add(
+                it.doPerformListenToMessage()
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                    .subscribe({
+                        getView()?.addMessages(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
 }
