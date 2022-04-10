@@ -2,6 +2,7 @@ package com.example.moments.ui.main.new_message
 
 import android.content.Intent
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
@@ -61,6 +62,7 @@ class UserItemNewMessage(val user: User) :
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.tvFullNameNewMessage.text = user.fullname
         viewHolder.itemView.tvUsernameNewMessage.text = user.username
+        Glide.with(viewHolder.itemView).load(user.avatar).into(viewHolder.itemView.ivAvatarUserNewMessage)
     }
 
     override fun getLayout(): Int {
