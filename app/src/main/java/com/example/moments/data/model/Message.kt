@@ -11,5 +11,5 @@ data class Message(
     var text: String = "",
     var fromId: String = "",
     var toId: String = "",
-    var timeStamp: Long
+    var timeStamp: Long = 0
 ) : Parcelable

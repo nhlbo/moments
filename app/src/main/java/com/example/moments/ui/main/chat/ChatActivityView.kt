@@ -19,10 +19,11 @@ class ChatActivityView : BaseActivity(), IChatActivityView {
     @Inject
     lateinit var presenter: IChatActivityPresenter<IChatActivityView, IChatActivityInteractor>
 
-    private val adapter = GroupieAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+
+        presenter.onAttach(this)
 
         setSupportActionBar(tbChatActivity)
         supportActionBar?.title = null
@@ -30,8 +31,7 @@ class ChatActivityView : BaseActivity(), IChatActivityView {
         val user = intent.getParcelableExtra<User>(NewMessageActivityView.USER_KEY)
         tvUsernameToolbarChat.text = user?.username
 
-        rvChat.adapter = adapter
-//        fetchChat()
+        presenter.onPerformListenToMessage()
 
         btnSendChat.setOnClickListener {
             val toId = user!!.id
@@ -44,7 +44,6 @@ class ChatActivityView : BaseActivity(), IChatActivityView {
                     System.currentTimeMillis() / 1000
                 )
             )
-            adapter.add(ChatRightItem(etMessageBox.text.toString()))
             etMessageBox.text = null
         }
     }
@@ -55,14 +54,16 @@ class ChatActivityView : BaseActivity(), IChatActivityView {
     override fun onFragmentDetached(tag: String) {
     }
 
-    override fun fetchChat(users: List<User>) {
-        adapter.add(ChatLeftItem("from message"))
-        adapter.add(ChatLeftItem("from message"))
-        adapter.add(ChatRightItem("to message"))
-    }
-
-    override fun addMessage(message: Message) {
-
+    override fun addMessages(messages: List<Message>) {
+        val adapter = GroupieAdapter()
+        for (message in messages) {
+            if (message.fromId == presenter.getCurrentUserId()) {
+                adapter.add(ChatRightItem(message.text))
+            } else {
+                adapter.add(ChatLeftItem(message.text))
+            }
+        }
+        rvChat.adapter = adapter
     }
 }
 

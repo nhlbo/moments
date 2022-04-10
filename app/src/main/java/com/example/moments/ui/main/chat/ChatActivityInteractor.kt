@@ -5,6 +5,7 @@ import com.example.moments.data.model.Message
 import com.example.moments.data.preference.PreferenceHelper
 import com.example.moments.ui.base.BaseInteractor
 import io.reactivex.Completable
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class ChatActivityInteractor @Inject constructor(
@@ -13,4 +14,5 @@ class ChatActivityInteractor @Inject constructor(
 ) : BaseInteractor(preferenceHelper, firebaseHelper), IChatActivityInteractor {
     override fun doPerformSendMessage(message: Message): Completable = firebaseHelper.performSendMessage(message)
     override fun getCurrentUserId(): String = firebaseHelper.getCurrentUserId()
+    override fun doPerformListenToMessage(): Observable<List<Message>> = firebaseHelper.performListenToMessage()
 }

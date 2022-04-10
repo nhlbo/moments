@@ -338,4 +338,19 @@ class FirebaseHelper @Inject constructor(
                     emitter.onError(it)
                 }
         }
+
+    override fun performListenToMessage(): Observable<List<Message>> =
+        Observable.create { emitter ->
+            firebaseFirestore.collection("/message")
+                .orderBy("timeStamp", Query.Direction.DESCENDING)
+                .addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        emitter.onError(e)
+                        return@addSnapshotListener
+                    }
+                    if (snapshot != null) {
+                        emitter.onNext(snapshot.toObjects<Message>())
+                    }
+                }
+        }
 }
