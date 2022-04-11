@@ -6,8 +6,8 @@ import com.example.moments.ui.login.LoginActivityModule
 import com.example.moments.ui.login.LoginActivityView
 import com.example.moments.ui.main.chat.ChatActivityModule
 import com.example.moments.ui.main.chat.ChatActivityView
-import com.example.moments.ui.main.new_message.NewMessageActivityModule
-import com.example.moments.ui.main.new_message.NewMessageActivityView
+import com.example.moments.ui.main.newMessage.NewMessageActivityModule
+import com.example.moments.ui.main.newMessage.NewMessageActivityView
 import com.example.moments.ui.signUp.SignUpActivityModule
 import com.example.moments.ui.signUp.SignUpActivityView
 import com.example.moments.ui.start.StartActivityModule

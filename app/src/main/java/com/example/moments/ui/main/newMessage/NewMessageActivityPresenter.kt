@@ -1,4 +1,4 @@
-package com.example.moments.ui.main.new_message
+package com.example.moments.ui.main.newMessage
 
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider
