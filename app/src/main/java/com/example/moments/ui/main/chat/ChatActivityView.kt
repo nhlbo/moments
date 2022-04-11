@@ -6,7 +6,7 @@ import com.example.moments.R
 import com.example.moments.data.model.Message
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
-import com.example.moments.ui.main.new_message.NewMessageActivityView
+import com.example.moments.ui.main.newMessage.NewMessageActivityView
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item

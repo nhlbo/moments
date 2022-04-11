@@ -7,7 +7,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.moments.R
 import com.example.moments.ui.main.MainActivityView
-import com.example.moments.ui.main.new_message.NewMessageActivityView
+import com.example.moments.ui.main.newMessage.NewMessageActivityView
 
 
 class MessageFragmentView : Fragment() {
