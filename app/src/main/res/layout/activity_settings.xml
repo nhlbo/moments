@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.main.chat.ChatActivityView">
 
     <androidx.appcompat.widget.Toolbar
@@ -17,15 +18,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_left"
-        app:title="Settings" ></androidx.appcompat.widget.Toolbar>
+        app:title="Settings" />
 
-    <TextView
+    <Button
         android:id="@+id/btnLogOut"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_horizontal|center_vertical"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/white"
         android:text="Log Out"
         android:textColor="#008AF7"
         android:textSize="18sp"

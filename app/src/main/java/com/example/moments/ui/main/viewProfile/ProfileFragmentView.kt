@@ -2,7 +2,6 @@ package com.example.moments.ui.main.viewProfile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,6 @@ class ProfileFragmentView : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         profileToolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.profileSettingBtn) {
-                Log.d("debug", "clicked")
                 val intent = Intent(activity, SettingsActivityView::class.java)
                 startActivity(intent)
                 return@setOnMenuItemClickListener true
