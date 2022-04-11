@@ -8,6 +8,8 @@ import com.example.moments.ui.main.chat.ChatActivityModule
 import com.example.moments.ui.main.chat.ChatActivityView
 import com.example.moments.ui.main.newMessage.NewMessageActivityModule
 import com.example.moments.ui.main.newMessage.NewMessageActivityView
+import com.example.moments.ui.main.settings.SettingsActivityModule
+import com.example.moments.ui.main.settings.SettingsActivityView
 import com.example.moments.ui.signUp.SignUpActivityModule
 import com.example.moments.ui.signUp.SignUpActivityView
 import com.example.moments.ui.start.StartActivityModule
@@ -35,4 +37,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(ChatActivityModule::class)])
     abstract fun bindChatActivity(): ChatActivityView
+
+    @ContributesAndroidInjector(modules = [(SettingsActivityModule::class)])
+    abstract fun bindSettingsActivity(): SettingsActivityView
 }
