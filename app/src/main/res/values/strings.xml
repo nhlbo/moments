@@ -20,4 +20,8 @@
     <string name="confirm_password_not_match_error_message">confirm_password_not_match_error_message</string>
     <string name="invalid_password_error_message">invalid_password_error_message</string>
     <string name="login_failure">login_failure</string>
+
+
+    <!--Deep link URI-->
+    <string name="commentFragment">android-app://moments.example.com/comment-detail</string>
 </resources>

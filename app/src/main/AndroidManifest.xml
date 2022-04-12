@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.moments">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -12,12 +14,15 @@
         android:theme="@style/Theme.Moments"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.main.viewFollowList.ViewFollowTabActivityView"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.moments.MomentsActivityView"
             android:exported="false" />
         <activity
             android:name=".ui.forgetPassword.ForgetPasswordActivityView"
-            android:noHistory="true"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".ui.main.notification.NotificationActivityView"
             android:exported="false" />

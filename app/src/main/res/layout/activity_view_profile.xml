@@ -2,13 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:isScrollContainer="true"
-    android:nestedScrollingEnabled="true"
-    android:scrollbars="vertical"
-    app:layout_scrollFlags="scroll"
-    tools:context=".ui.main.viewProfile.ViewProfileActivityView">
+    android:fitsSystemWindows="true"
+    android:isScrollContainer="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/profile_header_toolbar"
@@ -19,147 +17,248 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/header_profile">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcMediaGrid"
+        <TextView
+            style="@style/Theme.Moments.TextView.Title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Your Profile"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEditProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_header_toolbar">
 
-    <Button
-        android:id="@+id/btnEditProfile"
-        style="@style/Theme.Moments.ButtonVariant1"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingRight="0dp"
-        android:paddingBottom="0dp"
-        android:text="Edit Profile"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        tools:ignore="TouchTargetSizeCheck" />
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textView7"
-        style="@style/Theme.Moments.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Janiver"
-        app:layout_constraintStart_toStartOf="@+id/btnEditProfile"
-        app:layout_constraintTop_toBottomOf="@+id/tvHashtagProfile" />
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorSecondary"
+                app:contentScrim="?attr/colorSecondary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
 
-    <TextView
-        android:id="@+id/tvHashtagProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gothic_light"
-        android:text="\@son.tran"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsernameProfile" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent">
 
-    <TextView
-        android:id="@+id/tvUsernameProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gothic_bold"
-        android:text="Son Tran"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/tvHashtagProfile"
-        app:layout_constraintTop_toBottomOf="@+id/ivAvatarProfile" />
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/ivAvatarProfile"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="8dp"
+                        app:civ_border_color="@android:color/transparent"
+                        app:civ_border_width="1dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_color="#FFFFFF"
+                        app:civ_shadow_radius="2dp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvUsernameProfile"
+                        app:layout_constraintStart_toStartOf="@+id/tvUsernameProfile"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/default_avatar"
+                        tools:ignore="MissingClass" />
 
-    <TextView
-        android:id="@+id/tvToPostList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:clickable="true"
-        android:text="Posts"
-        app:layout_constraintBottom_toBottomOf="@+id/ivAvatarProfile"
-        app:layout_constraintStart_toEndOf="@+id/ivAvatarProfile"
-        app:layout_constraintTop_toTopOf="@+id/ivAvatarProfile"
-        tools:ignore="TouchTargetSizeCheck" />
+                    <LinearLayout
+                        android:id="@+id/llFollowing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:clickable="true"
+                        android:background="@drawable/pressed_layout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.952"
+                        app:layout_constraintStart_toStartOf="@+id/ivAvatarProfile"
+                        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvToFollowersList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:text="Followers"
-        app:layout_constraintBottom_toBottomOf="@+id/ivAvatarProfile"
-        app:layout_constraintEnd_toStartOf="@+id/tvToFollowingList"
-        app:layout_constraintStart_toEndOf="@+id/tvToPostList"
-        app:layout_constraintTop_toTopOf="@+id/ivAvatarProfile"
-        app:layout_constraintVertical_bias="0.506"
-        tools:ignore="TouchTargetSizeCheck" />
+                        <TextView
+                            android:id="@+id/tvFollowingList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gothic_bold"
+                            android:text="21" />
 
-    <TextView
-        android:id="@+id/tvToFollowingList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:clickable="true"
-        android:text="Following"
-        app:layout_constraintBottom_toBottomOf="@+id/ivAvatarProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ivAvatarProfile"
-        tools:ignore="TouchTargetSizeCheck" />
+                        <TextView
+                            android:id="@+id/tvToFollowingList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Following"
+                            tools:ignore="TouchTargetSizeCheck"
+                            tools:layout_editor_absoluteX="53dp"
+                            tools:layout_editor_absoluteY="24dp" />
+                    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvPostsNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gothic_bold"
-        android:text="21"
-        app:layout_constraintBottom_toTopOf="@+id/tvToPostList"
-        app:layout_constraintEnd_toEndOf="@+id/tvToPostList"
-        app:layout_constraintStart_toStartOf="@+id/tvToPostList" />
+                    <LinearLayout
+                        android:id="@+id/llPost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:clickable="true"
+                        android:background="@drawable/pressed_layout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.316"
+                        app:layout_constraintStart_toStartOf="@+id/ivAvatarProfile"
+                        app:layout_constraintTop_toTopOf="@+id/llFollowers">
 
-    <TextView
-        android:id="@+id/tvFollowersNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gothic_bold"
-        android:text="12"
-        app:layout_constraintBottom_toTopOf="@+id/tvToFollowersList"
-        app:layout_constraintEnd_toEndOf="@+id/tvToFollowersList"
-        app:layout_constraintStart_toStartOf="@+id/tvToFollowersList" />
+                        <TextView
+                            android:id="@+id/tvPostsNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gothic_bold"
+                            android:text="21" />
 
-    <TextView
-        android:id="@+id/tvFollowingList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gothic_bold"
-        android:text="21"
-        app:layout_constraintBottom_toTopOf="@+id/tvToFollowingList"
-        app:layout_constraintEnd_toEndOf="@+id/tvToFollowingList"
-        app:layout_constraintStart_toStartOf="@+id/tvToFollowingList" />
+                        <TextView
+                            android:id="@+id/tvToPostList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Posts"
+                            tools:ignore="TouchTargetSizeCheck" />
+                    </LinearLayout>
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/ivAvatarProfile"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:civ_border_color="@android:color/transparent"
-        app:civ_border_width="1dp"
-        app:civ_shadow="true"
-        app:civ_shadow_color="#FFFFFF"
-        app:civ_shadow_radius="2dp"
-        app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/profile_header_toolbar"
-        app:srcCompat="@drawable/default_avatar"
-        tools:ignore="MissingClass" />
+                    <LinearLayout
+                        android:id="@+id/llFollowers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:clickable="true"
+                        android:background="@drawable/pressed_layout"
+                        app:layout_constraintEnd_toStartOf="@+id/llFollowing"
+                        app:layout_constraintStart_toEndOf="@id/llPost"
+                        app:layout_constraintTop_toTopOf="@+id/llFollowing">
+
+                        <TextView
+                            android:id="@+id/tvFollowersNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gothic_bold"
+                            android:text="12"
+                            app:layout_constraintBottom_toTopOf="@+id/tvToFollowersList"
+                            app:layout_constraintEnd_toEndOf="@+id/tvToFollowersList"
+                            app:layout_constraintStart_toStartOf="@+id/tvToFollowersList"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvToFollowersList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Followers"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvToPostList"
+                            app:layout_constraintEnd_toStartOf="@+id/tvToFollowingList"
+                            app:layout_constraintStart_toEndOf="@+id/tvToPostList"
+                            tools:ignore="TouchTargetSizeCheck" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvUsernameProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gothic_bold"
+                        android:text="Son Tran"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvHashtagProfile"
+                        app:layout_constraintStart_toStartOf="@+id/tvHashtagProfile" />
+
+                    <TextView
+                        android:id="@+id/tvHashtagProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gothic_light"
+                        android:text="\@son.tran"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView7"
+                        app:layout_constraintStart_toStartOf="@+id/textView7" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        style="@style/Theme.Moments.TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Janiver"
+                        app:layout_constraintBottom_toTopOf="@+id/btnEditProfile"
+                        app:layout_constraintStart_toStartOf="@+id/btnEditProfile" />
+
+                    <Button
+                        android:id="@+id/btnEditProfile"
+                        style="@style/Theme.Moments.ButtonVariant1"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="Edit Profile"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_view_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorSecondary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:tabMode="fixed">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_grid"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_video"/>
+            </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            tools:ignore="SpeakableTextPresentCheck">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp2_view_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

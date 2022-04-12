@@ -7,7 +7,7 @@
     android:padding="5dp">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/ivAvatarPostComment"
+        android:id="@+id/ivAvatarPostCommentSelf"
         android:layout_width="35dp"
         android:layout_height="35dp"
         app:civ_border="true"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPostComment"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivAvatarPostComment"
+        app:layout_constraintStart_toEndOf="@+id/ivAvatarPostCommentSelf"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
 

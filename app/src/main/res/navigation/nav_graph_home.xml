@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_home"
-    app:startDestination="@id/newsfeedFragmentView">
+    app:startDestination="@id/chatFragmentView">
 
-    <fragment
-        android:id="@+id/newsfeedFragmentView"
-        android:name="com.example.moments.ui.main.newsFeed.NewsFeedFragmentView"
-        android:label="NewsFeedFragmentView" >
-        <action
-            android:id="@+id/action_newsFeedFragmentView_to_chatFragmentView"
-            app:destination="@id/chatFragmentView" />
-    </fragment>
     <fragment
         android:id="@+id/chatFragmentView"
         android:name="com.example.moments.ui.main.chat.ChatFragmentView"
         android:label="ChatFragmentView" />
+    <fragment
+        android:id="@+id/commentFragmentView"
+        android:name="com.example.moments.ui.main.comment.CommentFragmentView"
+        android:label="CommentFragmentView">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="@string/commentFragment" />
+    </fragment>
 </navigation>
