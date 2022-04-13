@@ -3,25 +3,23 @@ package com.example.moments.ui.main.newsFeed
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.get
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
-import com.example.moments.ui.main.comment.CommentFragmentView
-import com.example.moments.ui.main.notification.NotificationRecyclerViewAdapter
-import java.net.URI
 
-class NewsFeedFragmentView : Fragment() {
+
+class NewsFeedFragmentView : Fragment(), IAdapterCallBack {
     private var toolBar: Toolbar? = null
-    private lateinit var parentViewPager: ViewPager2
-
+    private var recyclerView: RecyclerView? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,8 +35,6 @@ class NewsFeedFragmentView : Fragment() {
         toolBar = getView()?.findViewById(R.id.newsfeed_header_bar)
         toolBar?.inflateMenu(R.menu.header_newsfeeds)
         onItemSelected()
-        parentViewPager = activity?.findViewById(R.id.fragmentViewPager)!!
-
     }
     private fun initRecycleView(view: View){
         val dataList = arrayListOf<NewsFeed>()
@@ -57,20 +53,33 @@ class NewsFeedFragmentView : Fragment() {
         dataList.add(NewsFeed("HoangLong",url2,"HCM","test newsfeed view",imageList,2,url1,"1 day ago"))
         dataList.add(NewsFeed("HuyQuang",url1,"VietNam","test newsfeed view",imageList,2,url2,"1 day ago"))
         dataList.add(NewsFeed("AnDuy",url1,"HCM","test newsfeed view",imageList,2,url2,"1 day ago"))
-        val newsFeedAdapter = view?.findViewById<RecyclerView>(R.id.rcNewsfeedPanel)
-        newsFeedAdapter?.layoutManager = LinearLayoutManager(activity)
-        val adapter = context?.let { NewsFeedAdapter(it,dataList) }
-        newsFeedAdapter .setNestedScrollingEnabled(true);
 
-        newsFeedAdapter?.adapter = adapter
+        recyclerView = view.findViewById(R.id.rcNewsfeedPanel)
+        recyclerView?.layoutManager = LinearLayoutManager(activity)
+        val adapter = context?.let { NewsFeedAdapter(it,dataList,this) }
+
+        recyclerView?.adapter = adapter
+        recyclerView?.isNestedScrollingEnabled = false
+
+        recyclerView?.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(view: RecyclerView, event: MotionEvent): Boolean {
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> recyclerView?.parent
+                        ?.requestDisallowInterceptTouchEvent(true)
+                }
+                return false
+            }
+
+            override fun onTouchEvent(view: RecyclerView, event: MotionEvent) {}
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+        })
     }
     private fun onItemSelected() {
         toolBar?.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.storyBtn -> {
                     // Navigate to settings screen
-                    val url = Uri.parse("android-app://moments.example.com/comment-detail")
-                    findNavController().navigate(url)
+
                     true
                 }
                 R.id.msgBtn -> {
@@ -80,6 +89,15 @@ class NewsFeedFragmentView : Fragment() {
                 }
                 else -> false
             }
+        }
+    }
+
+    override fun onItemTouch(position: Int, command:String) {
+        if(command == "showComment"){
+            val request = NavDeepLinkRequest.Builder
+                .fromUri(R.string.commentFragment.toString().toUri())
+                .build()
+            findNavController().navigate(R.id.commentFragmentView)
         }
     }
 

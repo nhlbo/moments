@@ -9,12 +9,5 @@
         android:id="@+id/chatFragmentView"
         android:name="com.example.moments.ui.main.chat.ChatFragmentView"
         android:label="ChatFragmentView" />
-    <fragment
-        android:id="@+id/commentFragmentView"
-        android:name="com.example.moments.ui.main.comment.CommentFragmentView"
-        android:label="CommentFragmentView">
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="@string/commentFragment" />
-    </fragment>
+
 </navigation>

@@ -1,14 +1,17 @@
 package com.example.moments.ui.main
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.example.moments.ui.customClasses.ViewPagerAdapter
 import com.example.moments.ui.customClasses.onChildFragmentClick
-import com.example.moments.ui.main.chat.ChatFragmentView
+
 
 class MainActivityView : AppCompatActivity(), onChildFragmentClick {
     // navigation bar and page viewer

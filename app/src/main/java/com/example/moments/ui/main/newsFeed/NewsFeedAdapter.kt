@@ -1,43 +1,37 @@
 package com.example.moments.ui.main.newsFeed
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 
-class NewsFeed(
-    val name: String,
-    val avatar: String,
-    val address: String,
-    val content: String,
-    val imagesList: List<String>,
-    val likeNumber: Int,
-    val myAvatar: String,
-    val time: String
-)
-
-class NewsFeedAdapter(var context: Context, private val newsFeedList: List<NewsFeed>) :
+class NewsFeedAdapter(var context: Context, private val newsFeedList: List<NewsFeed>, callback: IAdapterCallBack) :
     RecyclerView.Adapter<NewsFeedAdapter.ViewHolder>() {
-    val dotscount : Int = 0
-    val dots = arrayOfNulls<ImageView>(0)
+
+    private val adapterCallBack: IAdapterCallBack = callback
+
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val headerPost = listItemView.findViewById<View>(R.id.loHeaderNewsFeed)
         val avatar = headerPost.findViewById<ImageView>(R.id.ivAvatarHeaderPost)
         val name = headerPost.findViewById<TextView>(R.id.tvNameHeaderPost)
         val add = headerPost.findViewById<TextView>(R.id.tvAddress)
 
-        var viewPager = listItemView.findViewById<ViewPager>(R.id.vpNewsFeed)
-        val linearLayout = listItemView.findViewById<LinearLayout>(R.id.llSliderDots)
+        var viewPager = listItemView.findViewById<ViewPager2>(R.id.vpNewsFeed)
+        val linearLayout = listItemView.findViewById<TabLayout>(R.id.indicatorNewsFeed)
+
 
         val componentButton =
             listItemView.findViewById<View>(R.id.llComponentInteractionButtonNewsFeed)
@@ -59,6 +53,10 @@ class NewsFeedAdapter(var context: Context, private val newsFeedList: List<NewsF
 
     }
 
+    override fun getItemCount(): Int {
+        return newsFeedList.size
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
@@ -69,73 +67,52 @@ class NewsFeedAdapter(var context: Context, private val newsFeedList: List<NewsF
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val tmp: NewsFeed = newsFeedList[position]
 
-        val viewPagerAdapter = ViewPagerAdapter(tmp.imagesList, context)
+        val viewPagerAdapter = MediaSlidingAdapter(tmp.imagesList, context)
         holder.viewPager.adapter = viewPagerAdapter
+        TabLayoutMediator(holder.linearLayout, holder.viewPager)
+        { _, _ ->}.attach()
 
         Glide.with(context).load(tmp.avatar).into(holder.avatar)
         Glide.with(context).load(tmp.myAvatar).into(holder.myAvatar)
-        holder.like.setText("${tmp.likeNumber} like")
-        holder.content.setText(tmp.content)
-        holder.add.setText(tmp.address)
-        holder.time.setText(tmp.time)
-        holder.name.setText(tmp.name)
+        holder.like.text = "${tmp.likeNumber} like"
+        holder.content.text = tmp.content
+        holder.add.text = tmp.address
+        holder.time.text = tmp.time
+        holder.name.text = tmp.name
 
-        val dotscount = viewPagerAdapter.count
-        val dots = arrayOfNulls<ImageView>(dotscount)
+//        val dotscount = viewPagerAdapter.itemCount
+//        val dots = arrayOfNulls<ImageView>(dotscount)
+//
+//        for (i in 0 until dotscount) {
+//            dots[i] = ImageView(context)
+//            dots[i]?.setImageDrawable(
+//                ContextCompat.getDrawable(
+//                    context,
+//                    R.drawable.non_active_dot
+//                )
+//            )
+//            val params = LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.WRAP_CONTENT,
+//                LinearLayout.LayoutParams.WRAP_CONTENT
+//            )
+//            params.setMargins(8, 0, 8, 0)
+//            holder.linearLayout.addView(dots[i], params)
+//        }
+//
+//        dots.get(0)?.setImageDrawable(
+//            ContextCompat.getDrawable(
+//                context,
+//                R.drawable.active_dot
+//            )
+//        )
 
-        for (i in 0 until dotscount) {
-            dots[i] = ImageView(context)
-            dots[i]?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.non_active_dot
-                )
-            )
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.setMargins(8, 0, 8, 0)
-            holder.linearLayout.addView(dots.get(i), params)
+        holder.showAllComment.setOnClickListener {
+            adapterCallBack.onItemTouch(position, "showComment")
+        }
+        holder.btnComment.setOnClickListener{
+            adapterCallBack.onItemTouch(position, "showComment")
         }
 
-        dots.get(0)?.setImageDrawable(
-            ContextCompat.getDrawable(
-                context,
-                R.drawable.active_dot
-            )
-        )
-        holder.viewPager.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                for (i in 0 until dotscount) {
-                    dots[i]!!.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            getApplicationContext(),
-                            R.drawable.non_active_dot
-                        )
-                    )
-                }
-                dots[position]!!.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        getApplicationContext(),
-                        R.drawable.active_dot
-                    )
-                )
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {}
-        })
-    }
-
-    override fun getItemCount(): Int {
-        return newsFeedList.size
     }
 }
 

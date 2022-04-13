@@ -48,6 +48,7 @@ class HomeFragmentView : Fragment() {
 
         bottomNavigationView = result.findViewById(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(controller)
+
         controller.addOnDestinationChangedListener { _, destination, _ ->
             parentViewPager.isUserInputEnabled = destination.id == R.id.newsfeedFragmentView
             if(destination.id == R.id.commentFragmentView
