@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <include
-        android:id="@+id/include6"
+        android:id="@+id/loHeaderNewsFeed"
         layout="@layout/header_post"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -14,67 +14,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpNewsFeed"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include6">
+        app:layout_constraintTop_toBottomOf="@+id/loHeaderNewsFeed"
+        tools:ignore="SpeakableTextPresentCheck" />
 
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
-    </androidx.cardview.widget.CardView>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabDots"
+    <LinearLayout
+        android:id="@+id/llSliderDots"
+        android:layout_below="@+id/vpNewsFeed"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        app:tabBackground="@drawable/toggle_indicator_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"
-        tools:ignore="SpeakableTextPresentCheck">
+        app:layout_constraintTop_toBottomOf="@+id/vpNewsFeed"/>
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabItem2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.tabs.TabLayout>
 
     <include
-        android:id="@+id/include9"
+        android:id="@+id/llComponentInteractionButtonNewsFeed"
         layout="@layout/component_interaction_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabDots" />
+        app:layout_constraintTop_toBottomOf="@+id/llSliderDots" />
 
     <TextView
-        android:id="@+id/textView28"
+        android:id="@+id/tvLikeNewsFeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="-1 like"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include9" />
+        app:layout_constraintTop_toBottomOf="@+id/llComponentInteractionButtonNewsFeed" />
 
     <TextView
-        android:id="@+id/textView29"
+        android:id="@+id/tvContentNewsFeed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -84,10 +65,10 @@
         android:text="lostin.paris Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLikeNewsFeed" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/tvShowAllComment"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -96,26 +77,26 @@
         android:minHeight="32dp"
         android:text="show all comments"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29"
+        app:layout_constraintTop_toBottomOf="@+id/tvContentNewsFeed"
         tools:ignore="TouchTargetSizeCheck" />
 
     <include
-        android:id="@+id/include11"
+        android:id="@+id/loFooterPostCommentNewsFeed"
         layout="@layout/footer_post_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/tvShowAllComment" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/tvTimeNewsFeed"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="1 day ago"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include11" />
+        app:layout_constraintTop_toBottomOf="@+id/loFooterPostCommentNewsFeed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
