@@ -11,12 +11,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_home.*
 
 
 class HomeFragmentView : Fragment() {
     private lateinit var parentViewPager: ViewPager2
-    private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var controller: NavController
 
     private var mOnButtonClickListener: OnButtonClickListener? = null
@@ -40,15 +39,13 @@ class HomeFragmentView : Fragment() {
     ): View {
         val result: View = inflater.inflate(R.layout.activity_home, container, false)
         val navHostFragment =
-            childFragmentManager.findFragmentById(R.id.navigateFragmentsContainer) as NavHostFragment
+            childFragmentManager.findFragmentById(R.id.fragmentViewPager) as NavHostFragment
         controller = navHostFragment.navController
         parentViewPager = activity?.findViewById(R.id.fragmentContainerView)!!
 
-
-        bottomNavigationView = result.findViewById(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(controller)
         controller.addOnDestinationChangedListener { _, destination, _ ->
-            parentViewPager.isUserInputEnabled = destination.id == R.id.newsfeedFragmentView
+            parentViewPager.isUserInputEnabled = destination.id == R.id.navFeedMenu
         }
         //initNavigationBar()
         return result
@@ -58,7 +55,7 @@ class HomeFragmentView : Fragment() {
         bottomNavigationView.setOnItemSelectedListener {
             run {
                 when (it.itemId) {
-                    R.id.newsfeedFragmentView -> {
+                    R.id.navFeedMenu -> {
                         parentViewPager.isUserInputEnabled = true
                         true
                     }

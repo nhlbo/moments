@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph_home"
-    app:startDestination="@id/newsfeedFragmentView">
+    app:startDestination="@id/navFeedMenu">
 
     <fragment
-        android:id="@+id/newsfeedFragmentView"
+        android:id="@+id/navFeedMenu"
         android:name="com.example.moments.ui.main.newsFeed.NewsFeedFragmentView"
         android:label="NewsFeedFragmentView" >
         <action

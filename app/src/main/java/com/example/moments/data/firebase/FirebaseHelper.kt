@@ -149,7 +149,7 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryFeedPost(): Single<QuerySnapshot> =
+    override fun performQueryFeedPost(): Single<List<DocumentSnapshot>> =
         Single.create { emitter ->
             firebaseFirestore.collection("user/${getCurrentUserId()}/following")
                 .whereEqualTo("accepted", true)
@@ -161,10 +161,7 @@ class FirebaseHelper @Inject constructor(
                         .whereIn("creatorId", listUserFollowing)
                         .get()
                         .addOnSuccessListener {
-                            for (document in it.documents) {
-                                Log.d("feed", document.data.toString())
-                            }
-                            emitter.onSuccess(it)
+                            emitter.onSuccess(it.documents)
                         }
                 }
         }

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/newsfeedFragmentView">
+    app:startDestination="@id/navFeedMenu">
     <fragment
-        android:id="@+id/newsfeedFragmentView"
+        android:id="@+id/navFeedMenu"
         android:name="com.example.moments.ui.main.newsFeed.NewsFeedFragmentView"
         android:label="NewsFeedFragmentView">
         <action
@@ -13,19 +13,19 @@
             app:destination="@id/chatFragmentView" />
     </fragment>
     <fragment
-        android:id="@+id/searchFragmentView"
+        android:id="@+id/navSearchMenu"
         android:name="com.example.moments.ui.main.search.SearchFragmentView"
         android:label="SearchFragmentView" />
     <fragment
-        android:id="@+id/momentsFragmentView"
+        android:id="@+id/navMomentMenu"
         android:name="com.example.moments.ui.main.moments.MomentsFragmentView"
         android:label="MomentsFragmentView" />
     <fragment
-        android:id="@+id/notificationFragmentView"
+        android:id="@+id/navNotificationMenu"
         android:name="com.example.moments.ui.main.notification.NotificationFragmentView"
         android:label="NotificationFragmentView" />
     <fragment
-        android:id="@+id/profileFragmentView"
+        android:id="@+id/navProfileMenu"
         android:name="com.example.moments.ui.main.viewProfile.ProfileFragmentView"
         android:label="ProfileFragmentView" />
     <fragment

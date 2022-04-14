@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/include6"
+        android:id="@+id/postHeaderGroup"
         layout="@layout/header_post"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include6">
+        app:layout_constraintTop_toBottomOf="@+id/postHeaderGroup">
 
         <ImageView
             android:id="@+id/imageView8"
@@ -55,7 +55,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <include
-        android:id="@+id/include9"
+        android:id="@+id/interactionBtnGroup"
         layout="@layout/component_interaction_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,17 +64,17 @@
         app:layout_constraintTop_toBottomOf="@+id/tabDots" />
 
     <TextView
-        android:id="@+id/textView28"
+        android:id="@+id/postLikeCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="-1 like"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include9" />
+        app:layout_constraintTop_toBottomOf="@+id/interactionBtnGroup" />
 
     <TextView
-        android:id="@+id/textView29"
+        android:id="@+id/postCaptionTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -84,10 +84,10 @@
         android:text="lostin.paris Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        app:layout_constraintTop_toBottomOf="@+id/postLikeCount" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/showCommentTv"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -96,26 +96,26 @@
         android:minHeight="32dp"
         android:text="show all comments"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29"
+        app:layout_constraintTop_toBottomOf="@+id/postCaptionTv"
         tools:ignore="TouchTargetSizeCheck" />
 
     <include
-        android:id="@+id/include11"
+        android:id="@+id/postCommentInputGroup"
         layout="@layout/footer_post_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/showCommentTv" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/postCreatedAtTv"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="1 day ago"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include11" />
+        app:layout_constraintTop_toBottomOf="@+id/postCommentInputGroup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

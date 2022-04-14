@@ -36,7 +36,7 @@ interface IFirebaseHelper {
 
     fun performAcceptFollower(userId: String): Completable
 
-    fun performQueryFeedPost(): Single<QuerySnapshot>
+    fun performQueryFeedPost(): Single<List<DocumentSnapshot>>
 
     fun performLikePost(postId: String): Completable
 

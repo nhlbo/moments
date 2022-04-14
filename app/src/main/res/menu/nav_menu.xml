@@ -2,34 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/newsfeedFragmentView"
+        android:id="@+id/navFeedMenu"
         android:title="Home"
         android:icon="@drawable/ic_home"
         android:visible="true"
         android:enabled="true"/>
 
     <item
-        android:id="@+id/searchFragmentView"
+        android:id="@+id/navSearchMenu"
         android:title="Search"
         android:icon="@drawable/ic_search"
         android:visible="true"
         android:enabled="true"/>
 
-    <item android:id="@+id/momentsFragmentView"
+    <item android:id="@+id/navMomentMenu"
         android:title="Moments"
         android:icon="@drawable/ic_video"
         android:visible="true"
         android:enabled="true"/>
 
     <item
-        android:id="@+id/notificationFragmentView"
-        android:title="Notify"
+        android:id="@+id/navNotificationMenu"
+        android:enabled="true"
         android:icon="@drawable/ic_heart_outline"
-        android:visible="true"
-        android:enabled="true"/>
+        android:title="Notification"
+        android:visible="true" />
 
     <item
-        android:id="@+id/profileFragmentView"
+        android:id="@+id/navProfileMenu"
         android:title="Profile"
         android:icon="@drawable/ic_user"
         android:visible="true"
