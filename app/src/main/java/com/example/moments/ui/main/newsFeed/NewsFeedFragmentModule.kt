@@ -6,10 +6,10 @@ import dagger.Provides
 @Module
 class NewsFeedFragmentModule {
     @Provides
-    internal fun provideNewsFeedInteractor(interactor: NewsFeedInteractor): INewsFeedInteractor =
+    internal fun provideNewsFeedInteractor(interactor: NewsFeedFragmentInteractor): INewsFeedInteractor =
         interactor
 
     @Provides
-    internal fun provideNewsFeedPresenter(presenter: NewsFeedPresenter<INewsFeedView, INewsFeedInteractor>): INewsFeedPresenter<INewsFeedView, INewsFeedInteractor> =
+    internal fun provideNewsFeedPresenter(presenter: NewsFeedFragmentPresenter<INewsFeedView, INewsFeedInteractor>): INewsFeedPresenter<INewsFeedView, INewsFeedInteractor> =
         presenter
 }

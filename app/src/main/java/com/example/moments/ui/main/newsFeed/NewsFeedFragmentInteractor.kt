@@ -7,7 +7,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import io.reactivex.Single
 import javax.inject.Inject
 
-class NewsFeedInteractor @Inject constructor(
+class NewsFeedFragmentInteractor @Inject constructor(
     preferenceHelper: PreferenceHelper,
     firebaseHelper: FirebaseHelper
 ) : BaseInteractor(preferenceHelper, firebaseHelper), INewsFeedInteractor {

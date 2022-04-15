@@ -5,7 +5,7 @@ import com.example.moments.data.preference.PreferenceHelper
 import com.example.moments.ui.base.BaseInteractor
 import javax.inject.Inject
 
-class ProfileInteractor @Inject constructor(
+class ProfileFragmentInteractor @Inject constructor(
     preferenceHelper: PreferenceHelper,
     firebaseHelper: FirebaseHelper
 ) : BaseInteractor(preferenceHelper, firebaseHelper), IProfileInteractor {

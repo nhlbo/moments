@@ -9,7 +9,7 @@
     android:isScrollContainer="true">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/profile_header_toolbar"
+        android:id="@+id/profileToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSecondary"
@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_header_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/profileToolbar">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"

@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class SignUpActivityModule {
+class   SignUpActivityModule {
 
     @Provides
     internal fun provideSignUpInteractor(signUpActivityInteractor: SignUpActivityInteractor): ISignUpActivityInteractor =

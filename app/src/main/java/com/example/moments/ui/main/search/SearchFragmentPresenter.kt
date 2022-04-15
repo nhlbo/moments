@@ -1,11 +1,11 @@
-package com.example.moments.ui.main
+package com.example.moments.ui.main.search
 
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class MainActivityPresenter<V : IMainActivityView, I : IMainActivityInteractor> @Inject internal constructor(
+class SearchFragmentPresenter<V : ISearchView, I : ISearchInteractor> @Inject internal constructor(
     interactor: I,
     schedulerProvider: SchedulerProvider,
     disposable: CompositeDisposable
@@ -13,5 +13,5 @@ class MainActivityPresenter<V : IMainActivityView, I : IMainActivityInteractor> 
     interactor = interactor,
     schedulerProvider = schedulerProvider,
     compositeDisposable = disposable
-), IMainActivityPresenter<V, I> {
+), ISearchPresenter<V, I> {
 }

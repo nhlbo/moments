@@ -6,10 +6,10 @@ import dagger.Provides
 @Module
 class ProfileFragmentModule {
     @Provides
-    internal fun provideProfileInteractor(interactor: ProfileInteractor): IProfileInteractor =
+    internal fun provideProfileInteractor(interactor: ProfileFragmentInteractor): IProfileInteractor =
         interactor
 
     @Provides
-    internal fun provideProfilePresenter(presenter: ProfilePresenter<IProfileView, IProfileInteractor>): IProfilePresenter<IProfileView, IProfileInteractor> =
+    internal fun provideProfilePresenter(presenter: ProfileFragmentPresenter<IProfileView, IProfileInteractor>): IProfilePresenter<IProfileView, IProfileInteractor> =
         presenter
 }

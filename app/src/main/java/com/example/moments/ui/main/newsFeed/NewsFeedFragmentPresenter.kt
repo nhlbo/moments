@@ -5,7 +5,7 @@ import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class NewsFeedPresenter<V : INewsFeedView, I : INewsFeedInteractor> @Inject internal constructor(
+class NewsFeedFragmentPresenter<V : INewsFeedView, I : INewsFeedInteractor> @Inject internal constructor(
     interactor: I,
     schedulerProvider: SchedulerProvider,
     disposable: CompositeDisposable
