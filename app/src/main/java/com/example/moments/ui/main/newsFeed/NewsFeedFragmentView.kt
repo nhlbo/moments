@@ -34,36 +34,10 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         newsfeed_header_bar.inflateMenu(R.menu.header_newsfeeds)
-        onItemSelected()
     }
 
     override fun setUp() {
         presenter.onViewPrepared()
-    }
-
-    private fun onItemSelected() {
-        newsfeed_header_bar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.storyBtn -> {
-                    // Navigate to settings screen
-                    switchFragment(CommentFragmentView())
-                    true
-                }
-                R.id.msgBtn -> {
-                    // Save profile changes
-                    fragmentContainerView.currentItem += 1
-                    true
-                }
-                else -> false
-            }
-        }
-    }
-
-    private fun switchFragment(fragment: Fragment) {
-        activity?.supportFragmentManager?.beginTransaction()!!
-            .replace(R.id.fragmentViewPager, fragment, fragment.toString())
-            .addToBackStack(fragment.toString())
-            .commit()
     }
 
     override fun updatePost(listPost: List<DocumentSnapshot>) {

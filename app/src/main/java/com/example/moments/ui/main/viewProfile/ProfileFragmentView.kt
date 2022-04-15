@@ -1,23 +1,25 @@
 package com.example.moments.ui.main.viewProfile
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.example.moments.ui.base.BaseFragment
+import com.example.moments.ui.main.settings.SettingsActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_view_profile.*
 import javax.inject.Inject
 
 class ProfileFragmentView : BaseFragment(), IProfileView {
+
     companion object {
         fun newInstance(): ProfileFragmentView {
             return ProfileFragmentView()
@@ -28,6 +30,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     internal lateinit var presenter: IProfilePresenter<IProfileView, IProfileInteractor>
 
     private var toolBar: Toolbar? = null
+
     private var viewPager: ViewPager2? = null
 
     override fun setUp() {
@@ -40,9 +43,21 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.activity_view_profile, container, false)
-        initToolBar()
+        setHasOptionsMenu(true)
         initMediaGrid(view)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        profileToolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.profileSettingBtn) {
+                val intent = Intent(activity, SettingsActivityView::class.java)
+                startActivity(intent)
+                return@setOnMenuItemClickListener true
+            }
+            return@setOnMenuItemClickListener false
+        }
     }
 
     private fun initMediaGrid(view: View) {
@@ -58,10 +73,10 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     }
 
     private fun initToolBar() {
-        toolBar = view?.findViewById(R.id.profile_header_toolbar)
-        toolBar?.inflateMenu(R.menu.header_profile)
-        toolBar?.title = "Your profile"
-        onItemSelected()
+//        toolBar = view?.findViewById(R.id.profile_header_toolbar)
+//        toolBar?.inflateMenu(R.menu.header_profile)
+//        toolBar?.title = "Your profile"
+//        onItemSelected()
     }
 
     private fun initRecyclerView(view: View?) {
@@ -75,22 +90,5 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         recyclerView?.layoutManager = GridLayoutManager(activity, 3)
         var adapter = context?.let { ImagesAdapter(it, imageList) }
         recyclerView?.adapter = adapter
-    }
-
-    private fun onItemSelected() {
-        toolBar?.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.profileSettingBtn -> {
-                    // Navigate to settings screen
-                    true
-                }
-                R.id.storyBtn -> {
-                    // Save profile changes
-
-                    true
-                }
-                else -> false
-            }
-        }
     }
 }

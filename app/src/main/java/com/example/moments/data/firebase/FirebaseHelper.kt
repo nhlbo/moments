@@ -2,6 +2,7 @@ package com.example.moments.data.firebase
 
 import android.net.Uri
 import android.util.Log
+import com.example.moments.data.model.Message
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.di.FirebaseAuthInstance
@@ -11,6 +12,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storageMetadata
 import io.reactivex.Completable
@@ -124,7 +126,7 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryFollowingUser(): Single<List<DocumentSnapshot>> =
+    override fun performQueryFollowingUser(): Single<List<User>> =
         Single.create { emitter ->
             firebaseFirestore.collection("/user/${getCurrentUserId()}/following").get()
                 .addOnSuccessListener { followingUser ->
@@ -132,7 +134,7 @@ class FirebaseHelper @Inject constructor(
                     firebaseFirestore.collection("/user")
                         .whereIn(FieldPath.documentId(), listIdFollowing).get()
                         .addOnSuccessListener { listUserDetail ->
-                            emitter.onSuccess(listUserDetail.documents.toList())
+                            emitter.onSuccess(listUserDetail.toObjects())
                         }
                 }
         }
@@ -319,6 +321,33 @@ class FirebaseHelper @Inject constructor(
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
+                }
+        }
+
+    override fun performSendMessage(message: Message): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.collection("/message")
+                .add(message)
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performListenToMessage(): Observable<List<Message>> =
+        Observable.create { emitter ->
+            firebaseFirestore.collection("/message")
+                .orderBy("timeStamp", Query.Direction.ASCENDING)
+                .addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        emitter.onError(e)
+                        return@addSnapshotListener
+                    }
+                    if (snapshot != null) {
+                        emitter.onNext(snapshot.toObjects<Message>())
+                    }
                 }
         }
 }

@@ -1,10 +1,14 @@
 package com.example.moments.ui.main
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.example.moments.ui.main.moments.MomentsFragmentView
 import com.example.moments.ui.main.newsFeed.NewsFeedFragmentView
+import com.example.moments.ui.main.notification.NotificationFragmentView
 import com.example.moments.ui.main.search.SearchFragmentView
+import com.example.moments.ui.main.viewProfile.ProfileFragmentView
 
 class FragmentAdapter(fragmentManager: FragmentManager) :
     FragmentStatePagerAdapter(fragmentManager) {
@@ -15,7 +19,11 @@ class FragmentAdapter(fragmentManager: FragmentManager) :
     override fun getItem(position: Int): Fragment {
         return when(position){
             0 -> NewsFeedFragmentView.newInstance()
-            else -> SearchFragmentView()
+            1 -> SearchFragmentView.newInstance()
+            2 -> MomentsFragmentView.newInstance()
+            3 -> NotificationFragmentView.newInstance()
+            4 -> ProfileFragmentView.newInstance()
+            else -> NewsFeedFragmentView.newInstance()
         }
     }
 

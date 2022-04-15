@@ -1,6 +1,7 @@
 package com.example.moments.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
@@ -18,13 +19,23 @@ class MainActivityView : BaseActivity(), HasAndroidInjector,
 
     @Inject
     internal lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+
     private lateinit var viewPagerAdapter: FragmentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         viewPagerAdapter = FragmentAdapter(supportFragmentManager)
+        viewPagerAdapter.count = 5
         setUp()
+    }
+
+    override fun onBackPressed() {
+        if(fragmentViewPager.currentItem == 0){
+            super.onBackPressed()
+        } else {
+            fragmentViewPager.currentItem  = fragmentViewPager.currentItem - 1
+        }
     }
 
     override fun onFragmentAttached() {
@@ -38,7 +49,6 @@ class MainActivityView : BaseActivity(), HasAndroidInjector,
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
-
 
     private fun setUp() {
         fragmentViewPager.adapter = viewPagerAdapter
