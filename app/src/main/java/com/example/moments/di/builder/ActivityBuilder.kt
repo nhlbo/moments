@@ -7,6 +7,8 @@ import com.example.moments.ui.login.LoginActivityView
 import com.example.moments.ui.main.MainActivityView
 import com.example.moments.ui.main.chat.ChatActivityModule
 import com.example.moments.ui.main.chat.ChatActivityView
+import com.example.moments.ui.main.message.MessageActivityModule
+import com.example.moments.ui.main.message.MessageActivityView
 import com.example.moments.ui.main.newMessage.NewMessageActivityModule
 import com.example.moments.ui.main.newMessage.NewMessageActivityView
 import com.example.moments.ui.main.newsFeed.NewsFeedFragmentProvider
@@ -48,4 +50,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(NewsFeedFragmentProvider::class), (SearchFragmentProvider::class), (NotificationFragmentProvider::class)])
     abstract fun bindMainActivity(): MainActivityView
+
+    @ContributesAndroidInjector(modules = [(MessageActivityModule::class)])
+    abstract fun bindMessageActitity(): MessageActivityView
 }

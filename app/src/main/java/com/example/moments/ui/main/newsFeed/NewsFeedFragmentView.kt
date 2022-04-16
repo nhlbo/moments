@@ -1,15 +1,14 @@
 package com.example.moments.ui.main.newsFeed
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.moments.R
 import com.example.moments.ui.base.BaseFragment
-import com.example.moments.ui.main.comment.CommentFragmentView
+import com.example.moments.ui.main.message.MessageActivityView
 import com.google.firebase.firestore.DocumentSnapshot
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_news_feed.*
 import javax.inject.Inject
 
@@ -34,6 +33,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         newsfeed_header_bar.inflateMenu(R.menu.header_newsfeeds)
+        setUpOnClicked()
     }
 
     override fun setUp() {
@@ -49,5 +49,21 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView {
     override fun onDestroyView() {
         presenter.onDetach()
         super.onDestroyView()
+    }
+
+    private fun setUpOnClicked() {
+        newsfeed_header_bar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.storyBtn -> {
+                    true
+                }
+                R.id.msgBtn -> {
+                    val intent: Intent = Intent(activity, MessageActivityView::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }
