@@ -29,7 +29,7 @@
             android:name=".ui.signUp.SignUpActivityView"
             android:exported="false" />
         <activity
-            android:name=".ui.main.newsFeed.NewsFeedActivityView"
+            android:name=".ui.main.message.MessageActivityView"
             android:exported="false" />
         <activity
             android:name=".ui.main.chat.ChatActivityView"

@@ -14,6 +14,6 @@
     </fragment>
     <fragment
         android:id="@+id/messageFragmentView"
-        android:name="com.example.moments.ui.main.message.MessageFragmentView"
+        android:name="com.example.moments.ui.main.message.`MessageActivity'View`"
         android:label="MessageFragmentView" />
 </navigation>
