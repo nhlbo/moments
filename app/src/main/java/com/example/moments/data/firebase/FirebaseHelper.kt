@@ -63,7 +63,7 @@ class FirebaseHelper @Inject constructor(
                                 .addOnSuccessListener { authTask ->
                                     firebaseFirestore.collection("user")
                                         .document(getCurrentUserId())
-                                        .set(User(username, email))
+                                        .set(User(username = username, email = email))
                                         .addOnSuccessListener {
                                             emitter.onComplete()
                                         }
@@ -98,17 +98,29 @@ class FirebaseHelper @Inject constructor(
 
     override fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
 
-    override fun performQueryUserByUsername(username: String): Single<List<DocumentSnapshot>> =
+    override fun performQueryUserByUsername(username: String): Single<List<User>> =
         Single.create { emitter ->
             firebaseFirestore.collection("user")
                 .whereGreaterThanOrEqualTo("username", username)
                 .get()
                 .addOnSuccessListener { documents ->
-                    emitter.onSuccess(documents.documents.toList())
+                    val res = mutableListOf<User>()
+                    for (doc in documents.documents) {
+                        res.add(doc.toObject(User::class.java)!!)
+                    }
+                    emitter.onSuccess(res.toList())
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
                 }
+        }
+
+    override fun performQueryUserByReference(user: DocumentReference): Single<User> =
+        Single.create { emitter ->
+            user.get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.toObject(User::class.java)!!) }
+                .addOnFailureListener { emitter.onError(it) }
         }
 
     override fun performFollowUser(userId: String): Completable =
@@ -151,19 +163,22 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryFeedPost(): Single<List<DocumentSnapshot>> =
+    override fun performQueryFeedPost(): Single<List<Post>> =
         Single.create { emitter ->
             firebaseFirestore.collection("user/${getCurrentUserId()}/following")
                 .whereEqualTo("accepted", true)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
                     val listUserFollowing: List<DocumentReference> =
-                        querySnapshot.map { firebaseFirestore.document("/user/${it.id}") }
+                        listOf(firebaseFirestore.document("user/P2NLrTbmHSVYF14UjNuLnHTE8H62"))
+//                        querySnapshot.map { firebaseFirestore.document("user/${it.id}") }
                     firebaseFirestore.collection("post")
-                        .whereIn("creatorId", listUserFollowing)
+                        .whereIn("creator", listUserFollowing)
                         .get()
-                        .addOnSuccessListener {
-                            emitter.onSuccess(it.documents)
+                        .addOnSuccessListener { postSnapshot ->
+                            val listPost =
+                                postSnapshot.documents.map { it.toObject(Post::class.java)!! }
+                            emitter.onSuccess(listPost)
                         }
                 }
         }
@@ -202,17 +217,19 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryLikedPostUser(postId: String): Single<List<DocumentSnapshot>> =
+    override fun performQueryLikedPostUser(postId: String): Single<List<User>> =
         Single.create { emitter ->
             firebaseFirestore.collection("/post/$postId/like").get()
-                .addOnSuccessListener { likedPosts ->
-                    val res: MutableList<DocumentSnapshot> = mutableListOf()
-                    for (post in likedPosts.documents) {
-                        firebaseFirestore.document("/user/${post.id}").get()
-                            .addOnSuccessListener {
-                                res.add(it)
+                .addOnSuccessListener { likedUser ->
+                    val res: MutableList<User> = mutableListOf()
+                    firebaseFirestore.collection("user")
+                        .whereIn(FieldPath.documentId(), likedUser.documents.map { it.id })
+                        .get()
+                        .addOnSuccessListener { listUser ->
+                            for (doc in listUser.documents) {
+                                res.add(doc.toObject(User::class.java)!!)
                             }
-                    }
+                        }
                     emitter.onSuccess(res.toList())
                 }
                 .addOnFailureListener {
@@ -297,9 +314,9 @@ class FirebaseHelper @Inject constructor(
             firebaseFirestore.collection("/post")
                 .add(
                     Post(
-                        firebaseFirestore.document("/user/${getCurrentUserId()}"),
-                        caption,
-                        media
+                        caption = caption,
+                        creator = firebaseFirestore.document("/user/${getCurrentUserId()}"),
+                        listMedia = media
                     )
                 )
                 .addOnSuccessListener { docRef ->
