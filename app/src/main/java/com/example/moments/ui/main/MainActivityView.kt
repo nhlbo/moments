@@ -7,15 +7,13 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
 
-class MainActivityView : BaseActivity(), HasAndroidInjector,
-    BottomNavigationView.OnNavigationItemSelectedListener, IMainActivityView {
+class MainActivityView : BaseActivity(), HasAndroidInjector, IMainActivityView {
 
     @Inject
     internal lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
@@ -31,10 +29,10 @@ class MainActivityView : BaseActivity(), HasAndroidInjector,
     }
 
     override fun onBackPressed() {
-        if(fragmentViewPager.currentItem == 0){
+        if (fragmentViewPager.currentItem == 0) {
             super.onBackPressed()
         } else {
-            fragmentViewPager.currentItem  = fragmentViewPager.currentItem - 1
+            fragmentViewPager.currentItem = fragmentViewPager.currentItem - 1
         }
     }
 
@@ -51,6 +49,17 @@ class MainActivityView : BaseActivity(), HasAndroidInjector,
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
     private fun setUp() {
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navFeedMenu -> fragmentViewPager.currentItem = 0
+                R.id.navSearchMenu -> fragmentViewPager.currentItem = 1
+                R.id.navMomentMenu -> fragmentViewPager.currentItem = 2
+                R.id.navNotificationMenu -> fragmentViewPager.currentItem = 3
+                R.id.navProfileMenu -> fragmentViewPager.currentItem = 4
+            }
+            true
+        }
+
         fragmentViewPager.adapter = viewPagerAdapter
         fragmentViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
@@ -74,16 +83,5 @@ class MainActivityView : BaseActivity(), HasAndroidInjector,
             override fun onPageScrollStateChanged(state: Int) {
             }
         })
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.navFeedMenu -> fragmentViewPager.currentItem = 0
-            R.id.navSearchMenu -> fragmentViewPager.currentItem = 1
-            R.id.navMomentMenu -> fragmentViewPager.currentItem = 2
-            R.id.navNotificationMenu -> fragmentViewPager.currentItem = 3
-            R.id.navProfileMenu -> fragmentViewPager.currentItem = 4
-        }
-        return true
     }
 }

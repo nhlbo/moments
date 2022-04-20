@@ -16,7 +16,7 @@ import com.example.moments.ui.main.search.SearchFragmentView
 import com.example.moments.ui.main.viewProfile.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_notification.*
 
-class NotificationFragmentView : Fragment(R.layout.activity_notification) {
+class NotificationFragmentView : Fragment() {
     companion object {
         fun newInstance(): NotificationFragmentView {
             return NotificationFragmentView()

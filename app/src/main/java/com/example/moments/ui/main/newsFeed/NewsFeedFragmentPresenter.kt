@@ -20,9 +20,9 @@ class NewsFeedFragmentPresenter<V : INewsFeedView, I : INewsFeedInteractor> @Inj
             compositeDisposable.add(
                 it.doQueryFeedPost().compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
-                               Log.d("debug", it.toString())
+                        Log.d("debug", it.map { it.creator }.toString())
                     }, {
-                            getView()?.showCustomToastMessage(it.localizedMessage)
+                        getView()?.showCustomToastMessage(it.localizedMessage)
                     })
 
             )

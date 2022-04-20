@@ -1,7 +1,6 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
-import android.util.Log
 import com.example.moments.data.model.Message
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
@@ -119,7 +118,8 @@ class FirebaseHelper @Inject constructor(
         Single.create { emitter ->
             user.get()
                 .addOnSuccessListener {
-                    emitter.onSuccess(it.toObject(User::class.java)!!) }
+                    emitter.onSuccess(it.toObject(User::class.java)!!)
+                }
                 .addOnFailureListener { emitter.onError(it) }
         }
 
@@ -365,6 +365,19 @@ class FirebaseHelper @Inject constructor(
                     if (snapshot != null) {
                         emitter.onNext(snapshot.toObjects<Message>())
                     }
+                }
+        }
+
+    override fun performQueryCurrentUserPost(): Single<List<Post>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("post")
+                .whereEqualTo("creator", firebaseFirestore.document("user/${getCurrentUserId()}"))
+                .get()
+                .addOnSuccessListener { listPost ->
+                    emitter.onSuccess(listPost.documents.map { it.toObject(Post::class.java)!! })
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
                 }
         }
 }
