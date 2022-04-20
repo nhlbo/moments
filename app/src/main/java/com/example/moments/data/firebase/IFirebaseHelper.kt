@@ -2,8 +2,11 @@ package com.example.moments.data.firebase
 
 import android.net.Uri
 import com.example.moments.data.model.Message
+import com.example.moments.data.model.Post
+import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.User
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import io.reactivex.Completable
@@ -32,19 +35,21 @@ interface IFirebaseHelper {
 
     fun performPasswordResetRequest(email: String): Completable
 
-    fun performQueryUserByUsername(username: String): Single<List<DocumentSnapshot>>
+    fun performQueryUserByUsername(username: String): Single<List<User>>
+
+    fun performQueryUserByReference(user: DocumentReference): Single<User>
 
     fun performFollowUser(userId: String): Completable
 
     fun performAcceptFollower(userId: String): Completable
 
-    fun performQueryFeedPost(): Single<List<DocumentSnapshot>>
+    fun performQueryFeedPost(): Single<List<Post>>
 
     fun performLikePost(postId: String): Completable
 
     fun performUnlikePost(postId: String): Completable
 
-    fun performQueryLikedPostUser(postId: String): Single<List<DocumentSnapshot>>
+    fun performQueryLikedPostUser(postId: String): Single<List<User>>
 
     fun performDeletePost(postId: String): Completable
 

@@ -1,5 +1,6 @@
 package com.example.moments.ui.main.newsFeed
 
+import android.util.Log
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -15,14 +16,15 @@ class NewsFeedFragmentPresenter<V : INewsFeedView, I : INewsFeedInteractor> @Inj
     compositeDisposable = disposable
 ), INewsFeedPresenter<V, I> {
     override fun onViewPrepared() {
-        interactor?.let {
+        interactor?.let { it ->
             compositeDisposable.add(
                 it.doQueryFeedPost().compose(schedulerProvider.ioToMainSingleScheduler())
-                    .subscribe({ listPost ->
-                               getView()?.updatePost(listPost)
-                    },{
-                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    .subscribe({
+                               Log.d("debug", it.toString())
+                    }, {
+                            getView()?.showCustomToastMessage(it.localizedMessage)
                     })
+
             )
         }
     }
