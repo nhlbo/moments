@@ -68,4 +68,6 @@ interface IFirebaseHelper {
     fun performSendMessage(message: Message): Completable
 
     fun performListenToMessage(): Observable<List<Message>>
+
+    fun performQueryCurrentUserPost(): Single<List<Post>>
 }

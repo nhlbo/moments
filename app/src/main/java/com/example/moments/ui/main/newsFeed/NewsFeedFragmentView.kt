@@ -31,6 +31,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
         newsfeed_header_bar.inflateMenu(R.menu.header_newsfeeds)
         setUpOnClicked()

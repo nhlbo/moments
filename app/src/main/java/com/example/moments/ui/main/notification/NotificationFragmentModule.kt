@@ -5,11 +5,12 @@ import dagger.Provides
 
 @Module
 class NotificationFragmentModule {
+
     @Provides
     internal fun provideNotificationInteractor(interactor: NotificationFragmentInteractor): INotificationInteractor =
         interactor
 
     @Provides
-    fun provideNotificationPresenter(presenter: NotificationFragmentPresenter<INotificationView, INotificationInteractor>): INotificationPresenter<INotificationView, INotificationInteractor> =
+    internal fun provideNotificationPresenter(presenter: NotificationFragmentPresenter<INotificationView, INotificationInteractor>): INotificationPresenter<INotificationView, INotificationInteractor> =
         presenter
 }

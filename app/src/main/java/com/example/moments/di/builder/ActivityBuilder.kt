@@ -48,7 +48,7 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [(SettingsActivityModule::class)])
     abstract fun bindSettingsActivity(): SettingsActivityView
 
-    @ContributesAndroidInjector(modules = [(NewsFeedFragmentProvider::class), (SearchFragmentProvider::class), (NotificationFragmentProvider::class)])
+    @ContributesAndroidInjector(modules = [(NewsFeedFragmentProvider::class), (SearchFragmentProvider::class), (NotificationFragmentProvider::class), (ProfileFragmentProvider::class)])
     abstract fun bindMainActivity(): MainActivityView
 
     @ContributesAndroidInjector(modules = [(MessageActivityModule::class)])

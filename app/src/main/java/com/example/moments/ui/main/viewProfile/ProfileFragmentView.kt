@@ -34,7 +34,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     private var viewPager: ViewPager2? = null
 
     override fun setUp() {
-        TODO("Not yet implemented")
+        presenter.onViewPrepared()
     }
 
     override fun onCreateView(
@@ -49,6 +49,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
         profileToolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.profileSettingBtn) {
@@ -58,6 +59,11 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
             }
             return@setOnMenuItemClickListener false
         }
+    }
+
+    override fun onDestroyView() {
+        presenter.onDetach()
+        super.onDestroyView()
     }
 
     private fun initMediaGrid(view: View) {
