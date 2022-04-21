@@ -10,7 +10,6 @@ data class User(
     val id: String = "",
     var username: String = "",
     var email: String = "",
-    var fullname: String = "",
     var avatar: String = "",
     var followingCount: Int = 0,
     var followerCount: Int = 0,
