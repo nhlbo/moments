@@ -54,7 +54,9 @@ interface IFirebaseHelper {
 
     fun performDeletePost(postId: String): Completable
 
-    fun performUploadMedia(listMedia: ArrayList<ByteArray>): Observable<Uri>
+    fun performUploadListMedia(listMedia: List<ByteArray>): Observable<Uri>
+
+    fun performUploadMedia(media: ByteArray): Single<Uri>
 
     fun performAddPost(caption: String, media: ArrayList<String>): Single<DocumentSnapshot>
 

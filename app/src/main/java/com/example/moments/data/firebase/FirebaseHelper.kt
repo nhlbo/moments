@@ -1,7 +1,6 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
-import android.util.Log
 import com.example.moments.data.model.Message
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
@@ -14,7 +13,6 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storageMetadata
@@ -341,27 +339,31 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performUploadMedia(listMedia: ArrayList<ByteArray>): Observable<Uri> =
-        Observable.create { emitter ->
-            val ref = firebaseStorage.reference
-            for (media in listMedia) {
-                ref.child("images/${UUID.randomUUID()}.jpeg")
-                    .putBytes(media, storageMetadata { contentType = "image/jpeg" })
-                    .continueWithTask { task ->
-                        if (!task.isSuccessful) {
-                            task.exception?.let {
-                                emitter.onError(it)
-                            }
-                        }
-                        ref.downloadUrl
-                    }
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful)
-                            emitter.onNext(task.result)
-                    }
+    override fun performUploadListMedia(listMedia: List<ByteArray>): Observable<Uri> =
+        Observable.fromIterable(listMedia)
+            .flatMapSingle { media ->
+                performUploadMedia(media)
             }
-        }
 
+    override fun performUploadMedia(media: ByteArray): Single<Uri> =
+        Single.create { emitter ->
+            val ref = firebaseStorage.reference.child("images/${UUID.randomUUID()}.jpeg")
+            ref.putBytes(media, storageMetadata { contentType = "image/jpeg" })
+                .continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            emitter.onError(it)
+                        }
+                    }
+                    ref.downloadUrl
+                }
+                .addOnSuccessListener {
+                    emitter.onSuccess(it)
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
 
     override fun performAddPost(
         caption: String,
