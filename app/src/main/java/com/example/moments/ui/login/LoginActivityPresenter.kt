@@ -3,6 +3,7 @@ package com.example.moments.ui.login
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.AppConstants
 import com.example.moments.util.SchedulerProvider
+import com.google.firebase.auth.AuthCredential
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -39,7 +40,7 @@ class LoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInteracto
     }
 
     override fun onGoogleLoginClicked() {
-        TODO("Not yet implemented")
+        getView()?.openGoogleLoginActivity()
     }
 
     override fun onGoToSignUpClicked() {
@@ -48,5 +49,18 @@ class LoginActivityPresenter<V : ILoginActivityView, I : ILoginActivityInteracto
 
     override fun onGoToForgotPasswordClicked() {
         getView()?.openForgotPasswordActivity()
+    }
+
+    override fun onGoogleLoginProcess(credential: AuthCredential) {
+        interactor?.let {
+            compositeDisposable.add(
+                it.doGoogleLogin(credential).compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+                        getView()?.openMainActivity()
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
     }
 }

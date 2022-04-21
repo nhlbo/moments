@@ -8,6 +8,7 @@ import com.example.moments.di.FirebaseAuthInstance
 import com.example.moments.di.FirebaseCloudStorageInstance
 import com.example.moments.di.FirebaseFirestoreInstance
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
@@ -43,9 +44,19 @@ class FirebaseHelper @Inject constructor(
 
     override fun isUserLoggedIn(): Boolean = getCurrentUser() != null
 
-    override fun performGoogleLogin(): Completable {
-        TODO("sfs")
-    }
+    override fun performGoogleLogin(credential: AuthCredential): Completable =
+        Completable.create{ emitter ->
+            firebaseAuth.signInWithCredential(credential).addOnSuccessListener {
+                firebaseFirestore.collection("user")
+                    .document(it.user!!.uid)
+                    .set(User(username = it.user!!.email!!.substring(0, it.user!!.email!!.indexOf('@')), email = it.user!!.email!!), SetOptions.merge())
+                    .addOnSuccessListener {
+                        emitter.onComplete()
+                    }
+            }.addOnFailureListener {
+                emitter.onError(it)
+            }
+        }
 
     override fun performEmailAndPasswordRegister(
         email: String,
@@ -62,7 +73,7 @@ class FirebaseHelper @Inject constructor(
                                 .addOnSuccessListener { authTask ->
                                     firebaseFirestore.collection("user")
                                         .document(getCurrentUserId())
-                                        .set(User(username = username, email = email))
+                                        .set(User(username = username, email = email), SetOptions.merge())
                                         .addOnSuccessListener {
                                             emitter.onComplete()
                                         }
