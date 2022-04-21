@@ -5,6 +5,7 @@ import com.example.moments.data.model.Message
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.User
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
@@ -17,7 +18,7 @@ interface IFirebaseHelper {
 
     fun performEmailAndPasswordLogin(email: String, password: String): Completable
 
-    fun performGoogleLogin(): Completable
+    fun performGoogleLogin(credential: AuthCredential): Completable
 
     fun performEmailAndPasswordRegister(
         email: String,

@@ -10,6 +10,13 @@ import com.example.moments.ui.forgetPassword.ForgetPasswordActivityView
 import com.example.moments.ui.main.MainActivityView
 import com.example.moments.ui.signUp.SignUpActivityView
 import com.example.moments.util.AppConstants
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
@@ -18,11 +25,24 @@ class LoginActivityView : BaseActivity(), ILoginActivityView {
     @Inject
     lateinit var presenter: ILoginActivityPresenter<ILoginActivityView, ILoginActivityInteractor>
 
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    val REQ_CODE_GOOGLE_SIGN_IN = 1337
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         presenter.onAttach(this)
+        setUpGoogle()
         setOnClickListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val lastSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
+        if (lastSignInAccount != null) {
+            UpdateUI(lastSignInAccount)
+        }
     }
 
     override fun onDestroy() {
@@ -96,5 +116,42 @@ class LoginActivityView : BaseActivity(), ILoginActivityView {
         tvForgetPassword.setOnClickListener {
             presenter.onGoToForgotPasswordClicked()
         }
+    }
+
+    private fun setUpGoogle() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("586030394871-c28o0b48bbiaunrp6nv1am0e4995qmn7.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    override fun openGoogleLoginActivity() {
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, REQ_CODE_GOOGLE_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_CODE_GOOGLE_SIGN_IN) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleResult(task)
+        }
+    }
+
+    private fun handleResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
+            if (account != null) {
+                UpdateUI(account)
+            }
+        } catch (e: ApiException) {
+            showCustomToastMessage(e.localizedMessage)
+        }
+    }
+
+    private fun UpdateUI(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        presenter.onGoogleLoginProcess(credential)
     }
 }
