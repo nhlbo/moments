@@ -67,6 +67,7 @@ class ChatActivityView : BaseActivity(), IChatActivityView {
             }
         }
         rvChat.adapter = adapter
+        rvChat.scrollToPosition(adapter.itemCount - 1)
     }
 }
 

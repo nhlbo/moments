@@ -6,6 +6,7 @@ import com.example.moments.R
 import com.example.moments.data.model.Message
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.main.newMessage.NewMessageActivityView
 import kotlinx.android.synthetic.main.activity_latest_message.*
 import javax.inject.Inject
 
@@ -28,7 +29,7 @@ class LatestMessageActivityView : BaseActivity(), ILatestMessageActivityView {
         tbLatestMessageActivity.setNavigationOnClickListener { finish() }
         tbLatestMessageActivity.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.btnChat) {
-                val intent = Intent(this, LatestMessageActivityView::class.java)
+                val intent = Intent(this, NewMessageActivityView::class.java)
                 startActivity(intent)
                 return@setOnMenuItemClickListener true
             }
