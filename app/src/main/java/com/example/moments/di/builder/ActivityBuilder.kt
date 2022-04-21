@@ -9,8 +9,8 @@ import com.example.moments.ui.main.chat.ChatActivityModule
 import com.example.moments.ui.main.chat.ChatActivityView
 import com.example.moments.ui.main.editProfile.EditProfileActivityModule
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
-import com.example.moments.ui.main.message.MessageActivityModule
-import com.example.moments.ui.main.message.MessageActivityView
+import com.example.moments.ui.main.latestMessage.LatestMessageActivityModule
+import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.newMessage.NewMessageActivityModule
 import com.example.moments.ui.main.newMessage.NewMessageActivityView
 import com.example.moments.ui.main.newsFeed.NewsFeedFragmentProvider
@@ -56,6 +56,6 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [(NewsFeedFragmentProvider::class), (SearchFragmentProvider::class), (NotificationFragmentProvider::class), (ProfileFragmentProvider::class)])
     abstract fun bindMainActivity(): MainActivityView
 
-    @ContributesAndroidInjector(modules = [(MessageActivityModule::class)])
-    abstract fun bindMessageActitity(): MessageActivityView
+    @ContributesAndroidInjector(modules = [(LatestMessageActivityModule::class)])
+    abstract fun bindMessageActitity(): LatestMessageActivityView
 }

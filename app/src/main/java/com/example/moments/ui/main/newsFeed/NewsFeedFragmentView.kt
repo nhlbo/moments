@@ -2,19 +2,16 @@ package com.example.moments.ui.main.newsFeed
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavDeepLinkRequest
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.ui.base.BaseFragment
-import com.example.moments.ui.main.message.MessageActivityView
-import com.google.firebase.firestore.DocumentSnapshot
+import com.example.moments.ui.main.latestMessage.MessageActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
 import javax.inject.Inject
 

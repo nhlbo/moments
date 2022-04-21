@@ -71,4 +71,6 @@ interface IFirebaseHelper {
     fun performQueryCurrentUserPost(): Single<List<Post>>
 
     fun performChangePassword(oldPassword: String, newPassword: String): Completable
+
+    fun performQueryLatestMessage(): Single<List<User>>
 }
