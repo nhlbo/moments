@@ -47,7 +47,8 @@ class SearchFragmentView : BaseFragment(), ISearchView {
     }
 
     override fun onSearchResultCallback(listUser: List<User>) {
-        (svSearchOthers.adapter as UserSearchAdapter).updateUser(listUser)
+        val adapter = UserSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, ArrayList(listUser))
+        svSearchOthers.setAdapter(adapter)
         svSearchOthers.showDropDown()
     }
 
@@ -86,17 +87,20 @@ class UserSearchAdapter(
         }
         val user: User = items[position]
         val fullname = view!!.findViewById<TextView>(R.id.tvFullNameSearch)
-        fullname?.setText(user.username)
+        fullname?.text = user.username
         val username = view.findViewById<TextView>(R.id.tvUsernameSearch)
-        username?.setText(user.username)
+        username?.text = user.username
         val image = view.findViewById<ImageView>(R.id.ivAvatarUserSearch)
         Glide.with(context).load(user.avatar).into(image)
         return view
     }
 
     fun updateUser(listUser: List<User>) {
-        items.clear()
-        items.addAll(listUser)
+        this.clear()
+        for(i: Int in listUser.indices){
+            this.insert(listUser[i], i)
+        }
+        setNotifyOnChange(true)
         notifyDataSetChanged()
         Log.d("debug", count.toString())
     }
