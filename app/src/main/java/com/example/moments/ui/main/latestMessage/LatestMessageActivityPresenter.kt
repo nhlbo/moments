@@ -16,11 +16,11 @@ class LatestMessageActivityPresenter<V : ILatestMessageActivityView, I : ILatest
 ),
     ILatestMessageActivityPresenter<V, I> {
 
-    override fun onQueryLatestMessage() {
+    override fun onListenToLatestMessage() {
         interactor?.let {
             compositeDisposable.add(
-                it.doQueryLatestMessage()
-                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                it.doListenToLatestMessage()
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
                     .subscribe({
                         getView()?.addLatestMessages(it)
                     }, {

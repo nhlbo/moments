@@ -138,6 +138,19 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
+    override fun performQueryUserByIds(ids: List<String>): Single<List<User>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("user")
+                .whereIn(FieldPath.documentId(), ids)
+                .get()
+                .addOnSuccessListener { documents ->
+                    emitter.onSuccess(documents.toObjects<User>())
+                }
+                .addOnFailureListener { exception ->
+                    emitter.onError(exception)
+                }
+        }
+
     override fun performQueryUserByReference(user: DocumentReference): Single<User> =
         Single.create { emitter ->
             user.get()
@@ -437,9 +450,9 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performListenLatestMessage(): Observable<List<Pair<User, Message>>> =
+    override fun performListenToLatestMessage(): Observable<List<Message>> =
         Observable.create { emitter ->
-            firebaseFirestore.collection("/message/${getCurrentUserId()}/")
+            firebaseFirestore.collection("/message/latest-message/${getCurrentUserId()}/")
                 .addSnapshotListener { snapshot, e ->
                     if (e != null) {
                         emitter.onError(e)
@@ -449,4 +462,5 @@ class FirebaseHelper @Inject constructor(
                         emitter.onNext(snapshot.toObjects<Message>())
                     }
                 }
+        }
 }
