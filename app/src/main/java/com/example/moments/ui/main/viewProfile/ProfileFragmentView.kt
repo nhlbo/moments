@@ -1,7 +1,6 @@
 package com.example.moments.ui.main.viewProfile
 
 import android.content.Intent
-import android.content.Intent
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -78,7 +77,6 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         super.onDestroyView()
     }
 
-    private fun initMediaGrid(view: View) {
     private fun initMediaGrid(view: View) {
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout_view_profile)
         viewPager = view.findViewById(R.id.vp2_view_profile)

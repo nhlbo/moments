@@ -14,6 +14,7 @@ import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.message.MessageActivityView
+import com.example.moments.ui.main.newsFeed.post.PostView
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.android.synthetic.main.activity_news_feed.*
 import javax.inject.Inject
@@ -93,10 +94,12 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         newsfeed_header_bar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.storyBtn -> {
+                    val intent = Intent(activity, PostView::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.msgBtn -> {
-                    val intent: Intent = Intent(activity, MessageActivityView::class.java)
+                    val intent = Intent(activity, MessageActivityView::class.java)
                     startActivity(intent)
                     true
                 }

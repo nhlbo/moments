@@ -8,8 +8,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 
-class ImagesAdapter (var context: Context, private val imagesList : List<String>) :
+class ImagesAdapter (var context: Context, private val imagesList : ArrayList<String>, private val itemTouchListener: IOnRecyclerViewItemTouchListener?) :
     RecyclerView.Adapter<ImagesAdapter.ViewHolder>() {
     var onItemClick: ((String) -> Unit)? = null
 
@@ -30,10 +31,17 @@ class ImagesAdapter (var context: Context, private val imagesList : List<String>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val img : String = imagesList[position]
         Glide.with(context).load(img).into(holder.img)
+        holder.img.setOnClickListener { itemTouchListener?.onItemClick(position) }
     }
 
     override fun getItemCount(): Int {
         return imagesList.size
+    }
+
+    fun updateItems(newList: List<String>){
+        val latestIndex = imagesList.size - 1
+        imagesList.addAll(newList)
+        notifyItemRangeChanged(latestIndex,newList.size)
     }
 
 }

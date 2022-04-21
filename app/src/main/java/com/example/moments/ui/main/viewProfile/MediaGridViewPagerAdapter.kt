@@ -65,7 +65,7 @@ class GridMediaFragment : Fragment() {
             DividerItemDecoration(context,
             DividerItemDecoration.VERTICAL))
         recyclerView?.layoutManager= GridLayoutManager(activity,3)
-        var adapter = context?.let { ImagesAdapter(it,imageList) }
+        var adapter = context?.let { ImagesAdapter(it,imageList, null) }
         recyclerView?.adapter=adapter
     }
 }
