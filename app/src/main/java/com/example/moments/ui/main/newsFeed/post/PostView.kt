@@ -3,18 +3,17 @@ package com.example.moments.ui.main.newsFeed.post
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.MediaStore.MediaColumns
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -41,11 +40,12 @@ class PostView : AppCompatActivity() {
     private var loading: Boolean = true
     private lateinit var imageList: ArrayList<String>
     private var recyclerView: RecyclerView? = null
+    private var toggleSelection: Button? = null
+    private var isMultipleChoice: Boolean = false
 
     private val listener: IOnRecyclerViewItemTouchListener = object: IOnRecyclerViewItemTouchListener {
         override fun onItemClick(postition: Int) {
             Glide.with(this@PostView).load(imageList[postition]).into(previewImage!!)
-            nestedScrollView?.scrollTo(0, 0)
             appBar?.setExpanded(true)
         }
     }
@@ -68,6 +68,12 @@ class PostView : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        toggleSelection = findViewById(R.id.toggleBtnSelectionNewPost)
+        toggleSelection?.setOnClickListener {
+            isMultipleChoice = !isMultipleChoice
+            (recyclerView?.adapter as ImageChoosingAdapter).setChosingType(isMultipleChoice)
         }
         initRecyclerView(mediaGrid)
     }
@@ -156,7 +162,7 @@ class PostView : AppCompatActivity() {
                 DividerItemDecoration.VERTICAL)
         )
         recyclerView?.layoutManager = GridLayoutManager(this,4)
-        val adapter = ImagesAdapter(this,ArrayList(imageList.subList(0,20)), listener)
+        val adapter = ImageChoosingAdapter(this,ArrayList(imageList.subList(0,20)), listener)
         recyclerView?.adapter=adapter
 
         nestedScrollView?.setOnScrollChangeListener { v: NestedScrollView, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -178,12 +184,16 @@ class PostView : AppCompatActivity() {
     }
 
     private fun loadMore(total: Int){
-        (recyclerView?.adapter as ImagesAdapter).updateItems(imageList.subList(total - 10, total))
+        (recyclerView?.adapter as ImageChoosingAdapter).updateItems(imageList.subList(total - 10, total))
     }
 
     private fun convertImagesToByteArray() : ArrayList<ByteArray>{
         val result: ArrayList<ByteArray> = arrayListOf()
-        result.add(convertImageToByteArray(previewImage!!))
+        val selectedItems = (recyclerView?.adapter as ImageChoosingAdapter).selectedItems
+
+        for (item:ImageView in selectedItems){
+            result.add(convertImageToByteArray(item))
+        }
         return result
     }
 
