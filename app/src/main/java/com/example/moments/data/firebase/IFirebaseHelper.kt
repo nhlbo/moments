@@ -36,6 +36,8 @@ interface IFirebaseHelper {
 
     fun performQueryUserByUsername(username: String): Single<List<User>>
 
+    fun performQueryUserByIds(ids: List<String>): Single<List<User>>
+
     fun performQueryUserByReference(user: DocumentReference): Single<User>
 
     fun performFollowUser(userId: String): Completable
@@ -72,5 +74,5 @@ interface IFirebaseHelper {
 
     fun performChangePassword(oldPassword: String, newPassword: String): Completable
 
-    fun performListenLatestMessage(): Observable<List<Pair<User, Message>>>
+    fun performListenToLatestMessage(): Observable<List<Message>>
 }
