@@ -4,6 +4,7 @@ import com.example.moments.data.firebase.FirebaseHelper
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.preference.PreferenceHelper
 import com.example.moments.ui.base.BaseInteractor
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -19,4 +20,12 @@ class NewsFeedFragmentInteractor @Inject constructor(
                 }
             }
             .toList()
+
+    override fun doLikePost(postId: String): Completable {
+        TODO("Not yet implemented")
+    }
+
+    override fun doUnlikePost(postId: String): Completable {
+        TODO("Not yet implemented")
+    }
 }
