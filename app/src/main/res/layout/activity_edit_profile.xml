@@ -56,47 +56,46 @@
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="122dp"
         tools:layout_editor_absoluteY="80dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp">
 
-        <EditText
+        <com.example.moments.ui.customClasses.CustomEditText
             android:id="@+id/etUsernameEditProfile"
+            style="@style/Theme.Moments.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:width="100dp"
-            android:clickable="false"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/edit_text_background"
             android:ems="10"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:fontFamily="@font/gothic_medium"
-            android:foreground="@color/white"
             android:hint="Username"
-            android:inputType="text" />
+            android:inputType="text"
+            android:minHeight="48dp" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="122dp"
         tools:layout_editor_absoluteY="80dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp">
 
-        <EditText
+        <com.example.moments.ui.customClasses.CustomEditText
+            android:id="@+id/etBioEditProfile"
+            style="@style/Theme.Moments.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:width="100dp"
-            android:clickable="false"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/edit_text_background"
             android:ems="10"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:fontFamily="@font/gothic_medium"
-            android:foreground="@color/white"
             android:hint="Bio"
-            android:inputType="text" />
+            android:inputType="text"
+            android:minHeight="48dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>
