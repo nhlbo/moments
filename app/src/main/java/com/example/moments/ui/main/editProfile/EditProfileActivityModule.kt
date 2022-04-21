@@ -1,8 +1,5 @@
 package com.example.moments.ui.main.editProfile
 
-import com.example.moments.ui.main.EditProfile.IEditProfileActivityInteractor
-import com.example.moments.ui.main.EditProfile.IEditProfileActivityPresenter
-import com.example.moments.ui.main.EditProfile.IEditProfileActivityView
 import dagger.Module
 import dagger.Provides
 

@@ -9,7 +9,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import io.reactivex.Single
 
 interface INewsFeedView : IBaseView {
-    fun updatePost(listPost: List<DocumentSnapshot>)
+    fun updatePost(listPost: List<RetrievedPost>)
 }
 
 interface INewsFeedInteractor : IBaseInteractor {
@@ -18,4 +18,8 @@ interface INewsFeedInteractor : IBaseInteractor {
 
 interface INewsFeedPresenter<V : INewsFeedView, I : INewsFeedInteractor> : IBasePresenter<V, I> {
     fun onViewPrepared()
+}
+
+interface IAdapterCallBack{
+    fun onItemTouch(position: Int, command:String)
 }

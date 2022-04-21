@@ -1,55 +1,56 @@
 package com.example.moments.ui.main.newsFeed
 
 import android.content.Context
-import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.example.moments.data.model.RetrievedPost
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-
-class NewsFeedAdapter(var context: Context, private val newsFeedList: List<NewsFeed>, callback: IAdapterCallBack) :
+class NewsFeedAdapter(
+    var context: Context,
+    private var newsFeedList: MutableList<RetrievedPost>,
+    callback: IAdapterCallBack
+) :
     RecyclerView.Adapter<NewsFeedAdapter.ViewHolder>() {
 
     private val adapterCallBack: IAdapterCallBack = callback
 
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
-        val headerPost = listItemView.findViewById<View>(R.id.loHeaderNewsFeed)
-        val avatar = headerPost.findViewById<ImageView>(R.id.ivAvatarHeaderPost)
-        val name = headerPost.findViewById<TextView>(R.id.tvNameHeaderPost)
-        val add = headerPost.findViewById<TextView>(R.id.tvAddress)
+        val headerPost = listItemView.findViewById<View>(R.id.postHeaderGroup)
+        val headerAvatar = headerPost.findViewById<ImageView>(R.id.ivAvatarHeaderPost)
+        val headerUsername = headerPost.findViewById<TextView>(R.id.tvUsername)
+        val headerAddress = headerPost.findViewById<TextView>(R.id.tvAddress)
 
         var viewPager = listItemView.findViewById<ViewPager2>(R.id.vpNewsFeed)
         val linearLayout = listItemView.findViewById<TabLayout>(R.id.indicatorNewsFeed)
 
 
-        val componentButton =
-            listItemView.findViewById<View>(R.id.llComponentInteractionButtonNewsFeed)
-        val btnComment = componentButton.findViewById<ImageButton>(R.id.btnComment)
-        val btnLike = componentButton.findViewById<ToggleButton>(R.id.btnLike)
-        val btnShare = componentButton.findViewById<ImageButton>(R.id.btnShare)
-        val btnSave = componentButton.findViewById<ToggleButton>(R.id.btnSave)
+        val interactionBtnGroup =
+            listItemView.findViewById<View>(R.id.interactionBtnGroup)
+        val btnComment = interactionBtnGroup.findViewById<ImageButton>(R.id.btnComment)
+        val btnLike = interactionBtnGroup.findViewById<ToggleButton>(R.id.btnLike)
+        val btnShare = interactionBtnGroup.findViewById<ImageButton>(R.id.btnShare)
+        val btnSave = interactionBtnGroup.findViewById<ToggleButton>(R.id.btnSave)
 
-        val like = listItemView.findViewById<TextView>(R.id.tvLikeNewsFeed)
-        val content = listItemView.findViewById<TextView>(R.id.tvContentNewsFeed)
-        val showAllComment = listItemView.findViewById<TextView>(R.id.tvShowAllComment)
+        val tvLikeCount = listItemView.findViewById<TextView>(R.id.tvLikeCount)
+        val tvCaption = listItemView.findViewById<TextView>(R.id.tvCaption)
+        val tvShowAllComment = listItemView.findViewById<TextView>(R.id.tvShowAllComment)
 
-        val footerPost = listItemView.findViewById<View>(R.id.loFooterPostCommentNewsFeed)
-        val myAvatar = footerPost.findViewById<ImageView>(R.id.ivAvatarPostCommentSelf)
-        val etCommentBox = footerPost.findViewById<EditText>(R.id.etCommentBox)
-        val btnPostComment = footerPost.findViewById<Button>(R.id.btnPostComment)
+        val postCommentInputGroup = listItemView.findViewById<View>(R.id.postCommentInputGroup)
+        val postCommentInputAvatar =
+            postCommentInputGroup.findViewById<ImageView>(R.id.ivAvatarPostCommentSelf)
+        val etPostCommentInput = postCommentInputGroup.findViewById<EditText>(R.id.etCommentBox)
+        val btnPostCommentInput = postCommentInputGroup.findViewById<Button>(R.id.btnPostComment)
 
-        val time = listItemView.findViewById<TextView>(R.id.tvTimeNewsFeed)
+        val tvPostCreated = listItemView.findViewById<TextView>(R.id.tvPostCreated)
 
     }
 
@@ -65,20 +66,20 @@ class NewsFeedAdapter(var context: Context, private val newsFeedList: List<NewsF
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val tmp: NewsFeed = newsFeedList[position]
+        val tmp = newsFeedList[position]
 
-        val viewPagerAdapter = MediaSlidingAdapter(tmp.imagesList, context)
+        val viewPagerAdapter = MediaSlidingAdapter(tmp.listMedia, context)
         holder.viewPager.adapter = viewPagerAdapter
         TabLayoutMediator(holder.linearLayout, holder.viewPager)
-        { _, _ ->}.attach()
+        { _, _ -> }.attach()
 
-        Glide.with(context).load(tmp.avatar).into(holder.avatar)
-        Glide.with(context).load(tmp.myAvatar).into(holder.myAvatar)
-        holder.like.text = "${tmp.likeNumber} like"
-        holder.content.text = tmp.content
-        holder.add.text = tmp.address
-        holder.time.text = tmp.time
-        holder.name.text = tmp.name
+        Glide.with(context).load(tmp.creator.avatar).into(holder.headerAvatar)
+//        Glide.with(context).load(tmp.myAvatar).into(holder.myAvatar)
+        holder.tvLikeCount.text = "${tmp.likeCount} like"
+        holder.tvCaption.text = tmp.caption
+//        holder.add.text = tmp.address
+        holder.tvPostCreated.text = tmp.createdAt.toString()
+        holder.headerUsername.text = tmp.creator.username
 
 //        val dotscount = viewPagerAdapter.itemCount
 //        val dots = arrayOfNulls<ImageView>(dotscount)
@@ -106,13 +107,23 @@ class NewsFeedAdapter(var context: Context, private val newsFeedList: List<NewsF
 //            )
 //        )
 
-        holder.showAllComment.setOnClickListener {
+        holder.tvShowAllComment.setOnClickListener {
             adapterCallBack.onItemTouch(position, "showComment")
         }
-        holder.btnComment.setOnClickListener{
+        holder.btnComment.setOnClickListener {
             adapterCallBack.onItemTouch(position, "showComment")
         }
 
     }
-}
 
+    fun updatePost(listPost: List<RetrievedPost>) {
+        newsFeedList.clear()
+        newsFeedList.addAll(listPost.toMutableList())
+        notifyDataSetChanged()
+    }
+
+    fun prependPost(post: RetrievedPost) {
+        newsFeedList.add(0, post)
+        notifyItemInserted(0)
+    }
+}

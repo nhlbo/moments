@@ -14,5 +14,5 @@ class ChatActivityInteractor @Inject constructor(
 ) : BaseInteractor(preferenceHelper, firebaseHelper), IChatActivityInteractor {
     override fun doPerformSendMessage(message: Message): Completable = firebaseHelper.performSendMessage(message)
     override fun getCurrentUserId(): String = firebaseHelper.getCurrentUserId()
-    override fun doPerformListenToMessage(): Observable<List<Message>> = firebaseHelper.performListenToMessage()
+    override fun doPerformListenToMessage(userId: String): Observable<List<Message>> = firebaseHelper.performListenToMessage(userId)
 }
