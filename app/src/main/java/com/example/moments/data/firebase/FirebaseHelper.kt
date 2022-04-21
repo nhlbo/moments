@@ -9,6 +9,7 @@ import com.example.moments.di.FirebaseCloudStorageInstance
 import com.example.moments.di.FirebaseFirestoreInstance
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
@@ -159,6 +160,21 @@ class FirebaseHelper @Inject constructor(
                             emitter.onError(it)
                         }
                 }
+        }
+
+    override fun performChangePassword(oldPassword: String, newPassword: String): Completable =
+        Completable.create { emitter ->
+            val user = getCurrentUser()!!
+            user.reauthenticate(EmailAuthProvider.getCredential(user.email!!, oldPassword))
+                .addOnSuccessListener {
+                    user.updatePassword(newPassword).addOnSuccessListener {
+                        emitter.onComplete()
+                    }.addOnFailureListener {
+                        emitter.onError(it)
+                    }
+                }.addOnFailureListener {
+                emitter.onError(it)
+            }
         }
 
     override fun performQueryFollowingUser(): Single<List<User>> =

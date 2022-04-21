@@ -69,4 +69,6 @@ interface IFirebaseHelper {
     fun performListenToMessage(userId: String): Observable<List<Message>>
 
     fun performQueryCurrentUserPost(): Single<List<Post>>
+
+    fun performChangePassword(oldPassword: String, newPassword: String): Completable
 }
