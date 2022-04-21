@@ -52,6 +52,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val view = inflater.inflate(R.layout.activity_view_profile, container, false)
         setHasOptionsMenu(true)
         initMediaGrid(view)
+        initLayout(view)
         return view
     }
 

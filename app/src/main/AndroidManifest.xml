@@ -40,6 +40,9 @@
             android:name=".ui.main.chat.ChatActivityView"
             android:exported="false" />
         <activity
+            android:name=".ui.main.comment.CommentActivityView"
+            android:exported="false" />
+        <activity
             android:name=".ui.login.LoginActivityView"
             android:exported="false" />
         <activity
