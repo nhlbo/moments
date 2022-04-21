@@ -32,10 +32,10 @@ class ChatActivityPresenter<V : IChatActivityView, I : IChatActivityInteractor> 
 
     override fun getCurrentUserId(): String = interactor?.getCurrentUserId().toString()
 
-    override fun onPerformListenToMessage() {
+    override fun onPerformListenToMessage(userId: String) {
         interactor?.let {
             compositeDisposable.add(
-                it.doPerformListenToMessage()
+                it.doPerformListenToMessage(userId)
                     .compose(schedulerProvider.ioToMainObservableScheduler())
                     .subscribe({
                         getView()?.addMessages(it)

@@ -15,11 +15,11 @@ interface IChatActivityPresenter<V : IChatActivityView, I : IChatActivityInterac
     IBasePresenter<V, I> {
     fun onPerformSendMessage(message: Message)
     fun getCurrentUserId(): String
-    fun onPerformListenToMessage()
+    fun onPerformListenToMessage(userId: String)
 }
 
 interface IChatActivityInteractor : IBaseInteractor {
     fun doPerformSendMessage(message: Message): Completable
     fun getCurrentUserId(): String
-    fun doPerformListenToMessage(): Observable<List<Message>>
+    fun doPerformListenToMessage(userId: String): Observable<List<Message>>
 }
