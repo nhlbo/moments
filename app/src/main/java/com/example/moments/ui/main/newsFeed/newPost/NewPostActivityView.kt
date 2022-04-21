@@ -3,6 +3,7 @@ package com.example.moments.ui.main.newsFeed.newPost
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
@@ -27,6 +28,7 @@ import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
+import com.example.moments.ui.main.newsFeed.newPostStep2.NewPostActivityStep2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import java.io.ByteArrayOutputStream
@@ -70,7 +72,9 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         toolBar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.new_post_post -> {
-                    presenter.onUploadMedia(getSelectedImageByteArray())
+                    val intent: Intent = Intent(this, NewPostActivityStep2::class.java)
+                    intent.putExtra("imageData", getSelectedImageByteArray())
+                    startActivity(intent)
                     true
                 }
                 else -> false
@@ -185,12 +189,12 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         (recyclerView?.adapter as ImageChoosingAdapter).updateItems(imageList.subList(total - 10, total))
     }
 
-    private fun getSelectedImageByteArray() : ArrayList<ByteArray>{
-        val result: ArrayList<ByteArray> = arrayListOf()
+    private fun getSelectedImageByteArray() : ArrayList<String>{
+        val result: ArrayList<String> = arrayListOf()
         val selectedItems = (recyclerView?.adapter as ImageChoosingAdapter).selectedItems
 
         for (item:ImageView in selectedItems){
-            result.add(convertImageToByteArray(item))
+            result.add(convertImageToByteArray(item).toString())
         }
         return result
     }
