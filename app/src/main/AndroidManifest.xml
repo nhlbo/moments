@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Moments"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.main.newsFeed.post.PostView"
+            android:name=".ui.main.newsFeed.newPost.NewPostActivityView"
             android:exported="false" />
         <activity
             android:name=".ui.main.viewFollowList.ViewFollowTabActivityView"

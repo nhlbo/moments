@@ -1,4 +1,4 @@
-package com.example.moments.ui.main.newsFeed.post
+package com.example.moments.ui.main.newsFeed.newPost
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.MediaStore.MediaColumns
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -24,14 +25,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
-import com.example.moments.ui.main.viewProfile.ImagesAdapter
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 
 
-class PostView : AppCompatActivity() {
+class NewPostActivityView : BaseActivity(), INewPostActivityView {
     private val PICK_FROM_GALLERY = 1
     private var previewImage: ImageView? = null
     private var nestedScrollView: NestedScrollView? = null
@@ -43,9 +45,12 @@ class PostView : AppCompatActivity() {
     private var toggleSelection: Button? = null
     private var isMultipleChoice: Boolean = false
 
+    @Inject
+    lateinit var presenter: INewPostActivityPresenter<INewPostActivityView, INewPostActivityInteractor>
+
     private val listener: IOnRecyclerViewItemTouchListener = object: IOnRecyclerViewItemTouchListener {
         override fun onItemClick(postition: Int) {
-            Glide.with(this@PostView).load(imageList[postition]).into(previewImage!!)
+            Glide.with(this@NewPostActivityView).load(imageList[postition]).into(previewImage!!)
             appBar?.setExpanded(true)
         }
     }
@@ -53,7 +58,9 @@ class PostView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post_view)
+        presenter.onAttach(this)
         requestPermission()
+
         val frameLayout = findViewById<FrameLayout>(R.id.MediaNewPostContainer) as ViewGroup
         val mediaGrid = layoutInflater.inflate(R.layout.component_grid_media, frameLayout, true)
         previewImage = findViewById(R.id.iv_newPostPreview)
@@ -63,7 +70,7 @@ class PostView : AppCompatActivity() {
         toolBar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.new_post_post -> {
-
+                    presenter.onUploadMedia(getSelectedImageByteArray())
                     true
                 }
                 else -> false
@@ -106,6 +113,14 @@ class PostView : AppCompatActivity() {
         }
     }
 
+    override fun onFragmentAttached() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFragmentDetached(tag: String) {
+        TODO("Not yet implemented")
+    }
+
     @SuppressLint("Recycle")
     private fun getAllShownImagesPath(activity: Activity): ArrayList<String> {
         val cursor: Cursor?
@@ -133,23 +148,6 @@ class PostView : AppCompatActivity() {
 
     private fun initRecyclerView(view: View?) {
         imageList = getAllShownImagesPath(this)
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic1.png?alt=media&token=4fdd9b9a-5109-4f88-8ac7-82f47a1c0f68")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic2.png?alt=media&token=22807789-8a01-413d-8ce5-fd86651e5107")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic3.png?alt=media&token=272b593d-eb42-4251-b88f-10c4aae740b3")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic1.png?alt=media&token=4fdd9b9a-5109-4f88-8ac7-82f47a1c0f68")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic2.png?alt=media&token=22807789-8a01-413d-8ce5-fd86651e5107")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic3.png?alt=media&token=272b593d-eb42-4251-b88f-10c4aae740b3")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic1.png?alt=media&token=4fdd9b9a-5109-4f88-8ac7-82f47a1c0f68")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic2.png?alt=media&token=22807789-8a01-413d-8ce5-fd86651e5107")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic3.png?alt=media&token=272b593d-eb42-4251-b88f-10c4aae740b3")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
-//        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
 
         recyclerView= view?.findViewById<RecyclerView>(R.id.rcMediaGrid)
         recyclerView?.setHasFixedSize(true);
@@ -187,7 +185,7 @@ class PostView : AppCompatActivity() {
         (recyclerView?.adapter as ImageChoosingAdapter).updateItems(imageList.subList(total - 10, total))
     }
 
-    private fun convertImagesToByteArray() : ArrayList<ByteArray>{
+    private fun getSelectedImageByteArray() : ArrayList<ByteArray>{
         val result: ArrayList<ByteArray> = arrayListOf()
         val selectedItems = (recyclerView?.adapter as ImageChoosingAdapter).selectedItems
 
@@ -200,7 +198,11 @@ class PostView : AppCompatActivity() {
     private fun convertImageToByteArray(view: ImageView): ByteArray{
         val bitmap = (view.drawable as BitmapDrawable).bitmap
         val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
         return stream.toByteArray()
+    }
+
+    override fun openCreatePostActivity() {
+
     }
 }

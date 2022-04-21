@@ -14,6 +14,8 @@ import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.newMessage.NewMessageActivityModule
 import com.example.moments.ui.main.newMessage.NewMessageActivityView
 import com.example.moments.ui.main.newsFeed.NewsFeedFragmentProvider
+import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityModule
+import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
 import com.example.moments.ui.main.notification.NotificationFragmentProvider
 import com.example.moments.ui.main.search.SearchFragmentProvider
 import com.example.moments.ui.main.settings.SettingsActivityModule
@@ -62,5 +64,8 @@ abstract class ActivityBuilder {
     abstract fun bindChangePasswordActivity(): ChangePasswordActivityView
 
     @ContributesAndroidInjector(modules = [(LatestMessageActivityModule::class)])
-    abstract fun bindMessageActitity(): LatestMessageActivityView
+    abstract fun bindMessageActivity(): LatestMessageActivityView
+
+    @ContributesAndroidInjector(modules = [(NewPostActivityModule::class)])
+    abstract fun bindNewPostActivity(): NewPostActivityView
 }
