@@ -27,4 +27,12 @@ class NewsFeedFragmentPresenter<V : INewsFeedView, I : INewsFeedInteractor> @Inj
             )
         }
     }
+
+    override fun onLikePost() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUnlikePost() {
+        TODO("Not yet implemented")
+    }
 }
