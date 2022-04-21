@@ -394,11 +394,15 @@ class FirebaseHelper @Inject constructor(
                     firebaseFirestore.collection("/message/${message.toId}/${message.fromId}")
                         .add(message)
                         .addOnSuccessListener {
-                            emitter.onComplete()
                         }
                         .addOnFailureListener {
                             emitter.onError(it)
                         }
+                    firebaseFirestore.document("/message/latest-message/${message.fromId}/${message.toId}")
+                        .set(message)
+                    firebaseFirestore.document("/message/latest-message/${message.toId}/${message.fromId}")
+                        .set(message)
+                    emitter.onComplete()
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
@@ -433,16 +437,16 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryLatestMessage(): Single<List<Pair<User, Message>>> =
-        Single.create { emitter ->
-            firebaseFirestore.collection("message")
-                .orderBy("timeStamp", Query.Direction.DESCENDING)
-                .get()
-                .addOnSuccessListener {
-                    emitter.onSuccess(listOf())
+    override fun performListenLatestMessage(): Observable<List<Pair<User, Message>>> =
+        Observable.create { emitter ->
+            firebaseFirestore.collection("/message/${getCurrentUserId()}/")
+                .addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        emitter.onError(e)
+                        return@addSnapshotListener
+                    }
+                    if (snapshot != null) {
+                        emitter.onNext(snapshot.toObjects<Message>())
+                    }
                 }
-                .addOnFailureListener {
-                    emitter.onError(it)
-                }
-        }
 }
