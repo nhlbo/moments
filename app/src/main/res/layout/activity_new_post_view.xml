@@ -82,7 +82,7 @@
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 <Button
-                    android:id="@+id/imageButton"
+                    android:id="@+id/toggleBtnSelectionNewPost"
                     style="@style/Theme.Moments.ButtonVariant3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
