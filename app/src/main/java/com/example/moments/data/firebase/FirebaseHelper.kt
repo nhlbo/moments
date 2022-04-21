@@ -14,6 +14,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storageMetadata
@@ -387,10 +388,17 @@ class FirebaseHelper @Inject constructor(
 
     override fun performSendMessage(message: Message): Completable =
         Completable.create { emitter ->
-            firebaseFirestore.collection("/message")
+            firebaseFirestore.collection("/message/${message.fromId}/${message.toId}")
                 .add(message)
                 .addOnSuccessListener {
-                    emitter.onComplete()
+                    firebaseFirestore.collection("/message/${message.toId}/${message.fromId}")
+                        .add(message)
+                        .addOnSuccessListener {
+                            emitter.onComplete()
+                        }
+                        .addOnFailureListener {
+                            emitter.onError(it)
+                        }
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
@@ -399,7 +407,7 @@ class FirebaseHelper @Inject constructor(
 
     override fun performListenToMessage(userId: String): Observable<List<Message>> =
         Observable.create { emitter ->
-            firebaseFirestore.collection("/message")
+            firebaseFirestore.collection("/message/${getCurrentUserId()}/${userId}")
                 .orderBy("timeStamp", Query.Direction.ASCENDING)
                 .addSnapshotListener { snapshot, e ->
                     if (e != null) {
@@ -407,12 +415,7 @@ class FirebaseHelper @Inject constructor(
                         return@addSnapshotListener
                     }
                     if (snapshot != null) {
-                        emitter.onNext(
-                            snapshot.toObjects<Message>()
-                                .filter { s ->
-                                    (s.fromId == getCurrentUserId() && s.toId == userId)
-                                            || (s.toId == getCurrentUserId() && s.fromId == userId)
-                                })
+                        emitter.onNext(snapshot.toObjects<Message>())
                     }
                 }
         }
@@ -432,14 +435,10 @@ class FirebaseHelper @Inject constructor(
 
     override fun performQueryLatestMessage(): Single<List<Pair<User, Message>>> =
         Single.create { emitter ->
-            firebaseFirestore.collection("/message")
+            firebaseFirestore.collection("message")
                 .orderBy("timeStamp", Query.Direction.DESCENDING)
                 .get()
-                .addOnSuccessListener { snapshot ->
-                    val messages = snapshot.toObjects<Message>()
-                        .filter { s -> s.fromId == getCurrentUserId() || s.toId == getCurrentUserId() }
-                    val userIds =
-                        messages.map { if (it.fromId == getCurrentUserId()) it.toId else it.fromId }
+                .addOnSuccessListener {
                     emitter.onSuccess(listOf())
                 }
                 .addOnFailureListener {
