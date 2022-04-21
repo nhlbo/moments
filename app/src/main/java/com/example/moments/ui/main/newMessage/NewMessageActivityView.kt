@@ -60,7 +60,7 @@ class NewMessageActivityView : BaseActivity(), INewMessageActivityView {
 class UserItemNewMessage(val user: User) :
     Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.tvFullNameNewMessage.text = user.fullname
+        viewHolder.itemView.tvFullNameNewMessage.text = user.email
         viewHolder.itemView.tvUsernameNewMessage.text = user.username
         Glide.with(viewHolder.itemView).load(user.avatar).into(viewHolder.itemView.ivAvatarUserNewMessage)
     }

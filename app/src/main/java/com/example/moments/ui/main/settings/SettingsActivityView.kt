@@ -17,6 +17,7 @@ class SettingsActivityView : BaseActivity(), ISettingsActivityView {
         setContentView(R.layout.activity_settings)
 
         presenter.onAttach(this)
+        tbEditProfileActivity.setNavigationOnClickListener { finish() }
         btnLogOut.setOnClickListener {
             presenter.onPerformLogOut()
             val intent: Intent = Intent(this, LoginActivityView::class.java)

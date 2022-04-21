@@ -38,6 +38,9 @@
             android:name=".ui.main.settings.SettingsActivityView"
             android:exported="false" />
         <activity
+            android:name=".ui.main.editProfile.EditProfileActivityView"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.newMessage.NewMessageActivityView"
             android:exported="false" />
         <activity
