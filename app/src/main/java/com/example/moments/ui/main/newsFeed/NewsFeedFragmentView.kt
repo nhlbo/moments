@@ -80,6 +80,10 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         }
     }
 
+    override fun onItemTouch(id: String, command: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun toString(): String = "newsfeedFragment"
 
     override fun onDestroyView() {

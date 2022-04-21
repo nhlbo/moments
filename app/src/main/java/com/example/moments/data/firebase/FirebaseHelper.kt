@@ -345,6 +345,17 @@ class FirebaseHelper @Inject constructor(
                 performUploadMedia(media)
             }
 
+    override fun performQueryIsLikedPost(postId: String): Single<Boolean> =
+        Single.create { emitter ->
+            firebaseFirestore.document("/post/$postId/like").get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.exists())
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
     override fun performUploadMedia(media: ByteArray): Single<Uri> =
         Single.create { emitter ->
             val ref = firebaseStorage.reference.child("images/${UUID.randomUUID()}.jpeg")
