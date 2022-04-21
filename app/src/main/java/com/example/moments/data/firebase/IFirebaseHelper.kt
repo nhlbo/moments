@@ -46,6 +46,8 @@ interface IFirebaseHelper {
 
     fun performQueryFeedPost(): Single<List<Post>>
 
+    fun performQueryIsLikedPost(postId: String): Single<Boolean>
+
     fun performLikePost(postId: String): Completable
 
     fun performUnlikePost(postId: String): Completable
