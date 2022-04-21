@@ -23,7 +23,7 @@
             android:name=".ui.signUp.SignUpActivityView"
             android:exported="false" />
         <activity
-            android:name=".ui.main.message.MessageActivityView"
+            android:name=".ui.main.latestMessage.LatestMessageActivityView"
             android:exported="false" />
         <activity
             android:name=".ui.main.settings.changePassword.ChangePasswordActivityView"
