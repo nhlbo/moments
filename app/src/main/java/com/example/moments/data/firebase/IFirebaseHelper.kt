@@ -34,7 +34,7 @@ interface IFirebaseHelper {
 
     fun performPasswordResetRequest(email: String): Completable
 
-    fun performQueryUserByUsername(username: String): Single<List<User>>
+    fun performQueryUserByUsername(username: String): Observable<List<User>>
 
     fun performQueryUserByReference(user: DocumentReference): Single<User>
 

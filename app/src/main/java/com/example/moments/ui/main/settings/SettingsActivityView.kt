@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.login.LoginActivityView
+import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityView
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 
@@ -23,6 +24,11 @@ class SettingsActivityView : BaseActivity(), ISettingsActivityView {
             val intent: Intent = Intent(this, LoginActivityView::class.java)
             startActivity(intent)
             finishAffinity()
+        }
+
+        btnChangePassword.setOnClickListener {
+            val intent: Intent = Intent(this, ChangePasswordActivityView::class.java)
+            startActivity(intent)
         }
     }
 

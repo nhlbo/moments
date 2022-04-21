@@ -1,6 +1,7 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
+import android.util.Log
 import com.example.moments.data.model.Message
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
@@ -119,17 +120,16 @@ class FirebaseHelper @Inject constructor(
 
     override fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
 
-    override fun performQueryUserByUsername(username: String): Single<List<User>> =
-        Single.create { emitter ->
+    override fun performQueryUserByUsername(username: String): Observable<List<User>> =
+        Observable.create { emitter ->
+            val upperBound = username.substring(0, username.length - 1) + username.last().inc()
             firebaseFirestore.collection("user")
                 .whereGreaterThanOrEqualTo("username", username)
+                .whereLessThan("username", upperBound)
                 .get()
                 .addOnSuccessListener { documents ->
-                    val res = mutableListOf<User>()
-                    for (doc in documents.documents) {
-                        res.add(doc.toObject(User::class.java)!!)
-                    }
-                    emitter.onSuccess(res.toList())
+                    emitter.onNext(documents.toObjects<User>())
+                    emitter.onComplete()
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
