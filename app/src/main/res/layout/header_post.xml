@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/default_avatar" />
 
     <TextView
-        android:id="@+id/tvNameHeaderPost"
+        android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -28,16 +28,16 @@
         app:layout_constraintTop_toTopOf="@+id/ivAvatarHeaderPost" />
 
     <TextView
-        android:id="@+id/tvUsernameNewMessage"
+        android:id="@+id/tvAddress"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HCMC, Vietnam"
         app:layout_constraintBottom_toBottomOf="@+id/ivAvatarHeaderPost"
-        app:layout_constraintStart_toStartOf="@+id/tvNameHeaderPost" />
+        app:layout_constraintStart_toStartOf="@+id/tvUsername" />
 
     <ImageButton
-        android:id="@+id/btnHeaderPost"
+        android:id="@+id/imageButton10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

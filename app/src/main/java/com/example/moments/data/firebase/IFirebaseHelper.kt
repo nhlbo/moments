@@ -3,13 +3,11 @@ package com.example.moments.data.firebase
 import android.net.Uri
 import com.example.moments.data.model.Message
 import com.example.moments.data.model.Post
-import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.User
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -68,7 +66,7 @@ interface IFirebaseHelper {
 
     fun performSendMessage(message: Message): Completable
 
-    fun performListenToMessage(): Observable<List<Message>>
+    fun performListenToMessage(userId: String): Observable<List<Message>>
 
     fun performQueryCurrentUserPost(): Single<List<Post>>
 }
