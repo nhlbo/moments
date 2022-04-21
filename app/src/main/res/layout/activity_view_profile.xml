@@ -72,71 +72,98 @@
                         app:srcCompat="@drawable/default_avatar"
                         tools:ignore="MissingClass" />
 
-                    <TextView
-                        android:id="@+id/tvFollowingList"
+                    <LinearLayout
+                        android:id="@+id/llFollowing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gothic_bold"
-                        android:text="21"
-                        app:layout_constraintBottom_toTopOf="@+id/tvToFollowingList"
-                        app:layout_constraintEnd_toEndOf="@+id/tvToFollowingList"
-                        app:layout_constraintStart_toStartOf="@+id/tvToFollowingList"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvToFollowingList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
                         android:clickable="true"
-                        android:text="Following"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvToFollowersList"
-                        app:layout_constraintEnd_toEndOf="@+id/btnEditProfile"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        android:background="@drawable/pressed_layout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.952"
+                        app:layout_constraintStart_toStartOf="@+id/ivAvatarProfile"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/tvFollowersNumber"
+                        <TextView
+                            android:id="@+id/tvFollowingList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gothic_bold"
+                            android:text="21" />
+
+                        <TextView
+                            android:id="@+id/tvToFollowingList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Following"
+                            tools:ignore="TouchTargetSizeCheck"
+                            tools:layout_editor_absoluteX="53dp"
+                            tools:layout_editor_absoluteY="24dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llPost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gothic_bold"
-                        android:text="12"
-                        app:layout_constraintBottom_toTopOf="@+id/tvToFollowersList"
-                        app:layout_constraintEnd_toEndOf="@+id/tvToFollowersList"
-                        app:layout_constraintStart_toStartOf="@+id/tvToFollowersList"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvPostsNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/gothic_bold"
-                        android:text="21"
-                        app:layout_constraintBottom_toTopOf="@+id/tvToPostList"
-                        app:layout_constraintEnd_toEndOf="@+id/tvToPostList"
-                        app:layout_constraintStart_toStartOf="@+id/tvToPostList"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvToFollowersList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
                         android:clickable="true"
-                        android:text="Followers"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvToPostList"
-                        app:layout_constraintEnd_toStartOf="@+id/tvToFollowingList"
-                        app:layout_constraintStart_toEndOf="@+id/tvToPostList"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        android:background="@drawable/pressed_layout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.316"
+                        app:layout_constraintStart_toStartOf="@+id/ivAvatarProfile"
+                        app:layout_constraintTop_toTopOf="@+id/llFollowers">
 
-                    <TextView
-                        android:id="@+id/tvToPostList"
+                        <TextView
+                            android:id="@+id/tvPostsNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gothic_bold"
+                            android:text="21" />
+
+                        <TextView
+                            android:id="@+id/tvToPostList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Posts"
+                            tools:ignore="TouchTargetSizeCheck" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llFollowers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
                         android:clickable="true"
-                        android:text="Posts"
-                        app:layout_constraintBottom_toBottomOf="@+id/ivAvatarProfile"
-                        app:layout_constraintStart_toEndOf="@+id/ivAvatarProfile"
-                        app:layout_constraintTop_toTopOf="@+id/ivAvatarProfile"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        android:background="@drawable/pressed_layout"
+                        app:layout_constraintEnd_toStartOf="@+id/llFollowing"
+                        app:layout_constraintStart_toEndOf="@id/llPost"
+                        app:layout_constraintTop_toTopOf="@+id/llFollowing">
+
+                        <TextView
+                            android:id="@+id/tvFollowersNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gothic_bold"
+                            android:text="12"
+                            app:layout_constraintBottom_toTopOf="@+id/tvToFollowersList"
+                            app:layout_constraintEnd_toEndOf="@+id/tvToFollowersList"
+                            app:layout_constraintStart_toStartOf="@+id/tvToFollowersList"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvToFollowersList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Followers"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvToPostList"
+                            app:layout_constraintEnd_toStartOf="@+id/tvToFollowingList"
+                            app:layout_constraintStart_toEndOf="@+id/tvToPostList"
+                            tools:ignore="TouchTargetSizeCheck" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tvUsernameProfile"
@@ -184,7 +211,8 @@
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="TouchTargetSizeCheck" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

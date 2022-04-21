@@ -7,6 +7,7 @@ class CommentDataGroup(
     rootContent: String,
     rootReactions: Int,
     rootTimeUpload: String,
-    val replies: List<CommentData>
+    val replies: ArrayList<CommentData>
 ) : CommentData(rootUserId, rootUsername, rootCommentId, rootContent, rootReactions, rootTimeUpload) {
+
 }

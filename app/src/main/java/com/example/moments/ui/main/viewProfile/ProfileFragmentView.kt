@@ -1,10 +1,14 @@
 package com.example.moments.ui.main.viewProfile
 
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,6 +18,8 @@ import com.example.moments.R
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.settings.SettingsActivityView
+import com.example.moments.ui.forgetPassword.ForgetPasswordActivityView
+import com.example.moments.ui.main.viewFollowList.ViewFollowTabActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_view_profile.*
@@ -90,16 +96,36 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
 //        onItemSelected()
     }
 
-    private fun initRecyclerView(view: View?) {
-        val imageList = arrayListOf<String>()
-        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic1.png?alt=media&token=4fdd9b9a-5109-4f88-8ac7-82f47a1c0f68")
-        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic2.png?alt=media&token=22807789-8a01-413d-8ce5-fd86651e5107")
-        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic3.png?alt=media&token=272b593d-eb42-4251-b88f-10c4aae740b3")
-        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
+    private fun initLayout(view: View) {
+        var linearLayoutFollowers = view.findViewById<LinearLayout>(R.id.llFollowers)
+        var linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llFollowing)
 
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.rcMediaGrid)
-        recyclerView?.layoutManager = GridLayoutManager(activity, 3)
-        var adapter = context?.let { ImagesAdapter(it, imageList) }
-        recyclerView?.adapter = adapter
+        linearLayoutFollowers.setOnClickListener(View.OnClickListener {
+            val intent = Intent(context, ViewFollowTabActivityView::class.java)
+            intent.putExtra("FollowViewType","0")
+            startActivity(intent)
+        })
+        linearLayoutFollowing.setOnClickListener(View.OnClickListener {
+            val intent: Intent = Intent(context, ViewFollowTabActivityView::class.java)
+            intent.putExtra("FollowViewType","1")
+            startActivity(intent)
+        })
+    }
+
+    private fun onItemSelected() {
+        toolBar?.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.profileSettingBtn -> {
+                    // Navigate to settings screen
+                    true
+                }
+                R.id.storyBtn -> {
+                    // Save profile changes
+
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }

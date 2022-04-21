@@ -20,7 +20,7 @@ class ViewPagerAdapter(
         if (fragmentManager.backStackEntryCount > 5) fragmentManager.popBackStack()
         val fragmentManager: FragmentManager = fragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainerView, fragment!!, fragment.toString())
+        fragmentTransaction.replace(R.id.fragmentViewPager, fragment!!, fragment.toString())
         fragmentTransaction.addToBackStack(fragment.toString())
         fragmentTransaction.commit()
     }

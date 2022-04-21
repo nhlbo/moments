@@ -12,6 +12,7 @@ import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
+import com.example.moments.ui.main.newsFeed.post.PostView
 import kotlinx.android.synthetic.main.activity_news_feed.*
 import javax.inject.Inject
 
@@ -90,6 +91,8 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         newsfeed_header_bar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.storyBtn -> {
+                    val intent = Intent(activity, PostView::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.msgBtn -> {
