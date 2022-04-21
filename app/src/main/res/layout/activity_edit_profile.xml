@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.main.settings.SettingsActivityView">
+    tools:context=".ui.main.editProfile.EditProfileActivityView">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbEditProfileActivity"
@@ -18,19 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_left"
-        app:title="Settings" />
-
-    <Button
-        android:id="@+id/btnLogOut"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/white"
-        android:text="Log Out"
-        android:textColor="#008AF7"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbEditProfileActivity" />
+        app:title="Edit Profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

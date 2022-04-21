@@ -27,9 +27,9 @@ class ChatActivityView : BaseActivity(), IChatActivityView {
 
         presenter.onAttach(this)
 
-        setSupportActionBar(tbSettingsActivity)
+        setSupportActionBar(tbEditProfileActivity)
         supportActionBar?.title = null
-        tbSettingsActivity.setNavigationOnClickListener { finish() }
+        tbEditProfileActivity.setNavigationOnClickListener { finish() }
         user = intent.getParcelableExtra<User>(NewMessageActivityView.USER_KEY)!!
         tvUsernameToolbarChat.text = user.username
         Glide.with(this).load(user.avatar).into(imgChatAvatar)
