@@ -9,7 +9,7 @@ data class Post(
     val id: String = "",
     var creator: DocumentReference? = null,
     var caption: String = "",
-    var listMedia: ArrayList<String> = arrayListOf(),
+    var listMedia: List<String> = listOf(),
     var createdAt: Timestamp = Timestamp.now(),
     var likeCount: Int = 0,
     var commentCount: Int = 0

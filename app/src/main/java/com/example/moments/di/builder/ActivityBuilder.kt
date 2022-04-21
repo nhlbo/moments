@@ -16,6 +16,8 @@ import com.example.moments.ui.main.newMessage.NewMessageActivityView
 import com.example.moments.ui.main.newsFeed.NewsFeedFragmentProvider
 import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityModule
 import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
+import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoModule
+import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView
 import com.example.moments.ui.main.notification.NotificationFragmentProvider
 import com.example.moments.ui.main.search.SearchFragmentProvider
 import com.example.moments.ui.main.settings.SettingsActivityModule
@@ -68,4 +70,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(NewPostActivityModule::class)])
     abstract fun bindNewPostActivity(): NewPostActivityView
+
+    @ContributesAndroidInjector(modules = [(NewPostActivityStepTwoModule::class)])
+    abstract fun bindNewPostActivityStepTwo(): NewPostActivityStepTwoView
 }

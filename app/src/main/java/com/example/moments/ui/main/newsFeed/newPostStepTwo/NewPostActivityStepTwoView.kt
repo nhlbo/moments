@@ -1,35 +1,50 @@
-package com.example.moments.ui.main.newsFeed.newPostStep2
+package com.example.moments.ui.main.newsFeed.newPostStepTwo
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.main.MainActivityView
 import com.google.android.material.appbar.MaterialToolbar
+import javax.inject.Inject
 
-class NewPostActivityStep2 : BaseActivity() {
+class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
 
-    private var imageData: ArrayList<ByteArray>? = null
+    private lateinit var imageData: List<ByteArray>
     private lateinit var toolBar: MaterialToolbar
     private lateinit var caption: EditText
+
+    @Inject
+    lateinit var presenter: INewPostStepTwoPresenter<INewPostStepTwoView, INewPostStepTwoInteractor>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post_step2)
+        presenter.onAttach(this)
+        Log.d("debug", intent.getStringArrayExtra("itemData").toString())
         imageData = parseToListByteArray(intent.getStringArrayExtra("itemData"))
 
         caption = findViewById(R.id.et_NewPost2)
+        Log.d("debug", imageData.toString())
 
         initToolBar()
 
     }
 
-    private fun parseToListByteArray(data: Array<String>?) : ArrayList<ByteArray>?{
-        if(data == null) return null
+    override fun onDestroy() {
+        presenter.onDetach()
+        super.onDestroy()
+    }
+
+    private fun parseToListByteArray(data: Array<String>?): List<ByteArray>? {
+        if (data == null) return null
         val result: ArrayList<ByteArray> = arrayListOf()
-        for(str: String in data){
+        for (str: String in data) {
             result.add(str.toByteArray())
         }
-        return result
+        return result.toList()
     }
 
     override fun onFragmentAttached() {
@@ -40,12 +55,12 @@ class NewPostActivityStep2 : BaseActivity() {
         TODO("Not yet implemented")
     }
 
-    private fun initToolBar(){
+    private fun initToolBar() {
         toolBar = findViewById(R.id.tb_newPostStep2)
         toolBar.setOnMenuItemClickListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.confirmNewPost -> {
-                    //TODO post
+                    presenter.onCreatePost(caption.text.toString(), imageData)
                     true
                 }
                 else -> false
@@ -54,6 +69,11 @@ class NewPostActivityStep2 : BaseActivity() {
         toolBar.setNavigationOnClickListener {
             finish()
         }
+    }
+
+    override fun backToFeedActivity() {
+        val intent = Intent(this, MainActivityView::class.java)
+        startActivity(intent)
     }
 
 }
