@@ -34,7 +34,7 @@ class ChatActivityView : BaseActivity(), IChatActivityView {
         tvUsernameToolbarChat.text = user.username
         Glide.with(this).load(user.avatar).into(imgChatAvatar)
 
-        presenter.onPerformListenToMessage()
+        presenter.onPerformListenToMessage(user.id)
 
         btnSendChat.setOnClickListener {
             val toId = user.id

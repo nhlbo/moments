@@ -45,11 +45,18 @@ class FirebaseHelper @Inject constructor(
     override fun isUserLoggedIn(): Boolean = getCurrentUser() != null
 
     override fun performGoogleLogin(credential: AuthCredential): Completable =
-        Completable.create{ emitter ->
+        Completable.create { emitter ->
             firebaseAuth.signInWithCredential(credential).addOnSuccessListener {
                 firebaseFirestore.collection("user")
                     .document(it.user!!.uid)
-                    .set(User(username = it.user!!.email!!.substring(0, it.user!!.email!!.indexOf('@')), email = it.user!!.email!!), SetOptions.merge())
+                    .set(
+                        User(
+                            username = it.user!!.email!!.substring(
+                                0,
+                                it.user!!.email!!.indexOf('@')
+                            ), email = it.user!!.email!!
+                        ), SetOptions.merge()
+                    )
                     .addOnSuccessListener {
                         emitter.onComplete()
                     }
@@ -73,7 +80,10 @@ class FirebaseHelper @Inject constructor(
                                 .addOnSuccessListener { authTask ->
                                     firebaseFirestore.collection("user")
                                         .document(getCurrentUserId())
-                                        .set(User(username = username, email = email), SetOptions.merge())
+                                        .set(
+                                            User(username = username, email = email),
+                                            SetOptions.merge()
+                                        )
                                         .addOnSuccessListener {
                                             emitter.onComplete()
                                         }
@@ -368,7 +378,7 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performListenToMessage(): Observable<List<Message>> =
+    override fun performListenToMessage(userId: String): Observable<List<Message>> =
         Observable.create { emitter ->
             firebaseFirestore.collection("/message")
                 .orderBy("timeStamp", Query.Direction.ASCENDING)
@@ -378,7 +388,12 @@ class FirebaseHelper @Inject constructor(
                         return@addSnapshotListener
                     }
                     if (snapshot != null) {
-                        emitter.onNext(snapshot.toObjects<Message>())
+                        emitter.onNext(
+                            snapshot.toObjects<Message>()
+                                .filter { s ->
+                                    (s.fromId == getCurrentUserId() && s.toId == userId)
+                                            || (s.toId == getCurrentUserId() && s.fromId == userId)
+                                })
                     }
                 }
         }
