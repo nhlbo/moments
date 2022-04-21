@@ -68,7 +68,6 @@ class SearchFragmentView : BaseFragment(), ISearchView {
     }
 
     override fun toString(): String = "searchFragment"
-
 }
 
 
