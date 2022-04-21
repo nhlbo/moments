@@ -7,7 +7,7 @@
     tools:context=".ui.main.chat.ChatActivityView">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbChatActivity"
+        android:id="@+id/tbSettingsActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSecondary"
@@ -33,7 +33,7 @@
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/textInputChat"
-        app:layout_constraintTop_toBottomOf="@+id/tbChatActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/tbSettingsActivity" />
 
     <include
         android:id="@+id/textInputChat"

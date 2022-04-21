@@ -8,7 +8,7 @@
     tools:context=".ui.main.chat.ChatActivityView">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbChatActivity"
+        android:id="@+id/tbSettingsActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSecondary"
@@ -23,7 +23,7 @@
     <Button
         android:id="@+id/btnLogOut"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:backgroundTint="@color/white"
         android:text="Log Out"
         android:textColor="#008AF7"
@@ -31,6 +31,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbChatActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/tbSettingsActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
