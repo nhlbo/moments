@@ -6,15 +6,17 @@
     android:layout_height="match_parent">
 
 
-    <androidx.appcompat.widget.SearchView
+    <AutoCompleteTextView
         android:id="@+id/svSearchOthers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/btn_background"
         android:backgroundTint="@color/secondary_btn_color"
+        android:hint="Search"
+        android:paddingLeft="10dp"
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
