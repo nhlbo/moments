@@ -48,7 +48,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     override fun setUp() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rcNewsfeedPanel.layoutManager = layoutManager
-        rcNewsfeedPanel.adapter = context?.let { NewsFeedAdapter(it, listPost, this) }
+        rcNewsfeedPanel.adapter = context?.let { NewsFeedAdapter(it, mutableListOf(), this) }
         rcNewsfeedPanel.isNestedScrollingEnabled = false
         rcNewsfeedPanel.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(view: RecyclerView, event: MotionEvent): Boolean {
