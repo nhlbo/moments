@@ -13,7 +13,8 @@ class MessageActivityView : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
-//        setHasOptionsMenu(true)
+
+        tbMessageActivity.setNavigationOnClickListener { finish() }
         tbMessageActivity.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.btnChat) {
                 val intent = Intent(this, NewMessageActivityView::class.java)
