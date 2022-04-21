@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/loHeaderNewsFeed"
+        android:id="@+id/postHeaderGroup"
         layout="@layout/header_post"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -22,7 +22,6 @@
         app:layout_constraintDimensionRatio="W,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loHeaderNewsFeed"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.tabs.TabLayout
@@ -30,7 +29,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:layout_constraintBottom_toTopOf="@+id/llComponentInteractionButtonNewsFeed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:tabBackground="@drawable/toggle_indicator_selector"
@@ -39,26 +37,27 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <include
-        android:id="@+id/llComponentInteractionButtonNewsFeed"
+        android:id="@+id/interactionBtnGroup"
         layout="@layout/component_interaction_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/tvLikeNewsFeed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tvLikeNewsFeed"
+
+        android:id="@+id/postLikeCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="-1 like"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvContentNewsFeed"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/interactionBtnGroup" />
 
     <TextView
-        android:id="@+id/tvContentNewsFeed"
+
+        android:id="@+id/postCaptionTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -66,12 +65,12 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:text="lostin.paris Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-        app:layout_constraintBottom_toTopOf="@+id/tvShowAllComment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postLikeCount" />
 
     <TextView
-        android:id="@+id/tvShowAllComment"
+        android:id="@+id/showCommentTv"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,21 +78,21 @@
         android:clickable="true"
         android:minHeight="32dp"
         android:text="show all comments"
-        app:layout_constraintBottom_toTopOf="@+id/loFooterPostCommentNewsFeed"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postCaptionTv"
         tools:ignore="TouchTargetSizeCheck" />
 
     <include
-        android:id="@+id/loFooterPostCommentNewsFeed"
+        android:id="@+id/postCommentInputGroup"
         layout="@layout/footer_post_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/tvTimeNewsFeed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showCommentTv" />
 
     <TextView
-        android:id="@+id/tvTimeNewsFeed"
+        android:id="@+id/postCreatedAtTv"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,6 +100,7 @@
         android:layout_marginBottom="8dp"
         android:text="1 day ago"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postCommentInputGroup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

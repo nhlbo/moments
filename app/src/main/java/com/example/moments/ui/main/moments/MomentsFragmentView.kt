@@ -1,11 +1,9 @@
 package com.example.moments.ui.main.moments
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
@@ -17,6 +15,12 @@ import com.example.moments.R
 import com.example.moments.ui.main.comment.CommentFragmentView
 
 class MomentsFragmentView : Fragment() {
+    companion object {
+        fun newInstance(): MomentsFragmentView {
+            return MomentsFragmentView()
+        }
+    }
+
     private lateinit var recyclerViewContainer: RecyclerView
     private lateinit var recyclerViewAdapter: MomentsRecyclerViewAdapter
     private lateinit var commentContainerView: FragmentContainerView

@@ -8,6 +8,12 @@ import androidx.fragment.app.Fragment
 import com.example.moments.R
 
 class SearchFragmentView : Fragment(R.layout.activity_search) {
+    companion object {
+        fun newInstance(): SearchFragmentView {
+            return SearchFragmentView()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

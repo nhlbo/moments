@@ -3,6 +3,7 @@ package com.example.moments.ui.base
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import dagger.android.support.AndroidSupportInjection
 
@@ -36,6 +37,14 @@ abstract class BaseFragment : Fragment(), IBaseView {
 
     override fun hideProgress() {
         TODO("Not yet implemented")
+    }
+
+    override fun showCustomToastMessage(message: String) {
+        Toast.makeText(
+            parentActivity,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     fun getBaseActivity() = parentActivity

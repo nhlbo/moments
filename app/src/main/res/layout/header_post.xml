@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/ivAvatarHeaderPost" />
 
     <TextView
-        android:id="@+id/tvAddress"
+        android:id="@+id/tvUsernameNewMessage"
         style="@style/Theme.Moments.TextView.SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

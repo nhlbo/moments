@@ -1,6 +1,7 @@
 package com.example.moments.ui.main.viewProfile
 
 import android.content.Intent
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -11,29 +12,73 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
+import com.example.moments.ui.base.BaseFragment
+import com.example.moments.ui.main.editProfile.EditProfileActivityView
+import com.example.moments.ui.main.settings.SettingsActivityView
 import com.example.moments.ui.forgetPassword.ForgetPasswordActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowTabActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_view_profile.*
+import javax.inject.Inject
 
-class ProfileFragmentView : Fragment(R.layout.activity_view_profile) {
+class ProfileFragmentView : BaseFragment(), IProfileView {
+
+    companion object {
+        fun newInstance(): ProfileFragmentView {
+            return ProfileFragmentView()
+        }
+    }
+
+    @Inject
+    internal lateinit var presenter: IProfilePresenter<IProfileView, IProfileInteractor>
+
     private var toolBar: Toolbar? = null
+
     private var viewPager: ViewPager2? = null
+
+    override fun setUp() {
+        presenter.onViewPrepared()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.activity_view_profile, container, false)
-        initToolBar()
+        setHasOptionsMenu(true)
         initMediaGrid(view)
-        initLayout(view)
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter.onAttach(this)
+        super.onViewCreated(view, savedInstanceState)
+        profileToolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.profileSettingBtn) {
+                val intent = Intent(activity, SettingsActivityView::class.java)
+                startActivity(intent)
+                return@setOnMenuItemClickListener true
+            }
+            return@setOnMenuItemClickListener false
+        }
+        btnEditProfile.setOnClickListener {
+            val intent = Intent(activity, EditProfileActivityView::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onDestroyView() {
+        presenter.onDetach()
+        super.onDestroyView()
+    }
+
+    private fun initMediaGrid(view: View) {
     private fun initMediaGrid(view: View) {
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout_view_profile)
         viewPager = view.findViewById(R.id.vp2_view_profile)
@@ -47,10 +92,10 @@ class ProfileFragmentView : Fragment(R.layout.activity_view_profile) {
     }
 
     private fun initToolBar() {
-        toolBar = view?.findViewById(R.id.profile_header_toolbar)
-        toolBar?.inflateMenu(R.menu.header_profile)
-        toolBar?.title = "Your profile"
-        onItemSelected()
+//        toolBar = view?.findViewById(R.id.profile_header_toolbar)
+//        toolBar?.inflateMenu(R.menu.header_profile)
+//        toolBar?.title = "Your profile"
+//        onItemSelected()
     }
 
     private fun initLayout(view: View) {

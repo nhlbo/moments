@@ -12,10 +12,17 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moments.ui.main.search.SearchFragmentView
 import com.example.moments.ui.main.viewProfile.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_notification.*
 
-class NotificationFragmentView : Fragment(R.layout.activity_notification) {
+class NotificationFragmentView : Fragment() {
+    companion object {
+        fun newInstance(): NotificationFragmentView {
+            return NotificationFragmentView()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
