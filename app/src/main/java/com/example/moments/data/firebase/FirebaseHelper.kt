@@ -151,6 +151,8 @@ class FirebaseHelper @Inject constructor(
                     firebaseFirestore.document("/user/${getCurrentUserId()}/following/$userId")
                         .set(hashMapOf("accepted" to !(snapshot?.data!!["private"] as Boolean)))
                         .addOnSuccessListener {
+                            firebaseFirestore.document("/user/${userId}/follower/${getCurrentUserId()}")
+
                             emitter.onComplete()
                         }
                         .addOnFailureListener {

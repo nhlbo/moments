@@ -1,4 +1,4 @@
-package com.example.moments.ui.main.EditProfile
+package com.example.moments.ui.main.editProfile
 
 import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
