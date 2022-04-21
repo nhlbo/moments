@@ -13,9 +13,6 @@
         android:theme="@style/Theme.Moments"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.main.moments.MomentsActivityView"
-            android:exported="false" />
-        <activity
             android:name=".ui.forgetPassword.ForgetPasswordActivityView"
             android:exported="false"
             android:noHistory="true" />
@@ -27,6 +24,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.main.message.MessageActivityView"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.settings.changePassword.ChangePasswordActivityView"
             android:exported="false" />
         <activity
             android:name=".ui.main.chat.ChatActivityView"

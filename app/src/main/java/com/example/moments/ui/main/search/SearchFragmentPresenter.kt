@@ -14,4 +14,19 @@ class SearchFragmentPresenter<V : ISearchView, I : ISearchInteractor> @Inject in
     schedulerProvider = schedulerProvider,
     compositeDisposable = disposable
 ), ISearchPresenter<V, I> {
+    override fun onSearchDispatch(query: String) {
+        if (query.isNotEmpty()) {
+            interactor?.let {
+                compositeDisposable.add(
+                    it.doSearchUserByUsername(query)
+                        .compose(schedulerProvider.ioToMainObservableScheduler())
+                        .subscribe({
+                            getView()?.onSearchResultCallback(it)
+                        }, {
+                            getView()?.showCustomToastMessage(it.localizedMessage)
+                        })
+                )
+            }
+        }
+    }
 }

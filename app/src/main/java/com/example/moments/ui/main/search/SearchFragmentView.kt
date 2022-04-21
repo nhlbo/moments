@@ -8,15 +8,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.User
+import com.example.moments.ui.base.BaseFragment
+import kotlinx.android.synthetic.main.activity_search.*
+import javax.inject.Inject
 
 
-class SearchFragmentView : Fragment(R.layout.activity_search) {
+class SearchFragmentView : BaseFragment(), ISearchView {
+
+    @Inject
+    lateinit var presenter: ISearchPresenter<ISearchView, ISearchInteractor>
+
     companion object {
         fun newInstance(): SearchFragmentView {
             return SearchFragmentView()
@@ -27,112 +34,72 @@ class SearchFragmentView : Fragment(R.layout.activity_search) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.activity_search, container, false)
-        search(view)
-        return view
+    ): View? = inflater.inflate(R.layout.activity_search, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter.onAttach(this)
+        super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun toString(): String = "searchFragment"
+    override fun onDestroyView() {
+        presenter.onDetach()
+        super.onDestroyView()
+    }
 
-    fun search(view : View){
-        val atctv : AutoCompleteTextView = view.findViewById(R.id.svSearchOthers)
-        val userlist = arrayListOf<User>()
-        userlist.add(User("1","Anduy","abc@gmail.com"))
-        userlist.add(User("2","Anhduy","abc1@gmail.com"))
-        userlist.add(User("3","HoangLong","abc2@gmail.com"))
-        userlist.add(User("4","XuanSon","abc3@gmail.com"))
-        userlist.add(User("5","QuangHuy","abc4@gmail.com"))
-        Log.i("checkUser",userlist.toString())
+    override fun onSearchResultCallback(listUser: List<User>) {
+        (svSearchOthers.adapter as UserSearchAdapter).updateUser(listUser)
+        svSearchOthers.showDropDown()
+    }
 
-        val adapter =
-            UserSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, userlist)
-        atctv.setAdapter(adapter)
-        atctv!!.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {}
+    override fun setUp() {
+        val userSearchAdapter =
+            UserSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, arrayListOf())
+        svSearchOthers.threshold = 0
+        svSearchOthers.setAdapter(userSearchAdapter)
+        svSearchOthers.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(query: Editable?) {
+                Log.d("debug", query.toString())
+                presenter.onSearchDispatch(query.toString())
+            }
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         })
     }
 
+    override fun toString(): String = "searchFragment"
+
 }
-
-
 
 
 class UserSearchAdapter(
     context: Context?, viewResourceId: Int,
-    items: ArrayList<User>
-) : ArrayAdapter<User?>(context!!, viewResourceId, items as List<User?>) {
-    private val items: ArrayList<User> = items
-    private val itemsAll: ArrayList<User> = items.clone() as ArrayList<User>
-    private val suggestions : ArrayList<User> = ArrayList<User>()
+    private var items: ArrayList<User>
+) : ArrayAdapter<User>(context!!, viewResourceId, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var v = convertView
-        if (v == null) {
+        var view = convertView
+        if (view == null) {
             val vi = context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE
             ) as LayoutInflater
-            v = vi.inflate(R.layout.item_search, null)
+            view = vi.inflate(R.layout.item_search, null)
         }
         val user: User = items[position]
-        if (user != null) {
-            val fullname = v!!.findViewById<TextView>(R.id.tvFullNameSearch)
-            fullname?.setText(user.username)
-            val username = v!!.findViewById<TextView>(R.id.tvUsernameSearch)
-            username?.setText(user.username)
-            val image =  v!!.findViewById<ImageView>(R.id.ivAvatarUserSearch)
-            Glide.with(context).load(user.avatar).into(image)
-        }
-        return v!!
+        val fullname = view!!.findViewById<TextView>(R.id.tvFullNameSearch)
+        fullname?.setText(user.username)
+        val username = view.findViewById<TextView>(R.id.tvUsernameSearch)
+        username?.setText(user.username)
+        val image = view.findViewById<ImageView>(R.id.ivAvatarUserSearch)
+        Glide.with(context).load(user.avatar).into(image)
+        return view
     }
 
-    override fun getFilter(): Filter {
-        return nameFilter
+    fun updateUser(listUser: List<User>) {
+        items.clear()
+        items.addAll(listUser)
+        notifyDataSetChanged()
+        Log.d("debug", count.toString())
     }
-
-    var nameFilter: Filter = object : Filter() {
-        override fun convertResultToString(resultValue: Any): String {
-            return (resultValue as User).username
-        }
-
-        override fun performFiltering(constraint: CharSequence?): FilterResults {
-            return if (constraint != null) {
-                suggestions.clear()
-                for (user in itemsAll) {
-                    if (user.username.lowercase()
-                            .startsWith(constraint.toString().lowercase())
-                    ) {
-                        suggestions.add(user)
-                    }
-                }
-                val filterResults = FilterResults()
-                filterResults.values = suggestions
-                filterResults.count = suggestions.size
-                filterResults
-            } else {
-                FilterResults()
-            }
-        }
-
-        override fun publishResults(
-            constraint: CharSequence?,
-            results: FilterResults?
-        ) {
-
-            if (results != null && results.count > 0) {
-                clear()
-                val filteredList: ArrayList<User> =
-                    results!!.values as ArrayList<User>
-                for (c in filteredList) {
-                    add(c)
-                }
-                notifyDataSetChanged()
-            }
-        }
-    }
-
-
 }
 

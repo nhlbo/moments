@@ -18,6 +18,8 @@ import com.example.moments.ui.main.notification.NotificationFragmentProvider
 import com.example.moments.ui.main.search.SearchFragmentProvider
 import com.example.moments.ui.main.settings.SettingsActivityModule
 import com.example.moments.ui.main.settings.SettingsActivityView
+import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityView
+import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityModule
 import com.example.moments.ui.main.viewProfile.ProfileFragmentProvider
 import com.example.moments.ui.signUp.SignUpActivityModule
 import com.example.moments.ui.signUp.SignUpActivityView
@@ -58,4 +60,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(MessageActivityModule::class)])
     abstract fun bindMessageActitity(): MessageActivityView
+
+    @ContributesAndroidInjector(modules = [(ChangePasswordActivityModule::class)])
+    abstract fun bindChangePasswordActivity(): ChangePasswordActivityView
 }
