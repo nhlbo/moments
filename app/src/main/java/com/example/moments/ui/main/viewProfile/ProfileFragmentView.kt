@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.example.moments.ui.base.BaseFragment
+import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.settings.SettingsActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -58,6 +59,10 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
                 return@setOnMenuItemClickListener true
             }
             return@setOnMenuItemClickListener false
+        }
+        btnEditProfile.setOnClickListener {
+            val intent = Intent(activity, EditProfileActivityView::class.java)
+            startActivity(intent)
         }
     }
 
