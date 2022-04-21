@@ -8,7 +8,7 @@
     tools:context=".ui.main.chat.ChatActivityView">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbChatActivity"
+        android:id="@+id/tbEditProfileActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSecondary"
@@ -17,7 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/header_chat"
         app:navigationIcon="@drawable/ic_arrow_left">
 
         <include
@@ -29,20 +28,16 @@
             tools:layout_editor_absoluteX="72dp" />
     </androidx.appcompat.widget.Toolbar>
 
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMessagePanel"
-        android:layout_width="0dp"
+        android:id="@+id/rvChat"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/include4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbChatActivity">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/textInputChat"
+        app:layout_constraintTop_toBottomOf="@+id/tbEditProfileActivity" />
 
     <include
-        android:id="@+id/include4"
+        android:id="@+id/textInputChat"
         layout="@layout/footer_chat_textbox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

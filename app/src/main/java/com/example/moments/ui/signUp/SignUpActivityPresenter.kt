@@ -24,7 +24,6 @@ class SignUpActivityPresenter<V : ISignUpActivityView, I : ISignUpActivityIntera
         password: String,
         confirmPassword: String
     ) {
-        Log.d("123", password + confirmPassword)
         when {
             email.isEmpty() -> getView()?.showValidationMessage(AppConstants.EMPTY_EMAIL_ERROR)
             username.isEmpty() -> getView()?.showValidationMessage(AppConstants.EMPTY_USERNAME_ERROR)

@@ -9,7 +9,7 @@
     android:isScrollContainer="true">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/profile_header_toolbar"
+        android:id="@+id/profileToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSecondary"
@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_header_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/profileToolbar">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -199,7 +199,7 @@
                         android:id="@+id/btnEditProfile"
                         style="@style/Theme.Moments.ButtonVariant1"
                         android:layout_width="0dp"
-                        android:layout_height="30dp"
+                        android:layout_height="48dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
@@ -213,8 +213,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="TouchTargetSizeCheck" />
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

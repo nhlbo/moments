@@ -1,25 +1,29 @@
 package com.example.moments.ui.main.newsFeed
 
-import android.net.Uri
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.moments.R
+import com.example.moments.ui.base.BaseFragment
+import com.example.moments.ui.main.message.MessageActivityView
+import com.google.firebase.firestore.DocumentSnapshot
+import kotlinx.android.synthetic.main.activity_news_feed.*
+import javax.inject.Inject
 
+class NewsFeedFragmentView : BaseFragment(), INewsFeedView {
 
-class NewsFeedFragmentView : Fragment(), IAdapterCallBack {
-    private var toolBar: Toolbar? = null
-    private var recyclerView: RecyclerView? = null
+    companion object {
+        fun newInstance(): NewsFeedFragmentView {
+            return NewsFeedFragmentView()
+        }
+    }
+
+    @Inject
+    internal lateinit var presenter: INewsFeedPresenter<INewsFeedView, INewsFeedInteractor>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,6 +35,7 @@ class NewsFeedFragmentView : Fragment(), IAdapterCallBack {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
         toolBar = getView()?.findViewById(R.id.newsfeed_header_bar)
         toolBar?.inflateMenu(R.menu.header_newsfeeds)
@@ -53,6 +58,8 @@ class NewsFeedFragmentView : Fragment(), IAdapterCallBack {
         dataList.add(NewsFeed("HoangLong",url2,"HCM","test newsfeed view",imageList,2,url1,"1 day ago"))
         dataList.add(NewsFeed("HuyQuang",url1,"VietNam","test newsfeed view",imageList,2,url2,"1 day ago"))
         dataList.add(NewsFeed("AnDuy",url1,"HCM","test newsfeed view",imageList,2,url2,"1 day ago"))
+        newsfeed_header_bar.inflateMenu(R.menu.header_newsfeeds)
+        setUpOnClicked()
 
         recyclerView = view.findViewById(R.id.rcNewsfeedPanel)
         recyclerView?.layoutManager = LinearLayoutManager(activity)
@@ -69,10 +76,31 @@ class NewsFeedFragmentView : Fragment(), IAdapterCallBack {
                 }
                 return false
             }
+        }
+    }
 
+    override fun setUp() {
+        presenter.onViewPrepared()
+    }
+
+    override fun updatePost(listPost: List<DocumentSnapshot>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun toString(): String = "newsfeedFragment"
+
+    override fun onDestroyView() {
+        presenter.onDetach()
+        super.onDestroyView()
+    }
+
+    private fun setUpOnClicked() {
+        newsfeed_header_bar.setOnMenuItemClickListener {
+            when(it.itemId){
             override fun onTouchEvent(view: RecyclerView, event: MotionEvent) {}
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-        })
+            })
+         }
     }
     private fun onItemSelected() {
         toolBar?.setOnMenuItemClickListener {
@@ -84,7 +112,9 @@ class NewsFeedFragmentView : Fragment(), IAdapterCallBack {
                 }
                 R.id.msgBtn -> {
                     // Save profile changes
-                    findNavController().navigate(R.id.chatFragmentView)
+                    //findNavController().navigate(R.id.chatFragmentView)
+                    val intent: Intent = Intent(activity, MessageActivityView::class.java)
+                    startActivity(intent)
                     true
                 }
                 else -> false
@@ -101,12 +131,12 @@ class NewsFeedFragmentView : Fragment(), IAdapterCallBack {
         }
     }
 
-    private fun switchFragment(fragment: Fragment){
-        activity?.supportFragmentManager?.beginTransaction()!!
-            .replace(R.id.navigateFragmentsContainer, fragment,fragment.toString())
-            .addToBackStack(fragment.toString())
-            .commit()
-    }
+//    private fun switchFragment(fragment: Fragment){
+//        activity?.supportFragmentManager?.beginTransaction()!!
+//            .replace(R.id.navigateFragmentsContainer, fragment,fragment.toString())
+//            .addToBackStack(fragment.toString())
+//            .commit()
+//    }
 
-    override fun toString(): String = "newsfeedFragment"
+    //override fun toString(): String = "newsfeedFragment"
 }
