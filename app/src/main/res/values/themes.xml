@@ -83,9 +83,18 @@
         <item name="iconPadding">-25dp</item>
     </style>
 
+    <style name="Theme.Moments.ButtonVariant3" parent="Theme.Moments.Button">
+        <item name="backgroundTint">@color/secondary_text_color</item>
+        <item name="iconTint">@color/white</item>
+        <item name="iconSize">12dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="Theme.Moments.ButtonMoments" parent="Theme.Moments.Button">
         <item name="backgroundTint">?attr/colorPrimary</item>
         <item name="background">@drawable/btn_thin_background</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
     </style>
 
     <style name="Theme.Moments.ThinButton" parent="Theme.Moments.Button">

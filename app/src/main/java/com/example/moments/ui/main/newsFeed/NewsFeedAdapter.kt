@@ -119,7 +119,7 @@ class NewsFeedAdapter(
     fun updatePost(listPost: List<RetrievedPost>) {
         newsFeedList.clear()
         newsFeedList.addAll(listPost.toMutableList())
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, newsFeedList.size)
     }
 
     fun prependPost(post: RetrievedPost) {
