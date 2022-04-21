@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Moments"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.main.newsFeed.newPostStep2.NewPostActivityStep2"
+            android:name=".ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView"
             android:exported="false" />
         <activity
             android:name=".ui.main.newsFeed.newPost.NewPostActivityView"

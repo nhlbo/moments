@@ -18,7 +18,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -28,11 +27,10 @@ import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
-import com.example.moments.ui.main.newsFeed.newPostStep2.NewPostActivityStep2
+import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import java.io.ByteArrayOutputStream
-import javax.inject.Inject
 
 
 class NewPostActivityView : BaseActivity(), INewPostActivityView {
@@ -47,20 +45,17 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
     private var toggleSelection: Button? = null
     private var isMultipleChoice: Boolean = false
 
-    @Inject
-    lateinit var presenter: INewPostActivityPresenter<INewPostActivityView, INewPostActivityInteractor>
-
-    private val listener: IOnRecyclerViewItemTouchListener = object: IOnRecyclerViewItemTouchListener {
-        override fun onItemClick(postition: Int) {
-            Glide.with(this@NewPostActivityView).load(imageList[postition]).into(previewImage!!)
-            appBar?.setExpanded(true)
+    private val listener: IOnRecyclerViewItemTouchListener =
+        object : IOnRecyclerViewItemTouchListener {
+            override fun onItemClick(postition: Int) {
+                Glide.with(this@NewPostActivityView).load(imageList[postition]).into(previewImage!!)
+                appBar?.setExpanded(true)
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post_view)
-        presenter.onAttach(this)
         requestPermission()
 
         val frameLayout = findViewById<FrameLayout>(R.id.MediaNewPostContainer) as ViewGroup
@@ -70,10 +65,10 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         appBar = findViewById(R.id.appbarNewPost)
         toolBar = findViewById(R.id.tbNewPost)
         toolBar.setOnMenuItemClickListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.new_post_post -> {
-                    val intent: Intent = Intent(this, NewPostActivityStep2::class.java)
-                    intent.putExtra("imageData", getSelectedImageByteArray())
+                    val intent = Intent(this, NewPostActivityStepTwoView::class.java)
+                    intent.put("imageData", getSelectedImageByteArray())
                     startActivity(intent)
                     true
                 }
@@ -89,9 +84,10 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         initRecyclerView(mediaGrid)
     }
 
-    private fun requestPermission(){
+    private fun requestPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED) {
+            != PackageManager.PERMISSION_GRANTED
+        ) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(
@@ -153,24 +149,29 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
     private fun initRecyclerView(view: View?) {
         imageList = getAllShownImagesPath(this)
 
-        recyclerView= view?.findViewById<RecyclerView>(R.id.rcMediaGrid)
+        recyclerView = view?.findViewById<RecyclerView>(R.id.rcMediaGrid)
         recyclerView?.setHasFixedSize(true);
         recyclerView?.addItemDecoration(
-            DividerItemDecoration(this,
-                DividerItemDecoration.HORIZONTAL)
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.HORIZONTAL
+            )
         )
         recyclerView?.addItemDecoration(
-            DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL)
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
         )
-        recyclerView?.layoutManager = GridLayoutManager(this,4)
-        val adapter = ImageChoosingAdapter(this,ArrayList(imageList.subList(0,20)), listener)
-        recyclerView?.adapter=adapter
+        recyclerView?.layoutManager = GridLayoutManager(this, 4)
+        val adapter = ImageChoosingAdapter(this, ArrayList(imageList.subList(0, 20)), listener)
+        recyclerView?.adapter = adapter
 
         nestedScrollView?.setOnScrollChangeListener { v: NestedScrollView, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if(v.getChildAt(v.childCount - 1) != null) {
+            if (v.getChildAt(v.childCount - 1) != null) {
                 if ((scrollY >= (v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight)) &&
-                    scrollY > oldScrollY) {
+                    scrollY > oldScrollY
+                ) {
                     //code to fetch more data for endless scrolling
                     val mLayoutManager = recyclerView?.layoutManager as GridLayoutManager
                     val totalItemCount = mLayoutManager.itemCount
@@ -185,28 +186,29 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         }
     }
 
-    private fun loadMore(total: Int){
-        (recyclerView?.adapter as ImageChoosingAdapter).updateItems(imageList.subList(total - 10, total))
+    private fun loadMore(total: Int) {
+        (recyclerView?.adapter as ImageChoosingAdapter).updateItems(
+            imageList.subList(
+                total - 10,
+                total
+            )
+        )
     }
 
-    private fun getSelectedImageByteArray() : ArrayList<String>{
+    private fun getSelectedImageByteArray(): ArrayList<String> {
         val result: ArrayList<String> = arrayListOf()
         val selectedItems = (recyclerView?.adapter as ImageChoosingAdapter).selectedItems
 
-        for (item:ImageView in selectedItems){
+        for (item: ImageView in selectedItems) {
             result.add(convertImageToByteArray(item).toString())
         }
         return result
     }
 
-    private fun convertImageToByteArray(view: ImageView): ByteArray{
+    private fun convertImageToByteArray(view: ImageView): ByteArray {
         val bitmap = (view.drawable as BitmapDrawable).bitmap
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
         return stream.toByteArray()
-    }
-
-    override fun openCreatePostActivity() {
-
     }
 }

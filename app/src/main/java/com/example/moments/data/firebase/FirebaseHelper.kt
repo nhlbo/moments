@@ -378,8 +378,8 @@ class FirebaseHelper @Inject constructor(
 
     override fun performAddPost(
         caption: String,
-        media: ArrayList<String>
-    ): Single<DocumentSnapshot> =
+        media: List<String>
+    ): Single<Post> =
         Single.create { emitter ->
             firebaseFirestore.collection("/post")
                 .add(
@@ -391,7 +391,7 @@ class FirebaseHelper @Inject constructor(
                 )
                 .addOnSuccessListener { docRef ->
                     docRef.get().addOnSuccessListener { docSnapshot ->
-                        emitter.onSuccess(docSnapshot)
+                        emitter.onSuccess(docSnapshot.toObject(Post::class.java)!!)
                     }
                 }
                 .addOnFailureListener {
