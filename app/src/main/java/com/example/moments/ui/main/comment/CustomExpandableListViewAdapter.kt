@@ -1,28 +1,26 @@
 package com.example.moments.ui.main.comment
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.graphics.fonts.Font
-import android.graphics.fonts.FontStyle
+import android.graphics.Typeface
+import android.text.Spannable
 import android.text.SpannableString
-import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat.startActivity
 import com.example.moments.R
-import org.intellij.lang.annotations.JdkConstants
 
 
 class CustomExpandableListViewAdapter(private val context: Context,
                                       private val listChildData: HashMap<Int, List<CommentData>>,
-                                      private val listParent: List<CommentDataGroup>) : BaseExpandableListAdapter() {
+                                      private val listParent: List<CommentDataGroup>,
+                                      private val onButtonClickListener: CommentsButtonClickListener) : BaseExpandableListAdapter() {
 
     override fun getGroupCount(): Int = listParent.size
 
@@ -58,7 +56,7 @@ class CustomExpandableListViewAdapter(private val context: Context,
         val reactBtn = convertView.findViewById<ToggleButton>(R.id.toggleLikePostCommentBtn)
 
         //update UI
-        userCommentContent.text = buildSpannableString(commentData.username,commentData.content)
+        userCommentContent.setText(buildSpannableString(commentData.username,commentData.content, commentData.tagPeople),TextView.BufferType.SPANNABLE)
         userCommentContent.movementMethod = LinkMovementMethod.getInstance()
         userCommentContent.highlightColor = Color.TRANSPARENT
 
@@ -67,6 +65,7 @@ class CustomExpandableListViewAdapter(private val context: Context,
 
         // show replies button behaviours
         val showReplies = convertView.findViewById<TextView>(R.id.view_more_comments_btn)
+        if (commentData.replies.size == 0) showReplies.visibility = View.GONE
         if(isExpanded){
             showReplies.text = "hide replies"
         }
@@ -92,6 +91,10 @@ class CustomExpandableListViewAdapter(private val context: Context,
             userCommentLikes.text = "${commentData.reactions} likes"
         }
 
+        replyBtn.setOnClickListener{
+            onButtonClickListener.onReplyClicked(commentData.username, groupPosition)
+        }
+
         return convertView
     }
 
@@ -114,7 +117,7 @@ class CustomExpandableListViewAdapter(private val context: Context,
         val reactBtn = convertView.findViewById<ToggleButton>(R.id.toggleLikePostCommentBtn)
 
         //update UI
-        userCommentContent.text = buildSpannableString(commentData.username,commentData.content)
+        userCommentContent.setText(buildSpannableString(commentData.username,commentData.content, commentData.tagPeople),TextView.BufferType.SPANNABLE)
         userCommentContent.movementMethod = LinkMovementMethod.getInstance()
         userCommentContent.highlightColor = Color.TRANSPARENT
 
@@ -129,22 +132,48 @@ class CustomExpandableListViewAdapter(private val context: Context,
             userCommentLikes.text = "${commentData.reactions} likes"
         }
 
+        replyBtn.setOnClickListener{
+            onButtonClickListener.onReplyClicked(commentData.username, groupPosition)
+        }
+
         return convertView
     }
 
-    private fun buildSpannableString(username:String, content:String): String{
-        val ss = SpannableString("$username $content")
-        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+    private fun buildSpannableString(username:String, content:String, tagPeople: ArrayList<String>): Spannable{
+        val fullContent = "$username $content"
+        val ss : Spannable = SpannableString(fullContent)
+        val usernameLink: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
-
+                //TODO view profile
+                Toast.makeText(context, username, Toast.LENGTH_LONG).show()
             }
-
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
                 ds.isUnderlineText = false
             }
         }
-        ss.setSpan(clickableSpan, 0, username.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        return ss.toString()
+        ss.setSpan(usernameLink, 0, username.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(StyleSpan(Typeface.BOLD), 0, username.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(ForegroundColorSpan(context.getColor(R.color.primary_text_color)), 0, username.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        var startIndex = 0
+        for(tag in tagPeople){
+            val userProfileLink: ClickableSpan = object : ClickableSpan(){
+                override fun onClick(p0: View) {
+                    //TODO req to viewProfile
+                    Toast.makeText(context, tag, Toast.LENGTH_LONG).show()
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.isUnderlineText = false
+                }
+            }
+            startIndex = Math.max(fullContent.indexOf(tag), startIndex + 1)// if tags are duplicated
+            ss.setSpan(userProfileLink, startIndex, startIndex + tag.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            ss.setSpan(ForegroundColorSpan(Color.CYAN), startIndex, startIndex + tag.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
+        return ss
     }
 }

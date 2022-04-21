@@ -9,6 +9,7 @@
         android:id="@+id/imgChatAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginStart="8dp"
         app:civ_border="true"
         app:civ_border_color="@color/black"
         app:civ_border_width="1sp"

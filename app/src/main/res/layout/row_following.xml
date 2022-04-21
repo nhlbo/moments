@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp">
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/ivAvatarFollowing"
+        android:layout_width="wrap_content"
+        android:layout_height="@android:dimen/app_icon_size"
+        app:civ_border="true"
+        app:civ_border_color="@color/black"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/default_avatar" />
+
+    <TextView
+        android:id="@+id/tvNameFollowing"
+        style="@style/Theme.Moments.TextView.HelperText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="son_tran"
+        android:textColor="@color/primary_text_color"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivAvatarFollowing"
+        app:layout_constraintTop_toTopOf="@+id/ivAvatarFollowing"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <TextView
+        android:id="@+id/tvSubNameFollowing"
+        style="@style/Theme.Moments.TextView.HelperText"
+        android:fontFamily="@font/gothic_extra_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Son Tran"
+        android:textColor="@color/primary_text_color"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivAvatarFollowing"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameFollowing"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <Button
+        android:id="@+id/btnFollowFollowing"
+        style="@style/Theme.Moments.ThinButton"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="50dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:text="Following"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textViewOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="&#8943;"
+        android:textStyle="bold"
+        android:textAppearance="?android:textAppearanceLarge"
+        app:layout_constraintBottom_toBottomOf="@+id/btnFollowFollowing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnFollowFollowing"
+        app:layout_constraintTop_toTopOf="@+id/btnFollowFollowing" />
+</androidx.constraintlayout.widget.ConstraintLayout>

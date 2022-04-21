@@ -24,7 +24,6 @@ class NewsFeedFragmentPresenter<V : INewsFeedView, I : INewsFeedInteractor> @Inj
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })
-
             )
         }
     }
