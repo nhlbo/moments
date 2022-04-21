@@ -6,11 +6,15 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.ui.base.BaseFragment
+import com.example.moments.ui.main.comment.CommentActivityView
+import com.example.moments.ui.main.comment.CommentFragmentView
+import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
@@ -46,8 +50,13 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     override fun setUp() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rcNewsfeedPanel.layoutManager = layoutManager
-        rcNewsfeedPanel.adapter = context?.let { NewsFeedAdapter(it, mutableListOf(), this) }
+        var adapter = context?.let { NewsFeedAdapter(it, mutableListOf(), this) }
+        rcNewsfeedPanel.adapter = adapter
         rcNewsfeedPanel.isNestedScrollingEnabled = false
+        adapter?.onButtonClick = { commentList ->
+            var intent  = Intent(context, CommentActivityView::class.java)
+            startActivity(intent);
+        }
         rcNewsfeedPanel.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(view: RecyclerView, event: MotionEvent): Boolean {
                 when (event.action) {
