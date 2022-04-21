@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.ui.base.BaseFragment
-import com.example.moments.ui.main.latestMessage.MessageActivityView
+import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
 import javax.inject.Inject
 
@@ -71,7 +71,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     }
 
     override fun onItemTouch(position: Int, command: String) {
-        if(command == "showComment"){
+        if (command == "showComment") {
 //            val request = NavDeepLinkRequest.Builder
 //                .fromUri(R.string.commentFragment.toString().toUri())
 //                .build()
@@ -93,7 +93,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                     true
                 }
                 R.id.msgBtn -> {
-                    val intent: Intent = Intent(activity, MessageActivityView::class.java)
+                    val intent: Intent = Intent(activity, LatestMessageActivityView::class.java)
                     startActivity(intent)
                     true
                 }

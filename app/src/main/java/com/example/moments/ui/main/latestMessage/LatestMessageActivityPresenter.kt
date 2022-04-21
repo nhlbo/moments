@@ -16,13 +16,13 @@ class LatestMessageActivityPresenter<V : ILatestMessageActivityView, I : ILatest
 ),
     ILatestMessageActivityPresenter<V, I> {
 
-    override fun onQueryFollowingUser() {
+    override fun onQueryLatestMessage() {
         interactor?.let {
             compositeDisposable.add(
-                it.doQueryFollowingUser()
+                it.doQueryLatestMessage()
                     .compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
-                        getView()?.addUsers(it)
+                        getView()?.addLatestMessages(it)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })

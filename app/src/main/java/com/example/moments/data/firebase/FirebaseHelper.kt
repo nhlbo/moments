@@ -1,6 +1,7 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
+import android.util.Log
 import com.example.moments.data.model.Message
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
@@ -173,8 +174,8 @@ class FirebaseHelper @Inject constructor(
                         emitter.onError(it)
                     }
                 }.addOnFailureListener {
-                emitter.onError(it)
-            }
+                    emitter.onError(it)
+                }
         }
 
     override fun performQueryFollowingUser(): Single<List<User>> =
@@ -423,6 +424,23 @@ class FirebaseHelper @Inject constructor(
                 .get()
                 .addOnSuccessListener { listPost ->
                     emitter.onSuccess(listPost.documents.map { it.toObject(Post::class.java)!! })
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryLatestMessage(): Single<List<Pair<User, Message>>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("/message")
+                .orderBy("timeStamp", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    val messages = snapshot.toObjects<Message>()
+                        .filter { s -> s.fromId == getCurrentUserId() || s.toId == getCurrentUserId() }
+                    val userIds =
+                        messages.map { if (it.fromId == getCurrentUserId()) it.toId else it.fromId }
+                    emitter.onSuccess(listOf())
                 }
                 .addOnFailureListener {
                     emitter.onError(it)

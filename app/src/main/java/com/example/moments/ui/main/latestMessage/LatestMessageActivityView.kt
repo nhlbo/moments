@@ -3,9 +3,10 @@ package com.example.moments.ui.main.latestMessage
 import android.content.Intent
 import android.os.Bundle
 import com.example.moments.R
+import com.example.moments.data.model.Message
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_message.*
+import kotlinx.android.synthetic.main.activity_latest_message.*
 import javax.inject.Inject
 
 
@@ -19,10 +20,13 @@ class LatestMessageActivityView : BaseActivity(), ILatestMessageActivityView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_message)
+        setContentView(R.layout.activity_latest_message)
 
-        tbMessageActivity.setNavigationOnClickListener { finish() }
-        tbMessageActivity.setOnMenuItemClickListener { item ->
+        presenter.onAttach(this)
+        presenter.onQueryLatestMessage()
+
+        tbLatestMessageActivity.setNavigationOnClickListener { finish() }
+        tbLatestMessageActivity.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.btnChat) {
                 val intent = Intent(this, LatestMessageActivityView::class.java)
                 startActivity(intent)
@@ -40,7 +44,6 @@ class LatestMessageActivityView : BaseActivity(), ILatestMessageActivityView {
         TODO("Not yet implemented")
     }
 
-    override fun addUsers(users: List<User>) {
-        TODO("Not yet implemented")
+    override fun addLatestMessages(latestMessage: List<Pair<User, Message>>) {
     }
 }
