@@ -26,6 +26,8 @@ interface IFirebaseHelper {
 
     fun getCurrentUser(): FirebaseUser?
 
+    fun getCurrentUserModel(): Single<User>
+
     fun getCurrentUserId(): String
 
     fun isUserLoggedIn(): Boolean

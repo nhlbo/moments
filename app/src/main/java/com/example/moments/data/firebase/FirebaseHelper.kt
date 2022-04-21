@@ -119,6 +119,18 @@ class FirebaseHelper @Inject constructor(
 
     override fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
 
+    override fun getCurrentUserModel(): Single<User> =
+        Single.create { emitter ->
+            firebaseFirestore.document("user/${getCurrentUserId()}")
+                .get()
+                .addOnSuccessListener { document ->
+                    emitter.onSuccess(document.toObject<User>()!!)
+                }
+                .addOnFailureListener { exception ->
+                    emitter.onError(exception)
+                }
+        }
+
     override fun performQueryUserByUsername(username: String): Observable<List<User>> =
         Observable.create { emitter ->
             val upperBound = username.substring(0, username.length - 1) + username.last().inc()
