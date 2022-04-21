@@ -143,6 +143,10 @@ class FirebaseHelper @Inject constructor(
             firebaseFirestore.collection("/user/${getCurrentUserId()}/following").get()
                 .addOnSuccessListener { followingUser ->
                     val listIdFollowing = followingUser.documents.map { it.id }
+                    if (listIdFollowing.isEmpty()) {
+                        emitter.onSuccess(listOf())
+                        return@addOnSuccessListener
+                    }
                     firebaseFirestore.collection("/user")
                         .whereIn(FieldPath.documentId(), listIdFollowing).get()
                         .addOnSuccessListener { listUserDetail ->
