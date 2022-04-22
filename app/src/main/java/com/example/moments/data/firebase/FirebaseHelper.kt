@@ -487,4 +487,16 @@ class FirebaseHelper @Inject constructor(
                     }
                 }
         }
+
+    override fun performEditProfile(username: String, bio: String): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.document("/user/${getCurrentUserId()}")
+                .update(mapOf("username" to username, "bio" to bio))
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
 }

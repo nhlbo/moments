@@ -1,12 +1,12 @@
 package com.example.moments.ui.main.editProfile
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
-import com.example.moments.ui.main.newMessage.NewMessageActivityView
 import com.example.moments.ui.main.viewProfile.ProfileFragmentView
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import javax.inject.Inject
@@ -15,6 +15,10 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
 
     @Inject
     lateinit var presenter: IEditProfileActivityPresenter<IEditProfileActivityView, IEditProfileActivityInteractor>
+
+    companion object {
+        const val DONE = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,14 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
 
         tbEditProfileActivity.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.btnDoneEditProfile) {
+                presenter.onPerformEditProfile(
+                    etUsernameEditProfile.text.toString(),
+                    etBioEditProfile.text.toString()
+                )
+                val replyIntent = Intent()
+                replyIntent.putExtra("USERNAME", etUsernameEditProfile.text.toString())
+                replyIntent.putExtra("BIO", etBioEditProfile.text.toString())
+                setResult(DONE, replyIntent)
                 finish()
                 return@setOnMenuItemClickListener true
             }

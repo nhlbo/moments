@@ -16,7 +16,15 @@ class EditProfileActivityPresenter<V : IEditProfileActivityView, I : IEditProfil
 ),
     IEditProfileActivityPresenter<V, I> {
 
-    override fun onPerformLogOut() {
-        interactor?.doPerformLogOut()
+    override fun onPerformEditProfile(username: String, bio: String) {
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doPerformEditProfile(username, bio).compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
     }
 }
