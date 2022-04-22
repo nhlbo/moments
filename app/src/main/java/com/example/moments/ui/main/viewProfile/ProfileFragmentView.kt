@@ -63,6 +63,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         profileToolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.profileSettingBtn) {
                 val intent = Intent(activity, SettingsActivityView::class.java)
+                startActivity(intent)
                 true
             }
             false
