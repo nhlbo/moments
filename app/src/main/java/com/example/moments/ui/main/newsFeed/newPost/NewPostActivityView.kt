@@ -68,7 +68,11 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
             when (it.itemId) {
                 R.id.new_post_post -> {
                     val intent = Intent(this, NewPostActivityStepTwoView::class.java)
-                    intent.putExtra("imageData", getSelectedImageByteArray())
+                    val listData = getSelectedImageByteArray()
+                    intent.putExtra("size", listData.size)
+                    for(i :Int in 0 until listData.size){
+                        intent.putExtra("imageData $i", listData[i])
+                    }
                     startActivity(intent)
                     true
                 }
@@ -195,18 +199,19 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         )
     }
 
-    private fun getSelectedImageByteArray(): ArrayList<String> {
-        val result: ArrayList<String> = arrayListOf()
+    private fun getSelectedImageByteArray(): ArrayList<ByteArray> {
+        val result: ArrayList<ByteArray> = arrayListOf()
         val selectedItems = (recyclerView?.adapter as ImageChoosingAdapter).selectedItems
 
         for (item: ImageView in selectedItems) {
-            result.add(convertImageToByteArray(item).toString())
+            result.add(convertImageToByteArray(item))
         }
         return result
     }
 
     private fun convertImageToByteArray(view: ImageView): ByteArray {
-        val bitmap = (view.drawable as BitmapDrawable).bitmap
+        val drawable = (view.drawable as BitmapDrawable)
+        val bitmap = drawable.bitmap
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
         return stream.toByteArray()
