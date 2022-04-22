@@ -2,6 +2,7 @@ package com.example.moments.ui.main.viewProfile
 
 import com.example.moments.data.firebase.FirebaseHelper
 import com.example.moments.data.model.Post
+import com.example.moments.data.model.User
 import com.example.moments.data.preference.PreferenceHelper
 import com.example.moments.ui.base.BaseInteractor
 import io.reactivex.Single
@@ -13,4 +14,6 @@ class ProfileFragmentInteractor @Inject constructor(
 ) : BaseInteractor(preferenceHelper, firebaseHelper), IProfileInteractor {
     override fun doQueryCurrentUserPost(): Single<List<Post>> =
         firebaseHelper.performQueryCurrentUserPost()
+
+    override fun doGetCurrentUserModel(): Single<User> = firebaseHelper.getCurrentUserModel()
 }

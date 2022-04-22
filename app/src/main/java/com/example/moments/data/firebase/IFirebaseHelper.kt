@@ -26,6 +26,8 @@ interface IFirebaseHelper {
 
     fun getCurrentUser(): FirebaseUser?
 
+    fun getCurrentUserModel(): Single<User>
+
     fun getCurrentUserId(): String
 
     fun isUserLoggedIn(): Boolean
@@ -79,4 +81,6 @@ interface IFirebaseHelper {
     fun performChangePassword(oldPassword: String, newPassword: String): Completable
 
     fun performListenToLatestMessage(): Observable<List<Message>>
+
+    fun performEditProfile(username: String, bio: String): Completable
 }
