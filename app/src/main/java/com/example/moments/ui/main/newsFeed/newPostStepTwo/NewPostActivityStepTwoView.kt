@@ -1,17 +1,23 @@
 package com.example.moments.ui.main.newsFeed.newPostStepTwo
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
+import android.widget.ImageView
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.main.MainActivityView
+import com.example.moments.ui.main.newsFeed.newPost.ImageChoosingAdapter
 import com.google.android.material.appbar.MaterialToolbar
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
 
-    private var imageData: List<ByteArray>? = null
+    private var imageData: ArrayList<ByteArray> = arrayListOf()
     private lateinit var toolBar: MaterialToolbar
     private lateinit var caption: EditText
 
@@ -22,12 +28,13 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post_step2)
         presenter.onAttach(this)
-        imageData = parseToListByteArray(intent.extras?.getStringArrayList("imageData"))
 
+        val size = intent.extras?.getInt("size")!!
+        for(i:Int in 0 until size){
+            intent.extras?.getByteArray("imageData $i")?.let { imageData.add(it) }
+        }
         caption = findViewById(R.id.et_NewPost2)
-
         initToolBar()
-
     }
 
     override fun onDestroy() {
@@ -35,14 +42,7 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         super.onDestroy()
     }
 
-    private fun parseToListByteArray(data: java.util.ArrayList<String>?): List<ByteArray>? {
-        if (data == null) return null
-        val result: ArrayList<ByteArray> = arrayListOf()
-        for (str: String in data) {
-            result.add(str.toByteArray())
-        }
-        return result.toList()
-    }
+
 
     override fun onFragmentAttached() {
         TODO("Not yet implemented")
@@ -72,5 +72,4 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         val intent = Intent(this, MainActivityView::class.java)
         startActivity(intent)
     }
-
 }

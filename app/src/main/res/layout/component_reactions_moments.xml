@@ -32,6 +32,7 @@
         android:gravity="right"
         android:text="263k"
         android:textSize="12sp"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="@+id/btnLikeMoments"
         app:layout_constraintStart_toStartOf="@+id/btnLikeMoments"
         app:layout_constraintTop_toBottomOf="@+id/btnLikeMoments" />
@@ -42,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_message_square"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLikesMoments"
@@ -66,6 +68,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCommentsMoments"
         app:srcCompat="@drawable/ic_share"
+        android:background="@android:color/transparent"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -77,5 +80,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnShareMoments"
         app:srcCompat="@drawable/ic_more_vertical"
+        android:background="@android:color/transparent"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
