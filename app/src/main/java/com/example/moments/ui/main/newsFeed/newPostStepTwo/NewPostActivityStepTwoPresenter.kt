@@ -1,12 +1,11 @@
-package com.example.moments.ui.main.newsFeed.newPost
+package com.example.moments.ui.main.newsFeed.newPostStepTwo
 
-import android.util.Log
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class NewPostActivityPresenter<V : INewPostActivityView, I : INewPostActivityInteractor> @Inject internal constructor(
+class NewPostActivityStepTwoPresenter<V : INewPostStepTwoView, I : INewPostStepTwoInteractor> @Inject internal constructor(
     interactor: I,
     schedulerProvider: SchedulerProvider,
     disposable: CompositeDisposable
@@ -14,17 +13,19 @@ class NewPostActivityPresenter<V : INewPostActivityView, I : INewPostActivityInt
     interactor = interactor,
     schedulerProvider = schedulerProvider,
     compositeDisposable = disposable
-), INewPostActivityPresenter<V, I> {
-    override fun onUploadMedia(listMedia: List<ByteArray>) {
-        interactor?.let{
+), INewPostStepTwoPresenter<V, I> {
+    override fun onCreatePost(caption: String, listMedia: List<ByteArray>) {
+        interactor?.let {
             compositeDisposable.add(
-                it.doUploadMedia(listMedia).compose(schedulerProvider.ioToMainSingleScheduler())
+                it.doCreatePost(caption, listMedia)
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
-                               Log.d("gg", it.map{it.toString()}.toString())
+                        getView()?.backToFeedActivity()
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })
             )
         }
     }
+
 }
