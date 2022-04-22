@@ -32,22 +32,9 @@
         layout="@layout/component_interaction_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/indicatorNewsFeed"
-        app:layout_constraintEnd_toEndOf="@+id/indicatorNewsFeed"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/indicatorNewsFeed"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         app:layout_constraintBottom_toTopOf="@+id/tvLikeCount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@drawable/toggle_indicator_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
 
