@@ -2,7 +2,6 @@ package com.example.moments.ui.main.newsFeed.newPostStepTwo
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
@@ -12,7 +11,7 @@ import javax.inject.Inject
 
 class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
 
-    private lateinit var imageData: List<ByteArray>
+    private var imageData: List<ByteArray>? = null
     private lateinit var toolBar: MaterialToolbar
     private lateinit var caption: EditText
 
@@ -23,11 +22,9 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post_step2)
         presenter.onAttach(this)
-        Log.d("debug", intent.getStringArrayExtra("itemData").toString())
-        imageData = parseToListByteArray(intent.getStringArrayExtra("itemData"))
+        imageData = parseToListByteArray(intent.extras?.getStringArrayList("imageData"))
 
         caption = findViewById(R.id.et_NewPost2)
-        Log.d("debug", imageData.toString())
 
         initToolBar()
 
@@ -38,7 +35,7 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         super.onDestroy()
     }
 
-    private fun parseToListByteArray(data: Array<String>?): List<ByteArray>? {
+    private fun parseToListByteArray(data: java.util.ArrayList<String>?): List<ByteArray>? {
         if (data == null) return null
         val result: ArrayList<ByteArray> = arrayListOf()
         for (str: String in data) {
@@ -60,7 +57,7 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         toolBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.confirmNewPost -> {
-                    presenter.onCreatePost(caption.text.toString(), imageData)
+                    if(imageData != null) presenter.onCreatePost(caption.text.toString(), imageData!!)
                     true
                 }
                 else -> false
