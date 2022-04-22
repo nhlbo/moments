@@ -237,11 +237,12 @@ class FirebaseHelper @Inject constructor(
                 .whereEqualTo("accepted", true)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
-                    val listUserFollowing: List<DocumentReference> =
-                        listOf(firebaseFirestore.document("user/P2NLrTbmHSVYF14UjNuLnHTE8H62"))
-//                        querySnapshot.map { firebaseFirestore.document("user/${it.id}") }
+                    val listUserFollowing: MutableList<DocumentReference> =
+                        mutableListOf(firebaseFirestore.document("user/P2NLrTbmHSVYF14UjNuLnHTE8H62"))
+                    listUserFollowing.addAll(querySnapshot.map { firebaseFirestore.document("user/${it.id}") })
                     firebaseFirestore.collection("post")
                         .whereIn("creator", listUserFollowing)
+//                        .orderBy("createdAt", Query.Direction.DESCENDING)
                         .get()
                         .addOnSuccessListener { postSnapshot ->
                             val listPost =
