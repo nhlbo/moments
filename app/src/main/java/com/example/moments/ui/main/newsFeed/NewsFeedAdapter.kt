@@ -21,6 +21,7 @@ class NewsFeedAdapter(
 ) :
     RecyclerView.Adapter<NewsFeedAdapter.ViewHolder>() {
 
+    var onButtonClick: ((RetrievedPost) -> Unit)? = null
     private val adapterCallBack: IAdapterCallBack = callback
 
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
@@ -52,6 +53,11 @@ class NewsFeedAdapter(
 
         val tvPostCreated = listItemView.findViewById<TextView>(R.id.tvPostCreated)
 
+        init{
+            tvShowAllComment.setOnClickListener{
+                onButtonClick?.invoke(newsFeedList[adapterPosition])
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -107,9 +113,7 @@ class NewsFeedAdapter(
 //            )
 //        )
 
-        holder.tvShowAllComment.setOnClickListener {
-            adapterCallBack.onItemTouch(position, "showComment")
-        }
+
         holder.btnComment.setOnClickListener {
             adapterCallBack.onItemTouch(position, "showComment")
         }

@@ -7,14 +7,4 @@ import com.example.moments.ui.base.IBaseView
 import io.reactivex.Single
 
 interface INewPostActivityView : IBaseView {
-    fun openCreatePostActivity()
-}
-
-interface INewPostActivityInteractor : IBaseInteractor {
-    fun doUploadMedia(listMedia: List<ByteArray>): Single<List<Uri>>
-}
-
-interface INewPostActivityPresenter<V : INewPostActivityView, I : INewPostActivityInteractor> :
-    IBasePresenter<V, I> {
-    fun onUploadMedia(listMedia: List<ByteArray>)
 }

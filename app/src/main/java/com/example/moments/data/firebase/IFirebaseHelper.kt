@@ -46,6 +46,8 @@ interface IFirebaseHelper {
 
     fun performQueryFeedPost(): Single<List<Post>>
 
+    fun performQueryIsLikedPost(postId: String): Single<Boolean>
+
     fun performLikePost(postId: String): Completable
 
     fun performUnlikePost(postId: String): Completable
@@ -58,7 +60,7 @@ interface IFirebaseHelper {
 
     fun performUploadMedia(media: ByteArray): Single<Uri>
 
-    fun performAddPost(caption: String, media: ArrayList<String>): Single<DocumentSnapshot>
+    fun performAddPost(caption: String, media: List<String>): Single<Post>
 
     fun performBookmarkPost(postId: String): Completable
 

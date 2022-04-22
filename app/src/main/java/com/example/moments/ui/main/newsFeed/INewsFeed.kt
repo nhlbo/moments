@@ -6,6 +6,7 @@ import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
 import com.example.moments.ui.base.IBaseView
 import com.google.firebase.firestore.DocumentSnapshot
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface INewsFeedView : IBaseView {
@@ -14,12 +15,17 @@ interface INewsFeedView : IBaseView {
 
 interface INewsFeedInteractor : IBaseInteractor {
     fun doQueryFeedPost(): Single<List<RetrievedPost>>
+    fun doLikePost(postId: String): Completable
+    fun doUnlikePost(postId: String): Completable
 }
 
 interface INewsFeedPresenter<V : INewsFeedView, I : INewsFeedInteractor> : IBasePresenter<V, I> {
     fun onViewPrepared()
+    fun onLikePost()
+    fun onUnlikePost()
 }
 
 interface IAdapterCallBack{
     fun onItemTouch(position: Int, command:String)
+    fun onItemTouch(id: String, command: String)
 }

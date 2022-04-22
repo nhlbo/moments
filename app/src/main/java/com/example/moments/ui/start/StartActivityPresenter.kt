@@ -24,20 +24,6 @@ class StartActivityPresenter<V : IStartActivityView, I : IStartActivityInteracto
         decideActivityToOpen()
     }
 
-    override fun test() {
-        interactor?.let {
-            compositeDisposable.add(
-                it.test()
-                    .compose(schedulerProvider.ioToMainSingleScheduler())
-                    .subscribe({
-                        getView()?.openMainActivity()
-                    }, {
-                        getView()?.showCustomToastMessage(it.localizedMessage)
-                    })
-            )
-        }
-    }
-
     private fun decideActivityToOpen() = getView()?.let {
         if (isUserLoggedIn()) {
             it.openMainActivity()
