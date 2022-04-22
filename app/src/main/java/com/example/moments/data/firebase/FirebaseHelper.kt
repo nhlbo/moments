@@ -13,8 +13,6 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storageMetadata
 import io.reactivex.Completable
@@ -48,19 +46,30 @@ class FirebaseHelper @Inject constructor(
 
     override fun performGoogleLogin(credential: AuthCredential): Completable =
         Completable.create { emitter ->
-            firebaseAuth.signInWithCredential(credential).addOnSuccessListener {
+            firebaseAuth.signInWithCredential(credential).addOnSuccessListener { user ->
                 firebaseFirestore.collection("user")
-                    .document(it.user!!.uid)
-                    .set(
-                        User(
-                            username = it.user!!.email!!.substring(
-                                0,
-                                it.user!!.email!!.indexOf('@')
-                            ), email = it.user!!.email!!
-                        ), SetOptions.merge()
-                    )
-                    .addOnSuccessListener {
-                        emitter.onComplete()
+                    .document(user.user!!.uid)
+                    .get()
+                    .addOnSuccessListener { doc ->
+                        if(!doc.exists()) {
+                            firebaseFirestore.document("user/${getCurrentUserId()}")
+                                .set(
+                                    User(
+                                        username = user.user!!.email!!.substring(
+                                            0,
+                                            user.user!!.email!!.indexOf('@')
+                                        ), email = user.user!!.email!!
+                                    ), SetOptions.merge()
+                                )
+                                .addOnSuccessListener {
+                                    emitter.onComplete()
+                                }
+                                .addOnFailureListener {
+                                    emitter.onError(it)
+                                }
+                        } else {
+                            emitter.onComplete()
+                        }
                     }
             }.addOnFailureListener {
                 emitter.onError(it)
@@ -125,7 +134,7 @@ class FirebaseHelper @Inject constructor(
             firebaseFirestore.document("user/${getCurrentUserId()}")
                 .get()
                 .addOnSuccessListener { document ->
-                    emitter.onSuccess(document.toObject<User>()!!)
+                    emitter.onSuccess(document.toObject(User::class.java)!!)
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
@@ -140,7 +149,7 @@ class FirebaseHelper @Inject constructor(
                 .whereLessThan("username", upperBound)
                 .get()
                 .addOnSuccessListener { documents ->
-                    emitter.onNext(documents.toObjects<User>())
+                    emitter.onNext(documents.toObjects(User::class.java)!!)
                     emitter.onComplete()
                 }
                 .addOnFailureListener { exception ->
@@ -154,7 +163,7 @@ class FirebaseHelper @Inject constructor(
                 .whereIn(FieldPath.documentId(), ids)
                 .get()
                 .addOnSuccessListener { documents ->
-                    emitter.onSuccess(documents.toObjects<User>())
+                    emitter.onSuccess(documents.toObjects(User::class.java)!!)
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
@@ -214,7 +223,7 @@ class FirebaseHelper @Inject constructor(
                     firebaseFirestore.collection("/user")
                         .whereIn(FieldPath.documentId(), listIdFollowing).get()
                         .addOnSuccessListener { listUserDetail ->
-                            emitter.onSuccess(listUserDetail.toObjects())
+                            emitter.onSuccess(listUserDetail.toObjects(User::class.java)!!)
                         }
                 }
         }
@@ -237,7 +246,9 @@ class FirebaseHelper @Inject constructor(
                 .whereEqualTo("accepted", true)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
-                    val listUserFollowing: MutableList<DocumentReference> = querySnapshot.map { firebaseFirestore.document("user/${it.id}") }.toMutableList()
+                    val listUserFollowing: MutableList<DocumentReference> =
+                        querySnapshot.map { firebaseFirestore.document("user/${it.id}") }
+                            .toMutableList()
                     listUserFollowing.add(firebaseFirestore.document("user/${getCurrentUserId()}"))
                     firebaseFirestore.collection("post")
                         .whereIn("creator", listUserFollowing)
@@ -457,7 +468,7 @@ class FirebaseHelper @Inject constructor(
                         return@addSnapshotListener
                     }
                     if (snapshot != null) {
-                        emitter.onNext(snapshot.toObjects<Message>())
+                        emitter.onNext(snapshot.toObjects(Message::class.java))
                     }
                 }
         }
@@ -484,7 +495,7 @@ class FirebaseHelper @Inject constructor(
                         return@addSnapshotListener
                     }
                     if (snapshot != null) {
-                        emitter.onNext(snapshot.toObjects<Message>())
+                        emitter.onNext(snapshot.toObjects(Message::class.java))
                     }
                 }
         }
