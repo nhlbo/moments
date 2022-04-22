@@ -1,11 +1,11 @@
 package com.example.moments.ui.main.newsFeed
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -68,6 +68,10 @@ class NewsFeedAdapter(
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val contactView = inflater.inflate(R.layout.component_post, parent, false)
+
+        val params = contactView.layoutParams
+        params.height = (parent.measuredHeight * 1.25f).toInt()
+        contactView.layoutParams = params
         return ViewHolder(contactView)
     }
 
