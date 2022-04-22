@@ -1,6 +1,5 @@
 package com.example.moments.ui.main.viewProfile
 
-import android.util.Log
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -17,10 +16,16 @@ class ProfileFragmentPresenter<V : IProfileView, I : IProfileInteractor> @Inject
 ), IProfilePresenter<V, I> {
     override fun onViewPrepared() {
         interactor?.let { it ->
-            compositeDisposable.add(
+            compositeDisposable.addAll(
                 it.doQueryCurrentUserPost().compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
 //                        Log.d("debug", it.toString())
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    }),
+                it.doGetCurrentUserModel().compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.getCurrentUserModel(it)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })

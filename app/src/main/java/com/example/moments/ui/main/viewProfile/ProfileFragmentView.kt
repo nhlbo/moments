@@ -1,24 +1,19 @@
 package com.example.moments.ui.main.viewProfile
 
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
+import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.settings.SettingsActivityView
-import com.example.moments.ui.forgetPassword.ForgetPasswordActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowTabActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -31,6 +26,9 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         fun newInstance(): ProfileFragmentView {
             return ProfileFragmentView()
         }
+
+        const val USER_KEY = "USER_KEY"
+        const val REQUEST_EDIT_PROFILE = 1
     }
 
     @Inject
@@ -39,6 +37,8 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     private var toolBar: Toolbar? = null
 
     private var viewPager: ViewPager2? = null
+
+    private lateinit var userModel: User
 
     override fun setUp() {
         presenter.onViewPrepared()
@@ -59,18 +59,27 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
+
         profileToolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.profileSettingBtn) {
                 val intent = Intent(activity, SettingsActivityView::class.java)
-                startActivity(intent)
-                return@setOnMenuItemClickListener true
+                true
             }
-            return@setOnMenuItemClickListener false
+            false
         }
+        presenter.onViewPrepared()
         btnEditProfile.setOnClickListener {
             val intent = Intent(activity, EditProfileActivityView::class.java)
-            startActivity(intent)
+            intent.putExtra(USER_KEY, userModel)
+            startActivityForResult(intent, REQUEST_EDIT_PROFILE)
         }
+    }
+
+    override fun getCurrentUserModel(user: User) {
+        tvUsernameProfile.text = user.username
+        tvHashtagProfile.text = user.email
+        tvBioProfile.text = user.bio
+        userModel = user
     }
 
     override fun onDestroyView() {
@@ -90,6 +99,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         }.attach()
     }
 
+
     private fun initToolBar() {
 //        toolBar = view?.findViewById(R.id.profile_header_toolbar)
 //        toolBar?.inflateMenu(R.menu.header_profile)
@@ -103,12 +113,12 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
 
         linearLayoutFollowers.setOnClickListener(View.OnClickListener {
             val intent = Intent(context, ViewFollowTabActivityView::class.java)
-            intent.putExtra("FollowViewType","0")
+            intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         })
         linearLayoutFollowing.setOnClickListener(View.OnClickListener {
             val intent: Intent = Intent(context, ViewFollowTabActivityView::class.java)
-            intent.putExtra("FollowViewType","1")
+            intent.putExtra("FollowViewType", "1")
             startActivity(intent)
         })
     }
@@ -126,6 +136,18 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
                     true
                 }
                 else -> false
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_EDIT_PROFILE) {
+            if (resultCode == EditProfileActivityView.DONE) {
+                val username = data?.getStringExtra("USERNAME")
+                val bio = data?.getStringExtra("BIO")
+                tvUsernameProfile.text = username
+                tvBioProfile.text = bio
             }
         }
     }
