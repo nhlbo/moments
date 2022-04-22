@@ -48,6 +48,19 @@
         app:srcCompat="@drawable/ic_share"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/indicatorNewsFeed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSave"
+        app:layout_constraintStart_toEndOf="@+id/btnShare"
+        app:tabBackground="@drawable/toggle_indicator_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <ToggleButton
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"

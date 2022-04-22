@@ -13,6 +13,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storageMetadata
@@ -119,6 +120,18 @@ class FirebaseHelper @Inject constructor(
 
     override fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
 
+    override fun getCurrentUserModel(): Single<User> =
+        Single.create { emitter ->
+            firebaseFirestore.document("user/${getCurrentUserId()}")
+                .get()
+                .addOnSuccessListener { document ->
+                    emitter.onSuccess(document.toObject<User>()!!)
+                }
+                .addOnFailureListener { exception ->
+                    emitter.onError(exception)
+                }
+        }
+
     override fun performQueryUserByUsername(username: String): Observable<List<User>> =
         Observable.create { emitter ->
             val upperBound = username.substring(0, username.length - 1) + username.last().inc()
@@ -224,11 +237,12 @@ class FirebaseHelper @Inject constructor(
                 .whereEqualTo("accepted", true)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
-                    val listUserFollowing: List<DocumentReference> =
-                        listOf(firebaseFirestore.document("user/P2NLrTbmHSVYF14UjNuLnHTE8H62"))
-//                        querySnapshot.map { firebaseFirestore.document("user/${it.id}") }
+                    val listUserFollowing: MutableList<DocumentReference> =
+                        mutableListOf(firebaseFirestore.document("user/P2NLrTbmHSVYF14UjNuLnHTE8H62"))
+                    listUserFollowing.addAll(querySnapshot.map { firebaseFirestore.document("user/${it.id}") })
                     firebaseFirestore.collection("post")
                         .whereIn("creator", listUserFollowing)
+//                        .orderBy("createdAt", Query.Direction.DESCENDING)
                         .get()
                         .addOnSuccessListener { postSnapshot ->
                             val listPost =
@@ -473,6 +487,18 @@ class FirebaseHelper @Inject constructor(
                     if (snapshot != null) {
                         emitter.onNext(snapshot.toObjects<Message>())
                     }
+                }
+        }
+
+    override fun performEditProfile(username: String, bio: String): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.document("/user/${getCurrentUserId()}")
+                .update(mapOf("username" to username, "bio" to bio))
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
                 }
         }
 }

@@ -1,11 +1,11 @@
 package com.example.moments.ui.main.newsFeed
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -13,6 +13,11 @@ import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import java.sql.Timestamp
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class NewsFeedAdapter(
     var context: Context,
@@ -68,6 +73,10 @@ class NewsFeedAdapter(
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val contactView = inflater.inflate(R.layout.component_post, parent, false)
+
+        val params = contactView.layoutParams
+        params.height = (parent.measuredHeight * 1.25f).toInt()
+        contactView.layoutParams = params
         return ViewHolder(contactView)
     }
 
@@ -80,39 +89,12 @@ class NewsFeedAdapter(
         { _, _ -> }.attach()
 
         Glide.with(context).load(tmp.creator.avatar).into(holder.headerAvatar)
-//        Glide.with(context).load(tmp.myAvatar).into(holder.myAvatar)
-        holder.tvLikeCount.text = "${tmp.likeCount} like"
+//        Glide.with(context).load(tmp.creator.avatar).into(holder.myAvatar)
+        holder.tvLikeCount.text = "${tmp.likeCount} likes"
         holder.tvCaption.text = tmp.caption
 //        holder.add.text = tmp.address
-        holder.tvPostCreated.text = tmp.createdAt.toString()
+        holder.tvPostCreated.text = DateFormat.getDateInstance().format(tmp.createdAt.toDate())
         holder.headerUsername.text = tmp.creator.username
-
-//        val dotscount = viewPagerAdapter.itemCount
-//        val dots = arrayOfNulls<ImageView>(dotscount)
-//
-//        for (i in 0 until dotscount) {
-//            dots[i] = ImageView(context)
-//            dots[i]?.setImageDrawable(
-//                ContextCompat.getDrawable(
-//                    context,
-//                    R.drawable.non_active_dot
-//                )
-//            )
-//            val params = LinearLayout.LayoutParams(
-//                LinearLayout.LayoutParams.WRAP_CONTENT,
-//                LinearLayout.LayoutParams.WRAP_CONTENT
-//            )
-//            params.setMargins(8, 0, 8, 0)
-//            holder.linearLayout.addView(dots[i], params)
-//        }
-//
-//        dots.get(0)?.setImageDrawable(
-//            ContextCompat.getDrawable(
-//                context,
-//                R.drawable.active_dot
-//            )
-//        )
-
 
         holder.btnComment.setOnClickListener {
             adapterCallBack.onItemTouch(position, "showComment")
