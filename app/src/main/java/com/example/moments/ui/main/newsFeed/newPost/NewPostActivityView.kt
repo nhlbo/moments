@@ -68,7 +68,7 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
             when (it.itemId) {
                 R.id.new_post_post -> {
                     val intent = Intent(this, NewPostActivityStepTwoView::class.java)
-                    intent.put("imageData", getSelectedImageByteArray())
+                    intent.putExtra("imageData", getSelectedImageByteArray())
                     startActivity(intent)
                     true
                 }
