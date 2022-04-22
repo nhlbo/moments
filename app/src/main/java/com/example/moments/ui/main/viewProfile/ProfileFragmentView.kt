@@ -28,6 +28,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         }
 
         const val USER_KEY = "USER_KEY"
+        const val REQUEST_EDIT_PROFILE = 1
     }
 
     @Inject
@@ -62,7 +63,6 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         profileToolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.profileSettingBtn) {
                 val intent = Intent(activity, SettingsActivityView::class.java)
-                startActivity(intent)
                 true
             }
             false
@@ -71,7 +71,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         btnEditProfile.setOnClickListener {
             val intent = Intent(activity, EditProfileActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_EDIT_PROFILE)
         }
     }
 
@@ -136,6 +136,18 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
                     true
                 }
                 else -> false
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_EDIT_PROFILE) {
+            if (resultCode == EditProfileActivityView.DONE) {
+                val username = data?.getStringExtra("USERNAME")
+                val bio = data?.getStringExtra("BIO")
+                tvUsernameProfile.text = username
+                tvBioProfile.text = bio
             }
         }
     }
