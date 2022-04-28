@@ -11,10 +11,14 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
+import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
+import com.example.moments.ui.main.viewProfile.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
 
@@ -47,19 +51,36 @@ class SearchFragmentView : BaseFragment(), ISearchView {
     }
 
     override fun onSearchResultCallback(listUser: List<User>) {
+        // reset the adapter with new callback result
         val adapter = UserSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, ArrayList(listUser))
         svSearchOthers.setAdapter(adapter)
         svSearchOthers.showDropDown()
     }
 
     override fun setUp() {
+        initSearchingBar()
+        initGridView()
+    }
+
+    private val dataList: ArrayList<String> = fakeData()
+    private fun initGridView(){
+        rvOthersList.adapter = ImagesAdapter(requireContext(), dataList,
+            object:IOnRecyclerViewItemTouchListener{
+                override fun onItemClick(postition: Int) {
+                    Toast.makeText(context, dataList[postition], Toast.LENGTH_SHORT).show()
+                }
+            })
+        rvOthersList.layoutManager = GridLayoutManager(context, 3)
+    }
+
+    private fun initSearchingBar(){
         val userSearchAdapter =
             UserSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, arrayListOf())
         svSearchOthers.threshold = 0
         svSearchOthers.setAdapter(userSearchAdapter)
         svSearchOthers.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(query: Editable?) {
-                Log.d("debug", query.toString())
+                //Log.d("debug", query.toString())
                 presenter.onSearchDispatch(query.toString())
             }
 
@@ -69,6 +90,28 @@ class SearchFragmentView : BaseFragment(), ISearchView {
     }
 
     override fun toString(): String = "searchFragment"
+
+    private fun fakeData(): ArrayList<String>{
+        val imageList = arrayListOf<String>()
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic1.png?alt=media&token=4fdd9b9a-5109-4f88-8ac7-82f47a1c0f68")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic2.png?alt=media&token=22807789-8a01-413d-8ce5-fd86651e5107")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic3.png?alt=media&token=272b593d-eb42-4251-b88f-10c4aae740b3")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic1.png?alt=media&token=4fdd9b9a-5109-4f88-8ac7-82f47a1c0f68")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic2.png?alt=media&token=22807789-8a01-413d-8ce5-fd86651e5107")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic3.png?alt=media&token=272b593d-eb42-4251-b88f-10c4aae740b3")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic1.png?alt=media&token=4fdd9b9a-5109-4f88-8ac7-82f47a1c0f68")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic2.png?alt=media&token=22807789-8a01-413d-8ce5-fd86651e5107")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic3.png?alt=media&token=272b593d-eb42-4251-b88f-10c4aae740b3")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
+        imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
+        return imageList
+    }
 }
 
 
