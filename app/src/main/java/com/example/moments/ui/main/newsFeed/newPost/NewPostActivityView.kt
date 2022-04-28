@@ -31,6 +31,7 @@ import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTw
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import java.io.ByteArrayOutputStream
+import kotlin.math.min
 
 
 class NewPostActivityView : BaseActivity(), INewPostActivityView {
@@ -182,7 +183,7 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
                     if (loading) {
                         loading = false
                         // Do pagination.. i.e. fetch new data
-                        loadMore(totalItemCount + 10)
+                        loadMore(totalItemCount)
                         loading = true
                     }
                 }
@@ -191,10 +192,11 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
     }
 
     private fun loadMore(total: Int) {
+        val fetch = min(10, imageList.size - total)
         (recyclerView?.adapter as ImageChoosingAdapter).updateItems(
             imageList.subList(
-                total - 10,
-                total
+                total,
+                total + fetch
             )
         )
     }
