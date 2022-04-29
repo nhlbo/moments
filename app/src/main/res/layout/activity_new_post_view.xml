@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorSecondary"
-                android:padding="8dp">
+                android:paddingVertical="8dp">
 
                 <ImageButton
                     android:id="@+id/ib_cameraNewPost"
@@ -74,41 +74,40 @@
                     android:background="@drawable/btn_round_corner"
                     android:backgroundTint="?attr/colorPrimaryVariant"
                     android:padding="8dp"
+                    android:scaleType="fitXY"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_camera"
-                    app:tint="?attr/colorSecondary"
+                    app:tint="?attr/colorPrimary"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-                <Button
+                <ToggleButton
                     android:id="@+id/toggleBtnSelectionNewPost"
-                    style="@style/Theme.Moments.ButtonVariant3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/btn_round_corner"
-                    android:drawableTint="?attr/colorSecondary"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:text="SELECT MULTIPLE"
-                    android:textColor="?attr/colorSecondary"
-                    app:icon="@drawable/ic_clone"
-                    app:iconSize="18dp"
-                    app:iconTint="?attr/colorSecondary"
+                    android:background="@drawable/toggle_multiple_selection_new_post"
+                    android:checked="false"
+                    android:textOff="@null"
+                    android:textOn="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="H,1:1"
                     app:layout_constraintEnd_toStartOf="@+id/ib_cameraNewPost"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="TouchTargetSizeCheck">
 
-                </Button>
+                </ToggleButton>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
+
+
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollViewNewPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fillViewport="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             tools:ignore="SpeakableTextPresentCheck">
 

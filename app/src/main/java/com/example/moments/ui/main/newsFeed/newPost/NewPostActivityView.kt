@@ -12,12 +12,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.MediaStore.MediaColumns
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,6 +27,7 @@ import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
+import kotlinx.android.synthetic.main.activity_search.*
 import java.io.ByteArrayOutputStream
 import kotlin.math.min
 
@@ -43,13 +41,18 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
     private var loading: Boolean = true
     private lateinit var imageList: ArrayList<String>
     private var recyclerView: RecyclerView? = null
-    private var toggleSelection: Button? = null
-    private var isMultipleChoice: Boolean = false
+    private var toggleSelection: ToggleButton? = null
 
     private val listener: IOnRecyclerViewItemTouchListener =
         object : IOnRecyclerViewItemTouchListener {
-            override fun onItemClick(postition: Int) {
-                Glide.with(this@NewPostActivityView).load(imageList[postition]).into(previewImage!!)
+            override fun onItemClick(position: Int) {
+                Glide.with(this@NewPostActivityView).load(imageList[position]).into(previewImage!!)
+                val itemHeight = recyclerView?.y!! + recyclerView?.getChildAt(position)?.y!!
+
+                nestedScrollView?.post {
+                    nestedScrollView?.fling(0)
+                    nestedScrollView?.scrollTo(0, itemHeight.toInt())
+                }
                 appBar?.setExpanded(true)
             }
         }
@@ -80,12 +83,13 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
                 else -> false
             }
         }
+        toolBar.setNavigationOnClickListener { finish() }
 
         toggleSelection = findViewById(R.id.toggleBtnSelectionNewPost)
         toggleSelection?.setOnClickListener {
-            isMultipleChoice = !isMultipleChoice
-            (recyclerView?.adapter as ImageChoosingAdapter).setChosingType(isMultipleChoice)
+            (recyclerView?.adapter as ImageChoosingAdapter).setChosingType(toggleSelection?.isChecked!!)
         }
+
         initRecyclerView(mediaGrid)
     }
 
@@ -139,7 +143,7 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         )
         cursor = activity.contentResolver.query(
             uri, projection, null,
-            null, null
+            null, MediaStore.Images.ImageColumns.DATE_TAKEN
         )
         val columnIndexData: Int? = cursor?.getColumnIndexOrThrow(MediaColumns.DATA)
         while (cursor?.moveToNext() == true) {
@@ -154,7 +158,7 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
     private fun initRecyclerView(view: View?) {
         imageList = getAllShownImagesPath(this)
 
-        recyclerView = view?.findViewById<RecyclerView>(R.id.rcMediaGrid)
+        recyclerView = view?.findViewById(R.id.rcMediaGrid)
         recyclerView?.setHasFixedSize(true);
         recyclerView?.addItemDecoration(
             DividerItemDecoration(
@@ -171,6 +175,7 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         recyclerView?.layoutManager = GridLayoutManager(this, 4)
         val adapter = ImageChoosingAdapter(this, ArrayList(imageList.subList(0, 20)), listener)
         recyclerView?.adapter = adapter
+        recyclerView?.isNestedScrollingEnabled = false
 
         nestedScrollView?.setOnScrollChangeListener { v: NestedScrollView, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (v.getChildAt(v.childCount - 1) != null) {
