@@ -50,12 +50,12 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     override fun setUp() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rcNewsfeedPanel.layoutManager = layoutManager
-        var adapter = context?.let { NewsFeedAdapter(it, mutableListOf(), this) }
+        val adapter = context?.let { NewsFeedAdapter(it, mutableListOf(), this) }
         rcNewsfeedPanel.adapter = adapter
         rcNewsfeedPanel.isNestedScrollingEnabled = false
         adapter?.onButtonClick = { commentList ->
-            var intent  = Intent(context, CommentActivityView::class.java)
-            startActivity(intent);
+            val intent  = Intent(context, CommentActivityView::class.java)
+            startActivity(intent)
         }
         rcNewsfeedPanel.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(view: RecyclerView, event: MotionEvent): Boolean {

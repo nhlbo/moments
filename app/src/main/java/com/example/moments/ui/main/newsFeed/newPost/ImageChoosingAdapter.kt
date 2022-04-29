@@ -16,9 +16,13 @@ import java.lang.Exception
 
 class ImageChoosingAdapter(var context: Context, private val imagesList : ArrayList<String>, private val itemTouchListener: IOnRecyclerViewItemTouchListener?) :
     RecyclerView.Adapter<ImageChoosingAdapter.ViewHolder>() {
-    var onItemClick: ((String) -> Unit)? = null
+
     var selectedItems: ArrayList<ImageView> = arrayListOf()
-    var isMultipleSelect: Boolean = false
+
+    private val maxCapacity = 10
+    private var isMultipleSelect: Boolean = false
+    private var currentSelectedItem: Int = -1
+    private val orderItemSelection: HashMap<Int,Int> = HashMap()
 
     class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val img: ImageView =listItemView.findViewById(R.id.ivImageChoosing)
@@ -36,23 +40,23 @@ class ImageChoosingAdapter(var context: Context, private val imagesList : ArrayL
         val img : String = imagesList[position]
         Glide.with(context).load(img).into(holder.img)
 
+
         if(isMultipleSelect){
             holder.toggleBtn.visibility = View.VISIBLE
         }
         else holder.toggleBtn.visibility = View.INVISIBLE
 
-        holder.img.setOnClickListener {
-            val index = selectedItems.indexOf(holder.img)
-            val isExisted = index != -1
-            holder.toggleBtn.isChecked = !isExisted
-            if(isExisted){
-                deselectItem(index)
-            }
-            else{
-                selectItem(holder.img)
-                holder.toggleBtn.text = ""+selectedItems.size
-            }
+        if(orderItemSelection.containsKey(position)){
+            holder.toggleBtn.text = ""+orderItemSelection[position]
+            holder.toggleBtn.isChecked = true
+        }
 
+        holder.img.setOnClickListener {
+            onSelectItem(holder, position)
+            itemTouchListener?.onItemClick(position)
+        }
+        holder.toggleBtn.setOnClickListener{
+            onSelectItem(holder, position)
             itemTouchListener?.onItemClick(position)
         }
     }
@@ -65,6 +69,34 @@ class ImageChoosingAdapter(var context: Context, private val imagesList : ArrayL
         val latestIndex = imagesList.size - 1
         imagesList.addAll(newList)
         notifyItemRangeChanged(latestIndex,newList.size)
+    }
+
+    private fun onSelectItem(holder: ViewHolder, position: Int){
+        val index = selectedItems.indexOf(holder.img)
+        val isExisted = index != -1
+
+        if(isExisted && currentSelectedItem == position){
+            deselectItem(index)
+            holder.toggleBtn.isChecked = false
+            holder.toggleBtn.text = ""
+
+            //reset values in hashmap
+            val value = orderItemSelection[position]!!
+            orderItemSelection.remove(position)
+            for(item in orderItemSelection){
+                if(item.value < value) continue
+                item.setValue(Integer.max(0, item.value - 1))
+            }
+            notifyItemRangeChanged(0, orderItemSelection.values.indexOf(selectedItems.size))
+            return
+        }
+        if(maxCapacity > selectedItems.size && !isExisted){
+            holder.toggleBtn.isChecked = true
+            selectItem(holder.img)
+            holder.toggleBtn.text = ""+selectedItems.size
+            orderItemSelection[position] = selectedItems.size
+        }
+        currentSelectedItem = position
     }
 
     private fun deselectItem(position: Int){
@@ -89,8 +121,20 @@ class ImageChoosingAdapter(var context: Context, private val imagesList : ArrayL
     fun setChosingType(value: Boolean){
         if(isMultipleSelect != value){
             isMultipleSelect = value
+            resetItems()
+            // show the toggle selector
             this.notifyDataSetChanged()
         }
     }
 
+    private fun resetItems(){
+        if(selectedItems.size == 0) return
+
+        val firstItem = selectedItems[currentSelectedItem]
+        selectedItems.clear()
+        selectedItems.add(firstItem)
+
+        orderItemSelection.clear()
+        orderItemSelection[currentSelectedItem] = 1
+    }
 }
