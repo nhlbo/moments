@@ -11,7 +11,16 @@
         <entry key="..\:/AndroidExercise/moments/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/AndroidExercise/moments/app/src/main/res/layout/activity_sign_up.xml" value="0.176" />
         <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/activity_main.xml" value="0.17135416666666667" />
+        <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/activity_notification.xml" value="0.17447916666666666" />
         <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/activity_start.xml" value="0.3625" />
+        <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/component_interaction_buttons.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/component_messagebox_image.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/component_messagebox_me.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/component_messagebox_others.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/component_post.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/component_post_comment.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/component_post_comment_root.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/asupe/AndroidStudioProjects/moments/app/src/main/res/layout/row_follow_notification.xml" value="0.17447916666666666" />
         <entry key="..\:/Users/khatm/AndroidStudioProjects/moments/app/src/main/res/layout/activity_change_password.xml" value="0.1" />
         <entry key="..\:/Users/khatm/AndroidStudioProjects/moments/app/src/main/res/layout/activity_chat.xml" value="0.19270833333333334" />
         <entry key="..\:/Users/khatm/AndroidStudioProjects/moments/app/src/main/res/layout/activity_forget_password_step_one.xml" value="0.22" />

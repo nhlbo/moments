@@ -4,17 +4,10 @@ import com.example.moments.data.firebase.IFirebaseHelper
 import com.example.moments.data.preference.IPreferenceHelper
 import com.example.moments.util.AppConstants
 
-open class BaseInteractor() : IBaseInteractor {
-    protected lateinit var preferenceHelper: IPreferenceHelper
-    protected lateinit var firebaseHelper: IFirebaseHelper
-
-    constructor(
-        preferenceHelper: IPreferenceHelper,
-        firebaseHelper: IFirebaseHelper
-    ) : this() {
-        this.preferenceHelper = preferenceHelper
-        this.firebaseHelper = firebaseHelper
-    }
+open class BaseInteractor(
+    protected var preferenceHelper: IPreferenceHelper,
+    protected var firebaseHelper: IFirebaseHelper
+) : IBaseInteractor {
 
     override fun isUserLoggedIn() =
         this.firebaseHelper.isUserLoggedIn()
@@ -22,7 +15,4 @@ open class BaseInteractor() : IBaseInteractor {
     override fun performUserLogout() {
         this.firebaseHelper.performLogout()
     }
-
-    override fun updateUserLoginStatus(loggedInMode: AppConstants.LoggedInMode) =
-        this.preferenceHelper.setCurrentUserLoggedInMode(loggedInMode)
 }

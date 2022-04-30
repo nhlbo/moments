@@ -6,6 +6,4 @@ interface IBaseInteractor {
     fun isUserLoggedIn(): Boolean
 
     fun performUserLogout()
-
-    fun updateUserLoginStatus(loggedInMode: AppConstants.LoggedInMode)
 }
