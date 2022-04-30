@@ -110,7 +110,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
 
     private fun initLayout(view: View) {
         val linearLayoutFollowers = view.findViewById<LinearLayout>(R.id.llFollowers)
-        val linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llFollowing)
+        val linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llOtherFollowing)
 
         linearLayoutFollowers.setOnClickListener(View.OnClickListener {
             val intent = Intent(context, ViewFollowTabActivityView::class.java)
