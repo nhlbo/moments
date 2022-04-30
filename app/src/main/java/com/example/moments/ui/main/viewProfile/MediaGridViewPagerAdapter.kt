@@ -6,13 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moments.R
+import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 
-class MediaGridViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class MediaGridViewPagerAdapter: FragmentStateAdapter {
+    constructor(fragmentManager: FragmentManager, lifecycle: Lifecycle) :super (fragmentManager, lifecycle)
+    constructor(fragment: Fragment) : super(fragment)
+
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment {
@@ -65,7 +71,7 @@ class GridMediaFragment : Fragment() {
             DividerItemDecoration(context,
             DividerItemDecoration.VERTICAL))
         recyclerView?.layoutManager= GridLayoutManager(activity,3)
-        var adapter = context?.let { ImagesAdapter(it,imageList, null) }
+        val adapter = context?.let { ImagesAdapter(it,imageList, null) }
         recyclerView?.adapter=adapter
     }
 }
