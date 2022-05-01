@@ -6,4 +6,111 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.viewPost.ViewPostActivityView">
 
+    <include
+        android:id="@+id/postHeaderGroup"
+        layout="@layout/header_post"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpViewOnePost"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/interactionBtnGroup"
+        app:layout_constraintDimensionRatio="W,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postHeaderGroup"
+        tools:ignore="SpeakableTextPresentCheck">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <include
+        android:id="@+id/interactionBtnGroup"
+        layout="@layout/component_interaction_buttons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/tvOnePostLikeCount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+
+        android:id="@+id/tvOnePostLikeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="-1 like"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvOnePostCaption"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+
+        android:id="@+id/tvOnePostCaption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="lostin.paris Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvOnePostCreated"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvOnePostCreated"
+        style="@style/Theme.Moments.TextView.SubTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="1 day ago"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/nsv_ViewOnePost"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_ViewOnePost"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="false"
+        app:layout_constraintBottom_toTopOf="@+id/include8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.example.moments.ui.customClasses.NonScrollExpandableListView
+                android:id="@+id/elv_comment_viewPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:childDivider="@null"
+                android:childIndicatorLeft="16dp"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:groupIndicator="@null" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/include8"
+        layout="@layout/footer_post_comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

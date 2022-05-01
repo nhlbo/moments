@@ -60,8 +60,8 @@
         app:tabBackground="@drawable/toggle_indicator_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
-        app:tabPaddingEnd="6dp"
-        app:tabPaddingStart="6dp"
+        app:tabPaddingEnd="4dp"
+        app:tabPaddingStart="4dp"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ToggleButton
