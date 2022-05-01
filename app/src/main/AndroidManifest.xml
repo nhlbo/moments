@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Moments"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.main.viewPost.ViewPostActivityView"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.viewOtherProfile.OtherProfileActivityView"
             android:exported="false" />
         <activity
