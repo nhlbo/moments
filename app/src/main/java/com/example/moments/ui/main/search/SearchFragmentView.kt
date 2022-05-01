@@ -1,6 +1,7 @@
 package com.example.moments.ui.main.search
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,11 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.widget.NestedScrollView
+import android.widget.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,7 +17,7 @@ import com.example.moments.R
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
-import com.example.moments.ui.main.newsFeed.newPost.ImageChoosingAdapter
+import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import com.example.moments.ui.main.viewProfile.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
@@ -56,7 +53,8 @@ class SearchFragmentView : BaseFragment(), ISearchView {
 
     override fun onSearchResultCallback(listUser: List<User>) {
         // reset the adapter with new callback result
-        val adapter = UserSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, ArrayList(listUser))
+        this.listUser = listUser
+        val adapter = UserSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, this.listUser)
         svSearchOthers.setAdapter(adapter)
         svSearchOthers.showDropDown()
     }
@@ -71,8 +69,8 @@ class SearchFragmentView : BaseFragment(), ISearchView {
     private fun initGridView(){
         rvOthersList.adapter = ImagesAdapter(requireContext(), ArrayList(dataList.subList(0,20)),
             object:IOnRecyclerViewItemTouchListener{
-                override fun onItemClick(postition: Int) {
-                    Toast.makeText(context, dataList[postition], Toast.LENGTH_SHORT).show()
+                override fun onItemClick(position: Int) {
+                    Toast.makeText(context, dataList[position], Toast.LENGTH_SHORT).show()
                 }
             })
         rvOthersList.layoutManager = GridLayoutManager(context, 3)
@@ -106,9 +104,11 @@ class SearchFragmentView : BaseFragment(), ISearchView {
         )
     }
 
+    private lateinit var listUser: List<User>
     private fun initSearchingBar(){
+        listUser = listOf()
         val userSearchAdapter =
-            UserSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, arrayListOf())
+            UserSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, listUser)
         svSearchOthers.threshold = 0
         svSearchOthers.setAdapter(userSearchAdapter)
         svSearchOthers.addTextChangedListener(object : TextWatcher {
@@ -120,6 +120,12 @@ class SearchFragmentView : BaseFragment(), ISearchView {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         })
+
+        svSearchOthers.setOnItemClickListener { _, _, i, l ->
+            val intent = Intent(activity, OtherProfileActivityView::class.java)
+            intent.putExtra("USER_ID", listUser[i].id)
+            startActivity(intent)
+        }
     }
 
     override fun toString(): String = "searchFragment"
@@ -163,7 +169,7 @@ class SearchFragmentView : BaseFragment(), ISearchView {
 
 class UserSearchAdapter(
     context: Context?, viewResourceId: Int,
-    private var items: ArrayList<User>
+    private var items: List<User>
 ) : ArrayAdapter<User>(context!!, viewResourceId, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {

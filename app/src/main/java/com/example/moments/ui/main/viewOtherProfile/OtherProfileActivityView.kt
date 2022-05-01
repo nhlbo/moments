@@ -117,11 +117,15 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         tvOtherHashtagProfile.text = user.email
         tvOtherBioProfile.text = user.bio
         tv_otherProfileName.text = user.username
+        tvOtherFollowersNumber.text = ""+user.followerCount
+        tvOtherFollowingNumber.text = ""+user.followingCount
         userModel = user
     }
 
     override fun getCurrentUserPosts(posts: List<Post>) {
         userPosts = posts
+        tvOtherPostsNumber.text = ""+posts.size
+
         val listImages = arrayListOf<String>()
         posts.forEach { x -> listImages.add(x.listMedia[0]) }
 

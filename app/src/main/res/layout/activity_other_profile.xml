@@ -90,7 +90,7 @@
                         app:layout_constraintTop_toTopOf="@+id/ivOtherAvatarProfile">
 
                         <TextView
-                            android:id="@+id/tvOtherFollowingList"
+                            android:id="@+id/tvOtherFollowingNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gothic_bold"
@@ -115,6 +115,7 @@
                         android:clickable="true"
                         android:gravity="center"
                         android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@+id/llOtherFollowers"
                         app:layout_constraintStart_toEndOf="@+id/ivOtherAvatarProfile"
                         app:layout_constraintTop_toTopOf="@+id/llOtherFollowers"
                         tools:ignore="TouchTargetSizeCheck">
@@ -143,6 +144,7 @@
                         android:gravity="center"
                         android:minHeight="48dp"
                         android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@+id/llOtherFollowing"
                         app:layout_constraintEnd_toStartOf="@+id/llOtherFollowing"
                         app:layout_constraintStart_toEndOf="@id/llOtherPost"
                         app:layout_constraintTop_toTopOf="@+id/llOtherFollowing">
