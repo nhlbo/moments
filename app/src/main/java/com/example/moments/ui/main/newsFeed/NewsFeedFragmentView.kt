@@ -58,7 +58,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         rcNewsfeedPanel.isNestedScrollingEnabled = false
 
         adapter.onButtonClick = { commentList ->
-            val intent  = Intent(context, CommentActivityView::class.java)
+            val intent = Intent(context, CommentActivityView::class.java)
             startActivity(intent)
         }
 
@@ -93,15 +93,11 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
 //                .build()
 //            findNavController().navigate(R.id.commentFragmentView)
         }
-        if(command == "viewProfile"){
+        if (command == "viewProfile") {
             val intent = Intent(activity, OtherProfileActivityView::class.java)
-            intent.putExtra("USER_ID",data[position].creator.id)
+            intent.putExtra("USER_ID", data[position].creator.id)
             startActivity(intent)
         }
-    }
-
-    override fun onItemTouch(id: String, command: String) {
-        TODO("Not yet implemented")
     }
 
     override fun toString(): String = "newsfeedFragment"
