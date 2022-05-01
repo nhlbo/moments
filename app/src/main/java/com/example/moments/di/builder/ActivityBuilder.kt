@@ -7,6 +7,8 @@ import com.example.moments.ui.login.LoginActivityView
 import com.example.moments.ui.main.MainActivityView
 import com.example.moments.ui.main.chat.ChatActivityModule
 import com.example.moments.ui.main.chat.ChatActivityView
+import com.example.moments.ui.main.comment.CommentActivityModule
+import com.example.moments.ui.main.comment.CommentActivityView
 import com.example.moments.ui.main.editProfile.EditProfileActivityModule
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityModule
@@ -78,4 +80,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(OtherProfileActivityModule::class)])
     abstract fun bindOtherProfileActivity(): OtherProfileActivityView
+
+    @ContributesAndroidInjector(modules = [(CommentActivityModule::class)])
+    abstract fun bindCommentActivity(): CommentActivityView
 }
