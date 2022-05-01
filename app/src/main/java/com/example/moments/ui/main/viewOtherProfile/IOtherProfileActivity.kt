@@ -11,6 +11,7 @@ import io.reactivex.Single
 
 interface IOtherProfileActivityView : IBaseView {
     fun getCurrentUserModel(user: User)
+    fun getCurrentUserPosts(posts:List<Post>)
 }
 
 interface IOtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOtherProfileActivityInteractor> :
@@ -19,6 +20,6 @@ interface IOtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOth
 }
 
 interface IOtherProfileActivityInteractor : IBaseInteractor {
-    fun doQueryUserPostByUserId(userId: String): Single<List<RetrievedPost>>
+    fun doQueryUserPostByUserId(userId: String): Single<List<Post>>
     fun doQueryUserById(userId: String): Single<User>
 }
