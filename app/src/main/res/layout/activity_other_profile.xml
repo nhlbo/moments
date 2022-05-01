@@ -20,13 +20,15 @@
         app:menu="@menu/header_other_profile">
 
         <TextView
+            android:id="@+id/tv_otherProfileName"
             style="@style/Theme.Moments.TextView.Title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Other profile"
             android:textColor="?attr/colorPrimary"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -173,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/gothic_bold"
                         android:text="Son Tran"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/tvOtherHashtagProfile"
                         app:layout_constraintStart_toStartOf="@+id/tvOtherHashtagProfile" />
 
@@ -183,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/gothic_light"
                         android:text="\@son.tran"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toTopOf="@+id/tvOtherBioProfile"
                         app:layout_constraintStart_toStartOf="@+id/tvOtherBioProfile" />
 
@@ -195,6 +197,7 @@
                         android:layout_marginBottom="8dp"
                         android:text="Bio"
                         android:textColor="?attr/colorPrimary"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toTopOf="@+id/ll_btnContainer_otherProfile"
                         app:layout_constraintStart_toStartOf="@+id/ll_btnContainer_otherProfile" />
 

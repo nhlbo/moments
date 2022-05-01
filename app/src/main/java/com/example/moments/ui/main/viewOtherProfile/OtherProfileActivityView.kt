@@ -2,23 +2,22 @@ package com.example.moments.ui.main.viewOtherProfile
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.LinearLayout
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
+import com.example.moments.data.model.Post
+import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.main.chat.ChatActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowTabActivityView
-import com.example.moments.ui.main.viewProfile.IProfileView
+import com.example.moments.ui.main.viewProfile.GridMediaFragment
 import com.example.moments.ui.main.viewProfile.MediaGridViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_other_profile.*
-import kotlinx.android.synthetic.main.activity_view_profile.*
 import javax.inject.Inject
 
 class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
@@ -36,6 +35,7 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
     private var viewPager: ViewPager2? = null
 
     private lateinit var userModel: User
+    private lateinit var userPosts: List<Post>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +45,10 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         initLayout()
         toolBarAction()
         buttonsAction()
+
         // Lấy userId truyền trong intent
-        // presenter.onViewPrepared(userId)
+        val userId = intent.getStringExtra("USER_ID")!!
+        presenter.onViewPrepared(userId)
     }
 
     private fun initMediaGrid() {
@@ -114,6 +116,16 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         tvOtherUsernameProfile.text = user.username
         tvOtherHashtagProfile.text = user.email
         tvOtherBioProfile.text = user.bio
+        tv_otherProfileName.text = user.username
         userModel = user
+    }
+
+    override fun getCurrentUserPosts(posts: List<Post>) {
+        userPosts = posts
+        val listImages = arrayListOf<String>()
+        posts.forEach { x -> listImages.add(x.listMedia[0]) }
+
+        val fragment = supportFragmentManager.findFragmentByTag("f" + 0) as GridMediaFragment
+        fragment.updateData(listImages)
     }
 }

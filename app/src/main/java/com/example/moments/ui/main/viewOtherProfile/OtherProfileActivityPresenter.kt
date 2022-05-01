@@ -22,15 +22,15 @@ class OtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOtherPro
         interactor?.let {
             compositeDisposable.addAll(
                 it.doQueryUserById(userId).compose(schedulerProvider.ioToMainSingleScheduler())
-                    .subscribe({
-                        // getView()?.updateUser???
+                    .subscribe({ user ->
+                        getView()?.getCurrentUserModel(user)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     }),
                 it.doQueryUserPostByUserId(userId)
                     .compose(schedulerProvider.ioToMainSingleScheduler())
-                    .subscribe({
-                        // getView?.updateListPost???
+                    .subscribe({ posts->
+                        getView()?.getCurrentUserPosts(posts)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })

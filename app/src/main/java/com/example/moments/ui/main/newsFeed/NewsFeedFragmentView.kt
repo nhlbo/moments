@@ -35,6 +35,8 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     @Inject
     internal lateinit var layoutManager: LinearLayoutManager
 
+    private var data: List<RetrievedPost> = listOf()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,11 +53,11 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     override fun setUp() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rcNewsfeedPanel.layoutManager = layoutManager
-        val adapter = context?.let { NewsFeedAdapter(it, mutableListOf(), this) }
+        val adapter = NewsFeedAdapter(requireContext(), mutableListOf(), this)
         rcNewsfeedPanel.adapter = adapter
         rcNewsfeedPanel.isNestedScrollingEnabled = false
 
-        adapter?.onButtonClick = { commentList ->
+        adapter.onButtonClick = { commentList ->
             val intent  = Intent(context, CommentActivityView::class.java)
             startActivity(intent)
         }
@@ -80,6 +82,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     }
 
     override fun updatePost(listPost: List<RetrievedPost>) {
+        data = listPost
         (rcNewsfeedPanel.adapter as NewsFeedAdapter).updatePost(listPost)
     }
 
@@ -92,6 +95,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         }
         if(command == "viewProfile"){
             val intent = Intent(activity, OtherProfileActivityView::class.java)
+            intent.putExtra("USER_ID",data[position].creator.id)
             startActivity(intent)
         }
     }

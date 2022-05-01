@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moments.R
+import com.example.moments.data.model.Post
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 
 class MediaGridViewPagerAdapter: FragmentStateAdapter {
@@ -24,7 +25,6 @@ class MediaGridViewPagerAdapter: FragmentStateAdapter {
     override fun createFragment(position: Int): Fragment {
         return GridMediaFragment()
     }
-
 }
 
 class GridMediaFragment : Fragment() {
@@ -32,17 +32,15 @@ class GridMediaFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.component_grid_media, container, false)
-    }
+    ): View = inflater.inflate(R.layout.component_grid_media, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView(view)
     }
-
+    private var imageList = arrayListOf<String>()
+    private var recyclerView: RecyclerView? = null
     private fun initRecyclerView(view: View?) {
-        val imageList = arrayListOf<String>()
         imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic1.png?alt=media&token=4fdd9b9a-5109-4f88-8ac7-82f47a1c0f68")
         imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic2.png?alt=media&token=22807789-8a01-413d-8ce5-fd86651e5107")
         imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic3.png?alt=media&token=272b593d-eb42-4251-b88f-10c4aae740b3")
@@ -61,17 +59,22 @@ class GridMediaFragment : Fragment() {
         imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
         imageList.add("https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F2%2Fpic1.png?alt=media&token=8528742c-f2e9-4c80-8b56-4b07d13f4bf1")
 
-        val recyclerView= view?.findViewById<RecyclerView>(R.id.rcMediaGrid)
+        recyclerView= view?.findViewById(R.id.rcMediaGrid)!!
         recyclerView?.setHasFixedSize(true);
         recyclerView?.addItemDecoration(
             DividerItemDecoration(context,
-            DividerItemDecoration.HORIZONTAL)
+                DividerItemDecoration.HORIZONTAL)
         )
         recyclerView?.addItemDecoration(
             DividerItemDecoration(context,
-            DividerItemDecoration.VERTICAL))
-        recyclerView?.layoutManager= GridLayoutManager(activity,3)
+                DividerItemDecoration.VERTICAL))
+        recyclerView?.layoutManager = GridLayoutManager(activity,3)
         val adapter = context?.let { ImagesAdapter(it,imageList, null) }
-        recyclerView?.adapter=adapter
+        recyclerView?.adapter =adapter
+    }
+
+    fun updateData(data: List<String>){
+        imageList = ArrayList(data)
+        recyclerView?.adapter = ImagesAdapter(requireContext(), imageList, null)
     }
 }
