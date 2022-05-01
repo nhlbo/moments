@@ -18,8 +18,24 @@ class OtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOtherPro
     compositeDisposable = disposable
 ),
     IOtherProfileActivityPresenter<V, I> {
-    override fun onViewPrepared() {
-        TODO("Not yet implemented")
+    override fun onViewPrepared(userId: String) {
+        interactor?.let {
+            compositeDisposable.addAll(
+                it.doQueryUserById(userId).compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        // getView()?.updateUser???
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    }),
+                it.doQueryUserPostByUserId(userId)
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        // getView?.updateListPost???
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
     }
 
 }

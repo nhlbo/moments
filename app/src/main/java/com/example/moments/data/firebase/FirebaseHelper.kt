@@ -471,18 +471,21 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryCurrentUserPost(): Single<List<Post>> =
-        Single.create { emitter ->
-            firebaseFirestore.collection("post")
-                .whereEqualTo("creator", firebaseFirestore.document("user/${getCurrentUserId()}"))
-                .get()
-                .addOnSuccessListener { listPost ->
-                    emitter.onSuccess(listPost.documents.map { it.toObject(Post::class.java)!! })
-                }
-                .addOnFailureListener {
-                    emitter.onError(it)
-                }
-        }
+    override fun performQueryCurrentUserPost(): Single<List<Post>> = performQueryUserPostByUserId(getCurrentUserId())
+
+    override fun performQueryUserPostByUserReference(userRef: DocumentReference): Single<List<Post>> = Single.create { emitter ->
+        firebaseFirestore.collection("post")
+            .whereEqualTo("creator", userRef)
+            .get()
+            .addOnSuccessListener { listPost ->
+                emitter.onSuccess(listPost.documents.map { it.toObject(Post::class.java)!! })
+            }
+            .addOnFailureListener {
+                emitter.onError(it)
+            }
+    }
+
+    override fun performQueryUserPostByUserId(userId: String): Single<List<Post>> = performQueryUserPostByUserReference(firebaseFirestore.document("/user/$userId"))
 
     override fun performListenToLatestMessage(): Observable<List<Message>> =
         Observable.create { emitter ->
@@ -534,6 +537,8 @@ class FirebaseHelper @Inject constructor(
                 emitter.onError(it)
             }
     }
+
+    override fun performQueryUserById(userId: String): Single<User> = performQueryUserByReference(firebaseFirestore.document("/user/$userId"))
 
     override fun performQueryNotification(): Single<List<Notification>> =
         Single.create { emitter ->

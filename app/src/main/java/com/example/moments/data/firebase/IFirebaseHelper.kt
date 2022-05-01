@@ -40,6 +40,8 @@ interface IFirebaseHelper {
 
     fun performQueryUserByReference(user: DocumentReference): Single<User>
 
+    fun performQueryUserById(userId: String): Single<User>
+
     fun performFollowUser(userId: String): Completable
 
     fun performAcceptFollower(userId: String): Completable
@@ -76,13 +78,23 @@ interface IFirebaseHelper {
 
     fun performQueryCurrentUserPost(): Single<List<Post>>
 
+    fun performQueryUserPostByUserReference(userRef: DocumentReference): Single<List<Post>>
+
+    fun performQueryUserPostByUserId(userId: String): Single<List<Post>>
+
     fun performChangePassword(oldPassword: String, newPassword: String): Completable
 
     fun performListenToLatestMessage(): Observable<List<Message>>
 
     fun performEditProfile(username: String, bio: String): Completable
 
-    fun performAddNotification(toUser: String, type: String, caption: String, media: String, postId: String?) : Completable
+    fun performAddNotification(
+        toUser: String,
+        type: String,
+        caption: String,
+        media: String,
+        postId: String?
+    ): Completable
 
     fun performQueryNotification(): Single<List<Notification>>
 }

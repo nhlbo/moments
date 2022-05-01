@@ -15,6 +15,6 @@ class OtherProfileActivityModule {
         otherProfileActivityInteractor
 
     @Provides
-    internal fun provideEditProfilePresenter(otherProfileActivityPresenter: OtherProfileActivityPresenter<IOtherProfileActivityView, IOtherProfileActivityInteractor>): OtherProfileActivityPresenter<IOtherProfileActivityView, IOtherProfileActivityInteractor> =
+    internal fun provideEditProfilePresenter(otherProfileActivityPresenter: OtherProfileActivityPresenter<IOtherProfileActivityView, IOtherProfileActivityInteractor>): IOtherProfileActivityPresenter<IOtherProfileActivityView, IOtherProfileActivityInteractor> =
         otherProfileActivityPresenter
 }
