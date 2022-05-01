@@ -85,6 +85,7 @@ class NewsFeedAdapter(
 
         val viewPagerAdapter = MediaSlidingAdapter(tmp.listMedia, context)
         holder.viewPager.adapter = viewPagerAdapter
+        holder.viewPager.offscreenPageLimit = 3
         TabLayoutMediator(holder.linearLayout, holder.viewPager)
         { _, _ -> }.attach()
 
