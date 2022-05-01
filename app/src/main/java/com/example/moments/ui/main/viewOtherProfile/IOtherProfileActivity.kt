@@ -1,6 +1,7 @@
 package com.example.moments.ui.main.viewOtherProfile
 
 import com.example.moments.data.model.Post
+import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
@@ -14,10 +15,10 @@ interface IOtherProfileActivityView : IBaseView {
 
 interface IOtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOtherProfileActivityInteractor> :
     IBasePresenter<V, I> {
-    fun onViewPrepared()
+    fun onViewPrepared(userId: String)
 }
 
 interface IOtherProfileActivityInteractor : IBaseInteractor {
-    fun doQueryCurrentUserPost(): Single<List<Post>>
-    fun doGetCurrentUserModel(): Single<User>
+    fun doQueryUserPostByUserId(userId: String): Single<List<RetrievedPost>>
+    fun doQueryUserById(userId: String): Single<User>
 }
