@@ -1,9 +1,7 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
-import com.example.moments.data.model.Message
-import com.example.moments.data.model.Post
-import com.example.moments.data.model.User
+import com.example.moments.data.model.*
 import com.example.moments.di.FirebaseAuthInstance
 import com.example.moments.di.FirebaseCloudStorageInstance
 import com.example.moments.di.FirebaseFirestoreInstance
@@ -51,7 +49,7 @@ class FirebaseHelper @Inject constructor(
                     .document(user.user!!.uid)
                     .get()
                     .addOnSuccessListener { doc ->
-                        if(!doc.exists()) {
+                        if (!doc.exists()) {
                             firebaseFirestore.document("user/${getCurrentUserId()}")
                                 .set(
                                     User(
@@ -473,18 +471,21 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryCurrentUserPost(): Single<List<Post>> =
-        Single.create { emitter ->
-            firebaseFirestore.collection("post")
-                .whereEqualTo("creator", firebaseFirestore.document("user/${getCurrentUserId()}"))
-                .get()
-                .addOnSuccessListener { listPost ->
-                    emitter.onSuccess(listPost.documents.map { it.toObject(Post::class.java)!! })
-                }
-                .addOnFailureListener {
-                    emitter.onError(it)
-                }
-        }
+    override fun performQueryCurrentUserPost(): Single<List<Post>> = performQueryUserPostByUserId(getCurrentUserId())
+
+    override fun performQueryUserPostByUserReference(userRef: DocumentReference): Single<List<Post>> = Single.create { emitter ->
+        firebaseFirestore.collection("post")
+            .whereEqualTo("creator", userRef)
+            .get()
+            .addOnSuccessListener { listPost ->
+                emitter.onSuccess(listPost.documents.map { it.toObject(Post::class.java)!! })
+            }
+            .addOnFailureListener {
+                emitter.onError(it)
+            }
+    }
+
+    override fun performQueryUserPostByUserId(userId: String): Single<List<Post>> = performQueryUserPostByUserReference(firebaseFirestore.document("/user/$userId"))
 
     override fun performListenToLatestMessage(): Observable<List<Message>> =
         Observable.create { emitter ->
@@ -506,6 +507,46 @@ class FirebaseHelper @Inject constructor(
                 .update(mapOf("username" to username, "bio" to bio))
                 .addOnSuccessListener {
                     emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performAddNotification(
+        toUser: String,
+        type: String,
+        caption: String,
+        media: String,
+        postId: String?
+    ): Completable = Completable.create { emitter ->
+        firebaseFirestore.collection("/user/$toUser/notification")
+            .add(
+                Notification(
+                    type = type,
+                    caption = caption,
+                    media = media,
+                    creator = firebaseFirestore.document("/user/${getCurrentUserId()}"),
+                    post = if (postId != null) firebaseFirestore.document("/post/$postId") else null
+                )
+            )
+            .addOnSuccessListener {
+                emitter.onComplete()
+            }
+            .addOnFailureListener {
+                emitter.onError(it)
+            }
+    }
+
+    override fun performQueryUserById(userId: String): Single<User> = performQueryUserByReference(firebaseFirestore.document("/user/$userId"))
+
+    override fun performQueryNotification(): Single<List<Notification>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("/user/${getCurrentUserId()}/notification")
+                .orderBy("createdAt")
+                .get()
+                .addOnSuccessListener { listRawNotif ->
+                    emitter.onSuccess(listRawNotif.toObjects(Notification::class.java))
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
