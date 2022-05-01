@@ -17,6 +17,7 @@ import com.example.moments.ui.main.comment.CommentFragmentView
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
+import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
 import javax.inject.Inject
 
@@ -53,10 +54,12 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         val adapter = context?.let { NewsFeedAdapter(it, mutableListOf(), this) }
         rcNewsfeedPanel.adapter = adapter
         rcNewsfeedPanel.isNestedScrollingEnabled = false
+
         adapter?.onButtonClick = { commentList ->
             val intent  = Intent(context, CommentActivityView::class.java)
             startActivity(intent)
         }
+
         rcNewsfeedPanel.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(view: RecyclerView, event: MotionEvent): Boolean {
                 when (event.action) {
@@ -86,6 +89,10 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
 //                .fromUri(R.string.commentFragment.toString().toUri())
 //                .build()
 //            findNavController().navigate(R.id.commentFragmentView)
+        }
+        if(command == "viewProfile"){
+            val intent = Intent(activity, OtherProfileActivityView::class.java)
+            startActivity(intent)
         }
     }
 

@@ -96,10 +96,16 @@ class NewsFeedAdapter(
         holder.tvPostCreated.text = DateFormat.getDateInstance().format(tmp.createdAt.toDate())
         holder.headerUsername.text = tmp.creator.username
 
+
         holder.btnComment.setOnClickListener {
             adapterCallBack.onItemTouch(position, "showComment")
         }
-
+        holder.headerAvatar.setOnClickListener { 
+            adapterCallBack.onItemTouch(position, "viewProfile")
+        }
+        holder.headerUsername.setOnClickListener {
+            adapterCallBack.onItemTouch(position, "viewProfile")
+        }
     }
 
     fun updatePost(listPost: List<RetrievedPost>) {
