@@ -1,4 +1,4 @@
-package com.example.moments.ui.main.moments
+package com.example.moments.data.model
 
 class MomentsData(
     val user_id: Int,
