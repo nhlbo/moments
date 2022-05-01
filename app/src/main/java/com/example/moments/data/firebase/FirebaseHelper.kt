@@ -50,7 +50,7 @@ class FirebaseHelper @Inject constructor(
                     .get()
                     .addOnSuccessListener { doc ->
                         if (!doc.exists()) {
-                            firebaseFirestore.document("user/${getCurrentUserId()}")
+                            getCurrentUserReference()
                                 .set(
                                     User(
                                         username = user.user!!.email!!.substring(
@@ -86,7 +86,7 @@ class FirebaseHelper @Inject constructor(
                     if (task.isSuccessful) {
                         if (task.result.isEmpty) { // un-used username
                             firebaseAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnSuccessListener { authTask ->
+                                .addOnSuccessListener {
                                     firebaseFirestore.collection("user")
                                         .document(getCurrentUserId())
                                         .set(
@@ -129,7 +129,7 @@ class FirebaseHelper @Inject constructor(
 
     override fun getCurrentUserModel(): Single<User> =
         Single.create { emitter ->
-            firebaseFirestore.document("user/${getCurrentUserId()}")
+            getCurrentUserReference()
                 .get()
                 .addOnSuccessListener { document ->
                     emitter.onSuccess(document.toObject(User::class.java)!!)
@@ -147,7 +147,7 @@ class FirebaseHelper @Inject constructor(
                 .whereLessThan("username", upperBound)
                 .get()
                 .addOnSuccessListener { documents ->
-                    emitter.onNext(documents.toObjects(User::class.java)!!)
+                    emitter.onNext(documents.toObjects(User::class.java))
                     emitter.onComplete()
                 }
                 .addOnFailureListener { exception ->
@@ -161,7 +161,7 @@ class FirebaseHelper @Inject constructor(
                 .whereIn(FieldPath.documentId(), ids)
                 .get()
                 .addOnSuccessListener { documents ->
-                    emitter.onSuccess(documents.toObjects(User::class.java)!!)
+                    emitter.onSuccess(documents.toObjects(User::class.java))
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
@@ -221,7 +221,7 @@ class FirebaseHelper @Inject constructor(
                     firebaseFirestore.collection("/user")
                         .whereIn(FieldPath.documentId(), listIdFollowing).get()
                         .addOnSuccessListener { listUserDetail ->
-                            emitter.onSuccess(listUserDetail.toObjects(User::class.java)!!)
+                            emitter.onSuccess(listUserDetail.toObjects(User::class.java))
                         }
                 }
         }
@@ -247,7 +247,7 @@ class FirebaseHelper @Inject constructor(
                     val listUserFollowing: MutableList<DocumentReference> =
                         querySnapshot.map { firebaseFirestore.document("user/${it.id}") }
                             .toMutableList()
-                    listUserFollowing.add(firebaseFirestore.document("user/${getCurrentUserId()}"))
+                    listUserFollowing.add(getCurrentUserReference())
                     firebaseFirestore.collection("post")
                         .whereIn("creator", listUserFollowing)
                         .orderBy("createdAt", Query.Direction.DESCENDING)
@@ -407,7 +407,7 @@ class FirebaseHelper @Inject constructor(
                 .add(
                     Post(
                         caption = caption,
-                        creator = firebaseFirestore.document("/user/${getCurrentUserId()}"),
+                        creator = getCurrentUserReference(),
                         listMedia = media
                     )
                 )
@@ -471,21 +471,24 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryCurrentUserPost(): Single<List<Post>> = performQueryUserPostByUserId(getCurrentUserId())
+    override fun performQueryCurrentUserPost(): Single<List<Post>> =
+        performQueryUserPostByUserId(getCurrentUserId())
 
-    override fun performQueryUserPostByUserReference(userRef: DocumentReference): Single<List<Post>> = Single.create { emitter ->
-        firebaseFirestore.collection("post")
-            .whereEqualTo("creator", userRef)
-            .get()
-            .addOnSuccessListener { listPost ->
-                emitter.onSuccess(listPost.documents.map { it.toObject(Post::class.java)!! })
-            }
-            .addOnFailureListener {
-                emitter.onError(it)
-            }
-    }
+    override fun performQueryUserPostByUserReference(userRef: DocumentReference): Single<List<Post>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("post")
+                .whereEqualTo("creator", userRef)
+                .get()
+                .addOnSuccessListener { listPost ->
+                    emitter.onSuccess(listPost.documents.map { it.toObject(Post::class.java)!! })
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
 
-    override fun performQueryUserPostByUserId(userId: String): Single<List<Post>> = performQueryUserPostByUserReference(firebaseFirestore.document("/user/$userId"))
+    override fun performQueryUserPostByUserId(userId: String): Single<List<Post>> =
+        performQueryUserPostByUserReference(firebaseFirestore.document("/user/$userId"))
 
     override fun performListenToLatestMessage(): Observable<List<Message>> =
         Observable.create { emitter ->
@@ -503,7 +506,7 @@ class FirebaseHelper @Inject constructor(
 
     override fun performEditProfile(username: String, bio: String): Completable =
         Completable.create { emitter ->
-            firebaseFirestore.document("/user/${getCurrentUserId()}")
+            getCurrentUserReference()
                 .update(mapOf("username" to username, "bio" to bio))
                 .addOnSuccessListener {
                     emitter.onComplete()
@@ -526,7 +529,7 @@ class FirebaseHelper @Inject constructor(
                     type = type,
                     caption = caption,
                     media = media,
-                    creator = firebaseFirestore.document("/user/${getCurrentUserId()}"),
+                    creator = getCurrentUserReference(),
                     post = if (postId != null) firebaseFirestore.document("/post/$postId") else null
                 )
             )
@@ -538,15 +541,87 @@ class FirebaseHelper @Inject constructor(
             }
     }
 
-    override fun performQueryUserById(userId: String): Single<User> = performQueryUserByReference(firebaseFirestore.document("/user/$userId"))
+    override fun performQueryUserById(userId: String): Single<User> =
+        performQueryUserByReference(firebaseFirestore.document("/user/$userId"))
 
     override fun performQueryNotification(): Single<List<Notification>> =
         Single.create { emitter ->
             firebaseFirestore.collection("/user/${getCurrentUserId()}/notification")
                 .orderBy("createdAt")
                 .get()
-                .addOnSuccessListener { listRawNotif ->
-                    emitter.onSuccess(listRawNotif.toObjects(Notification::class.java))
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.toObjects(Notification::class.java))
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performAddCommentToPost(postId: String, content: String): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.collection("/post/$postId/comment")
+                .add(Comment(content = content, creator = getCurrentUserReference()))
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun getCurrentUserReference(): DocumentReference =
+        firebaseFirestore.document("/user/${getCurrentUserId()}")
+
+    override fun performReplyComment(
+        postId: String,
+        commentId: String,
+        content: String
+    ): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.collection("/post/$postId/comment/$commentId/reply")
+                .add(Comment(creator = getCurrentUserReference(), content = content))
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryPostComment(postId: String): Single<List<Comment>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("/post/$postId/comment")
+                .get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.toObjects(Comment::class.java))
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryPostCommentReply(
+        postId: String,
+        commentId: String
+    ): Single<List<Comment>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("/post/$postId/comment/$commentId/reply").get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.toObjects(Comment::class.java))
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryPostById(postId: String): Single<Post> =
+        performQueryPostByReference(firebaseFirestore.document("/post/$postId"))
+
+    override fun performQueryPostByReference(postRef: DocumentReference): Single<Post> =
+        Single.create { emitter ->
+            postRef.get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.toObject(Post::class.java)!!)
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
