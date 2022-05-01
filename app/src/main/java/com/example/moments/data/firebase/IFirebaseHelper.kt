@@ -1,9 +1,7 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
-import com.example.moments.data.model.Message
-import com.example.moments.data.model.Post
-import com.example.moments.data.model.User
+import com.example.moments.data.model.*
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
@@ -42,6 +40,8 @@ interface IFirebaseHelper {
 
     fun performQueryUserByReference(user: DocumentReference): Single<User>
 
+    fun performQueryUserById(userId: String): Single<User>
+
     fun performFollowUser(userId: String): Completable
 
     fun performAcceptFollower(userId: String): Completable
@@ -78,9 +78,23 @@ interface IFirebaseHelper {
 
     fun performQueryCurrentUserPost(): Single<List<Post>>
 
+    fun performQueryUserPostByUserReference(userRef: DocumentReference): Single<List<Post>>
+
+    fun performQueryUserPostByUserId(userId: String): Single<List<Post>>
+
     fun performChangePassword(oldPassword: String, newPassword: String): Completable
 
     fun performListenToLatestMessage(): Observable<List<Message>>
 
     fun performEditProfile(username: String, bio: String): Completable
+
+    fun performAddNotification(
+        toUser: String,
+        type: String,
+        caption: String,
+        media: String,
+        postId: String?
+    ): Completable
+
+    fun performQueryNotification(): Single<List<Notification>>
 }

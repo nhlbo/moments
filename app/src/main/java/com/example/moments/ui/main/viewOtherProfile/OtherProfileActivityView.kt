@@ -40,11 +40,13 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_profile)
-
+        presenter.onAttach(this)
         initMediaGrid()
         initLayout()
         toolBarAction()
         buttonsAction()
+        // Lấy userId truyền trong intent
+        // presenter.onViewPrepared(userId)
     }
 
     private fun initMediaGrid() {
