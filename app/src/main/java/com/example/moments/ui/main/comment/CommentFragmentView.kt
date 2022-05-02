@@ -36,7 +36,8 @@ class CommentFragmentView : Fragment() {
         onItemSelected()
 
         commentBox = getView()?.findViewById(R.id.etCommentBox)
-        commentBox?.setOnClickListener {
+        commentBox?.setOnFocusChangeListener { _, _ ->
+            if(commentBox?.text!!.isNotEmpty()) return@setOnFocusChangeListener // reply to someone not a standard comment
             onPostButtonClicked()
         }
 
