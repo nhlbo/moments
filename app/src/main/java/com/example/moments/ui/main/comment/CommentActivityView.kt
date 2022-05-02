@@ -8,12 +8,13 @@ import android.widget.EditText
 import android.widget.ExpandableListView
 import androidx.appcompat.widget.Toolbar
 import com.example.moments.R
+import com.example.moments.data.model.RetrieviedRootComment
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.base.IBaseView
 import javax.inject.Inject
 
 
-class CommentActivityView : BaseActivity(), IBaseView {
+class CommentActivityView : BaseActivity(), ICommentActivityView {
     private var toolBar: Toolbar? = null
     private var expandableListView: ExpandableListView? = null
     private var expandableListViewAdapter: CustomExpandableListViewAdapter? = null
@@ -30,12 +31,13 @@ class CommentActivityView : BaseActivity(), IBaseView {
         onItemSelected()
 
         commentBox = findViewById(R.id.etCommentBox)
-        commentBox?.setOnClickListener {
+        commentBox?.setOnFocusChangeListener { _, _ ->
+            if(commentBox?.text!!.isNotEmpty()) return@setOnFocusChangeListener // reply to someone not a standard comment
             onPostButtonClicked()
         }
 
         prepareListParent()
-        expandableListView = findViewById(R.id.elv_comment_post) as ExpandableListView
+        expandableListView = findViewById(R.id.elv_comment_post)
         expandableListViewAdapter = initAdapter()
         expandableListView?.setAdapter(expandableListViewAdapter)
     }
@@ -75,12 +77,7 @@ class CommentActivityView : BaseActivity(), IBaseView {
                 else -> false
             }
         }
-        toolBar?.setNavigationOnClickListener(
-            object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    finish()
-                }
-            })
+        toolBar?.setNavigationOnClickListener { finish() }
     }
 
     private fun EditText.showSoftKeyboard() {
@@ -98,8 +95,9 @@ class CommentActivityView : BaseActivity(), IBaseView {
 
         postButton?.setOnClickListener {
             val newComment = CommentData(
-                2,
+                "2",
                 "asd",
+                "",
                 listParent[position].commentId,
                 commentBox?.text.toString(),
                 0,
@@ -120,9 +118,10 @@ class CommentActivityView : BaseActivity(), IBaseView {
 
         postButton?.setOnClickListener {
             val newComment = CommentDataGroup(
-                2,
+                "2",
                 "asd",/*new comment id*/
-                5,
+                "",
+                "5",
                 commentBox?.text.toString(),
                 0,
                 "0",
@@ -138,8 +137,8 @@ class CommentActivityView : BaseActivity(), IBaseView {
         }
     }
 
-    private lateinit var listParent: ArrayList<CommentDataGroup>
-    private lateinit var hashListChildren: HashMap<Int, List<CommentData>>
+    private lateinit var listParent: MutableList<CommentDataGroup>
+    private lateinit var hashListChildren: HashMap<String, List<CommentData>>
     private fun prepareListParent() {
         listParent = arrayListOf()
         listParent.add(generateRootData())
@@ -160,9 +159,10 @@ class CommentActivityView : BaseActivity(), IBaseView {
 
     private fun generateRootData(): CommentDataGroup {
         return CommentDataGroup(
-            rootUserId = 1,
+            rootUserId = "1",
             rootUsername = "lorem",
-            rootCommentId = 1,
+            rootUserAvatar = "",
+            rootCommentId = "1",
             rootContent = "how to lay data tu firebase",
             rootReactions = -1,
             rootTimeUpload = "0s",
@@ -180,12 +180,23 @@ class CommentActivityView : BaseActivity(), IBaseView {
 
     private fun generateChildData(): CommentData {
         return CommentData(
-            userId = 1,
+            userId = "1",
             username = "lorem",
-            commentId = 1,
+            avatar = "",
+            commentId = "1",
             content = "hoi master Son",
             reactions = Int.MAX_VALUE - 1,
             timeUpload = "0s"
         )
+    }
+
+    override fun updatePost(input : List<RetrieviedRootComment>) {
+        for(item in input){
+            listParent.add(CommentDataGroup.parseRetrieveRootComment(item))
+        }
+    }
+
+    override fun updateComment(postId: String, content: String) {
+        TODO("Not yet implemented")
     }
 }

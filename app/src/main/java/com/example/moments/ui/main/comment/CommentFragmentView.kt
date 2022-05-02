@@ -93,7 +93,7 @@ class CommentFragmentView : Fragment() {
         val postButton = view?.findViewById<Button>(R.id.btnPostComment)
 
         postButton?.setOnClickListener {
-            val newComment = CommentData(2,"asd",listParent[position].commentId, commentBox?.text.toString(), 0,"0")
+            val newComment = CommentData("2","asd","",listParent[position].commentId, commentBox?.text.toString(), 0,"0")
             listParent[position].replies.add(newComment)
             hashListChildren[listParent[position].commentId] = listParent[position].replies
             expandableListViewAdapter?.notifyDataSetChanged()
@@ -108,7 +108,7 @@ class CommentFragmentView : Fragment() {
         val postButton = view?.findViewById<Button>(R.id.btnPostComment)
 
         postButton?.setOnClickListener {
-            val newComment = CommentDataGroup(2,"asd",/*new comment id*/5, commentBox?.text.toString(), 0,"0", arrayListOf())
+            val newComment = CommentDataGroup("2","asd","",/*new comment id*/"2", commentBox?.text.toString(), 0,"0", mutableListOf<CommentData>())
             listParent.add(newComment)
             hashListChildren[newComment.commentId] = newComment.replies
             expandableListViewAdapter?.notifyDataSetChanged()
@@ -120,7 +120,7 @@ class CommentFragmentView : Fragment() {
     }
 
     private lateinit var listParent: ArrayList<CommentDataGroup>
-    private lateinit var hashListChildren: HashMap<Int,List<CommentData>>
+    private lateinit var hashListChildren: HashMap<String,List<CommentData>>
     private fun prepareListParent(){
         listParent = arrayListOf()
         listParent.add(generateRootData())
@@ -141,32 +141,33 @@ class CommentFragmentView : Fragment() {
 
     private fun generateRootData() : CommentDataGroup{
         return CommentDataGroup(
-            rootUserId = 1,
+            rootUserId = "1",
             rootUsername = "lorem",
-            rootCommentId = 1,
+            rootUserAvatar = "lorem",
+            rootCommentId = "1",
             rootContent = "how to lay data tu firebase",
             rootReactions = -1,
             rootTimeUpload = "0s",
-            replies = prepareListChild()
+            replies = mutableListOf()
         )
     }
 
-    private fun prepareListChild() : ArrayList<CommentData>{
-        val res = arrayListOf<CommentData>()
-        res.add(generateChildData())
-        res.add(generateChildData())
-        res.add(generateChildData())
-        return res
-    }
+//    private fun prepareListChild() : ArrayList<CommentData>{
+//        val res = arrayListOf<CommentData>()
+//        res.add(generateChildData())
+//        res.add(generateChildData())
+//        res.add(generateChildData())
+//        return res
+//    }
 
-    private fun generateChildData(): CommentData{
-        return CommentData(
-            userId = 1,
-            username = "lorem",
-            commentId = 1,
-            content = "hoi master Son",
-            reactions = Int.MAX_VALUE - 1,
-            timeUpload = "0s"
-        )
-    }
+//    private fun generateChildData(): CommentData{
+//        return CommentData(
+//            userId = 1,
+//            username = "lorem",
+//            commentId = 1,
+//            content = "hoi master Son",
+//            reactions = Int.MAX_VALUE - 1,
+//            timeUpload = "0s"
+//        )
+//    }
 }

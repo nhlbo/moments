@@ -241,6 +241,8 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         return stream.toByteArray()
     }
 
+
+    // capture image
     val REQUEST_IMAGE_CAPTURE = 1
     private lateinit var imageUri: Uri
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
