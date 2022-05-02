@@ -15,4 +15,6 @@ data class User(
     var followingCount: Int = 0,
     var followerCount: Int = 0,
     var private: Boolean = false
-) : Parcelable
+) : Parcelable {
+    override fun toString(): String = username
+}

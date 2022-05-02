@@ -36,19 +36,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/default_avatar" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnChangeAvatarEditProfile"
+        style="@style/Theme.Moments.Button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="30dp"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/gothic_black"
-        android:text="Change profile photo"
-        android:textColor="@color/bleu_de_france" />
+        android:text="Change profile photo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         tools:ignore="MissingConstraints"
@@ -59,20 +63,23 @@
             android:id="@+id/etUsernameEditProfile"
             style="@style/Theme.Moments.EditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="30dp"
             android:background="@drawable/edit_text_background"
             android:ems="10"
+            android:fontFamily="@font/gothic_bold"
             android:hint="Username"
             android:inputType="text"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:gravity="bottom"
+            tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         tools:ignore="MissingConstraints"
@@ -83,15 +90,18 @@
             android:id="@+id/etBioEditProfile"
             style="@style/Theme.Moments.EditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="30dp"
             android:background="@drawable/edit_text_background"
             android:ems="10"
+            android:fontFamily="@font/gothic_bold"
             android:hint="Bio"
             android:inputType="text"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:gravity="bottom"
+            tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

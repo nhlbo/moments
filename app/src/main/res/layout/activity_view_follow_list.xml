@@ -6,25 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.viewFollowList.ViewFollowTabActivityView">
 
-    <TextView
-        android:id="@+id/tvNameFollowList"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbFollowList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/gothic_bold"
-        android:text="SonTran"
-        android:textSize="20sp"
+        android:background="?attr/colorSecondary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_left">
+
+        <TextView
+            android:id="@+id/tvToolbarTittle"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="hoanglong2" />
+    </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_view_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="?attr/colorSecondary"
-        app:layout_constraintEnd_toEndOf="@+id/tvNameFollowList"
-        app:layout_constraintStart_toStartOf="@+id/tvNameFollowList"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameFollowList"
+        app:layout_constraintEnd_toEndOf="@+id/tbFollowList"
+        app:layout_constraintStart_toStartOf="@+id/tbFollowList"
+        app:layout_constraintTop_toBottomOf="@+id/tbFollowList"
         app:layout_scrollFlags="scroll|enterAlways"
         app:tabMode="fixed"
         app:tabTextAppearance="@style/tab_text">

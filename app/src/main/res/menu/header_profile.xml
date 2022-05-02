@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="qrcode"
+        android:id="@+id/btnQRCode"
+        android:icon="@drawable/ic_qr_code"
+        app:showAsAction="always"
+        android:orderInCategory="2"/>
     <item android:title="settings"
         android:id="@+id/profileSettingBtn"
         android:icon="@drawable/ic_settings"

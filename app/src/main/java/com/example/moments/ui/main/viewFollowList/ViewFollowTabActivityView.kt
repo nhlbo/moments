@@ -4,14 +4,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
+import com.example.moments.data.model.User
+import com.example.moments.ui.main.viewProfile.ProfileFragmentView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.activity_view_follow_list.*
 
 class ViewFollowTabActivityView : AppCompatActivity() {
-    private var viewPager: ViewPager2? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_follow_list)
@@ -53,19 +59,18 @@ class ViewFollowTabActivityView : AppCompatActivity() {
         followingDataList.add(Following("https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/download.png?alt=media&token=e0cb33be-ce04-41ef-8cf1-bfed0a4f1d2e", "Emilie Olson", "Emilie Olson"))
         followingDataList.add(Following("https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/ronaldo.jpeg?alt=media&token=aa233a9c-7315-431f-be37-8856986efdf7", "Keon Thompson", "Keon Thompson"))
 
-        val tabLayout = findViewById<TabLayout>(R.id.tab_layout_view_follow)
         val intent = intent
         val type = intent.getStringExtra("FollowViewType")?.toInt()
-        viewPager = findViewById(R.id.vp2_view_follow)
-        viewPager?.adapter = FollowGridViewPagerAdapter(
+        val user = intent.getParcelableExtra<User>(ProfileFragmentView.USER_KEY)!!
+
+        tbFollowList.setNavigationOnClickListener { finish() }
+        tvToolbarTittle.setText(user.username)
+        vp2_view_follow.adapter = FollowGridViewPagerAdapter(
             this, followersDataList, followingDataList
         )
 
-        var x = -1
-        if (type == 0) x = 0
-        else if (type == 1) x = 1
-        viewPager?.setCurrentItem(x)
-        TabLayoutMediator(tabLayout, viewPager!!) { tab, position ->
+        type?.let { vp2_view_follow?.setCurrentItem(it) }
+        TabLayoutMediator(tab_layout_view_follow, vp2_view_follow!!) { tab, position ->
             when (position) {
                 0 -> tab.text = "${followersDataList.size} Followers"
                 1 -> tab.text = "${followingDataList.size} Following"
