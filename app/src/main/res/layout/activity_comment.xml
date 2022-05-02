@@ -51,7 +51,6 @@
                 android:id="@+id/elv_comment_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="true"
                 android:background="@android:color/transparent"
                 android:childDivider="@null"
                 android:childIndicatorLeft="16dp"

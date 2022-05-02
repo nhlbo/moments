@@ -6,12 +6,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ExpandableListView
 import androidx.appcompat.widget.Toolbar
+import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.RetrieviedComment
 import com.example.moments.data.model.RetrieviedRootComment
 import com.example.moments.ui.base.BaseActivity
 import io.reactivex.Single
+import kotlinx.android.synthetic.main.component_post_description.*
 import javax.inject.Inject
 
 
@@ -148,7 +150,7 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
         listParent.clear()
         for(i:Int in input.indices){
             listParent.add(CommentDataGroup.parseRetrieveRootComment(input[i]))
-            hashListChildren[listParent[i].commentId]=listParent[i].replies
+            hashListChildren[listParent[i].commentId] = listParent[i].replies
         }
         expandableListViewAdapter?.notifyDataSetChanged()
     }
@@ -156,6 +158,9 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
     private var postId: String = ""
     override fun updatePost(input: RetrievedPost) {
         //postId = input.id
+        Glide.with(this).load(input.creator.avatar).into(btnAvatarComment)
+        tvCommentDescription.text = input.caption
+        tvCommentTime.text = input.createdAt.toString()
     }
 
     private fun onPostButtonClicked() {

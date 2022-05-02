@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
 
     <application
@@ -17,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moments"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.main.editProfile.uploadAvatar.UploadAvatarActivityView"
+            android:exported="false" />
         <activity
             android:name=".ui.main.viewPost.ViewPostActivityView"
             android:exported="false" />
