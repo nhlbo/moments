@@ -15,6 +15,7 @@ import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowTabActivityView
 import com.example.moments.ui.main.viewProfile.GridMediaFragment
 import com.example.moments.ui.main.viewProfile.MediaGridViewPagerAdapter
+import com.example.moments.ui.main.viewProfile.ProfileFragmentView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_other_profile.*
@@ -77,11 +78,13 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
 
         linearLayoutFollowers.setOnClickListener{
             val intent = Intent(this, ViewFollowTabActivityView::class.java)
+            intent.putExtra(ProfileFragmentView.USER_KEY, userModel)
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         }
         linearLayoutFollowing.setOnClickListener{
-            val intent: Intent = Intent(this, ViewFollowTabActivityView::class.java)
+            val intent = Intent(this, ViewFollowTabActivityView::class.java)
+            intent.putExtra(ProfileFragmentView.USER_KEY, userModel)
             intent.putExtra("FollowViewType", "1")
             startActivity(intent)
         }

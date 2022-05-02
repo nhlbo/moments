@@ -53,7 +53,6 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val view = inflater.inflate(R.layout.activity_view_profile, container, false)
         setHasOptionsMenu(true)
         initMediaGrid(view)
-        initLayout(view)
         return view
     }
 
@@ -70,6 +69,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
             false
         }
         presenter.onViewPrepared()
+        initLayout(view)
         btnEditProfile.setOnClickListener {
             val intent = Intent(activity, EditProfileActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
@@ -115,12 +115,14 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llOtherFollowing)
 
         linearLayoutFollowers.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, ViewFollowTabActivityView::class.java)
+            val intent = Intent(activity, ViewFollowTabActivityView::class.java)
+            intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         })
         linearLayoutFollowing.setOnClickListener(View.OnClickListener {
-            val intent: Intent = Intent(context, ViewFollowTabActivityView::class.java)
+            val intent = Intent(activity, ViewFollowTabActivityView::class.java)
+            intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "1")
             startActivity(intent)
         })
