@@ -184,7 +184,7 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
             )
         )
         recyclerView?.layoutManager = GridLayoutManager(this, 4)
-        val adapter = ImageChoosingAdapter(this, ArrayList(imageList.subList(0, 20)), listener)
+        val adapter = ImageChoosingAdapter(this, ArrayList(imageList.subList(0, min(imageList.size, 20))), listener)
         recyclerView?.adapter = adapter
         recyclerView?.isNestedScrollingEnabled = false
 
