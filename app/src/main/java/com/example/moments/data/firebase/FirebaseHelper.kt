@@ -557,12 +557,15 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performAddCommentToPost(postId: String, content: String): Completable =
-        Completable.create { emitter ->
+    override fun performAddCommentToPost(postId: String, content: String): Single<Comment> =
+        Single.create { emitter ->
             firebaseFirestore.collection("/post/$postId/comment")
                 .add(Comment(content = content, creator = getCurrentUserReference()))
-                .addOnSuccessListener {
-                    emitter.onComplete()
+                .addOnSuccessListener { commentReference ->
+                    commentReference.get().addOnSuccessListener {
+                        emitter.onSuccess(it.toObject(Comment::class.java)!!)
+                    }
+                        .addOnFailureListener { emitter.onError(it) }
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
@@ -576,12 +579,15 @@ class FirebaseHelper @Inject constructor(
         postId: String,
         commentId: String,
         content: String
-    ): Completable =
-        Completable.create { emitter ->
+    ): Single<Comment> =
+        Single.create { emitter ->
             firebaseFirestore.collection("/post/$postId/comment/$commentId/reply")
                 .add(Comment(creator = getCurrentUserReference(), content = content))
-                .addOnSuccessListener {
-                    emitter.onComplete()
+                .addOnSuccessListener { commentReference ->
+                    commentReference.get().addOnSuccessListener {
+                        emitter.onSuccess(it.toObject(Comment::class.java)!!)
+                    }
+                        .addOnFailureListener { emitter.onError(it) }
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
