@@ -30,7 +30,7 @@
             android:name=".ui.main.newsFeed.newPost.NewPostActivityView"
             android:exported="false" />
         <activity
-            android:name=".ui.main.viewFollowList.ViewFollowTabActivityView"
+            android:name=".ui.main.viewFollowList.ViewFollowListActivityView"
             android:exported="false" />
         <activity
             android:name=".ui.forgetPassword.ForgetPasswordActivityView"
