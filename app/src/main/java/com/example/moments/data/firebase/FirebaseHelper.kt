@@ -184,8 +184,6 @@ class FirebaseHelper @Inject constructor(
                     firebaseFirestore.document("/user/${getCurrentUserId()}/following/$userId")
                         .set(hashMapOf("accepted" to !(snapshot?.data!!["private"] as Boolean)))
                         .addOnSuccessListener {
-                            firebaseFirestore.document("/user/${userId}/follower/${getCurrentUserId()}")
-
                             emitter.onComplete()
                         }
                         .addOnFailureListener {
@@ -209,22 +207,42 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryFollowingUser(): Single<List<User>> =
-        Single.create { emitter ->
-            firebaseFirestore.collection("/user/${getCurrentUserId()}/following").get()
+    override fun performQueryFollowingUser(userId: String): Single<List<User>> =
+        Single.create<List<String>> { emitter ->
+            firebaseFirestore.collection("/user/$userId/following").get()
                 .addOnSuccessListener { followingUser ->
-                    val listIdFollowing = followingUser.documents.map { it.id }
-                    if (listIdFollowing.isEmpty()) {
-                        emitter.onSuccess(listOf())
-                        return@addOnSuccessListener
-                    }
-                    firebaseFirestore.collection("/user")
-                        .whereIn(FieldPath.documentId(), listIdFollowing).get()
-                        .addOnSuccessListener { listUserDetail ->
-                            emitter.onSuccess(listUserDetail.toObjects(User::class.java))
-                        }
+                    emitter.onSuccess(followingUser.map { it.id })
                 }
-        }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }.flattenAsObservable { it }
+            .flatMapSingle {
+                performQueryUserById(it)
+            }
+            .toList()
+
+    override fun performQueryFollowingCurrentUser(): Single<List<User>> =
+        performQueryFollowingUser(getCurrentUserId())
+
+    override fun performQueryFollowerCurrentUser(): Single<List<User>> =
+        performQueryFollower(getCurrentUserId())
+
+    override fun performQueryFollower(userId: String): Single<List<User>> =
+        Single.create<List<String>> { emitter ->
+            firebaseFirestore.collectionGroup("following")
+                .whereEqualTo(FieldPath.documentId(), userId).get()
+                .addOnSuccessListener { followerList ->
+                    emitter.onSuccess(followerList.map { it.id })
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }.flattenAsObservable { it }
+            .flatMapSingle {
+                performQueryUserById(it)
+            }
+            .toList()
 
     override fun performAcceptFollower(userId: String): Completable =
         Completable.create { emitter ->
