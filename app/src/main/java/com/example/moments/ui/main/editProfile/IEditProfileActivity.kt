@@ -11,8 +11,10 @@ interface IEditProfileActivityView : IBaseView {
 interface IEditProfileActivityPresenter<V : IEditProfileActivityView, I : IEditProfileActivityInteractor> :
     IBasePresenter<V, I> {
     fun onPerformEditProfile(username: String, bio: String)
+    fun uploadAvatar(byteArray: ByteArray)
 }
 
 interface IEditProfileActivityInteractor : IBaseInteractor {
     fun doPerformEditProfile(username: String, bio: String): Completable
+    fun doUploadCurrentUserAvatar(media:ByteArray): Completable
 }

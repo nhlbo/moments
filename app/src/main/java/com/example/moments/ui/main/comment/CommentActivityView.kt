@@ -1,16 +1,17 @@
 package com.example.moments.ui.main.comment
 
 import android.os.Bundle
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ExpandableListView
 import androidx.appcompat.widget.Toolbar
 import com.example.moments.R
+import com.example.moments.data.model.RetrievedPost
+import com.example.moments.data.model.RetrieviedComment
 import com.example.moments.data.model.RetrieviedRootComment
 import com.example.moments.ui.base.BaseActivity
-import com.example.moments.ui.base.IBaseView
+import io.reactivex.Single
 import javax.inject.Inject
 
 
@@ -26,6 +27,7 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comment)
+        presenter.onAttach(this)
 
         toolBar = findViewById(R.id.tbCommentHeader)
         onItemSelected()
@@ -40,6 +42,9 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
         expandableListView = findViewById(R.id.elv_comment_post)
         expandableListViewAdapter = initAdapter()
         expandableListView?.setAdapter(expandableListViewAdapter)
+
+        postId = intent.extras!!["postId"] as String
+        presenter.onPreparedView(postId)
     }
 
     override fun onFragmentAttached() {
@@ -90,59 +95,10 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
             .hideSoftInputFromWindow(windowToken, 0)
     }
 
-    private fun onPostButtonClicked(position: Int) {
-        val postButton = findViewById<Button>(R.id.btnPostComment)
-
-        postButton?.setOnClickListener {
-            val newComment = CommentData(
-                "2",
-                "asd",
-                "",
-                listParent[position].commentId,
-                commentBox?.text.toString(),
-                0,
-                "0"
-            )
-            listParent[position].replies.add(newComment)
-            hashListChildren[listParent[position].commentId] = listParent[position].replies
-            expandableListViewAdapter?.notifyDataSetChanged()
-
-            commentBox?.setText("")
-            commentBox?.clearFocus()
-            commentBox?.closeSoftKeyboard()
-        }
-    }
-
-    private fun onPostButtonClicked() {
-        val postButton = findViewById<Button>(R.id.btnPostComment)
-
-        postButton?.setOnClickListener {
-            val newComment = CommentDataGroup(
-                "2",
-                "asd",/*new comment id*/
-                "",
-                "5",
-                commentBox?.text.toString(),
-                0,
-                "0",
-                arrayListOf()
-            )
-            listParent.add(newComment)
-            hashListChildren[newComment.commentId] = newComment.replies
-            expandableListViewAdapter?.notifyDataSetChanged()
-
-            commentBox?.setText("")
-            commentBox?.clearFocus()
-            commentBox?.closeSoftKeyboard()
-        }
-    }
-
     private lateinit var listParent: MutableList<CommentDataGroup>
-    private lateinit var hashListChildren: HashMap<String, List<CommentData>>
+    private lateinit var hashListChildren: HashMap<String, MutableList<CommentData>>
     private fun prepareListParent() {
         listParent = arrayListOf()
-        listParent.add(generateRootData())
-        listParent.add(generateRootData())
         listParent.add(generateRootData())
         listParent.add(generateRootData())
         listParent.add(generateRootData())
@@ -153,8 +109,6 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
         hashListChildren[listParent[1].commentId] = listParent[1].replies
         hashListChildren[listParent[2].commentId] = listParent[2].replies
         hashListChildren[listParent[3].commentId] = listParent[3].replies
-        hashListChildren[listParent[4].commentId] = listParent[4].replies
-        hashListChildren[listParent[5].commentId] = listParent[5].replies
     }
 
     private fun generateRootData(): CommentDataGroup {
@@ -190,13 +144,61 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
         )
     }
 
-    override fun updatePost(input : List<RetrieviedRootComment>) {
-        for(item in input){
-            listParent.add(CommentDataGroup.parseRetrieveRootComment(item))
+    override fun updatePostComment(input : List<RetrieviedRootComment>) {
+        listParent.clear()
+        for(i:Int in input.indices){
+            listParent.add(CommentDataGroup.parseRetrieveRootComment(input[i]))
+            hashListChildren[listParent[i].commentId]=listParent[i].replies
+        }
+        expandableListViewAdapter?.notifyDataSetChanged()
+    }
+
+    private var postId: String = ""
+    override fun updatePost(input: RetrievedPost) {
+        //postId = input.id
+    }
+
+    private fun onPostButtonClicked() {
+        val postButton = findViewById<Button>(R.id.btnPostComment)
+
+        postButton?.setOnClickListener {
+            if(commentBox?.text!!.isEmpty()) return@setOnClickListener
+
+            presenter.onUploadComment(postId, commentBox?.text.toString())
         }
     }
 
-    override fun updateComment(postId: String, content: String) {
-        TODO("Not yet implemented")
+    override fun updateComment(comment: RetrieviedRootComment) {
+        commentBox?.setText("")
+        commentBox?.clearFocus()
+        commentBox?.closeSoftKeyboard()
+
+        val commentDataGroup = CommentDataGroup.parseRetrieveRootComment(comment)
+        listParent.add(commentDataGroup)
+        hashListChildren[listParent[listParent.size - 1].commentId] = listParent[listParent.size - 1].replies
+        expandableListViewAdapter?.notifyDataSetChanged()
+    }
+
+    private var currentCommentPosition: Int = -1
+    private fun onPostButtonClicked(position: Int) {
+        val postButton = findViewById<Button>(R.id.btnPostComment)
+        currentCommentPosition = position
+
+        postButton?.setOnClickListener {
+            if(commentBox?.text!!.isEmpty()) return@setOnClickListener
+
+            presenter.onUploadReply(postId, listParent[position].commentId, commentBox?.text.toString())
+        }
+    }
+
+    override fun updateReply(reply: RetrieviedComment) {
+        commentBox?.setText("")
+        commentBox?.clearFocus()
+        commentBox?.closeSoftKeyboard()
+
+        val commentData = CommentData.parseRetrieveComment(reply)
+        listParent[currentCommentPosition].replies.add(commentData)
+        hashListChildren[listParent[currentCommentPosition].commentId] = listParent[currentCommentPosition].replies
+        expandableListViewAdapter?.notifyDataSetChanged()
     }
 }

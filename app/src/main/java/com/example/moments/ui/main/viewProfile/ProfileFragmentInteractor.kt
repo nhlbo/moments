@@ -18,9 +18,4 @@ class ProfileFragmentInteractor @Inject constructor(
         firebaseHelper.performQueryCurrentUserPost()
 
     override fun doGetCurrentUserModel(): Single<User> = firebaseHelper.getCurrentUserModel()
-
-    override fun doUploadCurrentUserAvatar(media:ByteArray): Completable =
-        firebaseHelper.performUploadMedia(media).flatMapCompletable { uri ->
-            firebaseHelper.performUpdateCurrentUserAvatar(uri.toString())
-        }
 }

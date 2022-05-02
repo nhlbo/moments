@@ -65,6 +65,14 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
             }
         }
 
+    override fun onFragmentAttached() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFragmentDetached(tag: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post_view)
@@ -131,14 +139,6 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
                     finish()
                 }
         }
-    }
-
-    override fun onFragmentAttached() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onFragmentDetached(tag: String) {
-        TODO("Not yet implemented")
     }
 
     @SuppressLint("Recycle")
