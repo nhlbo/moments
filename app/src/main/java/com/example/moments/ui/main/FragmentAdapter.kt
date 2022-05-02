@@ -1,6 +1,5 @@
 package com.example.moments.ui.main
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -17,7 +16,7 @@ class FragmentAdapter(fragmentManager: FragmentManager) :
     override fun getCount(): Int = tabCount
 
     override fun getItem(position: Int): Fragment {
-        return when(position){
+        return when (position) {
             0 -> NewsFeedFragmentView.newInstance()
             1 -> SearchFragmentView.newInstance()
             2 -> MomentsFragmentView.newInstance()

@@ -11,6 +11,7 @@ import com.example.moments.data.model.MomentsData
 import com.mikhaellopez.circularimageview.CircularImageView
 import java.lang.ref.WeakReference
 
+
 class MomentsRecyclerViewAdapter(
     private val listData: ArrayList<MomentsData>,
     private val clickListener: MomentsButtonClickListener
@@ -68,11 +69,6 @@ class MomentsRecyclerViewAdapter(
             it.isLooping = true
             it.start()
         }
-        holder.vvMoments.setOnPreparedListener {
-            it.isLooping = true
-            it.start()
-        }
-//        holder.vvMoments.setZOrderOnTop(true)
         onButtonClicked(holder)
     }
 

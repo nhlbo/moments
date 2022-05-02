@@ -6,7 +6,6 @@ import com.example.moments.data.model.RetrieviedComment
 import com.example.moments.data.model.RetrieviedRootComment
 import com.example.moments.data.preference.PreferenceHelper
 import com.example.moments.ui.base.BaseInteractor
-import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -46,9 +45,21 @@ class CommentActivityInteractor @Inject constructor(
                 }
             }
 
-    override fun doAddComment(postId: String, content: String): Completable =
-        firebaseHelper.performAddCommentToPost(postId, content)
+    override fun doAddComment(postId: String, content: String): Single<RetrieviedRootComment> =
+        firebaseHelper.performAddCommentToPost(postId, content).flatMap { comment ->
+            firebaseHelper.performQueryUserByReference(comment.creator!!).map { user ->
+                RetrieviedRootComment(comment, user)
+            }
+        }
 
-    override fun doAddReply(postId: String, commentId: String, content: String): Completable =
-        firebaseHelper.performReplyComment(postId, commentId, content)
+    override fun doAddReply(
+        postId: String,
+        commentId: String,
+        content: String
+    ): Single<RetrieviedComment> =
+        firebaseHelper.performReplyComment(postId, commentId, content).flatMap { comment ->
+            firebaseHelper.performQueryUserByReference(comment.creator!!).map { user ->
+                RetrieviedComment(comment, user)
+            }
+        }
 }

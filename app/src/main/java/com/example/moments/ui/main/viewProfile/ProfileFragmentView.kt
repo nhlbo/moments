@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
@@ -52,7 +53,6 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val view = inflater.inflate(R.layout.activity_view_profile, container, false)
         setHasOptionsMenu(true)
         initMediaGrid(view)
-        initLayout(view)
         return view
     }
 
@@ -69,6 +69,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
             false
         }
         presenter.onViewPrepared()
+        initLayout(view)
         btnEditProfile.setOnClickListener {
             val intent = Intent(activity, EditProfileActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
@@ -77,6 +78,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     }
 
     override fun getCurrentUserModel(user: User) {
+        Glide.with(this).load(user.avatar).into(ivAvatarProfile)
         tvUsernameProfile.text = user.username
         tvHashtagProfile.text = user.email
         tvBioProfile.text = user.bio
@@ -92,6 +94,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout_view_profile)
         viewPager = view.findViewById(R.id.vp2_view_profile)
         viewPager?.adapter = MediaGridViewPagerAdapter(this)
+        viewPager?.isUserInputEnabled = false
         TabLayoutMediator(tabLayout, viewPager!!) { tab, position ->
             when (position) {
                 0 -> tab.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_grid)
@@ -113,12 +116,14 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llOtherFollowing)
 
         linearLayoutFollowers.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, ViewFollowTabActivityView::class.java)
+            val intent = Intent(activity, ViewFollowTabActivityView::class.java)
+            intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         })
         linearLayoutFollowing.setOnClickListener(View.OnClickListener {
-            val intent: Intent = Intent(context, ViewFollowTabActivityView::class.java)
+            val intent = Intent(activity, ViewFollowTabActivityView::class.java)
+            intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "1")
             startActivity(intent)
         })
