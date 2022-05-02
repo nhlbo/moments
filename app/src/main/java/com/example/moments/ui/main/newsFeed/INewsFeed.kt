@@ -24,8 +24,3 @@ interface INewsFeedPresenter<V : INewsFeedView, I : INewsFeedInteractor> : IBase
     fun onLikePost()
     fun onUnlikePost()
 }
-
-interface IAdapterCallBack{
-    fun onItemTouch(position: Int, command:String)
-    fun onItemTouch(id: String, command: String)
-}

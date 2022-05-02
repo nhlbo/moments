@@ -97,4 +97,18 @@ interface IFirebaseHelper {
     ): Completable
 
     fun performQueryNotification(): Single<List<Notification>>
+
+    fun performAddCommentToPost(postId: String, content: String): Completable
+
+    fun performReplyComment(postId: String, commentId: String, content: String): Completable
+
+    fun performQueryPostComment(postId: String): Single<List<Comment>>
+
+    fun performQueryPostCommentReply(postId: String, commentId: String): Single<List<Comment>>
+
+    fun performQueryPostById(postId: String): Single<Post>
+
+    fun performQueryPostByReference(postRef: DocumentReference): Single<Post>
+
+    fun getCurrentUserReference(): DocumentReference
 }
