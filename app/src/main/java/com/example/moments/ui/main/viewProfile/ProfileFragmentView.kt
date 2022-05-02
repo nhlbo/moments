@@ -94,6 +94,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout_view_profile)
         viewPager = view.findViewById(R.id.vp2_view_profile)
         viewPager?.adapter = MediaGridViewPagerAdapter(this)
+        viewPager?.isUserInputEnabled = false
         TabLayoutMediator(tabLayout, viewPager!!) { tab, position ->
             when (position) {
                 0 -> tab.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_grid)
