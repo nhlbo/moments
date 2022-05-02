@@ -22,7 +22,7 @@ class CommentDataGroup(
                 rootCommentId = input.id,
                 rootContent = input.content,
                 rootReactions = input.likeCount,
-                rootTimeUpload = input.createdAt.toString(),
+                rootTimeUpload = input.createdAt.toDate().toString(),
                 replies = parseRetrieveComments(input.replies)
             )
 
