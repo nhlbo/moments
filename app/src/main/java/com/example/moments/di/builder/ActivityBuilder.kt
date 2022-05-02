@@ -21,6 +21,8 @@ import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
 import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoModule
 import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView
 import com.example.moments.ui.main.notification.NotificationFragmentProvider
+import com.example.moments.ui.main.qrCode.QRCodeActivityModule
+import com.example.moments.ui.main.qrCode.QRCodeActivityView
 import com.example.moments.ui.main.search.SearchFragmentProvider
 import com.example.moments.ui.main.settings.SettingsActivityModule
 import com.example.moments.ui.main.settings.SettingsActivityView
@@ -83,4 +85,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(CommentActivityModule::class)])
     abstract fun bindCommentActivity(): CommentActivityView
+
+    @ContributesAndroidInjector(modules = [(QRCodeActivityModule::class)])
+    abstract fun bindQRCodeActivity(): QRCodeActivityView
 }
