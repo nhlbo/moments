@@ -98,9 +98,9 @@ interface IFirebaseHelper {
 
     fun performQueryNotification(): Single<List<Notification>>
 
-    fun performAddCommentToPost(postId: String, content: String): Completable
+    fun performAddCommentToPost(postId: String, content: String): Single<Comment>
 
-    fun performReplyComment(postId: String, commentId: String, content: String): Completable
+    fun performReplyComment(postId: String, commentId: String, content: String): Single<Comment>
 
     fun performQueryPostComment(postId: String): Single<List<Comment>>
 
