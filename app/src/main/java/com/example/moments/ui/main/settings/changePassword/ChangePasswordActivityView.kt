@@ -15,6 +15,7 @@ class ChangePasswordActivityView: BaseActivity(), IChangePasswordView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
         presenter.onAttach(this)
+        tbChangePasswordActivity.setNavigationOnClickListener { finish() }
         setOnClickListener()
     }
 
