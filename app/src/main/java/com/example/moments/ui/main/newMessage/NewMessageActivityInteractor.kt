@@ -11,6 +11,6 @@ class NewMessageActivityInteractor @Inject constructor(
     preferenceHelper: PreferenceHelper,
     firebaseHelper: FirebaseHelper
 ) : BaseInteractor(preferenceHelper, firebaseHelper), INewMessageActivityInteractor {
-    override fun doQueryFollowingUser(): Single<List<User>> = firebaseHelper.performQueryFollowingUser()
+    override fun doQueryFollowingUser(): Single<List<User>> = firebaseHelper.performQueryFollowingCurrentUser()
 
 }

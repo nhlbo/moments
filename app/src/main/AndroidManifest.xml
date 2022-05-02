@@ -67,6 +67,9 @@
             android:name=".ui.main.newMessage.NewMessageActivityView"
             android:exported="false" />
         <activity
+            android:name=".ui.main.qrCode.QRCodeActivityView"
+            android:exported="false" />
+        <activity
             android:name=".ui.start.StartActivityView"
             android:exported="true"
             android:noHistory="true"
