@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:title="story"
-        android:icon="@drawable/ic_plus_square"
-        android:id="@+id/storyBtn"
-        android:orderInCategory="1"
-        app:showAsAction="always"/>
     <item android:title="settings"
         android:id="@+id/profileSettingBtn"
         android:icon="@drawable/ic_settings"

@@ -6,16 +6,21 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ExpandableListView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.moments.R
+import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.base.IBaseView
+import javax.inject.Inject
 
 
-class CommentActivityView : AppCompatActivity() {
+class CommentActivityView : BaseActivity(), IBaseView {
     private var toolBar: Toolbar? = null
     private var expandableListView: ExpandableListView? = null
     private var expandableListViewAdapter: CustomExpandableListViewAdapter? = null
     private var commentBox: EditText? = null
+
+    @Inject
+    lateinit var presenter: ICommentActivityPresenter<ICommentActivityView, ICommentActivityInteractor>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,15 @@ class CommentActivityView : AppCompatActivity() {
         expandableListViewAdapter = initAdapter()
         expandableListView?.setAdapter(expandableListViewAdapter)
     }
+
+    override fun onFragmentAttached() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFragmentDetached(tag: String) {
+        TODO("Not yet implemented")
+    }
+
     private fun initAdapter(): CustomExpandableListViewAdapter =
         CustomExpandableListViewAdapter(
             this,
@@ -69,21 +83,28 @@ class CommentActivityView : AppCompatActivity() {
             })
     }
 
-    private fun EditText.showSoftKeyboard(){
+    private fun EditText.showSoftKeyboard() {
         (this.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager)
             .showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    private fun EditText.closeSoftKeyboard(){
+    private fun EditText.closeSoftKeyboard() {
         (this.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(windowToken, 0)
     }
 
-    private fun onPostButtonClicked(position:Int){
+    private fun onPostButtonClicked(position: Int) {
         val postButton = findViewById<Button>(R.id.btnPostComment)
 
         postButton?.setOnClickListener {
-            val newComment = CommentData(2,"asd",listParent[position].commentId, commentBox?.text.toString(), 0,"0")
+            val newComment = CommentData(
+                2,
+                "asd",
+                listParent[position].commentId,
+                commentBox?.text.toString(),
+                0,
+                "0"
+            )
             listParent[position].replies.add(newComment)
             hashListChildren[listParent[position].commentId] = listParent[position].replies
             expandableListViewAdapter?.notifyDataSetChanged()
@@ -94,11 +115,19 @@ class CommentActivityView : AppCompatActivity() {
         }
     }
 
-    private fun onPostButtonClicked(){
+    private fun onPostButtonClicked() {
         val postButton = findViewById<Button>(R.id.btnPostComment)
 
         postButton?.setOnClickListener {
-            val newComment = CommentDataGroup(2,"asd",/*new comment id*/5, commentBox?.text.toString(), 0,"0", arrayListOf())
+            val newComment = CommentDataGroup(
+                2,
+                "asd",/*new comment id*/
+                5,
+                commentBox?.text.toString(),
+                0,
+                "0",
+                arrayListOf()
+            )
             listParent.add(newComment)
             hashListChildren[newComment.commentId] = newComment.replies
             expandableListViewAdapter?.notifyDataSetChanged()
@@ -110,8 +139,8 @@ class CommentActivityView : AppCompatActivity() {
     }
 
     private lateinit var listParent: ArrayList<CommentDataGroup>
-    private lateinit var hashListChildren: HashMap<Int,List<CommentData>>
-    private fun prepareListParent(){
+    private lateinit var hashListChildren: HashMap<Int, List<CommentData>>
+    private fun prepareListParent() {
         listParent = arrayListOf()
         listParent.add(generateRootData())
         listParent.add(generateRootData())
@@ -129,7 +158,7 @@ class CommentActivityView : AppCompatActivity() {
         hashListChildren[listParent[5].commentId] = listParent[5].replies
     }
 
-    private fun generateRootData() : CommentDataGroup{
+    private fun generateRootData(): CommentDataGroup {
         return CommentDataGroup(
             rootUserId = 1,
             rootUsername = "lorem",
@@ -141,7 +170,7 @@ class CommentActivityView : AppCompatActivity() {
         )
     }
 
-    private fun prepareListChild() : ArrayList<CommentData>{
+    private fun prepareListChild(): ArrayList<CommentData> {
         val res = arrayListOf<CommentData>()
         res.add(generateChildData())
         res.add(generateChildData())
@@ -149,7 +178,7 @@ class CommentActivityView : AppCompatActivity() {
         return res
     }
 
-    private fun generateChildData(): CommentData{
+    private fun generateChildData(): CommentData {
         return CommentData(
             userId = 1,
             username = "lorem",
