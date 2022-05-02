@@ -9,6 +9,8 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface ICommentActivityView : IBaseView {
+    fun updatePost(input: List<RetrieviedRootComment>)
+    fun updateComment(postId: String, content: String)
 }
 
 interface ICommentActivityInteractor : IBaseInteractor {
@@ -20,5 +22,7 @@ interface ICommentActivityInteractor : IBaseInteractor {
 
 interface ICommentActivityPresenter<V : ICommentActivityView, I : ICommentActivityInteractor> :
     IBasePresenter<V, I> {
-
+    fun onPreparedView(postId: String)
+    fun onUploadComment(postId: String, content:String)
+    fun onUploadReply(postId: String, commentId: String, content:String)
 }

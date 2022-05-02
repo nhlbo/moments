@@ -572,6 +572,17 @@ class FirebaseHelper @Inject constructor(
     override fun getCurrentUserReference(): DocumentReference =
         firebaseFirestore.document("/user/${getCurrentUserId()}")
 
+    override fun performUpdateCurrentUserAvatar(avatarUri: String): Completable =
+        Completable.create { emitter ->
+            getCurrentUserReference().update("avatar", avatarUri)
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
     override fun performReplyComment(
         postId: String,
         commentId: String,

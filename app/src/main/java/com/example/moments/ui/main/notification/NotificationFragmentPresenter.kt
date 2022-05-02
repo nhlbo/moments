@@ -26,5 +26,4 @@ class NotificationFragmentPresenter<V: INotificationView, I: INotificationIntera
             )
         }
     }
-
 }

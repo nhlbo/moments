@@ -32,4 +32,16 @@ class ProfileFragmentPresenter<V : IProfileView, I : IProfileInteractor> @Inject
             )
         }
     }
+
+    override fun uploadAvatar(byteArray: ByteArray) {
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doUploadCurrentUserAvatar(byteArray).compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+                        //Do Nothing
+                    }){
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+        }
+    }
 }

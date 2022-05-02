@@ -14,11 +14,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.bumptech.glide.Glide
 import com.example.moments.R
 
 
 class CustomExpandableListViewAdapter(private val context: Context,
-                                      private val listChildData: HashMap<Int, List<CommentData>>,
+                                      private val listChildData: HashMap<String, List<CommentData>>,
                                       private val listParent: List<CommentDataGroup>,
                                       private val onButtonClickListener: CommentsButtonClickListener) : BaseExpandableListAdapter() {
 
@@ -56,10 +57,14 @@ class CustomExpandableListViewAdapter(private val context: Context,
         val reactBtn = convertView.findViewById<ToggleButton>(R.id.toggleLikePostCommentBtn)
 
         //update UI
+        // avatar
+        Glide.with(convertView).load(commentData.avatar).into(userAva)
+
+        // comment
         userCommentContent.setText(buildSpannableString(commentData.username,commentData.content, commentData.tagPeople),TextView.BufferType.SPANNABLE)
         userCommentContent.movementMethod = LinkMovementMethod.getInstance()
         userCommentContent.highlightColor = Color.TRANSPARENT
-
+        // likes
         userCommentLikes.text = "${commentData.reactions} likes"
         timeUpload.text = commentData.timeUpload + " ago"
 
@@ -117,10 +122,13 @@ class CustomExpandableListViewAdapter(private val context: Context,
         val reactBtn = convertView.findViewById<ToggleButton>(R.id.toggleLikePostCommentBtn)
 
         //update UI
+        // avatar
+        Glide.with(convertView).load(commentData.avatar).into(userAva)
+        //comment
         userCommentContent.setText(buildSpannableString(commentData.username,commentData.content, commentData.tagPeople),TextView.BufferType.SPANNABLE)
         userCommentContent.movementMethod = LinkMovementMethod.getInstance()
         userCommentContent.highlightColor = Color.TRANSPARENT
-
+        //like and date
         userCommentLikes.text = "${commentData.reactions} likes"
         timeUpload.text = commentData.timeUpload + " ago"
 
