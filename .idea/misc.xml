@@ -96,6 +96,7 @@
         <entry key="app/src/main/res/layout/activity_moments.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/activity_new_message.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/activity_news_feed.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.30842391304347827" />
         <entry key="app/src/main/res/layout/activity_view_post.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_view_profile.xml" value="0.33" />
