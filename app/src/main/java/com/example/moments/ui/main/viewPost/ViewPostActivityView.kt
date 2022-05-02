@@ -1,7 +1,5 @@
 package com.example.moments.ui.main.viewPost
 
-import android.media.Image
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -17,7 +15,7 @@ import com.example.moments.ui.main.comment.CustomExpandableListViewAdapter
 import com.example.moments.ui.main.newsFeed.MediaSlidingAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import org.w3c.dom.Text
+import javax.inject.Inject
 
 class ViewPostActivityView : BaseActivity(), IViewPostView {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +24,8 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
 
         initLayouts()
     }
+    @Inject
+    lateinit var presenter: IViewPostPresenter<IViewPostView, IViewPostInteractor>
 
     override fun onFragmentAttached() {
         TODO("Not yet implemented")
@@ -105,40 +105,32 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
             .hideSoftInputFromWindow(windowToken, 0)
     }
 
-    private fun onPostButtonClicked(position:Int){
+    private var currentCommentPosition: Int = -1
+    private fun onPostButtonClicked(position: Int) {
         val postButton = findViewById<Button>(R.id.btnPostComment)
+        currentCommentPosition = position
 
         postButton?.setOnClickListener {
-            val newComment = CommentData(2,"asd",listParent[position].commentId, commentBox.text.toString(), 0,"0")
-            listParent[position].replies.add(newComment)
-            hashListChildren[listParent[position].commentId] = listParent[position].replies
-            expandableListViewAdapter.notifyDataSetChanged()
+            if(commentBox.text!!.isEmpty()) return@setOnClickListener
 
-            commentBox.setText("")
-            commentBox.clearFocus()
-            commentBox.closeSoftKeyboard()
+           // presenter.onUploadReply(postId, listParent[position].commentId, commentBox?.text.toString())
         }
     }
 
-    private fun onPostButtonClicked(){
+    private fun onPostButtonClicked() {
         val postButton = findViewById<Button>(R.id.btnPostComment)
 
         postButton?.setOnClickListener {
-            val newComment = CommentDataGroup(2,"asd",/*new comment id*/5, commentBox.text.toString(), 0,"0", arrayListOf())
-            listParent.add(newComment)
-            hashListChildren[newComment.commentId] = newComment.replies
-            expandableListViewAdapter.notifyDataSetChanged()
+            if(commentBox?.text!!.isEmpty()) return@setOnClickListener
 
-            commentBox.setText("")
-            commentBox.clearFocus()
-            commentBox.closeSoftKeyboard()
+            //presenter.onUploadComment(postId, commentBox?.text.toString())
         }
     }
 
 
-    private lateinit var listParent: ArrayList<CommentDataGroup>
-    private lateinit var hashListChildren: HashMap<Int,List<CommentData>>
-    private fun prepareListParent(){
+    private lateinit var listParent: MutableList<CommentDataGroup>
+    private lateinit var hashListChildren: HashMap<String, MutableList<CommentData>>
+    private fun prepareListParent() {
         listParent = arrayListOf()
         listParent.add(generateRootData())
         listParent.add(generateRootData())
@@ -156,11 +148,12 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         hashListChildren[listParent[5].commentId] = listParent[5].replies
     }
 
-    private fun generateRootData() : CommentDataGroup {
+    private fun generateRootData(): CommentDataGroup {
         return CommentDataGroup(
-            rootUserId = 1,
+            rootUserId = "1",
             rootUsername = "lorem",
-            rootCommentId = 1,
+            rootUserAvatar = "",
+            rootCommentId = "1",
             rootContent = "how to lay data tu firebase",
             rootReactions = -1,
             rootTimeUpload = "0s",
@@ -168,7 +161,7 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         )
     }
 
-    private fun prepareListChild() : ArrayList<CommentData>{
+    private fun prepareListChild(): ArrayList<CommentData> {
         val res = arrayListOf<CommentData>()
         res.add(generateChildData())
         res.add(generateChildData())
@@ -178,9 +171,10 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
 
     private fun generateChildData(): CommentData {
         return CommentData(
-            userId = 1,
+            userId = "1",
             username = "lorem",
-            commentId = 1,
+            avatar = "",
+            commentId = "1",
             content = "hoi master Son",
             reactions = Int.MAX_VALUE - 1,
             timeUpload = "0s"

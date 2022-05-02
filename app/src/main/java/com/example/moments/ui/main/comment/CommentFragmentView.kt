@@ -120,7 +120,7 @@ class CommentFragmentView : Fragment() {
     }
 
     private lateinit var listParent: ArrayList<CommentDataGroup>
-    private lateinit var hashListChildren: HashMap<String,List<CommentData>>
+    private lateinit var hashListChildren: HashMap<String,MutableList<CommentData>>
     private fun prepareListParent(){
         listParent = arrayListOf()
         listParent.add(generateRootData())

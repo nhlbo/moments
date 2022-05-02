@@ -16,24 +16,36 @@ import android.view.ViewGroup
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import java.lang.StringBuilder
 
+class Converter{
+    companion object{
+        fun stringToLong(string: String):Long{
+            val result = StringBuilder()
+            for (ch in string){
+                result.append(ch.digitToInt())
+            }
+            return result.toString().toLong()
+        }
+    }
+}
 
 class CustomExpandableListViewAdapter(private val context: Context,
-                                      private val listChildData: HashMap<String, List<CommentData>>,
-                                      private val listParent: List<CommentDataGroup>,
+                                      private val listChildData: HashMap<String, MutableList<CommentData>>,
+                                      private val listParent: MutableList<CommentDataGroup>,
                                       private val onButtonClickListener: CommentsButtonClickListener) : BaseExpandableListAdapter() {
 
     override fun getGroupCount(): Int = listParent.size
 
-    override fun getChildrenCount(p0: Int): Int = listChildData[listParent[p0].userId]!!.size
+    override fun getChildrenCount(p0: Int): Int = listChildData[listParent[p0].commentId]!!.size
 
     override fun getGroup(p0: Int): Any = listParent[p0]
 
-    override fun getChild(p0: Int, p1: Int): Any = listChildData[listParent[p0].userId]!![p1]
+    override fun getChild(p0: Int, p1: Int): Any = listChildData[listParent[p0].commentId]!![p1]
 
-    override fun getGroupId(p0: Int): Long = listParent[p0].userId.toLong()
+    override fun getGroupId(p0: Int): Long = 0//Converter.stringToLong(listParent[p0].commentId)
 
-    override fun getChildId(p0: Int, p1: Int): Long = listChildData[listParent[p0].userId]!![p1].userId.toLong()
+    override fun getChildId(p0: Int, p1: Int): Long = 0//listChildData[listParent[p0].commentId]!![p1].userId.toLong()
 
     override fun hasStableIds(): Boolean = false
 

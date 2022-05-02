@@ -16,10 +16,9 @@ interface IProfileView : IBaseView {
 interface IProfileInteractor : IBaseInteractor {
     fun doQueryCurrentUserPost(): Single<List<Post>>
     fun doGetCurrentUserModel(): Single<User>
-    fun doUploadCurrentUserAvatar(media:ByteArray): Completable
+
 }
 
 interface IProfilePresenter<V : IProfileView, I : IProfileInteractor> : IBasePresenter<V, I> {
     fun onViewPrepared()
-    fun uploadAvatar(byteArray: ByteArray)
 }

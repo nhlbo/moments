@@ -57,8 +57,9 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         rcNewsfeedPanel.adapter = adapter
         rcNewsfeedPanel.isNestedScrollingEnabled = false
 
-        adapter.onButtonClick = { commentList ->
+        adapter.onButtonClick = { post ->
             val intent = Intent(context, CommentActivityView::class.java)
+            intent.putExtra("postId", post.id)
             startActivity(intent)
         }
 
