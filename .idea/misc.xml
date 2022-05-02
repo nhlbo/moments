@@ -88,15 +88,20 @@
         <entry key="..\:/bin/Study/Y3/HK2/Android/Moments/app/src/main/res/menu/nav_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/bin/Study/Y3/HK2/Android/Moments/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.225" />
         <entry key="..\:/bin/Study/Y3/HK2/Android/Moments/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.225" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.27219202898550726" />
-        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.43430074055989587" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.30842391304347827" />
         <entry key="app/src/main/res/layout/activity_message.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/activity_moments.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/activity_new_message.xml" value="0.27219202898550726" />
+        <entry key="app/src/main/res/layout/activity_news_feed.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.30842391304347827" />
+        <entry key="app/src/main/res/layout/activity_view_post.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_view_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/component_full_layout_moments.xml" value="0.27219202898550726" />
         <entry key="app/src/main/res/layout/component_info_moments.xml" value="0.30842391304347827" />
+        <entry key="app/src/main/res/layout/component_post.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/menu/header_message.xml" value="0.3307291666666667" />
         <entry key="app/src/main/res/menu/header_profile.xml" value="0.3307291666666667" />
       </map>
