@@ -4,15 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.example.moments.data.model.Notification
+import com.example.moments.data.model.RetrievedNotification
 import com.example.moments.databinding.RowCommonNotificationBinding
 import com.example.moments.databinding.RowFollowNotificationBinding
-import java.net.URI
-import java.util.*
 
 
 sealed class NotificationRecyclerViewItem {
@@ -29,9 +28,26 @@ sealed class NotificationRecyclerViewItem {
         val content: String,
         val time: String,
     ) : NotificationRecyclerViewItem()
+
+    companion object{
+        fun parseRetrievedNotification(input : RetrievedNotification) : NotificationRecyclerViewItem{
+            if(input.type == "")
+                return commonNotification(
+                    avatar = input.creator!!.avatar,
+                    content = "", //TODO add post to this content
+                    time = input.createdAt.toString(),
+                    avatarOther = input.media
+                )
+            return followNotification(
+                avatar = input.creator!!.avatar,
+                content = "", //TODO add post to this content
+                time = input.createdAt.toString(),
+            )
+        }
+    }
 }
 
-sealed class NotificationRecyclerViewHolder(binding: ViewBinding, context: Context) :
+sealed class NotificationRecyclerViewHolder(binding: ViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     var itemClickListener: ((view: View, item: NotificationRecyclerViewItem, position: Int) -> Unit)? = null
@@ -40,7 +56,7 @@ sealed class NotificationRecyclerViewHolder(binding: ViewBinding, context: Conte
         private val binding: RowCommonNotificationBinding,
         val context: Context
     ) :
-        NotificationRecyclerViewHolder(binding, context) {
+        NotificationRecyclerViewHolder(binding) {
         fun bind(common: NotificationRecyclerViewItem.commonNotification) {
             Glide.with(context).load(common.avatar).into(binding.ivAvatarCommonNotification)
             Glide.with(context).load(common.avatarOther)
@@ -57,7 +73,7 @@ sealed class NotificationRecyclerViewHolder(binding: ViewBinding, context: Conte
         private val binding: RowFollowNotificationBinding,
         val context: Context
     ) :
-        NotificationRecyclerViewHolder(binding, context) {
+        NotificationRecyclerViewHolder(binding) {
         fun bind(follow: NotificationRecyclerViewItem.followNotification) {
             Glide.with(context).load(follow.avatar).into(binding.ivAvatarFollowNotification)
             binding.tvContentFollow.text = follow.content
@@ -75,7 +91,7 @@ sealed class NotificationRecyclerViewHolder(binding: ViewBinding, context: Conte
 class NotificationRecyclerViewAdapter(var context: Context) :
     RecyclerView.Adapter<NotificationRecyclerViewHolder>() {
 
-    var items = listOf<NotificationRecyclerViewItem>()
+    var items = mutableListOf<NotificationRecyclerViewItem>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -127,5 +143,13 @@ class NotificationRecyclerViewAdapter(var context: Context) :
             is NotificationRecyclerViewItem.commonNotification -> R.layout.row_common_notification
             is NotificationRecyclerViewItem.followNotification -> R.layout.row_follow_notification
         }
+    }
+
+    fun updateList(inputList: List<RetrievedNotification>){
+        items.clear()
+        for(input in inputList){
+            items.add(NotificationRecyclerViewItem.parseRetrievedNotification(input))
+        }
+        notifyDataSetChanged()
     }
 }

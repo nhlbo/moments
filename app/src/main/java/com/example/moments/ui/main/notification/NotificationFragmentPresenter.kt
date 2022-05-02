@@ -14,4 +14,17 @@ class NotificationFragmentPresenter<V: INotificationView, I: INotificationIntera
     schedulerProvider = schedulerProvider,
     compositeDisposable = disposable
 ), INotificationPresenter<V, I> {
+    override fun onViewPrepared() {
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doQueryNotification().compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.updateList(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+
 }
