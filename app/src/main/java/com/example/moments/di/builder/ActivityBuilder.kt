@@ -26,6 +26,8 @@ import com.example.moments.ui.main.settings.SettingsActivityModule
 import com.example.moments.ui.main.settings.SettingsActivityView
 import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityView
 import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityModule
+import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityModule
+import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityModule
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import com.example.moments.ui.main.viewProfile.ProfileFragmentProvider
@@ -83,4 +85,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(CommentActivityModule::class)])
     abstract fun bindCommentActivity(): CommentActivityView
+
+    @ContributesAndroidInjector(modules = [(ViewFollowListActivityModule::class)])
+    abstract fun bindViewFollowListActivity(): ViewFollowListActivityView
 }

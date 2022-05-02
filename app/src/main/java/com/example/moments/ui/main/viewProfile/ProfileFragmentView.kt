@@ -15,7 +15,7 @@ import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.settings.SettingsActivityView
-import com.example.moments.ui.main.viewFollowList.ViewFollowTabActivityView
+import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_view_profile.*
@@ -82,6 +82,8 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         tvUsernameProfile.text = user.username
         tvHashtagProfile.text = user.email
         tvBioProfile.text = user.bio
+        tvFollowersNumber.text = user.followerCount.toString()
+        tvFollowingNumber.text = user.followingCount.toString()
         userModel = user
     }
 
@@ -116,13 +118,13 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llOtherFollowing)
 
         linearLayoutFollowers.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, ViewFollowTabActivityView::class.java)
+            val intent = Intent(activity, ViewFollowListActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         })
         linearLayoutFollowing.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, ViewFollowTabActivityView::class.java)
+            val intent = Intent(activity, ViewFollowListActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "1")
             startActivity(intent)
