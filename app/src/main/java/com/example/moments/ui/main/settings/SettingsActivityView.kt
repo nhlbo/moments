@@ -30,6 +30,13 @@ class SettingsActivityView : BaseActivity(), ISettingsActivityView {
             val intent: Intent = Intent(this, ChangePasswordActivityView::class.java)
             startActivity(intent)
         }
+
+        btnDeleteAccount.setOnClickListener {
+            presenter.onPerformLogOut()
+            val intent: Intent = Intent(this, LoginActivityView::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
     }
 
     override fun onFragmentAttached() {
