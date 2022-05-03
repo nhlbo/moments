@@ -45,10 +45,16 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
 
         tbEditProfileActivity.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.btnDoneEditProfile) {
-                presenter.onPerformEditProfile(
-                    etUsernameEditProfile.text.toString(),
-                    etBioEditProfile.text.toString()
-                )
+                runBlocking { // upload changes to db
+                    val job = launch(Dispatchers.Default) {
+                        presenter.uploadAvatar(byteArray)
+                        presenter.onPerformEditProfile(
+                            etUsernameEditProfile.text.toString(),
+                            etBioEditProfile.text.toString()
+                        )
+                    }
+                    job.start()
+                }
                 val replyIntent = Intent()
                 replyIntent.putExtra("USERNAME", etUsernameEditProfile.text.toString())
                 replyIntent.putExtra("BIO", etBioEditProfile.text.toString())
@@ -73,17 +79,12 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
         }
     }
 
+    private lateinit var byteArray: ByteArray
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            // There are no request codes
+            // get bytearray from image and show on imageview
             val intent: Intent? = result.data
-            val byteArray = intent?.extras!!["ava"] as ByteArray
-            runBlocking {
-                val job = launch(Dispatchers.Default) {
-                    presenter.uploadAvatar(byteArray)
-                }
-                job.start()
-            }
+            byteArray = intent?.extras!!["ava"] as ByteArray
             val bitmap = convertByteArrayToBitmap(byteArray)
             Glide.with(this).load(bitmap).into(ivAvatarEditProfile)
         }
