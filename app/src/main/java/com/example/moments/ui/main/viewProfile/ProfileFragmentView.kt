@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
@@ -18,6 +19,7 @@ import com.example.moments.ui.main.settings.SettingsActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowTabActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_other_profile.*
 import kotlinx.android.synthetic.main.activity_view_profile.*
 import javax.inject.Inject
 
@@ -43,6 +45,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
 
     override fun setUp() {
         presenter.onViewPrepared()
+        initMediaGrid(requireView())
     }
 
     override fun onCreateView(
@@ -52,7 +55,6 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     ): View? {
         val view = inflater.inflate(R.layout.activity_view_profile, container, false)
         setHasOptionsMenu(true)
-        initMediaGrid(view)
         return view
     }
 
@@ -82,7 +84,24 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         tvUsernameProfile.text = user.username
         tvHashtagProfile.text = user.email
         tvBioProfile.text = user.bio
+        tvFollowersNumber.text = "${user.followerCount}"
+        tvFollowingList.text = "${user.followingCount}"
         userModel = user
+    }
+
+    private lateinit var userPosts: List<Post>
+    override fun getCurrentUserPosts(posts: List<Post>) {
+        userPosts = posts
+        tvPostsNumber.text = "${posts.size}"
+
+        val capacity = Math.max(12, posts.size)
+        val listImages = MutableList(capacity){""}
+        for(i in posts.indices){
+            listImages[i] = posts[i].listMedia[0]
+        }
+
+        val fragment = childFragmentManager.findFragmentByTag("f" + 0) as GridMediaFragment
+        fragment.updateData(listImages)
     }
 
     override fun onDestroyView() {
