@@ -22,71 +22,87 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/default_avatar" />
 
-    <ToggleButton
-        android:id="@+id/toggleLikePostCommentBtn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:autoSizeMinTextSize="0dp"
-        android:background="@android:color/transparent"
-        android:button="@drawable/toggle_comment_react_btn"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:textAppearance="@null"
-        android:textOff="@null"
-        android:textOn="@null"
+        android:orientation="vertical"
+        android:paddingHorizontal="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvDescriptionPostComment"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionPostComment"
-        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-    <TextView
-        android:id="@+id/tvDescriptionPostComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Description"
-        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivAvatarPostCommentOther"
-        app:layout_constraintTop_toTopOf="@+id/ivAvatarPostCommentOther" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvReplyComment"
-        style="@style/Theme.Moments.TextView.SubTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:clickable="true"
-        android:text="Reply"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tvCommentLikeNumber"
-        app:layout_constraintStart_toEndOf="@+id/tvCommentLikeNumber"
-        app:layout_constraintTop_toTopOf="@+id/tvCommentLikeNumber"
-        tools:ignore="TouchTargetSizeCheck" />
+        <TextView
+            android:id="@+id/tvDescriptionPostComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textStyle="normal" />
 
-    <TextView
-        android:id="@+id/tvCommentLikeNumber"
-        style="@style/Theme.Moments.TextView.SubTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="1 like"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/toggleLikePostCommentBtn"
-        app:layout_constraintStart_toEndOf="@+id/toggleLikePostCommentBtn"
-        app:layout_constraintTop_toTopOf="@+id/toggleLikePostCommentBtn" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tvTimePostComment"
-        style="@style/Theme.Moments.TextView.SubTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="1h ago"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tvReplyComment"
-        app:layout_constraintStart_toEndOf="@+id/tvReplyComment"
-        app:layout_constraintTop_toTopOf="@+id/tvReplyComment" />
+            <ToggleButton
+                android:id="@+id/toggleLikePostCommentBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:autoSizeMinTextSize="0dp"
+                android:background="@android:color/transparent"
+                android:button="@drawable/toggle_comment_react_btn"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:textAppearance="@null"
+                android:textOff="@null"
+                android:textOn="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/tvCommentLikeNumber"
+                style="@style/Theme.Moments.TextView.SubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 like"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvTimePostComment"
+                app:layout_constraintStart_toEndOf="@+id/toggleLikePostCommentBtn" />
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tvReplyComment"
+                style="@style/Theme.Moments.TextView.SubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="Reply"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
+            <Space
+                android:layout_width="4dp"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tvTimePostComment"
+                style="@style/Theme.Moments.TextView.SubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1h ago"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvReplyComment" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
