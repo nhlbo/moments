@@ -42,6 +42,8 @@ class SearchFragmentView : BaseFragment(), ISearchView {
     ): View? = inflater.inflate(R.layout.activity_search, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initSearchingBar()
+        initGridView()
         presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
     }
@@ -60,8 +62,7 @@ class SearchFragmentView : BaseFragment(), ISearchView {
     }
 
     override fun setUp() {
-        initSearchingBar()
-        initGridView()
+
     }
 
     private val dataList: ArrayList<String> = fakeData()

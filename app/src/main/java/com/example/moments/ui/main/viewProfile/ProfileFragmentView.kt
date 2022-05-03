@@ -48,7 +48,6 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
 
     override fun setUp() {
         presenter.onViewPrepared()
-        initMediaGrid(requireView())
     }
 
     override fun onCreateView(
@@ -58,6 +57,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     ): View? {
         val view = inflater.inflate(R.layout.activity_view_profile, container, false)
         setHasOptionsMenu(true)
+        initMediaGrid(view)
         return view
     }
 
