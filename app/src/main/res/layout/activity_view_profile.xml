@@ -16,6 +16,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/header_profile">
@@ -83,7 +84,7 @@
                         app:layout_constraintTop_toTopOf="@+id/ivAvatarProfile">
 
                         <TextView
-                            android:id="@+id/tvFollowingList"
+                            android:id="@+id/tvFollowingNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gothic_bold"
@@ -156,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:text="Followers"
                             app:layout_constraintBottom_toBottomOf="@+id/tvToPostList"
-                            app:layout_constraintEnd_toStartOf="@+id/tvToFollowingList"
+                            app:layout_constraintEnd_toStartOf="@+id/tvFollowingNumber"
                             app:layout_constraintStart_toEndOf="@+id/tvToPostList"
                             tools:ignore="TouchTargetSizeCheck" />
                     </LinearLayout>

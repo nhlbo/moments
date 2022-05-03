@@ -1,65 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.viewFollowList.ViewFollowListActivityView">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbFollowList"
+        android:id="@+id/tbQRCodeActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSecondary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_left">
-
-        <TextView
-            android:id="@+id/tvToolbarTittle"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="hoanglong2" />
-    </androidx.appcompat.widget.Toolbar>
+        app:navigationIcon="@drawable/ic_arrow_left"
+        app:title="Scan QR Code" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_view_follow"
+        android:id="@+id/tlQRCodeActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:background="?attr/colorSecondary"
-        app:layout_constraintEnd_toEndOf="@+id/tbFollowList"
-        app:layout_constraintStart_toStartOf="@+id/tbFollowList"
-        app:layout_constraintTop_toBottomOf="@+id/tbFollowList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbQRCodeActivity"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:tabMode="fixed"
-        app:tabTextAppearance="@style/tab_text">
+        app:tabMode="fixed">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="123 Followers" />
+            android:icon="@drawable/ic_qr_code" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12 Following" />
+            android:icon="@drawable/ic_camera" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        app:layout_constraintEnd_toEndOf="@+id/tab_layout_view_follow"
-        app:layout_constraintStart_toStartOf="@+id/tab_layout_view_follow"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout_view_follow"
-        tools:ignore="MissingConstraints,SpeakableTextPresentCheck">
+        app:layout_constraintEnd_toEndOf="@+id/tlQRCodeActivity"
+        app:layout_constraintStart_toStartOf="@+id/tlQRCodeActivity"
+        app:layout_constraintTop_toBottomOf="@+id/tlQRCodeActivity"
+        tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +54,7 @@
             android:orientation="vertical">
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp2_view_follow"
+                android:id="@+id/vp2QRCode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

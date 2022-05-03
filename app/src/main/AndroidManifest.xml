@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -35,7 +36,7 @@
             android:name=".ui.main.newsFeed.newPost.NewPostActivityView"
             android:exported="false" />
         <activity
-            android:name=".ui.main.viewFollowList.ViewFollowTabActivityView"
+            android:name=".ui.main.viewFollowList.ViewFollowListActivityView"
             android:exported="false" />
         <activity
             android:name=".ui.forgetPassword.ForgetPasswordActivityView"
@@ -70,6 +71,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.main.newMessage.NewMessageActivityView"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.qrCode.QRCodeActivityView"
             android:exported="false" />
         <activity
             android:name=".ui.start.StartActivityView"

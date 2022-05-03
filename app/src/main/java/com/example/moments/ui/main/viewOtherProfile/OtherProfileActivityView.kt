@@ -7,12 +7,11 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.example.moments.data.model.Post
-import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.main.chat.ChatActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
-import com.example.moments.ui.main.viewFollowList.ViewFollowTabActivityView
+import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.example.moments.ui.main.viewProfile.GridMediaFragment
 import com.example.moments.ui.main.viewProfile.MediaGridViewPagerAdapter
 import com.example.moments.ui.main.viewProfile.ProfileFragmentView
@@ -77,13 +76,13 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         val linearLayoutFollowing = findViewById<LinearLayout>(R.id.llOtherFollowing)
 
         linearLayoutFollowers.setOnClickListener{
-            val intent = Intent(this, ViewFollowTabActivityView::class.java)
+            val intent = Intent(this, ViewFollowListActivityView::class.java)
             intent.putExtra(ProfileFragmentView.USER_KEY, userModel)
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         }
         linearLayoutFollowing.setOnClickListener{
-            val intent = Intent(this, ViewFollowTabActivityView::class.java)
+            val intent = Intent(this, ViewFollowListActivityView::class.java)
             intent.putExtra(ProfileFragmentView.USER_KEY, userModel)
             intent.putExtra("FollowViewType", "1")
             startActivity(intent)

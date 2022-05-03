@@ -15,8 +15,9 @@ import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
+import com.example.moments.ui.main.qrCode.QRCodeActivityView
 import com.example.moments.ui.main.settings.SettingsActivityView
-import com.example.moments.ui.main.viewFollowList.ViewFollowTabActivityView
+import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_other_profile.*
@@ -68,10 +69,17 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
                 startActivity(intent)
                 true
             }
+            else if(item.itemId == R.id.btnQRCode){
+                val intent = Intent(activity, QRCodeActivityView::class.java)
+                intent.putExtra(USER_KEY, userModel)
+                startActivity(intent)
+                true
+            }
             false
         }
         presenter.onViewPrepared()
         initLayout(view)
+
         btnEditProfile.setOnClickListener {
             val intent = Intent(activity, EditProfileActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
@@ -135,13 +143,13 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llOtherFollowing)
 
         linearLayoutFollowers.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, ViewFollowTabActivityView::class.java)
+            val intent = Intent(activity, ViewFollowListActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         })
         linearLayoutFollowing.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, ViewFollowTabActivityView::class.java)
+            val intent = Intent(activity, ViewFollowListActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "1")
             startActivity(intent)
