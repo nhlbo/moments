@@ -70,10 +70,11 @@
             android:background="@drawable/edit_text_background"
             android:ems="10"
             android:fontFamily="@font/gothic_bold"
+            android:gravity="bottom"
             android:hint="Username"
             android:inputType="text"
             android:minHeight="48dp"
-            android:gravity="bottom"
+            android:textColorHint="?attr/colorPrimaryVariant"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,10 +98,11 @@
             android:background="@drawable/edit_text_background"
             android:ems="10"
             android:fontFamily="@font/gothic_bold"
+            android:gravity="bottom"
             android:hint="Bio"
             android:inputType="text"
             android:minHeight="48dp"
-            android:gravity="bottom"
+            android:textColorHint="?attr/colorPrimaryVariant"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
