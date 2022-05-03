@@ -1,12 +1,12 @@
 package com.example.moments.ui.main.viewPost
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.moments.R
-import com.example.moments.data.model.Post
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.RetrieviedComment
 import com.example.moments.data.model.RetrieviedRootComment
@@ -16,6 +16,7 @@ import com.example.moments.ui.main.comment.CommentDataGroup
 import com.example.moments.ui.main.comment.CommentsButtonClickListener
 import com.example.moments.ui.main.comment.CustomExpandableListViewAdapter
 import com.example.moments.ui.main.newsFeed.MediaSlidingAdapter
+import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_view_post.*
@@ -70,7 +71,16 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         }
 
         override fun onUserNameClicked(username: String, position: Int) {
-
+            val userId: String =
+                if(listParent[position].username == username){
+                    //assign
+                    listParent[position].userId
+                } else{
+                    val userReply = listParent[position].replies.find { x -> x.username == username } ?: return // if null -> return
+                    //assign
+                    userReply.userId
+                }
+            startViewProfileActivity(userId)
         }
     }
     override fun updatePostComment(input: List<RetrieviedRootComment>) {
@@ -80,12 +90,8 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
             listParent.add(CommentDataGroup.parseRetrieveRootComment(input[i]))
             hashListChildren[listParent[i].commentId] = listParent[i].replies
         }
-        expandableListViewAdapter = CustomExpandableListViewAdapter(
-            this,
-            hashListChildren,
-            listParent,
-            listener
-        )
+        expandableListViewAdapter = initAdapter()
+        expandableListView.setAdapter(expandableListViewAdapter)
     }
 
     override fun updateComment(comment: RetrieviedRootComment) {
@@ -234,5 +240,11 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         commentBtn.setOnClickListener{ commentBox.requestFocus() }
         shareBtn.setOnClickListener{/*TODO share post*/}
         saveBtn.setOnClickListener{/*TODO save post*/}
+    }
+
+    private fun startViewProfileActivity(userId:String){
+        val intent = Intent(this, OtherProfileActivityView::class.java)
+        intent.putExtra("USER_ID", userId)
+        startActivity(intent)
     }
 }
