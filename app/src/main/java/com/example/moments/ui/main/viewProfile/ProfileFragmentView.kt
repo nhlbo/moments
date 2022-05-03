@@ -20,9 +20,9 @@ import com.example.moments.ui.main.qrCode.QRCodeActivityView
 import com.example.moments.ui.main.settings.SettingsActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.example.moments.ui.main.viewPost.ViewPostActivityView
+import com.example.moments.ui.vuforia.VuforiaActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_other_profile.*
 import kotlinx.android.synthetic.main.activity_view_profile.*
 import javax.inject.Inject
 
@@ -66,14 +66,17 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         super.onViewCreated(view, savedInstanceState)
 
         profileToolbar.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.profileSettingBtn) {
-                val intent = Intent(activity, SettingsActivityView::class.java)
+            if (item.itemId == R.id.btnScanFace) {
+                val intent = Intent(activity, VuforiaActivity::class.java)
                 startActivity(intent)
                 true
-            }
-            else if(item.itemId == R.id.btnQRCode){
+            } else if (item.itemId == R.id.btnQRCode) {
                 val intent = Intent(activity, QRCodeActivityView::class.java)
                 intent.putExtra(USER_KEY, userModel)
+                startActivity(intent)
+                true
+            } else if (item.itemId == R.id.profileSettingBtn) {
+                val intent = Intent(activity, SettingsActivityView::class.java)
                 startActivity(intent)
                 true
             }
@@ -105,8 +108,8 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         tvPostsNumber.text = "${posts.size}"
 
         val capacity = Math.max(12, posts.size)
-        val listImages = MutableList(capacity){""}
-        for(i in posts.indices){
+        val listImages = MutableList(capacity) { "" }
+        for (i in posts.indices) {
             listImages[i] = posts[i].listMedia[0]
         }
 
@@ -120,22 +123,24 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     }
 
 
-    private val onPostClickListener = object:IOnRecyclerViewItemTouchListener{
+    private val onPostClickListener = object : IOnRecyclerViewItemTouchListener {
         override fun onItemClick(position: Int) {
             val intent = Intent(requireContext(), ViewPostActivityView::class.java)
             intent.putExtra("postId", userPosts[position].id)
             startActivity(intent)
         }
     }
-    private val onVideoClickListener = object:IOnRecyclerViewItemTouchListener{
+    private val onVideoClickListener = object : IOnRecyclerViewItemTouchListener {
         override fun onItemClick(position: Int) {
 
         }
     }
+
     private fun initMediaGrid(view: View) {
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout_view_profile)
         viewPager = view.findViewById(R.id.vp2_view_profile)
-        viewPager?.adapter = MediaGridViewPagerAdapter(this, onPostClickListener, onVideoClickListener)
+        viewPager?.adapter =
+            MediaGridViewPagerAdapter(this, onPostClickListener, onVideoClickListener)
         viewPager?.isUserInputEnabled = false
         TabLayoutMediator(tabLayout, viewPager!!) { tab, position ->
             when (position) {

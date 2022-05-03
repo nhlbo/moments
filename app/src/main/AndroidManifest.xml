@@ -75,6 +75,10 @@
         <activity
             android:name=".ui.main.qrCode.QRCodeActivityView"
             android:exported="false" />
+        <meta-data android:name="com.google.ar.core" android:value="required" />
+        <activity
+            android:name=".ui.vuforia.VuforiaActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.start.StartActivityView"
             android:exported="true"
