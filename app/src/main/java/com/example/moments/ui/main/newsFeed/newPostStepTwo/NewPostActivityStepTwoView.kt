@@ -57,7 +57,7 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         toolBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.confirmNewPost -> {
-                    if(imageData != null) presenter.onCreatePost(caption.text.toString(), imageData!!)
+                    presenter.onCreatePost(caption.text.toString(), imageData!!)
                     true
                 }
                 else -> false

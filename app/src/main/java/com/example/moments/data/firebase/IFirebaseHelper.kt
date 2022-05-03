@@ -117,4 +117,6 @@ interface IFirebaseHelper {
     fun performQueryPostByReference(postRef: DocumentReference): Single<Post>
 
     fun getCurrentUserReference(): DocumentReference
+
+    fun performUpdateCurrentUserAvatar(avatarUri: String): Completable
 }

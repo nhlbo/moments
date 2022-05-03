@@ -50,6 +50,12 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
 
     }
 
+    private fun onUploadBtnClicked(){
+        btnChangeAvatarEditProfile.setOnClickListener {
+
+        }
+    }
+
     override fun onFragmentAttached() {
     }
 

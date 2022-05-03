@@ -1,10 +1,12 @@
 package com.example.moments.ui.main.comment
+import com.example.moments.data.model.RetrieviedComment
 import com.example.moments.util.AppConstants
 
 open class CommentData(
-    val userId: Int,
+    val userId: String,
     val username: String,
-    val commentId: Int,
+    val avatar: String,
+    val commentId: String,
     val content: String,
     var reactions: Int,
     val timeUpload: String
@@ -28,5 +30,18 @@ open class CommentData(
 
     private fun isValidChar(ch: Char):Boolean{
         return ch in 'a'..'z' || ch in AppConstants.validChar
+    }
+
+    companion object{
+        fun parseRetrieveComment(input:RetrieviedComment): CommentData =
+            CommentData(
+                userId = input.creator.id,
+                username = input.creator.username,
+                avatar = input.creator.avatar,
+                commentId = input.id,
+                content = input.content,
+                reactions = input.likeCount,
+                timeUpload = input.createdAt.toString()
+            )
     }
 }

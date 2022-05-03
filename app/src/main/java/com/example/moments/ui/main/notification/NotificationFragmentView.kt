@@ -12,30 +12,50 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moments.data.model.RetrievedNotification
+import com.example.moments.ui.base.BaseFragment
+import com.example.moments.ui.main.newsFeed.INewsFeedInteractor
+import com.example.moments.ui.main.newsFeed.INewsFeedPresenter
+import com.example.moments.ui.main.newsFeed.INewsFeedView
 import com.example.moments.ui.main.search.SearchFragmentView
 import com.example.moments.ui.main.viewProfile.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_notification.*
+import javax.inject.Inject
 
-class NotificationFragmentView : Fragment() {
+class NotificationFragmentView : BaseFragment(), INotificationView {
     companion object {
         fun newInstance(): NotificationFragmentView {
             return NotificationFragmentView()
         }
     }
-
+    @Inject
+    internal lateinit var presenter: INotificationPresenter<INotificationView, INotificationInteractor>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.activity_notification, container, false)
+    ): View? = inflater.inflate(R.layout.activity_notification, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter.onAttach(this)
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun setUp() {
         initRecycleView(view)
-        return view
+        presenter.onViewPrepared()
+    }
+
+    override fun updateList(list: List<RetrievedNotification>) {
+        dataList = list
+        adapter.updateList(dataList)
     }
 
     override fun toString(): String = "notificationFragment"
 
-    fun initRecycleView(view : View?){
+    private lateinit var dataList: List<RetrievedNotification>
+    private lateinit var adapter: NotificationRecyclerViewAdapter
+    private fun initRecycleView(view : View?){
         val followList = mutableListOf<NotificationRecyclerViewItem>()
         val urlAvatar = "https://firebasestorage.googleapis.com/v0/b/ggrm-2d70b.appspot.com/o/1648308491999%2F1%2Fpic2.png?alt=media&token=22807789-8a01-413d-8ce5-fd86651e5107"
         followList.add(NotificationRecyclerViewItem.followNotification("https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/ronaldo.jpeg?alt=media&token=aa233a9c-7315-431f-be37-8856986efdf7","An Duy want to follow you","2w"))
@@ -48,11 +68,11 @@ class NotificationFragmentView : Fragment() {
 
         val recycleView = view?.findViewById<RecyclerView>(R.id.rcNotificationList)
         recycleView?.layoutManager = LinearLayoutManager(activity)
-        val adapter = context?.let { NotificationRecyclerViewAdapter(it) }
-        adapter?.items = followList
+        adapter = context?.let { NotificationRecyclerViewAdapter(it) }!!
+        adapter.items = followList
         recycleView?.adapter = adapter
 
-        adapter?.itemClickListener = { view, item, position ->
+        adapter.itemClickListener = { view, item, position ->
                 val messenger = when(item){
                     is NotificationRecyclerViewItem.commonNotification -> "Common ${item.content} click"
                     is NotificationRecyclerViewItem.followNotification -> "Follow ${item.content} click"
@@ -60,7 +80,7 @@ class NotificationFragmentView : Fragment() {
             Toast.makeText(context,messenger,Toast.LENGTH_SHORT).show()
         }
 
-        adapter?.onButtonClick = {view, item, position ->
+        adapter.onButtonClick = { view, item, position ->
             val messenger = when(item){
                 is NotificationRecyclerViewItem.commonNotification -> "Nothing"
                 is NotificationRecyclerViewItem.followNotification -> "Follow ${item.content} click button"
