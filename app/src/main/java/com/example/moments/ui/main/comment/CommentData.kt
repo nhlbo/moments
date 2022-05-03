@@ -29,7 +29,7 @@ open class CommentData(
     }
 
     private fun isValidChar(ch: Char):Boolean{
-        return ch in 'a'..'z' || ch in AppConstants.validChar
+        return ch in 'a'..'z' || ch in '0'..'9' || ch in AppConstants.validChar
     }
 
     companion object{

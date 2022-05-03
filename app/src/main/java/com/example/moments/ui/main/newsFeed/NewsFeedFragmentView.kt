@@ -117,7 +117,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                     true
                 }
                 R.id.msgBtn -> {
-                    val intent: Intent = Intent(activity, LatestMessageActivityView::class.java)
+                    val intent = Intent(activity, LatestMessageActivityView::class.java)
                     startActivity(intent)
                     true
                 }

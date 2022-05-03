@@ -24,42 +24,57 @@
             style="@style/Theme.Moments.TextView.Title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Comments" />
+            android:text="Comments"
+            android:textColor="?attr/colorPrimary"
+            tools:layout_editor_absoluteX="72dp"
+            tools:layout_editor_absoluteY="9dp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="false"
         app:layout_constraintBottom_toTopOf="@+id/include8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tbCommentHeader">
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/nestedScrollView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/include7"
-                layout="@layout/component_post_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.example.moments.ui.customClasses.NonScrollExpandableListView
-                android:id="@+id/elv_comment_post"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:childDivider="@null"
-                android:childIndicatorLeft="16dp"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:groupIndicator="@null" />
+                android:orientation="vertical">
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                <include
+                    android:id="@+id/include7"
+                    layout="@layout/component_post_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.example.moments.ui.customClasses.NonScrollExpandableListView
+                    android:id="@+id/elv_comment_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@android:color/transparent"
+                    android:childDivider="@null"
+                    android:childIndicatorLeft="16dp"
+                    android:childIndicatorRight="16dp"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:groupIndicator="@null"
+                    android:scrollbarAlwaysDrawVerticalTrack="false" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
         android:id="@+id/include8"

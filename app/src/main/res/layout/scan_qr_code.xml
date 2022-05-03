@@ -9,7 +9,7 @@
         android:id="@+id/scanner_view"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="8dp"
         app:autoFocusButtonColor="@android:color/white"
         app:autoFocusButtonVisible="true"
         app:flashButtonColor="@android:color/white"

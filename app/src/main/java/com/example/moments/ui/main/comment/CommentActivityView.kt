@@ -14,6 +14,7 @@ import com.example.moments.data.model.RetrieviedRootComment
 import com.example.moments.ui.base.BaseActivity
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.component_post_description.*
+import kotlinx.android.synthetic.main.footer_post_comment.*
 import javax.inject.Inject
 
 
@@ -22,6 +23,16 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
     private var expandableListView: ExpandableListView? = null
     private var expandableListViewAdapter: CustomExpandableListViewAdapter? = null
     private var commentBox: EditText? = null
+    private val listener =  object : CommentsButtonClickListener {
+        override fun onReplyClicked(username: String, position: Int) {
+            commentBox?.requestFocus()
+            commentBox?.showSoftKeyboard()
+            commentBox?.setText("@${username} ")
+            commentBox?.setSelection(username.length + 2)
+
+            onPostButtonClicked(position)
+        }
+    }
 
     @Inject
     lateinit var presenter: ICommentActivityPresenter<ICommentActivityView, ICommentActivityInteractor>
@@ -62,16 +73,7 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
             this,
             hashListChildren,
             listParent,
-            object : CommentsButtonClickListener {
-                override fun onReplyClicked(username: String, position: Int) {
-                    commentBox?.requestFocus()
-                    commentBox?.showSoftKeyboard()
-                    commentBox?.setText("@${username} ")
-                    commentBox?.setSelection(username.length + 2)
-
-                    onPostButtonClicked(position)
-                }
-            }
+            listener
         )
 
     private fun onItemSelected() {
@@ -148,17 +150,20 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
 
     override fun updatePostComment(input : List<RetrieviedRootComment>) {
         listParent.clear()
+        hashListChildren.clear()
         for(i:Int in input.indices){
             listParent.add(CommentDataGroup.parseRetrieveRootComment(input[i]))
             hashListChildren[listParent[i].commentId] = listParent[i].replies
         }
-        expandableListViewAdapter?.notifyDataSetChanged()
+        expandableListViewAdapter = initAdapter()
+        expandableListView?.setAdapter(expandableListViewAdapter)
     }
 
     private var postId: String = ""
     override fun updatePost(input: RetrievedPost) {
         //postId = input.id
         Glide.with(this).load(input.creator.avatar).into(btnAvatarComment)
+        Glide.with(this).load(input.creator.avatar).into(ivAvatarPostCommentSelf)
         tvCommentDescription.text = input.caption
         tvCommentTime.text = input.createdAt.toString()
     }

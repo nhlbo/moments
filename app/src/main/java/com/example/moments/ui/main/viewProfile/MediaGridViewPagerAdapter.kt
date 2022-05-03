@@ -12,22 +12,41 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moments.R
+import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 
 class MediaGridViewPagerAdapter: FragmentStateAdapter {
-    constructor(fragmentManager: FragmentManager, lifecycle: Lifecycle) : super(
-        fragmentManager,
-        lifecycle
-    )
-    constructor(fragment: Fragment) : super(fragment)
+    constructor(fragmentManager: FragmentManager,
+                lifecycle: Lifecycle,
+                postListener: IOnRecyclerViewItemTouchListener,
+                videoListener: IOnRecyclerViewItemTouchListener
+    ) : super(fragmentManager, lifecycle)
+    {
+        this.postListener = postListener
+        this.videoListener = videoListener
+    }
 
+    constructor(fragment: Fragment,
+                postListener: IOnRecyclerViewItemTouchListener,
+                videoListener: IOnRecyclerViewItemTouchListener
+    ) : super(fragment)
+    {
+        this.postListener = postListener
+        this.videoListener = videoListener
+    }
+
+    private var postListener: IOnRecyclerViewItemTouchListener
+    private var videoListener: IOnRecyclerViewItemTouchListener
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment {
-        return GridMediaFragment()
+        return when(position){
+            0 -> GridMediaFragment(postListener)
+            else -> GridMediaFragment(videoListener)
+        }
     }
 }
 
-class GridMediaFragment : Fragment() {
+class GridMediaFragment(private val listener: IOnRecyclerViewItemTouchListener) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -79,12 +98,12 @@ class GridMediaFragment : Fragment() {
             DividerItemDecoration(context,
                 DividerItemDecoration.VERTICAL))
         recyclerView?.layoutManager = GridLayoutManager(activity,3)
-        val adapter = context?.let { ImagesAdapter(it,imageList, null) }
+        val adapter = context?.let { ImagesAdapter(it,imageList, listener) }
         recyclerView?.adapter =adapter
     }
 
     fun updateData(data: List<String>){
         imageList = ArrayList(data)
-        recyclerView?.adapter = ImagesAdapter(requireContext(), imageList, null)
+        recyclerView?.adapter = ImagesAdapter(requireContext(), imageList, listener)
     }
 }

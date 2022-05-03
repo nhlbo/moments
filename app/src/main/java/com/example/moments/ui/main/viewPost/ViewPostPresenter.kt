@@ -17,12 +17,34 @@ class ViewPostPresenter<V : IViewPostView, I : IViewPostInteractor> @Inject inte
     schedulerProvider = schedulerProvider,
     compositeDisposable = disposable
 ), IViewPostPresenter<V, I> {
-    override fun onViewPrepared() {
+    override fun onViewPrepared(postId: String) {
         interactor?.let { it ->
-            compositeDisposable.add(
-                it.doQueryFeedPost().compose(schedulerProvider.ioToMainSingleScheduler())
+            compositeDisposable.addAll(
+                it.doQueryPostComment(postId)
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.updatePostComment(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    }),
+                it.doQueryFeedPost(postId)
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
                         getView()?.updatePost(it)
+                    },{
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+
+    override fun onUploadComment(postId: String, content: String) {
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doAddComment(postId, content)
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.updateComment(it)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })
@@ -30,11 +52,25 @@ class ViewPostPresenter<V : IViewPostView, I : IViewPostInteractor> @Inject inte
         }
     }
 
-    override fun onLikePost() {
+    override fun onUploadReply(postId: String, commentId: String, content: String) {
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doAddReply(postId, commentId, content)
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.updateReply(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+
+    override fun onLikePost(postId: String) {
         TODO("Not yet implemented")
     }
 
-    override fun onUnlikePost() {
+    override fun onUnlikePost(postId: String) {
         TODO("Not yet implemented")
     }
 }

@@ -1,5 +1,6 @@
 package com.example.moments.ui.main.comment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
@@ -33,7 +34,8 @@ class Converter{
 class CustomExpandableListViewAdapter(private val context: Context,
                                       private val listChildData: HashMap<String, MutableList<CommentData>>,
                                       private val listParent: MutableList<CommentDataGroup>,
-                                      private val onButtonClickListener: CommentsButtonClickListener) : BaseExpandableListAdapter() {
+                                      private val onButtonClickListener: CommentsButtonClickListener) : BaseExpandableListAdapter()
+{
 
     override fun getGroupCount(): Int = listParent.size
 
@@ -159,6 +161,7 @@ class CustomExpandableListViewAdapter(private val context: Context,
         return convertView
     }
 
+    @SuppressLint("ResourceType")
     private fun buildSpannableString(username:String, content:String, tagPeople: ArrayList<String>): Spannable{
         val fullContent = "$username $content"
         val ss : Spannable = SpannableString(fullContent)
@@ -174,7 +177,7 @@ class CustomExpandableListViewAdapter(private val context: Context,
         }
         ss.setSpan(usernameLink, 0, username.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         ss.setSpan(StyleSpan(Typeface.BOLD), 0, username.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        ss.setSpan(ForegroundColorSpan(context.getColor(R.color.primary_text_color)), 0, username.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(ForegroundColorSpan(context.getColor(R.color.bleu_de_france)), 0, username.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         var startIndex = 0
         for(tag in tagPeople){

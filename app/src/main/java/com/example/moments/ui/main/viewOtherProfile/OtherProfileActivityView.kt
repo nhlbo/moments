@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 import com.example.moments.ui.main.chat.ChatActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
+import com.example.moments.ui.main.viewPost.ViewPostActivityView
 import com.example.moments.ui.main.viewProfile.GridMediaFragment
 import com.example.moments.ui.main.viewProfile.MediaGridViewPagerAdapter
 import com.example.moments.ui.main.viewProfile.ProfileFragmentView
@@ -51,10 +54,30 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         presenter.onViewPrepared(userId)
     }
 
+
+    private val onPostClickListener = object: IOnRecyclerViewItemTouchListener {
+        override fun onItemClick(position: Int) {
+            val intent = Intent(this@OtherProfileActivityView, ViewPostActivityView::class.java)
+            intent.putExtra("postId", userPosts[position].id)
+            startActivity(intent)
+        }
+    }
+    private val onVideoClickListener = object: IOnRecyclerViewItemTouchListener {
+        override fun onItemClick(position: Int) {
+
+        }
+    }
     private fun initMediaGrid() {
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout_view_other_profile)
         viewPager = findViewById(R.id.vp2_view_other_profile)
-        viewPager?.adapter = MediaGridViewPagerAdapter(supportFragmentManager, lifecycle)
+
+        viewPager?.adapter = MediaGridViewPagerAdapter(
+            supportFragmentManager,
+            lifecycle,
+            onPostClickListener,
+            onVideoClickListener
+        )
+
         TabLayoutMediator(tabLayout, viewPager!!) { tab, position ->
             when (position) {
                 0 -> tab.icon = ContextCompat.getDrawable(this, R.drawable.ic_grid)
@@ -121,6 +144,7 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         tv_otherProfileName.text = user.username
         tvOtherFollowersNumber.text = ""+user.followerCount
         tvOtherFollowingNumber.text = ""+user.followingCount
+        Glide.with(this).load(user.avatar).into(ivOtherAvatarProfile)
         userModel = user
     }
 

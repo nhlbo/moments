@@ -90,7 +90,7 @@ class NewsFeedAdapter(
         { _, _ -> }.attach()
 
         Glide.with(context).load(tmp.creator.avatar).into(holder.headerAvatar)
-//        Glide.with(context).load(tmp.creator.avatar).into(holder.myAvatar)
+        Glide.with(context).load(tmp.creator.avatar).into(holder.postCommentInputAvatar)
         holder.tvLikeCount.text = "${tmp.likeCount} likes"
         holder.tvCaption.text = tmp.caption
 //        holder.add.text = tmp.address
