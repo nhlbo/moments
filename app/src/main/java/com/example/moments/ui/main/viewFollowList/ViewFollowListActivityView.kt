@@ -19,10 +19,14 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_follow_list)
+        presenter.onAttach(this)
         initFollowLinear()
     }
 
     private fun initFollowLinear() {
+        presenter.onPerformQueryFollowerCurrentUser()
+        presenter.onPerformQueryFollowingCurrentUser()
+
         val intent = intent
         val type = intent.getStringExtra("FollowViewType")?.toInt()
         val user = intent.getParcelableExtra<User>(ProfileFragmentView.USER_KEY)!!
