@@ -3,13 +3,17 @@ package com.example.moments.ui.main.editProfile.uploadAvatar
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,6 +25,7 @@ import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 import com.example.moments.ui.main.newsFeed.newPost.ImageChoosingAdapter
 import com.example.moments.ui.main.viewProfile.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_upload_avatar.*
+import java.io.ByteArrayOutputStream
 import kotlin.math.min
 
 class UploadAvatarActivityView : AppCompatActivity() {
@@ -32,6 +37,7 @@ class UploadAvatarActivityView : AppCompatActivity() {
         val viewContainer = layoutInflater.inflate(R.layout.component_grid_media, MediaUploadAvaContainer, true)
         initRecyclerView(viewContainer)
         onScrollListener()
+        onToolBarButtonsClicked()
     }
 
     private var recyclerView: RecyclerView? = null
@@ -128,8 +134,6 @@ class UploadAvatarActivityView : AppCompatActivity() {
         recyclerView?.layoutManager = GridLayoutManager(this, 4)
         val adapter = ImagesAdapter(this, ArrayList(imageList.subList(0, min(imageList.size, 20))), listener)
         recyclerView?.adapter = adapter
-        recyclerView?.isNestedScrollingEnabled = false
-
     }
 
     private var loading = true
@@ -155,12 +159,46 @@ class UploadAvatarActivityView : AppCompatActivity() {
 
     private fun loadMore(total: Int) {
         val fetch = min(10, imageList.size - total)
-        (recyclerView?.adapter as ImageChoosingAdapter).updateItems(
+        (recyclerView?.adapter as ImagesAdapter).updateItems(
             imageList.subList(
                 total,
                 total + fetch
             )
         )
+    }
+
+    private fun onToolBarButtonsClicked(){
+        tbUploadAvatar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.upload_avatar_confirm -> {
+                    onReturnData()
+                    true
+                }
+                else->false
+            }
+        }
+
+        tbUploadAvatar.setNavigationOnClickListener {
+            setResult(RESULT_CANCELED, Intent())
+            finish()
+        }
+    }
+
+    private fun convertImageToByteArray(view: ImageView): ByteArray {
+        val drawable = (view.drawable as BitmapDrawable)
+        val bitmap = drawable.bitmap
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
+        return stream.toByteArray()
+    }
+
+    private fun onReturnData(){
+        val data = convertImageToByteArray(iv_avatarUploadPreview)
+
+        val intent = Intent()
+        intent.putExtra("ava", data)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
 }

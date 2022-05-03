@@ -24,6 +24,7 @@
             style="@style/Theme.Moments.TextView.Title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textColor="?attr/colorPrimary"
             android:text="Your Profile"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="16dp" />
@@ -61,11 +62,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginTop="8dp"
-                        app:civ_border_color="@android:color/transparent"
-                        app:civ_border_width="1dp"
-                        app:civ_shadow="true"
-                        app:civ_shadow_color="#FFFFFF"
-                        app:civ_shadow_radius="2dp"
+                        android:scaleType="centerCrop"
                         app:layout_constraintBottom_toTopOf="@+id/tvUsernameProfile"
                         app:layout_constraintStart_toStartOf="@+id/tvUsernameProfile"
                         app:layout_constraintTop_toTopOf="parent"
@@ -76,15 +73,14 @@
                         android:id="@+id/llOtherFollowing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/pressed_layout"
+                        android:clickable="true"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:clickable="true"
-                        android:background="@drawable/pressed_layout"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivAvatarProfile"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.952"
-                        app:layout_constraintStart_toStartOf="@+id/ivAvatarProfile"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="@+id/ivAvatarProfile">
 
                         <TextView
                             android:id="@+id/tvFollowingList"
@@ -107,14 +103,14 @@
                         android:id="@+id/llPost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/pressed_layout"
+                        android:clickable="true"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:clickable="true"
-                        android:background="@drawable/pressed_layout"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.316"
-                        app:layout_constraintStart_toStartOf="@+id/ivAvatarProfile"
-                        app:layout_constraintTop_toTopOf="@+id/llFollowers">
+                        app:layout_constraintStart_toEndOf="@+id/ivAvatarProfile"
+                        app:layout_constraintTop_toTopOf="@+id/llFollowers"
+                        tools:ignore="TouchTargetSizeCheck">
 
                         <TextView
                             android:id="@+id/tvPostsNumber"
@@ -199,14 +195,12 @@
                         android:id="@+id/btnEditProfile"
                         style="@style/Theme.Moments.ButtonVariant1"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
-                        android:paddingLeft="0dp"
-                        android:paddingTop="0dp"
-                        android:paddingRight="0dp"
-                        android:paddingBottom="0dp"
+                        android:minHeight="0dp"
+                        android:padding="0dp"
                         android:text="Edit Profile"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -239,9 +233,10 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:ignore="SpeakableTextPresentCheck">
+            tools:ignore="SpeakableTextPresentCheck"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -251,7 +246,9 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vp2_view_profile"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:nestedScrollingEnabled="false"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

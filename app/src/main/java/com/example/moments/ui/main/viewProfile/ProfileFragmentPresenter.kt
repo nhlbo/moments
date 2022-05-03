@@ -19,7 +19,7 @@ class ProfileFragmentPresenter<V : IProfileView, I : IProfileInteractor> @Inject
             compositeDisposable.addAll(
                 it.doQueryCurrentUserPost().compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
-//                        Log.d("debug", it.toString())
+                        getView()?.getCurrentUserPosts(it)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     }),

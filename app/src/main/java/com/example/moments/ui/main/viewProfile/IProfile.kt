@@ -11,6 +11,7 @@ import io.reactivex.Single
 
 interface IProfileView : IBaseView {
     fun getCurrentUserModel(user: User)
+    fun getCurrentUserPosts(posts:List<Post>)
 }
 
 interface IProfileInteractor : IBaseInteractor {
