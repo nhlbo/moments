@@ -11,4 +11,8 @@ class EditProfileActivityInteractor @Inject constructor(
     firebaseHelper: FirebaseHelper
 ) : BaseInteractor(preferenceHelper, firebaseHelper), IEditProfileActivityInteractor {
     override fun doPerformEditProfile(username: String, bio: String): Completable = firebaseHelper.performEditProfile(username, bio)
+    override fun doUploadCurrentUserAvatar(media:ByteArray): Completable =
+        firebaseHelper.performUploadMedia(media).flatMapCompletable { uri ->
+            firebaseHelper.performUpdateCurrentUserAvatar(uri.toString())
+        }
 }

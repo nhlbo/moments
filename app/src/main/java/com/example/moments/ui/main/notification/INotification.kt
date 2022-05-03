@@ -7,6 +7,7 @@ import com.example.moments.ui.base.IBaseView
 import io.reactivex.Single
 
 interface INotificationView : IBaseView {
+    fun updateList(list : List<RetrievedNotification>)
 }
 
 interface INotificationInteractor : IBaseInteractor {
@@ -15,5 +16,5 @@ interface INotificationInteractor : IBaseInteractor {
 
 interface INotificationPresenter<V : INotificationView, I : INotificationInteractor> :
     IBasePresenter<V, I> {
-
+    fun onViewPrepared()
 }
