@@ -32,6 +32,8 @@ import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityModule
 import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityModule
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
+import com.example.moments.ui.main.viewPost.ViewPostActivityModule
+import com.example.moments.ui.main.viewPost.ViewPostActivityView
 import com.example.moments.ui.main.viewProfile.ProfileFragmentProvider
 import com.example.moments.ui.signUp.SignUpActivityModule
 import com.example.moments.ui.signUp.SignUpActivityView
@@ -93,4 +95,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(QRCodeActivityModule::class)])
     abstract fun bindQRCodeActivity(): QRCodeActivityView
+
+    @ContributesAndroidInjector(modules = [(ViewPostActivityModule::class)])
+    abstract fun bindViewPostActivity(): ViewPostActivityView
 }

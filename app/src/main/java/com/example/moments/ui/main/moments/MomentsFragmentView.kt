@@ -61,7 +61,6 @@ class MomentsFragmentView : Fragment() {
                                     CommentFragmentView()
                                 ).addToBackStack("commentFragmentView").commit()
                             }
-
                         }
                         else -> return
                     }
