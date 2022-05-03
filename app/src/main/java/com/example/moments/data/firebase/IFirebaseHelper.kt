@@ -70,7 +70,13 @@ interface IFirebaseHelper {
 
     fun performQueryBookmarkPost(): Single<List<DocumentSnapshot>>
 
-    fun performQueryFollowingUser(): Single<List<User>>
+    fun performQueryFollowingCurrentUser(): Single<List<User>>
+
+    fun performQueryFollowingUser(userId: String): Single<List<User>>
+
+    fun performQueryFollowerCurrentUser(): Single<List<User>>
+
+    fun performQueryFollower(userId: String):Single<List<User>>
 
     fun performSendMessage(message: Message): Completable
 

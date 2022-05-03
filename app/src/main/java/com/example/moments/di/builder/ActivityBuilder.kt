@@ -21,11 +21,15 @@ import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
 import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoModule
 import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView
 import com.example.moments.ui.main.notification.NotificationFragmentProvider
+import com.example.moments.ui.main.qrCode.QRCodeActivityModule
+import com.example.moments.ui.main.qrCode.QRCodeActivityView
 import com.example.moments.ui.main.search.SearchFragmentProvider
 import com.example.moments.ui.main.settings.SettingsActivityModule
 import com.example.moments.ui.main.settings.SettingsActivityView
 import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityView
 import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityModule
+import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityModule
+import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityModule
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import com.example.moments.ui.main.viewProfile.ProfileFragmentProvider
@@ -83,4 +87,10 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(CommentActivityModule::class)])
     abstract fun bindCommentActivity(): CommentActivityView
+
+    @ContributesAndroidInjector(modules = [(ViewFollowListActivityModule::class)])
+    abstract fun bindViewFollowListActivity(): ViewFollowListActivityView
+
+    @ContributesAndroidInjector(modules = [(QRCodeActivityModule::class)])
+    abstract fun bindQRCodeActivity(): QRCodeActivityView
 }
