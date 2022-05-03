@@ -14,6 +14,7 @@ import com.example.moments.R
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
+import com.example.moments.ui.main.qrCode.QRCodeActivityView
 import com.example.moments.ui.main.settings.SettingsActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.google.android.material.tabs.TabLayout
@@ -66,10 +67,17 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
                 startActivity(intent)
                 true
             }
+            else if(item.itemId == R.id.btnQRCode){
+                val intent = Intent(activity, QRCodeActivityView::class.java)
+                intent.putExtra(USER_KEY, userModel)
+                startActivity(intent)
+                true
+            }
             false
         }
         presenter.onViewPrepared()
         initLayout(view)
+
         btnEditProfile.setOnClickListener {
             val intent = Intent(activity, EditProfileActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
