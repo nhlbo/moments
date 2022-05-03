@@ -2,6 +2,7 @@ package com.example.moments.ui.customClasses
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.widget.ExpandableListView
 
 
@@ -21,5 +22,9 @@ class NonScrollExpandableListView : ExpandableListView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpecCustom)
         val params = layoutParams
         params.height = measuredHeight
+    }
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        parent.requestDisallowInterceptTouchEvent(true)
+        return super.dispatchTouchEvent(ev)
     }
 }

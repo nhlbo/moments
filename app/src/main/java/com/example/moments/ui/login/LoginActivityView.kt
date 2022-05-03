@@ -3,6 +3,7 @@ package com.example.moments.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.widget.Toast
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
@@ -35,6 +36,24 @@ class LoginActivityView : BaseActivity(), ILoginActivityView {
         presenter.onAttach(this)
         setUpGoogle()
         setOnClickListener()
+        setEditTextKeyBoardBehaviors()
+    }
+
+    private fun setEditTextKeyBoardBehaviors() {
+        etPassword.setOnKeyListener { _, keyCode, keyEvent ->
+            if (keyEvent.action == KeyEvent.ACTION_DOWN)
+            {
+                when (keyCode)
+                {
+                    KeyEvent.KEYCODE_ENTER -> {
+                        btnServerLogin.performClick()
+                        return@setOnKeyListener true
+                    }
+                    else -> return@setOnKeyListener false
+                }
+            }
+            false
+        }
     }
 
     override fun onStart() {

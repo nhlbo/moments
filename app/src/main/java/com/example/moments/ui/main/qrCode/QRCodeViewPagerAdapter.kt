@@ -41,9 +41,9 @@ class QRCodeViewPagerAdapter : FragmentStateAdapter {
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> return QRCodeFragment(userID)
+            0 -> QRCodeFragment(userID)
             else -> {
-                return CameraFragment()
+                CameraFragment()
             }
         }
     }

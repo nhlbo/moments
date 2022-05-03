@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.RetrievedPost
+import com.example.moments.data.model.RetrieviedComment
+import com.example.moments.data.model.RetrieviedRootComment
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.main.comment.CommentData
 import com.example.moments.ui.main.comment.CommentDataGroup
@@ -15,14 +18,19 @@ import com.example.moments.ui.main.comment.CustomExpandableListViewAdapter
 import com.example.moments.ui.main.newsFeed.MediaSlidingAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_view_post.*
+import kotlinx.android.synthetic.main.header_post.*
 import javax.inject.Inject
 
 class ViewPostActivityView : BaseActivity(), IViewPostView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_post)
-
+        presenter.onAttach(this)
         initLayouts()
+
+        postId = intent?.extras!!["postId"] as String
+        presenter.onViewPrepared(postId)
     }
     @Inject
     lateinit var presenter: IViewPostPresenter<IViewPostView, IViewPostInteractor>
@@ -35,8 +43,67 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         TODO("Not yet implemented")
     }
 
+    private lateinit var postId: String
     override fun updatePost(post: RetrievedPost) {
-        TODO("Not yet implemented")
+        Glide.with(this).load(post.creator.avatar).into(ivAvatarHeaderPost)
+        tvUsername.text = post.creator.username
+        tvOnePostLikeCount.text = "${post.likeCount}"
+        tvOnePostCaption.text = post.caption
+        tvOnePostCreated.text = post.createdAt.toDate().toString()
+
+        val imagePager = findViewById<ViewPager2>(R.id.vpViewOnePost)
+        val tabLayout = findViewById<TabLayout>(R.id.indicatorNewsFeed)
+        imagePager.adapter = MediaSlidingAdapter(post.listMedia, this)
+        imagePager.offscreenPageLimit = 3
+        TabLayoutMediator(tabLayout, imagePager)
+        { _, _ -> }.attach()
+    }
+
+    private val listener = object : CommentsButtonClickListener {
+        override fun onReplyClicked(username: String, position: Int) {
+            commentBox.setText("@${username} ")
+            commentBox.requestFocus()
+            commentBox.showSoftKeyboard()
+            commentBox.setSelection(username.length + 2)
+
+            onPostButtonClicked(position)
+        }
+    }
+    override fun updatePostComment(input: List<RetrieviedRootComment>) {
+        listParent.clear()
+        hashListChildren.clear()
+        for(i:Int in input.indices){
+            listParent.add(CommentDataGroup.parseRetrieveRootComment(input[i]))
+            hashListChildren[listParent[i].commentId] = listParent[i].replies
+        }
+        expandableListViewAdapter = CustomExpandableListViewAdapter(
+            this,
+            hashListChildren,
+            listParent,
+            listener
+        )
+    }
+
+    override fun updateComment(comment: RetrieviedRootComment) {
+        commentBox.setText("")
+        commentBox.clearFocus()
+        commentBox.closeSoftKeyboard()
+
+        val commentDataGroup = CommentDataGroup.parseRetrieveRootComment(comment)
+        listParent.add(commentDataGroup)
+        hashListChildren[listParent[listParent.size - 1].commentId] = listParent[listParent.size - 1].replies
+        expandableListViewAdapter.notifyDataSetChanged()
+    }
+
+    override fun updateReply(reply: RetrieviedComment) {
+        commentBox.setText("")
+        commentBox.clearFocus()
+        commentBox.closeSoftKeyboard()
+
+        val commentData = CommentData.parseRetrieveComment(reply)
+        listParent[currentCommentPosition].replies.add(commentData)
+        hashListChildren[listParent[currentCommentPosition].commentId] = listParent[currentCommentPosition].replies
+        expandableListViewAdapter.notifyDataSetChanged()
     }
 
 
@@ -59,40 +126,12 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         interactionButtonsClicked()
     }
 
-    private fun initPostHeader(){
-        val avatar = findViewById<ImageView>(R.id.ivAvatarHeaderPost)
-        val username = findViewById<TextView>(R.id.tvUsername)
-        val address = findViewById<TextView>(R.id.tvAddress)
-    }
-
-    private fun initPostInfo(post:Post){
-        val likeCount = findViewById<TextView>(R.id.tvOnePostLikeCount)
-        val caption = findViewById<TextView>(R.id.tvOnePostCaption)
-        val dayCreated = findViewById<TextView>(R.id.tvOnePostCreated)
-        
-        val imagePager = findViewById<ViewPager2>(R.id.vpViewOnePost)
-        val tabLayout = findViewById<TabLayout>(R.id.indicatorNewsFeed)
-        imagePager.adapter = MediaSlidingAdapter(post.listMedia, this)
-        imagePager.offscreenPageLimit = 3
-        TabLayoutMediator(tabLayout, imagePager)
-        { _, _ -> }.attach()
-    }
-
     private fun initAdapter(): CustomExpandableListViewAdapter =
         CustomExpandableListViewAdapter(
             this,
             hashListChildren,
             listParent,
-            object : CommentsButtonClickListener {
-                override fun onReplyClicked(username: String, position: Int) {
-                    commentBox.setText("@${username} ")
-                    commentBox.requestFocus()
-                    commentBox.showSoftKeyboard()
-                    commentBox.setSelection(username.length + 2)
-
-                    onPostButtonClicked(position)
-                }
-            }
+            listener
         )
 
     private fun EditText.showSoftKeyboard(){
@@ -113,7 +152,7 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         postButton?.setOnClickListener {
             if(commentBox.text!!.isEmpty()) return@setOnClickListener
 
-           // presenter.onUploadReply(postId, listParent[position].commentId, commentBox?.text.toString())
+            presenter.onUploadReply(postId, listParent[position].commentId, commentBox.text.toString())
         }
     }
 
@@ -121,9 +160,9 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         val postButton = findViewById<Button>(R.id.btnPostComment)
 
         postButton?.setOnClickListener {
-            if(commentBox?.text!!.isEmpty()) return@setOnClickListener
+            if(commentBox.text!!.isEmpty()) return@setOnClickListener
 
-            //presenter.onUploadComment(postId, commentBox?.text.toString())
+            presenter.onUploadComment(postId, commentBox.text.toString())
         }
     }
 

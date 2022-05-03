@@ -14,10 +14,12 @@ import com.example.moments.R
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
+import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.qrCode.QRCodeActivityView
 import com.example.moments.ui.main.settings.SettingsActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
+import com.example.moments.ui.main.viewPost.ViewPostActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_other_profile.*
@@ -93,7 +95,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         tvHashtagProfile.text = user.email
         tvBioProfile.text = user.bio
         tvFollowersNumber.text = "${user.followerCount}"
-        tvFollowingList.text = "${user.followingCount}"
+        tvFollowingNumber.text = "${user.followingCount}"
         userModel = user
     }
 
@@ -117,10 +119,23 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         super.onDestroyView()
     }
 
+
+    private val onPostClickListener = object:IOnRecyclerViewItemTouchListener{
+        override fun onItemClick(position: Int) {
+            val intent = Intent(requireContext(), ViewPostActivityView::class.java)
+            intent.putExtra("postId", userPosts[position].id)
+            startActivity(intent)
+        }
+    }
+    private val onVideoClickListener = object:IOnRecyclerViewItemTouchListener{
+        override fun onItemClick(position: Int) {
+
+        }
+    }
     private fun initMediaGrid(view: View) {
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout_view_profile)
         viewPager = view.findViewById(R.id.vp2_view_profile)
-        viewPager?.adapter = MediaGridViewPagerAdapter(this)
+        viewPager?.adapter = MediaGridViewPagerAdapter(this, onPostClickListener, onVideoClickListener)
         viewPager?.isUserInputEnabled = false
         TabLayoutMediator(tabLayout, viewPager!!) { tab, position ->
             when (position) {

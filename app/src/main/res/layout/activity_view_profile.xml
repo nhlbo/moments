@@ -81,7 +81,8 @@
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="@+id/ivAvatarProfile"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/ivAvatarProfile">
+                        app:layout_constraintTop_toTopOf="@+id/ivAvatarProfile"
+                        tools:ignore="TouchTargetSizeCheck">
 
                         <TextView
                             android:id="@+id/tvFollowingNumber"
@@ -132,13 +133,14 @@
                         android:id="@+id/llFollowers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/pressed_layout"
+                        android:clickable="true"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:clickable="true"
-                        android:background="@drawable/pressed_layout"
                         app:layout_constraintEnd_toStartOf="@+id/llOtherFollowing"
                         app:layout_constraintStart_toEndOf="@id/llPost"
-                        app:layout_constraintTop_toTopOf="@+id/llOtherFollowing">
+                        app:layout_constraintTop_toTopOf="@+id/llOtherFollowing"
+                        tools:ignore="TouchTargetSizeCheck">
 
                         <TextView
                             android:id="@+id/tvFollowersNumber"

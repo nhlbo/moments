@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Description"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintStart_toEndOf="@+id/btnAvatarComment"
         app:layout_constraintTop_toTopOf="@+id/btnAvatarComment" />
 
@@ -37,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1h ago"
+        android:textColor="?attr/colorPrimaryVariant"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
