@@ -3,7 +3,9 @@ package com.example.moments.ui.main.qrCode
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.example.moments.R
+import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.main.viewProfile.ProfileFragmentView
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_qr_code.*
 import javax.inject.Inject
@@ -22,7 +24,9 @@ class QRCodeActivityView : BaseActivity(), IQRCodeActivityView {
         setContentView(R.layout.activity_qr_code)
 
         presenter.onAttach(this)
-        initMediaGrid()
+        val intent = intent
+        val user = intent.getParcelableExtra<User>(ProfileFragmentView.USER_KEY)!!
+        initMediaGrid(user.id)
         tbQRCodeActivity.setNavigationOnClickListener { finish() }
     }
 
@@ -32,9 +36,9 @@ class QRCodeActivityView : BaseActivity(), IQRCodeActivityView {
     override fun onFragmentDetached(tag: String) {
     }
 
-    private fun initMediaGrid() {
+    private fun initMediaGrid(id: String) {
 
-        vp2QRCode?.adapter = QRCodeViewPagerAdapter(supportFragmentManager, lifecycle)
+        vp2QRCode?.adapter = QRCodeViewPagerAdapter(supportFragmentManager, lifecycle,id)
         vp2QRCode?.isUserInputEnabled = false
         TabLayoutMediator(tlQRCodeActivity, vp2QRCode!!) { tab, position ->
             when (position) {

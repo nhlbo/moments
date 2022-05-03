@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -13,11 +12,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moments.R
-import com.example.moments.data.model.Post
-import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 
 class MediaGridViewPagerAdapter: FragmentStateAdapter {
-    constructor(fragmentManager: FragmentManager, lifecycle: Lifecycle) :super (fragmentManager, lifecycle)
+    constructor(fragmentManager: FragmentManager, lifecycle: Lifecycle) : super(
+        fragmentManager,
+        lifecycle
+    )
     constructor(fragment: Fragment) : super(fragment)
 
     override fun getItemCount(): Int = 2
