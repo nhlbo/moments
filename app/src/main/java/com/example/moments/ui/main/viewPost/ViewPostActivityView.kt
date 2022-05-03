@@ -68,6 +68,10 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
 
             onPostButtonClicked(position)
         }
+
+        override fun onUserNameClicked(username: String, position: Int) {
+
+        }
     }
     override fun updatePostComment(input: List<RetrieviedRootComment>) {
         listParent.clear()

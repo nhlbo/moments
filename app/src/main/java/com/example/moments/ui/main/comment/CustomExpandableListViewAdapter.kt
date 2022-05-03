@@ -75,7 +75,15 @@ class CustomExpandableListViewAdapter(private val context: Context,
         Glide.with(convertView).load(commentData.avatar).into(userAva)
 
         // comment
-        userCommentContent.setText(buildSpannableString(commentData.username,commentData.content, commentData.tagPeople),TextView.BufferType.SPANNABLE)
+        userCommentContent.setText(
+            buildSpannableString(
+                groupPosition,
+                commentData.username,
+                commentData.content,
+                commentData.tagPeople
+            ),
+            TextView.BufferType.SPANNABLE)
+
         userCommentContent.movementMethod = LinkMovementMethod.getInstance()
         userCommentContent.highlightColor = Color.TRANSPARENT
         // likes
@@ -114,6 +122,8 @@ class CustomExpandableListViewAdapter(private val context: Context,
             onButtonClickListener.onReplyClicked(commentData.username, groupPosition)
         }
 
+        userAva.setOnClickListener { onButtonClickListener.onUserNameClicked(commentData.username, groupPosition) }
+
         return convertView
     }
 
@@ -139,7 +149,15 @@ class CustomExpandableListViewAdapter(private val context: Context,
         // avatar
         Glide.with(convertView).load(commentData.avatar).into(userAva)
         //comment
-        userCommentContent.setText(buildSpannableString(commentData.username,commentData.content, commentData.tagPeople),TextView.BufferType.SPANNABLE)
+        userCommentContent.setText(
+            buildSpannableString(
+                groupPosition,
+                commentData.username,
+                commentData.content,
+                commentData.tagPeople
+            ),
+            TextView.BufferType.SPANNABLE)
+
         userCommentContent.movementMethod = LinkMovementMethod.getInstance()
         userCommentContent.highlightColor = Color.TRANSPARENT
         //like and date
@@ -158,17 +176,24 @@ class CustomExpandableListViewAdapter(private val context: Context,
             onButtonClickListener.onReplyClicked(commentData.username, groupPosition)
         }
 
+        userAva.setOnClickListener { onButtonClickListener.onUserNameClicked(commentData.username, groupPosition) }
+
         return convertView
     }
 
     @SuppressLint("ResourceType")
-    private fun buildSpannableString(username:String, content:String, tagPeople: ArrayList<String>): Spannable{
+    private fun buildSpannableString(
+        position: Int,
+        username:String,
+        content:String,
+        tagPeople: ArrayList<String>
+    ): Spannable
+    {
         val fullContent = "$username $content"
         val ss : Spannable = SpannableString(fullContent)
         val usernameLink: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
-                //TODO view profile
-                Toast.makeText(context, username, Toast.LENGTH_LONG).show()
+                onButtonClickListener.onUserNameClicked(username, position)
             }
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
@@ -183,8 +208,7 @@ class CustomExpandableListViewAdapter(private val context: Context,
         for(tag in tagPeople){
             val userProfileLink: ClickableSpan = object : ClickableSpan(){
                 override fun onClick(p0: View) {
-                    //TODO req to viewProfile
-                    Toast.makeText(context, tag, Toast.LENGTH_LONG).show()
+                    onButtonClickListener.onUserNameClicked(tag, position)
                 }
 
                 override fun updateDrawState(ds: TextPaint) {

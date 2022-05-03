@@ -1,5 +1,6 @@
 package com.example.moments.ui.main.comment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -12,6 +13,7 @@ import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.RetrieviedComment
 import com.example.moments.data.model.RetrieviedRootComment
 import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.component_post_description.*
 import kotlinx.android.synthetic.main.footer_post_comment.*
@@ -31,6 +33,19 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
             commentBox?.setSelection(username.length + 2)
 
             onPostButtonClicked(position)
+        }
+
+        override fun onUserNameClicked(username: String, position: Int) {
+            val userId: String =
+                if(listParent[position].username == username){
+                    //assign
+                    listParent[position].userId
+                } else{
+                    val userReply = listParent[position].replies.find { x -> x.username == username } ?: return // if null -> return
+                    //assign
+                    userReply.userId
+                }
+            startViewProfileActivity(userId)
         }
     }
 
@@ -210,5 +225,11 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
         listParent[currentCommentPosition].replies.add(commentData)
         hashListChildren[listParent[currentCommentPosition].commentId] = listParent[currentCommentPosition].replies
         expandableListViewAdapter?.notifyDataSetChanged()
+    }
+
+    private fun startViewProfileActivity(userId:String){
+        val intent = Intent(this, OtherProfileActivityView::class.java)
+        intent.putExtra("USER_ID", userId)
+        startActivity(intent)
     }
 }

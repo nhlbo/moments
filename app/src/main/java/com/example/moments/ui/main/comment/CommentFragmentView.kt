@@ -61,6 +61,10 @@ class CommentFragmentView : Fragment() {
 
                     onPostButtonClicked(position)
                 }
+
+                override fun onUserNameClicked(username: String, position: Int) {
+                    TODO("Not yet implemented")
+                }
             }
         )
 
