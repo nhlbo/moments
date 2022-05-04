@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="face"
+        android:id="@+id/btnScanFace"
+        android:icon="@drawable/ic_face"
+        app:showAsAction="always"
+        android:orderInCategory="1"/>
     <item android:title="qrcode"
         android:id="@+id/btnQRCode"
         android:icon="@drawable/ic_qr_code"
@@ -10,5 +15,5 @@
         android:id="@+id/profileSettingBtn"
         android:icon="@drawable/ic_settings"
         app:showAsAction="always"
-        android:orderInCategory="2"/>
+        android:orderInCategory="3"/>
 </menu>
