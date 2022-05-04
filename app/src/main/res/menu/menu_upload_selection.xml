@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:icon="@drawable/ic_grid"
+        android:id="@+id/upload_post_item"
+        android:iconTint="?attr/colorPrimary"
+        android:title="Post"/>
+    <item
+        android:icon="@drawable/ic_video"
+    android:id="@+id/upload_moment_item"
+    android:iconTint="?attr/colorPrimary"
+    android:title="Moment"/>
+</menu>
