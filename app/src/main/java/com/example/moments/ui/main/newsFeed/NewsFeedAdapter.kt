@@ -38,7 +38,6 @@ class NewsFeedAdapter(
             listItemView.findViewById<View>(R.id.interactionBtnGroup)
         val btnComment = interactionBtnGroup.findViewById<ImageButton>(R.id.btnComment)
         val btnLike = interactionBtnGroup.findViewById<ToggleButton>(R.id.btnLike)
-        val btnShare = interactionBtnGroup.findViewById<ImageButton>(R.id.btnShare)
         val btnSave = interactionBtnGroup.findViewById<ToggleButton>(R.id.btnSave)
 
         val tvLikeCount = listItemView.findViewById<TextView>(R.id.tvLikeCount)
@@ -122,9 +121,6 @@ class NewsFeedAdapter(
             else{
                 adapterCallBack.onItemTouch(position, "savePost")
             }
-        }
-        holder.btnShare.setOnClickListener {
-            adapterCallBack.onItemTouch(position, "sharePost")
         }
     }
 
