@@ -2,6 +2,7 @@ package com.example.moments.ui.main.newsFeed.newPostStepTwo
 
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider
+import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -22,6 +23,20 @@ class NewPostActivityStepTwoPresenter<V : INewPostStepTwoView, I : INewPostStepT
                     .subscribe({
                         getView()?.backToFeedActivity()
                     }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+
+    override fun onCreateMoment(caption: String, media: ByteArray) {
+        interactor?.let{
+            compositeDisposable.add(
+                it.doCreateMoment(caption, media)
+                    .compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+                        //DO nothing
+                    },{
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })
             )

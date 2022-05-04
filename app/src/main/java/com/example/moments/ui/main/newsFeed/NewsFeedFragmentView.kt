@@ -23,6 +23,7 @@ import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.comment.CommentActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
+import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView
 import com.example.moments.ui.main.newsFeed.sharePost.BottomSheetFragment
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
@@ -132,6 +133,9 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                 getFragmentManager()?.let { bottomSheetFragment.show(it, bottomSheetFragment.tag) }
             }
             "showComment" -> {
+                val intent = Intent(activity, CommentActivityView::class.java)
+                intent.putExtra("postId", data[position].id)
+                startActivity(intent)
             }
         }
     }
@@ -191,6 +195,10 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                 REQUEST_VIDEO_CAPTURE->{
                     val intent = result.data
                     val videoUri: Uri = intent?.data!!
+                    val intentToStepTwo = Intent(requireContext(), NewPostActivityStepTwoView::class.java)
+                    intentToStepTwo.putExtra("uploadType",1)
+                    intentToStepTwo.putExtra("videoLink", videoUri.toString())
+                    startActivity(intentToStepTwo)
                 }
             }
         }
