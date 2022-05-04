@@ -4,6 +4,7 @@ import com.example.moments.data.model.RetrievedPost
 import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
 import com.example.moments.ui.base.IBaseView
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface INewPostStepTwoView : IBaseView {
@@ -12,6 +13,7 @@ interface INewPostStepTwoView : IBaseView {
 
 interface INewPostStepTwoInteractor : IBaseInteractor {
     fun doCreatePost(caption: String, listMedia: List<ByteArray>): Single<RetrievedPost>
+    fun doCreateMoment(caption: String, media:String):Completable
 }
 
 interface INewPostStepTwoPresenter<V : INewPostStepTwoView, I : INewPostStepTwoInteractor> :
