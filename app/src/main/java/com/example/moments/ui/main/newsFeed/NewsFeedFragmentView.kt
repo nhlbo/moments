@@ -85,16 +85,24 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     }
 
     override fun onItemTouch(position: Int, command: String) {
-        if (command == "showComment") {
-//            val request = NavDeepLinkRequest.Builder
-//                .fromUri(R.string.commentFragment.toString().toUri())
-//                .build()
-//            findNavController().navigate(R.id.commentFragmentView)
-        }
-        if (command == "viewProfile") {
-            val intent = Intent(activity, OtherProfileActivityView::class.java)
-            intent.putExtra("USER_ID", data[position].creator.id)
-            startActivity(intent)
+        when (command) {
+            "viewProfile" -> {
+                val intent = Intent(activity, OtherProfileActivityView::class.java)
+                intent.putExtra("USER_ID", data[position].creator.id)
+                startActivity(intent)
+            }
+            "likePost" -> {
+                presenter.onLikePost(data[position].id)
+            }
+            "unlikePost" -> {
+                presenter.onUnlikePost(data[position].id)
+            }
+            "savePost" -> {
+                presenter.onBookmarkPost(data[position].id)
+            }
+            "unsavePost" -> {
+                presenter.onUnBookmarkPost(data[position].id)
+            }
         }
     }
 

@@ -16,7 +16,7 @@ import com.example.moments.R
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 
 class FollowGridViewPagerAdapter(
-    fragmentManager: FragmentManager,
+    private val fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     private val dataFollowersList: List<Followers>,
     private val dataFollowingList: List<Following>
@@ -25,7 +25,9 @@ class FollowGridViewPagerAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> LinearFollowerFragment(dataFollowersList)
+            0 -> {
+                LinearFollowerFragment(dataFollowersList)
+            }
             1 -> LinearFollowingFragment(dataFollowingList)
             else -> Fragment()
         }
@@ -53,7 +55,7 @@ class LinearFollowerFragment(private var dataList: List<Followers>) : Fragment()
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         val adapter = context?.let { FollowersAdapter(it, dataList) }
-        adapter?.onItemClick = { startViewProfile(it.name) }
+        adapter?.onItemClick = { startViewProfile(it.userId) }
 
         recyclerView.adapter = adapter
     }
@@ -61,7 +63,7 @@ class LinearFollowerFragment(private var dataList: List<Followers>) : Fragment()
     fun updateList(input: List<Followers>){
         dataList = input
         val adapter = FollowersAdapter(requireContext(), dataList)
-        adapter.onItemClick = { startViewProfile(it.name) }
+        adapter.onItemClick = { startViewProfile(it.userId) }
         recyclerView.adapter = adapter
     }
     private fun startViewProfile(userId:String) {
@@ -92,14 +94,14 @@ class LinearFollowingFragment(private var dataList: List<Following>) : Fragment(
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         val adapter = context?.let { FollowingAdapter(it, dataList) }
-        adapter?.onItemClick = { startViewProfile(it.name) }
+        adapter?.onItemClick = { startViewProfile(it.userId) }
 
         recyclerView.adapter = adapter
     }
     fun updateList(input: List<Following>){
         dataList = input
         val adapter = FollowingAdapter(requireContext(), dataList)
-        adapter.onItemClick = { startViewProfile(it.name) }
+        adapter.onItemClick = { startViewProfile(it.userId) }
         recyclerView.adapter = adapter
     }
 

@@ -42,7 +42,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
 
     private var viewPager: ViewPager2? = null
 
-    private lateinit var userModel: User
+    private var userModel: User? = null
 
     override fun setUp() {
         presenter.onViewPrepared()
@@ -69,9 +69,11 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
                 startActivity(intent)
             }
             else if(item.itemId == R.id.btnQRCode){
-                val intent = Intent(activity, QRCodeActivityView::class.java)
-                intent.putExtra(USER_KEY, userModel)
-                startActivity(intent)
+                if(userModel != null){
+                    val intent = Intent(activity, QRCodeActivityView::class.java)
+                    intent.putExtra(USER_KEY, userModel)
+                    startActivity(intent)
+                }
             }
             false
         }
@@ -79,6 +81,8 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         initLayout(view)
 
         btnEditProfile.setOnClickListener {
+            if(userModel == null) return@setOnClickListener
+
             val intent = Intent(activity, EditProfileActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
             startActivityForResult(intent, REQUEST_EDIT_PROFILE)
@@ -146,12 +150,14 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llOtherFollowing)
 
         linearLayoutFollowers.setOnClickListener(View.OnClickListener {
+            if(userModel == null) return@OnClickListener
             val intent = Intent(activity, ViewFollowListActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         })
         linearLayoutFollowing.setOnClickListener(View.OnClickListener {
+            if(userModel == null) return@OnClickListener
             val intent = Intent(activity, ViewFollowListActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "1")

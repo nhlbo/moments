@@ -34,7 +34,7 @@ class ViewFollowListActivityPresenter<V : IViewFollowListActivityView, I : IView
     override fun onPerformQueryFollowingCurrentUser() {
          interactor?.let { it ->
             compositeDisposable.add(
-                it.doPerformQueryFollowerCurrentUser()
+                it.doPerformQueryFollowingCurrentUser()
                     .compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
                         getView()?.addFollowingUsers(it)

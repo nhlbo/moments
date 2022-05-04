@@ -67,10 +67,53 @@ class ViewPostPresenter<V : IViewPostView, I : IViewPostInteractor> @Inject inte
     }
 
     override fun onLikePost(postId: String) {
-        TODO("Not yet implemented")
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doLikePost(postId).compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+//                        getView()?.updateLikePost(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
     }
 
     override fun onUnlikePost(postId: String) {
-        TODO("Not yet implemented")
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doUnlikePost(postId).compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+//                        getView()?.updateUnLikePost(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+    override fun onBookmarkPost(postId: String) {
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doBookmarkPost(postId).compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+//                        getView()?.updateLikePost(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+
+    override fun onUnBookmarkPost(postId: String) {
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doUnBookmarkPost(postId).compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+//                        getView()?.updateUnLikePost(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
     }
 }

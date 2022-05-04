@@ -1,6 +1,7 @@
 package com.example.moments.ui.main.viewOtherProfile
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -146,6 +147,15 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         tvOtherFollowersNumber.text = "" + user.followerCount
         tvOtherFollowingNumber.text = "" + user.followingCount
         Glide.with(this).load(user.avatar).into(ivOtherAvatarProfile)
+
+        if(user.following){
+            btnFollowOtherProfile.text = "Following"
+            btnFollowOtherProfile.setBackgroundColor(getColor(R.color.bleu_de_france))
+        }
+        else{
+            btnFollowOtherProfile.text = "Follow"
+        }
+
         userModel = user
     }
 
