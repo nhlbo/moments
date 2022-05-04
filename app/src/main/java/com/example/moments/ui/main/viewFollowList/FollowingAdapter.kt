@@ -11,11 +11,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 
 
-data class Following(val avatar: String, val name: String, val subName: String)
+data class Following(val userId:String, val avatar: String, val name: String, val subName: String)
 
-class FollowingAdapter(var context: Context, private val followingList: List<Following>) :
+class FollowingAdapter(var context: Context,
+                       private val followingList: List<Following>) :
     RecyclerView.Adapter<FollowingAdapter.ViewHolder>() {
     var onItemClick: ((Following) -> Unit)? = null
 

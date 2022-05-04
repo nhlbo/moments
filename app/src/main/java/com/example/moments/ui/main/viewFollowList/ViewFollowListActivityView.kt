@@ -26,9 +26,6 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
     }
 
     private fun initFollowLinear() {
-        presenter.onPerformQueryFollowerCurrentUser()
-        presenter.onPerformQueryFollowingCurrentUser()
-
         val intent = intent
         val type = intent.getStringExtra("FollowViewType")?.toInt()
         val user = intent.getParcelableExtra<User>(ProfileFragmentView.USER_KEY)!!
@@ -36,7 +33,7 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
         tbFollowList.setNavigationOnClickListener { finish() }
         tvToolbarTittle.text = user.username
         vp2_view_follow.adapter = FollowGridViewPagerAdapter(
-            this, followersDataList, followingDataList
+            supportFragmentManager,lifecycle, followersDataList, followingDataList
         )
 
         type?.let { vp2_view_follow?.setCurrentItem(it) }
@@ -46,12 +43,15 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
                 1 -> tab.text = "${followingDataList.size} Following"
             }
         }.attach()
+
+        presenter.onPerformQueryFollowerCurrentUser()
+        presenter.onPerformQueryFollowingCurrentUser()
     }
 
     override fun addFollowerUsers(users: List<User>) {
         followersDataList.clear()
         for (user in users) {
-            followersDataList.add(Followers(user.avatar, user.username, true))
+            followersDataList.add(Followers(user.id, user.avatar, user.username, true))
         }
         val followerFragment = supportFragmentManager.findFragmentByTag("f" + 0) as LinearFollowerFragment
         followerFragment.updateList(followersDataList)
@@ -61,7 +61,7 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
     override fun addFollowingUsers(users: List<User>) {
         followingDataList.clear()
         for (user in users) {
-            followingDataList.add(Following(user.avatar, user.username, user.email))
+            followingDataList.add(Following(user.id, user.avatar, user.username, user.email))
         }
         val followingFragment = supportFragmentManager.findFragmentByTag("f" + 1) as LinearFollowingFragment
         followingFragment.updateList(followingDataList)

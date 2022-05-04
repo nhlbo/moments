@@ -39,12 +39,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:clickable="true"
         android:background="@drawable/pressed_layout"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvNameFollowers"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.487">
+        app:layout_constraintVertical_bias="0.487"
+        tools:ignore="TouchTargetSizeCheck">
 
         <TextView
             style="@style/Theme.Moments.TextView.HelperText"
@@ -63,20 +64,17 @@
             android:layout_marginStart="4dp"
             android:fontFamily="@font/gothic_bold"
             android:text="Follow"
-            android:textSize="14sp"
-            android:textColor="@color/bleu_de_france" />
+            android:textColor="@color/bleu_de_france"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btnRemoveFollowers"
         style="@style/Theme.Moments.ThinButton"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingRight="0dp"
-        android:paddingBottom="0dp"
+        android:minHeight="0dp"
         android:text="Remove"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
