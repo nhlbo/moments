@@ -2,6 +2,7 @@ package com.example.moments.data.model
 
 class MomentsData(
     val user_id: String,
+    val user_ava: String,
     val post_id : String,
     val content: String,
     val audio: String,

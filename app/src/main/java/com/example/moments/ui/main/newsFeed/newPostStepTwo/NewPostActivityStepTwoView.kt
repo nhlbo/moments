@@ -2,6 +2,7 @@ package com.example.moments.ui.main.newsFeed.newPostStepTwo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
@@ -65,7 +66,7 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
             when (it.itemId) {
                 R.id.confirmNewPost -> {
                     if(uploadType == 0) presenter.onCreatePost(caption.text.toString(), imageData)
-                    else presenter.onCreateMoment(caption.text.toString(), convertStringToByteArray())
+                    else if(uploadType == 1) presenter.onCreateMoment(caption.text.toString(), convertStringToByteArray())
                     true
                 }
                 else -> false
