@@ -10,4 +10,6 @@ class RetrievedPost(post: Post, user: User) {
     var createdAt: Timestamp = post.createdAt
     var likeCount: Int = post.likeCount
     var commentCount: Int = post.commentCount
+    var liked: Boolean = false
+    var bookmarked: Boolean = false
 }
