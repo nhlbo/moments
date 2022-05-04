@@ -10,7 +10,7 @@ data class Notification(
     val type: String = "",
     val caption : String = "",
     val creator: DocumentReference? = null,
-    val post: DocumentReference? = null,
+    val ref: DocumentReference? = null,
     val media: String = "",
     val btnClicked: Boolean = false,
     val createdAt: Timestamp = Timestamp.now()
