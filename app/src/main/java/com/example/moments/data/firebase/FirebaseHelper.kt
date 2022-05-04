@@ -5,6 +5,7 @@ import com.example.moments.data.model.*
 import com.example.moments.di.FirebaseAuthInstance
 import com.example.moments.di.FirebaseCloudStorageInstance
 import com.example.moments.di.FirebaseFirestoreInstance
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
@@ -230,7 +231,7 @@ class FirebaseHelper @Inject constructor(
         }
 
     override fun performUnfollowUser(userId: String): Completable =
-        Completable.create{emitter ->
+        Completable.create { emitter ->
             firebaseFirestore.document("/user/$userId").get()
                 .addOnSuccessListener { snapshot ->
                     firebaseFirestore.document("/user/${getCurrentUserId()}/following/$userId")
@@ -370,7 +371,31 @@ class FirebaseHelper @Inject constructor(
                     firebaseFirestore.document("/post/$postId")
                         .update("likeCount", FieldValue.increment(1))
                         .addOnSuccessListener {
-                            emitter.onComplete()
+                            getCurrentUserReference().get().addOnSuccessListener { user ->
+                                val userInfo = user.toObject(User::class.java)!!
+                                firebaseFirestore.document("post/$postId").get()
+                                    .addOnSuccessListener { post ->
+                                        val postInfo = post.toObject(Post::class.java)!!
+                                        performAddNotification(
+                                            toUser = postInfo.creator!!.id,
+                                            type = "postLiked",
+                                            caption = "${userInfo.username} liked your post",
+                                            media = postInfo.listMedia[0],
+                                            postId
+                                        ).addOnSuccessListener {
+                                            emitter.onComplete()
+                                        }
+                                            .addOnFailureListener {
+                                                emitter.onError(it)
+                                            }
+                                    }.addOnFailureListener {
+                                        emitter.onError(it)
+                                    }
+                            }.addOnFailureListener {
+                                emitter.onError(it)
+                            }
+                        }.addOnFailureListener {
+                            emitter.onError(it)
                         }
                 }
                 .addOnFailureListener {
@@ -711,7 +736,7 @@ class FirebaseHelper @Inject constructor(
         caption: String,
         media: String,
         postId: String?
-    ): Completable = Completable.create { emitter ->
+    ): Task<DocumentReference> =
         firebaseFirestore.collection("/user/$toUser/notification")
             .add(
                 Notification(
@@ -722,13 +747,7 @@ class FirebaseHelper @Inject constructor(
                     ref = if (postId != null) firebaseFirestore.document("/post/$postId") else null
                 )
             )
-            .addOnSuccessListener {
-                emitter.onComplete()
-            }
-            .addOnFailureListener {
-                emitter.onError(it)
-            }
-    }
+
 
     override fun performQueryUserById(userId: String): Single<User> =
         performQueryUserByReference(firebaseFirestore.document("/user/$userId"))
