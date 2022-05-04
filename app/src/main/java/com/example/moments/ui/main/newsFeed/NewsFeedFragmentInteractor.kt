@@ -19,13 +19,29 @@ class NewsFeedFragmentInteractor @Inject constructor(
                     RetrievedPost(post, user)
                 }
             }
+            .flatMapSingle{ post ->
+                firebaseHelper.performQueryPostIsLiked(post.id).map{ isLiked ->
+                    post.liked = isLiked
+                    post
+                }
+            }
+            .flatMapSingle{ post ->
+                firebaseHelper.performQueryPostIsBookmarked(post.id).map{ bookmarked ->
+                    post.bookmarked = bookmarked
+                    post
+                }
+            }
             .toList()
 
-    override fun doLikePost(postId: String): Completable {
-        TODO("Not yet implemented")
-    }
+    override fun doLikePost(postId: String): Completable =
+        firebaseHelper.performLikePost(postId)
 
-    override fun doUnlikePost(postId: String): Completable {
-        TODO("Not yet implemented")
-    }
+    override fun doUnlikePost(postId: String): Completable =
+        firebaseHelper.performUnlikePost(postId)
+
+    override fun doBookmarkPost(postId: String): Completable =
+        firebaseHelper.performBookmarkPost(postId)
+
+    override fun doUnBookmarkPost(postId: String): Completable =
+        firebaseHelper.performUnBookmarkPost(postId)
 }

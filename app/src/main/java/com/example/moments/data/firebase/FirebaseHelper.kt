@@ -1,7 +1,6 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
-import android.util.Log
 import com.example.moments.data.model.*
 import com.example.moments.di.FirebaseAuthInstance
 import com.example.moments.di.FirebaseCloudStorageInstance
@@ -381,6 +380,29 @@ class FirebaseHelper @Inject constructor(
                             }
                     }
                     emitter.onSuccess(res.toList())
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryPostIsLiked(postId: String): Single<Boolean> =
+        Single.create { emitter ->
+            firebaseFirestore.document("/post/$postId/like/${getCurrentUserId()}")
+                .get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.exists())
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryPostIsBookmarked(postId: String): Single<Boolean> =
+        Single.create { emitter ->
+            firebaseFirestore.document("/user/${getCurrentUserId()}/bookmark/$postId").get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.exists())
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
