@@ -42,6 +42,34 @@ class OtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOtherPro
         }
     }
 
+    override fun onUnfollow(userId: String) {
+        interactor?.let{
+            compositeDisposable.add(
+                it.doUnfollowingUser(userId)
+                    .compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+                        //DO nothing
+                    },{
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+
+    override fun onFollow(userId: String) {
+        interactor?.let{
+            compositeDisposable.add(
+                it.doFollowingUser(userId)
+                    .compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+                        //DO nothing
+                    },{
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+
     override fun isMyself(userId: String): Boolean = userId == interactor?.doGetCurrentUserId()
 
 }

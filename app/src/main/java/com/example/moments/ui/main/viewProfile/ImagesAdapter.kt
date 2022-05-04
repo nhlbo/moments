@@ -47,6 +47,6 @@ class ImagesAdapter (var context: Context, private val imagesList : ArrayList<St
     fun replaceAllItems(newList: List<String>){
         imagesList.clear()
         imagesList.addAll(newList)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0, newList.size)
     }
 }
