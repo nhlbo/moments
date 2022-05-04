@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -67,15 +66,13 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
             if (item.itemId == R.id.btnScanFace) {
                 val intent = Intent(activity, VuforiaActivityView::class.java)
                 startActivity(intent)
-            }
-            else if(item.itemId == R.id.btnQRCode){
-                if(userModel != null){
+            } else if (item.itemId == R.id.btnQRCode) {
+                if (userModel != null) {
                     val intent = Intent(activity, QRCodeActivityView::class.java)
                     intent.putExtra(USER_KEY, userModel)
                     startActivity(intent)
                 }
                 true
-            }
             } else if (item.itemId == R.id.profileSettingBtn) {
                 val intent = Intent(activity, SettingsActivityView::class.java)
                 startActivity(intent)
@@ -87,7 +84,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         initLayout(view)
 
         btnEditProfile.setOnClickListener {
-            if(userModel == null) return@setOnClickListener
+            if (userModel == null) return@setOnClickListener
 
             val intent = Intent(activity, EditProfileActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
@@ -158,14 +155,14 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         val linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llOtherFollowing)
 
         linearLayoutFollowers.setOnClickListener(View.OnClickListener {
-            if(userModel == null) return@OnClickListener
+            if (userModel == null) return@OnClickListener
             val intent = Intent(activity, ViewFollowListActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         })
         linearLayoutFollowing.setOnClickListener(View.OnClickListener {
-            if(userModel == null) return@OnClickListener
+            if (userModel == null) return@OnClickListener
             val intent = Intent(activity, ViewFollowListActivityView::class.java)
             intent.putExtra(USER_KEY, userModel)
             intent.putExtra("FollowViewType", "1")
