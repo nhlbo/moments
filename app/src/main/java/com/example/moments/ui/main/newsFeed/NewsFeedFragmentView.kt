@@ -1,7 +1,6 @@
 package com.example.moments.ui.main.newsFeed
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
@@ -12,9 +11,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.view.*
-import android.widget.PopupMenu
-import android.widget.VideoView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -185,8 +181,9 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                 REQUEST_VIDEO_CAPTURE -> {
                     val intent = result.data
                     val videoUri: Uri = intent?.data!!
-                    val intentToStepTwo = Intent(requireContext(), NewPostActivityStepTwoView::class.java)
-                    intentToStepTwo.putExtra("uploadType",1)
+                    val intentToStepTwo =
+                        Intent(requireContext(), NewPostActivityStepTwoView::class.java)
+                    intentToStepTwo.putExtra("uploadType", 1)
                     intentToStepTwo.putExtra("videoLink", getRealPathFromURI(videoUri))
                     startActivity(intentToStepTwo)
                 }
@@ -205,7 +202,8 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
 
     private fun getRealPathFromURI(contentURI: Uri): String? {
         val result: String?
-        val cursor: Cursor? = requireContext().contentResolver.query(contentURI, null, null, null, null)
+        val cursor: Cursor? =
+            requireContext().contentResolver.query(contentURI, null, null, null, null)
         if (cursor == null) { // Source is Dropbox or other similar local file path
             result = contentURI.path
         } else {
