@@ -64,7 +64,6 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
         for (user in users) {
             followersDataList.add(Followers(user.id, user.avatar, user.username, true))
         }
-        val fragments = supportFragmentManager.fragments
         val followerFragment = supportFragmentManager.findFragmentByTag("f" + 0) as LinearFollowerFragment
         followerFragment.updateList(followersDataList)
         (tab_layout_view_follow.getTabAt(0) as TabLayout.Tab).text = "${followersDataList.size} Followers"
@@ -75,7 +74,6 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
         for (user in users) {
             followingDataList.add(Following(user.id, user.avatar, user.username, user.email))
         }
-        val fragments = supportFragmentManager.fragments
         val followingFragment = supportFragmentManager.findFragmentByTag("f" + 1) as LinearFollowingFragment
         followingFragment.updateList(followingDataList)
         (tab_layout_view_follow.getTabAt(1) as TabLayout.Tab).text = "${followingDataList.size} Following"

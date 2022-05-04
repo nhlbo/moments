@@ -258,7 +258,7 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         saveBtn.isChecked = post.bookmarked
         saveBtn.setOnClickListener{
             if(post.bookmarked){
-                presenter.onUnlikePost(post.id)
+                presenter.onUnBookmarkPost(post.id)
             }else{
                 presenter.onBookmarkPost(post.id)
             }

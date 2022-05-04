@@ -15,10 +15,14 @@ interface IOtherProfileActivityView : IBaseView {
 interface IOtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOtherProfileActivityInteractor> :
     IBasePresenter<V, I> {
     fun onViewPrepared(userId: String)
+    fun onUnfollow(userId: String)
+    fun onFollow(userId: String)
 }
 
 interface IOtherProfileActivityInteractor : IBaseInteractor {
     fun doQueryUserPostByUserId(userId: String): Single<List<Post>>
     fun doQueryUserById(userId: String): Single<OtherUser>
     fun doQueryUserMoment(userId: String): Single<List<Moment>>
+    fun doFollowingUser(userId: String):Completable
+    fun doUnfollowingUser(userId: String):Completable
 }
