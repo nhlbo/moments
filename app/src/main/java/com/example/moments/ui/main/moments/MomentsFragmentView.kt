@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.VideoView
 import androidx.fragment.app.FragmentContainerView
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +16,6 @@ import com.example.moments.data.model.MomentsData
 import com.example.moments.data.model.RetrievedMoment
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.comment.CommentActivityView
-import com.example.moments.ui.main.comment.CommentFragmentView
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import javax.inject.Inject
 
@@ -49,12 +47,23 @@ class MomentsFragmentView : BaseFragment(), IMommentsView {
         //commentContainerView = view.findViewById(R.id.commentMomentsFragmentContainer)
     }
 
+    override fun setMenuVisibility(isVisibleToUser: Boolean) {
+        super.setMenuVisibility(isVisibleToUser)
+
+        val video = findCurrentVideo()
+        if(isVisibleToUser){
+            video?.start()
+        }else video?.pause()
+        currentVisible = isVisibleToUser
+    }
+
     override fun setUp() {
         initRecyclerView(requireView())
         presenter.onViewPrepared()
     }
 
     private lateinit var videos: ArrayList<MomentsData>
+    private var currentVisible = false
     private fun initRecyclerView(view: View) {
         recyclerViewContainer = view.findViewById(R.id.rcMomentsContainer)
         videos = fakeData()
@@ -80,8 +89,25 @@ class MomentsFragmentView : BaseFragment(), IMommentsView {
             })
         recyclerViewContainer.layoutManager = LinearLayoutManager(this.context)
         recyclerViewContainer.adapter = recyclerViewAdapter
+
+        recyclerViewContainer.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView:RecyclerView , dx:Int,  dy:Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val video = findCurrentVideo()
+                if(video?.isPlaying == false && currentVisible) video.start()
+            }
+        })
+
         val helper: SnapHelper = PagerSnapHelper()
         helper.attachToRecyclerView(recyclerViewContainer)
+    }
+
+    private fun findCurrentVideo():VideoView?{
+        val layoutManager = (recyclerViewContainer.layoutManager as LinearLayoutManager)
+        val position = layoutManager.findFirstCompletelyVisibleItemPosition()
+        val view = layoutManager.findViewByPosition(position)
+        return view?.findViewById(R.id.vvMoments)
     }
 
     private fun fakeData(): ArrayList<MomentsData> {

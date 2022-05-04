@@ -65,10 +65,8 @@ class MomentsRecyclerViewAdapter(
         likes.text = data.likes.toString()
         val videoUri: Uri = Uri.parse(data.video)
         holder.vvMoments.setVideoURI(videoUri)
-        holder.vvMoments.pause()
         holder.vvMoments.setOnPreparedListener {
             it.isLooping = true
-            it.start()
         }
         onButtonClicked(holder)
     }
