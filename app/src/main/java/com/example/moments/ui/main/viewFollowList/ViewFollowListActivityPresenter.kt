@@ -1,5 +1,6 @@
 package com.example.moments.ui.main.viewFollowList
 
+import android.util.Log
 import com.example.moments.ui.base.BasePresenter
 import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
