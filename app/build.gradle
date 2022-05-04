@@ -103,6 +103,7 @@ android {
             assets.srcDirs += ['../../Assets/ImageTargets','../../Assets/ModelTargets']
         }
     }
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -158,4 +159,7 @@ dependencies {
 
     implementation 'com.google.ar:core:1.19.0'
     implementation files("..\\..\\build\\java\\Vuforia\\Vuforia.jar")
+
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'commons-codec:commons-codec:1.13'
 }

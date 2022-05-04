@@ -155,6 +155,21 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
+    override fun performQueryUserByVuforiaId(vuforiaId: String): Single<User> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("user")
+                .whereEqualTo("vuforiaId", vuforiaId)
+                .get()
+                .addOnSuccessListener {
+                    val users = it.toObjects(User::class.java)
+                    if (users.isEmpty()) emitter.onSuccess(User())
+                    emitter.onSuccess(users[0])
+                }
+                .addOnFailureListener { exception ->
+                    emitter.onError(exception)
+                }
+        }
+
     override fun performQueryUserByIds(ids: List<String>): Single<List<User>> =
         Single.create { emitter ->
             firebaseFirestore.collection("user")

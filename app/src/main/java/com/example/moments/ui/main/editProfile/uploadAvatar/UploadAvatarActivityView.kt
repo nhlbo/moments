@@ -196,6 +196,7 @@ class UploadAvatarActivityView : AppCompatActivity() {
         val data = convertImageToByteArray(iv_avatarUploadPreview)
 
         val intent = Intent()
+        intent.putExtra("path", imageList[currentChosePosition])
         intent.putExtra("ava", data)
         setResult(RESULT_OK, intent)
         finish()
