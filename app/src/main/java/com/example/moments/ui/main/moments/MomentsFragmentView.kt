@@ -116,6 +116,7 @@ class MomentsFragmentView : BaseFragment(), IMommentsView {
             MomentsData(
                 user_id = "1",
                 user_ava = "1",
+                username = "",
                 post_id = "1",
                 content = "askdljljqwe",
                 audio = "Fake Love",
@@ -128,6 +129,7 @@ class MomentsFragmentView : BaseFragment(), IMommentsView {
             MomentsData(
                 user_id = "1",
                 user_ava = "1",
+                username = "",
                 post_id = "1",
                 content = "askdljljqwe",
                 audio = "Fake Love",
@@ -185,6 +187,7 @@ class MomentsFragmentView : BaseFragment(), IMommentsView {
             videos.add(MomentsData(
                 user_id = item.creator.id,
                 user_ava = item.creator.avatar,
+                username = item.creator.username,
                 post_id = item.id,
                 content = item.caption,
                 audio = "",
