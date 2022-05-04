@@ -4,22 +4,22 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.test.core.app.ActivityScenario.launch
 import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.main.editProfile.uploadAvatar.UploadAvatarActivityView
-import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView
 import com.example.moments.ui.main.viewProfile.ProfileFragmentView
+import com.example.moments.ui.vuforia.VuforiaAPI.PostNewTarget
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
@@ -80,16 +80,33 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
     }
 
     private lateinit var byteArray: ByteArray
-    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // get bytearray from image and show on imageview
-            val intent: Intent? = result.data
-            byteArray = intent?.extras!!["ava"] as ByteArray
-            val bitmap = convertByteArrayToBitmap(byteArray)
-            Glide.with(this).load(bitmap).into(ivAvatarEditProfile)
-        }
-    }
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // get bytearray from image and show on imageview
+                val intent: Intent? = result.data
+                var path = intent?.extras!!["path"] as String
+                byteArray = intent?.extras!!["ava"] as ByteArray
+                val thread = Thread {
+                    try {
+                        //Your code goes here
+                        var p = PostNewTarget(
+                            DateTimeFormatter.ISO_INSTANT.format(Instant.now()) + ".jpg",
+                            path
+                        )
+                        p.postTargetThenPollStatus()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
 
-    private fun convertByteArrayToBitmap(bitmapData : ByteArray) : Bitmap =
+                thread.start()
+
+                val bitmap = convertByteArrayToBitmap(byteArray)
+                Glide.with(this).load(bitmap).into(ivAvatarEditProfile)
+            }
+        }
+
+    private fun convertByteArrayToBitmap(bitmapData: ByteArray): Bitmap =
         BitmapFactory.decodeByteArray(bitmapData, 0, bitmapData.size);
 }
