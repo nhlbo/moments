@@ -82,7 +82,7 @@ interface IFirebaseHelper {
 
     fun performQueryFollowerCurrentUser(): Single<List<User>>
 
-    fun performQueryFollower(userId: String):Single<List<User>>
+    fun performQueryFollower(userId: String): Single<List<User>>
 
     fun performSendMessage(message: Message): Completable
 
@@ -125,4 +125,18 @@ interface IFirebaseHelper {
     fun getCurrentUserReference(): DocumentReference
 
     fun performUpdateCurrentUserAvatar(avatarUri: String): Completable
+
+    fun performAddMoment(caption: String, media: String): Completable
+
+    fun performQueryUserMoment(userId: String): Single<List<Moment>>
+
+    fun performQueryCurrentUserMoment(): Single<List<Moment>>
+
+    fun performQueryFeedMoment(): Single<List<Moment>>
+
+    fun performLikeMoment(momentId: String): Completable
+
+    fun performUnlikeMoment(momentId: String): Completable
+
+    fun performQueryMomentIsLiked(momentId: String): Single<Boolean>
 }
