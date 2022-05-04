@@ -182,7 +182,12 @@ class FirebaseHelper @Inject constructor(
             firebaseFirestore.document("/user/$userId").get()
                 .addOnSuccessListener { snapshot ->
                     firebaseFirestore.document("/user/${getCurrentUserId()}/following/$userId")
-                        .set(hashMapOf("accepted" to !(snapshot?.data!!["private"] as Boolean)))
+                        .set(
+                            hashMapOf(
+                                "accepted" to !(snapshot?.data!!["private"] as Boolean),
+                                "followerId" to getCurrentUserId()
+                            )
+                        )
                         .addOnSuccessListener {
                             emitter.onComplete()
                         }
@@ -231,7 +236,9 @@ class FirebaseHelper @Inject constructor(
     override fun performQueryFollower(userId: String): Single<List<User>> =
         Single.create<List<String>> { emitter ->
             firebaseFirestore.collectionGroup("following")
-                .whereEqualTo(FieldPath.documentId(), userId).get()
+                .whereEqualTo("followerId", userId)
+                .whereEqualTo("accepted", true)
+                .get()
                 .addOnSuccessListener { followerList ->
                     emitter.onSuccess(followerList.map { it.id })
                 }
@@ -379,10 +386,39 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performUploadListMedia(listMedia: List<ByteArray>): Observable<Uri> =
-        Observable.fromIterable(listMedia)
+    override fun performQueryPostIsLiked(postId: String): Single<Boolean> =
+        Single.create { emitter ->
+            firebaseFirestore.document("/post/$postId/like/${getCurrentUserId()}")
+                .get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.exists())
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryPostIsBookmarked(postId: String): Single<Boolean> =
+        Single.create { emitter ->
+            firebaseFirestore.document("/user/${getCurrentUserId()}/bookmark/$postId").get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.exists())
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performUploadListImage(listImage: List<ByteArray>): Observable<Uri> =
+        Observable.fromIterable(listImage)
             .flatMapSingle { media ->
-                performUploadMedia(media)
+                performUploadMedia(media, "image/jpeg")
+            }
+
+    override fun performUploadListVideo(listVideo: List<ByteArray>): Observable<Uri> =
+        Observable.fromIterable(listVideo)
+            .flatMapSingle { media ->
+                performUploadMedia(media, "video/mp4")
             }
 
     override fun performQueryIsLikedPost(postId: String): Single<Boolean> =
@@ -396,10 +432,13 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performUploadMedia(media: ByteArray): Single<Uri> =
+    override fun performUploadMedia(
+        media: ByteArray,
+        contentType: String
+    ): Single<Uri> =
         Single.create { emitter ->
             val ref = firebaseStorage.reference.child("images/${UUID.randomUUID()}.jpeg")
-            ref.putBytes(media, storageMetadata { contentType = "image/jpeg" })
+            ref.putBytes(media, storageMetadata { contentType })
                 .continueWithTask { task ->
                     if (!task.isSuccessful) {
                         task.exception?.let {

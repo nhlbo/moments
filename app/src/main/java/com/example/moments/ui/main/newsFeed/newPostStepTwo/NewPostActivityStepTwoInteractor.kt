@@ -12,7 +12,7 @@ class NewPostActivityStepTwoInteractor @Inject constructor(
     firebaseHelper: FirebaseHelper
 ) : BaseInteractor(preferenceHelper, firebaseHelper), INewPostStepTwoInteractor {
     override fun doCreatePost(caption: String, listMedia: List<ByteArray>): Single<RetrievedPost> =
-        firebaseHelper.performUploadListMedia(listMedia).toList().flatMap { listUri ->
+        firebaseHelper.performUploadListImage(listMedia).toList().flatMap { listUri ->
             firebaseHelper.performAddPost(caption, listUri.map { it.toString() }).flatMap { post ->
                 firebaseHelper.performQueryUserByReference(post.creator!!).map { user ->
                     RetrievedPost(post, user)
