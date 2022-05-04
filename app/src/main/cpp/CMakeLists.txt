@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.4.1)
 project(Arabbit)
 
 # Setup properties used below
-set(VUFORIA_ENGINE ${CMAKE_CURRENT_LIST_DIR}/../../../../..)
+set(VUFORIA_ENGINE ${CMAKE_CURRENT_LIST_DIR}/../Vuforia/)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -31,9 +31,9 @@ add_library(
         SHARED
 
         # Cross platform source
-        ../../../../../CrossPlatform/AppController.cpp
-        ../../../../../CrossPlatform/MathUtils.cpp
-        ../../../../../CrossPlatform/tiny_obj_loader.cpp
+        ../Vuforia/CrossPlatform/AppController.cpp
+        ../Vuforia/CrossPlatform/MathUtils.cpp
+        ../Vuforia/CrossPlatform/tiny_obj_loader.cpp
 
         # Android native sources
         GLESRenderer.cpp
@@ -45,7 +45,7 @@ target_include_directories(
         VuforiaSample
         PUBLIC
 
-        ../../../../../CrossPlatform
+        ../Vuforia/CrossPlatform
         ${VUFORIA_ENGINE}/build/include
         ${GLES2_INCLUDE_DIR}
 )
