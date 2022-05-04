@@ -1,6 +1,7 @@
 package com.example.moments.ui.main.viewProfile
 
 import android.provider.MediaStore
+import com.example.moments.data.model.Moment
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.IBaseInteractor
@@ -17,6 +18,7 @@ interface IProfileView : IBaseView {
 interface IProfileInteractor : IBaseInteractor {
     fun doQueryCurrentUserPost(): Single<List<Post>>
     fun doGetCurrentUserModel(): Single<User>
+    fun doQueryCurrentUserMoment(): Single<List<Moment>>
 
 }
 

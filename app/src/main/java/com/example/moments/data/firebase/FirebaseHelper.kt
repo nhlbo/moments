@@ -432,6 +432,63 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
+    override fun performAddMoment(caption: String, media: String): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.collection("moment")
+                .add(Moment(caption = caption, media = media, creator = getCurrentUserReference()))
+                .addOnSuccessListener {
+                    emitter.onComplete()
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryMomentIsLiked(momentId: String): Single<Boolean> =
+        Single.create { emitter ->
+            firebaseFirestore.document("moment/$momentId/like/${getCurrentUserId()}")
+                .get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.exists())
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performLikeMoment(momentId: String): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.document("moment/$momentId/like/${getCurrentUserId()}")
+                .set(hashMapOf("type" to "like"))// can be change to another various reactions type
+                .addOnSuccessListener {
+                    firebaseFirestore.document("/moment/$momentId")
+                        .update("likeCount", FieldValue.increment(1))
+                        .addOnSuccessListener {
+                            emitter.onComplete()
+                        }
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+
+    override fun performUnlikeMoment(momentId: String): Completable =
+        Completable.create { emitter ->
+            firebaseFirestore.document("moment/$momentId/like/${getCurrentUserId()}")
+                .delete()
+                .addOnSuccessListener {
+                    firebaseFirestore.document("/moment/$momentId")
+                        .update("likeCount", FieldValue.increment(1))
+                        .addOnSuccessListener {
+                            emitter.onComplete()
+                        }
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
     override fun performUploadMedia(
         media: ByteArray,
         contentType: String
@@ -699,6 +756,42 @@ class FirebaseHelper @Inject constructor(
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
+                }
+        }
+
+    override fun performQueryUserMoment(userId: String): Single<List<Moment>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("moment")
+                .whereEqualTo("creator", firebaseFirestore.document("user/$userId"))
+                .get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.toObjects(Moment::class.java))
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+
+    override fun performQueryCurrentUserMoment(): Single<List<Moment>> =
+        performQueryUserMoment(getCurrentUserId())
+
+    override fun performQueryFeedMoment(): Single<List<Moment>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("user/${getCurrentUserId()}/following")
+                .whereEqualTo("accepted", true)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    val listUserFollowing: MutableList<DocumentReference> =
+                        querySnapshot.map { firebaseFirestore.document("user/${it.id}") }
+                            .toMutableList()
+                    listUserFollowing.add(getCurrentUserReference())
+                    firebaseFirestore.collection("moment")
+                        .whereIn("creator", listUserFollowing)
+                        .orderBy("createdAt", Query.Direction.DESCENDING)
+                        .get()
+                        .addOnSuccessListener { postSnapshot ->
+                            emitter.onSuccess(postSnapshot.toObjects(Moment::class.java))
+                        }
                 }
         }
 }

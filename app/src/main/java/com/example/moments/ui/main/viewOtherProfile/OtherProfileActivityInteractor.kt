@@ -1,6 +1,7 @@
 package com.example.moments.ui.main.viewOtherProfile
 
 import com.example.moments.data.firebase.FirebaseHelper
+import com.example.moments.data.model.Moment
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.data.model.User
@@ -18,4 +19,7 @@ class OtherProfileActivityInteractor @Inject constructor(
 
     override fun doQueryUserById(userId: String): Single<User> =
         firebaseHelper.performQueryUserById(userId)
+
+    override fun doQueryUserMoment(userId: String): Single<List<Moment>> =
+        firebaseHelper.performQueryUserMoment(userId)
 }
