@@ -1,16 +1,15 @@
 package com.example.moments.ui.main.newsFeed
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
 import android.widget.PopupMenu
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.widget.VideoView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,9 +26,6 @@ import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTw
 import com.example.moments.ui.main.newsFeed.sharePost.BottomSheetFragment
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileInputStream
 import javax.inject.Inject
 
 
@@ -197,7 +193,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                     val videoUri: Uri = intent?.data!!
                     val intentToStepTwo = Intent(requireContext(), NewPostActivityStepTwoView::class.java)
                     intentToStepTwo.putExtra("uploadType",1)
-                    intentToStepTwo.putExtra("videoLink", videoUri.toString())
+                    intentToStepTwo.putExtra("videoLink", getRealPathFromURI(videoUri))
                     startActivity(intentToStepTwo)
                 }
             }
@@ -211,6 +207,20 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                 startForResult.launch(takeVideoIntent)
             }
         }
+    }
+
+    private fun getRealPathFromURI(contentURI: Uri): String? {
+        val result: String?
+        val cursor: Cursor? = requireContext().contentResolver.query(contentURI, null, null, null, null)
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.path
+        } else {
+            cursor.moveToFirst()
+            val idx = cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATA)
+            result = cursor.getString(idx)
+            cursor.close()
+        }
+        return result
     }
 }
 
