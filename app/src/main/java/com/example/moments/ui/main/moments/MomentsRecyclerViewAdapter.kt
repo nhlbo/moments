@@ -29,7 +29,6 @@ class MomentsRecyclerViewAdapter(
         val btnLikeMoments = itemView.findViewById<ToggleButton>(R.id.btnLikeMoments)
         val btnCommentMoments = itemView.findViewById<ImageButton>(R.id.btnCommentMoments)
         val btnFollowMoments = itemView.findViewById<Button>(R.id.btnFollowMoments)
-        val btnShareMoments = itemView.findViewById<ImageButton>(R.id.btnShareMoments)
         val btnMoreMoments = itemView.findViewById<ImageButton>(R.id.btnMoreMoments)
 
         override fun onClick(p0: View?) {
@@ -78,14 +77,12 @@ class MomentsRecyclerViewAdapter(
         val likeBtn = holder.btnLikeMoments
         val commentBtn = holder.btnCommentMoments
         val followBtn = holder.btnFollowMoments
-        val shareBtn = holder.btnShareMoments
         val moreBtn = holder.btnMoreMoments
 
         ava.setOnClickListener(holder)
         commentBtn.setOnClickListener(holder)
         likeBtn.setOnClickListener(holder)
         followBtn.setOnClickListener(holder)
-        shareBtn.setOnClickListener(holder)
         moreBtn.setOnClickListener(holder)
     }
 

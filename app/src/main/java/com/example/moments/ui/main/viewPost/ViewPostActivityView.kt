@@ -238,7 +238,6 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         tb_viewPost.setNavigationOnClickListener { finish() }
         val likeBtn = findViewById<ToggleButton>(R.id.btnLike)
         val commentBtn = findViewById<ImageButton>(R.id.btnComment)
-        val shareBtn = findViewById<ImageButton>(R.id.btnShare)
         val saveBtn = findViewById<ToggleButton>(R.id.btnSave)
 
         likeBtn.isChecked = post.liked
@@ -254,7 +253,6 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
             tvOnePostLikeCount.text = "${post.likeCount} likes"
         }
         commentBtn.setOnClickListener{ commentBox.requestFocus() }
-        shareBtn.setOnClickListener{/*TODO share post*/}
 
         saveBtn.isChecked = post.bookmarked
         saveBtn.setOnClickListener{

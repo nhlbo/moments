@@ -5,12 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.*
-import android.widget.PopupMenu
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,18 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
-import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.comment.CommentActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
 import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView
-import com.example.moments.ui.main.newsFeed.sharePost.BottomSheetFragment
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileInputStream
 import javax.inject.Inject
 
 
@@ -57,9 +51,10 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                result: ActivityResult -> onActivityResult(REQUEST_VIDEO_CAPTURE, result)
-        }
+        startForResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                onActivityResult(REQUEST_VIDEO_CAPTURE, result)
+            }
         presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
         newsfeed_header_bar.inflateMenu(R.menu.header_newsfeeds)
@@ -122,16 +117,6 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
             "unsavePost" -> {
                 presenter.onUnBookmarkPost(data[position].id)
             }
-            "sharePost" -> {
-                val fakeData = arrayListOf<User>()
-                fakeData.add(User("","An Duy","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
-                fakeData.add(User("","Son Tran","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
-                fakeData.add(User("","Hoang Long","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
-                fakeData.add(User("","Quang Huy","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
-                fakeData.add(User("","An Duy","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
-                val bottomSheetFragment = BottomSheetFragment(fakeData)
-                getFragmentManager()?.let { bottomSheetFragment.show(it, bottomSheetFragment.tag) }
-            }
             "showComment" -> {
                 val intent = Intent(activity, CommentActivityView::class.java)
                 intent.putExtra("postId", data[position].id)
@@ -165,7 +150,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     }
 
     private lateinit var popup: PopupMenu
-    private fun initPopupMenu(){
+    private fun initPopupMenu() {
         popup = PopupMenu(requireContext(), newsfeed_header_bar.getChildAt(0))
         popup.inflate(R.menu.menu_upload_selection)
         popup.setOnMenuItemClickListener(menuListener)
@@ -173,7 +158,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
 
     private val menuListener = PopupMenu.OnMenuItemClickListener {
         when (it.itemId) {
-            R.id.upload_post_item->{
+            R.id.upload_post_item -> {
                 val intent = Intent(activity, NewPostActivityView::class.java)
                 startActivity(intent)
                 true
@@ -192,11 +177,12 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     private fun onActivityResult(requestCode: Int, result: ActivityResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                REQUEST_VIDEO_CAPTURE->{
+                REQUEST_VIDEO_CAPTURE -> {
                     val intent = result.data
                     val videoUri: Uri = intent?.data!!
-                    val intentToStepTwo = Intent(requireContext(), NewPostActivityStepTwoView::class.java)
-                    intentToStepTwo.putExtra("uploadType",1)
+                    val intentToStepTwo =
+                        Intent(requireContext(), NewPostActivityStepTwoView::class.java)
+                    intentToStepTwo.putExtra("uploadType", 1)
                     intentToStepTwo.putExtra("videoLink", videoUri.toString())
                     startActivity(intentToStepTwo)
                 }
