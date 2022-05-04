@@ -2,6 +2,7 @@ package com.example.moments.data.firebase
 
 import android.net.Uri
 import com.example.moments.data.model.*
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
@@ -112,7 +113,7 @@ interface IFirebaseHelper {
         caption: String,
         media: String,
         postId: String?
-    ): Completable
+    ): Task<DocumentReference>
 
     fun performQueryNotification(): Single<List<Notification>>
 
