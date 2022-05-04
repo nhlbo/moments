@@ -1,9 +1,15 @@
 package com.example.moments.ui.main.newsFeed
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.*
 import android.widget.PopupMenu
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moments.R
@@ -14,6 +20,9 @@ import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
 import javax.inject.Inject
 
 
@@ -41,6 +50,9 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                result: ActivityResult -> onActivityResult(REQUEST_VIDEO_CAPTURE, result)
+        }
         presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
         newsfeed_header_bar.inflateMenu(R.menu.header_newsfeeds)
@@ -145,10 +157,33 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                 true
             }
             R.id.upload_moment_item -> {
-
+                dispatchTakeVideoIntent()
                 true
             }
             else -> false
+        }
+    }
+
+    // start recording video
+    private lateinit var startForResult: ActivityResultLauncher<Intent>
+    private val REQUEST_VIDEO_CAPTURE = 2
+    private fun onActivityResult(requestCode: Int, result: ActivityResult) {
+        if (result.resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_VIDEO_CAPTURE->{
+                    val intent = result.data
+                    val videoUri: Uri = intent?.data!!
+                }
+            }
+        }
+    }
+
+    //src: https://developer.android.com/training/camera/videobasics
+    private fun dispatchTakeVideoIntent() {
+        Intent(MediaStore.ACTION_VIDEO_CAPTURE).also { takeVideoIntent ->
+            takeVideoIntent.resolveActivity(requireActivity().packageManager)?.also {
+                startForResult.launch(takeVideoIntent)
+            }
         }
     }
 }

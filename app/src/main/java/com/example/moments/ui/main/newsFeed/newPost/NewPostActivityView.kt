@@ -225,7 +225,6 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
 
     // capture activities
     private val REQUEST_IMAGE_CAPTURE = 1
-    private val REQUEST_VIDEO_CAPTURE = 2
     private lateinit var imageUri: Uri
     private lateinit var startForResult: ActivityResultLauncher<Intent>
 
@@ -241,10 +240,6 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
                     newPostIntent.putExtra("size", 1)
                     newPostIntent.putExtra("imageData 0", data)
                     startActivity(newPostIntent)
-                }
-                REQUEST_VIDEO_CAPTURE->{
-                    val intent = result.data
-                    val videoUri: Uri = intent?.data!!
                 }
             }
         }
@@ -271,18 +266,6 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
 
         } catch (e: ActivityNotFoundException) {
             // display error state to the user
-        }
-    }
-
-    //src: https://developer.android.com/training/camera/videobasics
-    private fun dispatchTakeVideoIntent() {
-        Intent(MediaStore.ACTION_VIDEO_CAPTURE).also { takeVideoIntent ->
-            takeVideoIntent.resolveActivity(packageManager)?.also {
-                startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                        result: ActivityResult -> onActivityResult(REQUEST_VIDEO_CAPTURE, result)
-                }
-                startForResult.launch(takeVideoIntent)
-            }
         }
     }
 }
