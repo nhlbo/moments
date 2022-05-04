@@ -1,9 +1,6 @@
 package com.example.moments.ui.main.viewOtherProfile
 
 import com.example.moments.ui.base.BasePresenter
-import com.example.moments.ui.main.editProfile.IEditProfileActivityInteractor
-import com.example.moments.ui.main.editProfile.IEditProfileActivityPresenter
-import com.example.moments.ui.main.editProfile.IEditProfileActivityView
 import com.example.moments.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -29,8 +26,15 @@ class OtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOtherPro
                     }),
                 it.doQueryUserPostByUserId(userId)
                     .compose(schedulerProvider.ioToMainSingleScheduler())
-                    .subscribe({ posts->
+                    .subscribe({ posts ->
                         getView()?.getCurrentUserPosts(posts)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    }),
+                it.doQueryUserMoment(userId)
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({ moments ->
+//                        getView()?.getCurrentUserMoments(moments)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })
