@@ -23,6 +23,7 @@ import com.example.moments.ui.main.viewPost.ViewPostActivityView
 import com.example.moments.ui.main.viewProfile.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
+import kotlin.math.max
 import kotlin.math.min
 
 
@@ -69,6 +70,8 @@ class SearchFragmentView : BaseFragment(), ISearchView {
             x -> dataList.add(x.listMedia[0])
         }
         val adapter = rvOthersList.adapter as ImagesAdapter
+        val limit = min(20, dataList.size)
+        adapter.replaceAllItems(ArrayList(dataList.subList(0,limit)))
     }
 
     override fun setUp() {
@@ -97,10 +100,10 @@ class SearchFragmentView : BaseFragment(), ISearchView {
                     val pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition()
                     if (loading) {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            loading = false;
+                            loading = false
                             // Do pagination.. i.e. fetch new data
                             loadMore(totalItemCount)
-                            loading = true;
+                            loading = true
                         }
                     }
                 }
