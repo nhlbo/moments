@@ -20,7 +20,7 @@ import com.example.moments.ui.main.qrCode.QRCodeActivityView
 import com.example.moments.ui.main.settings.SettingsActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.example.moments.ui.main.viewPost.ViewPostActivityView
-import com.example.moments.ui.vuforia.VuforiaActivity
+import com.example.moments.ui.vuforia.VuforiaActivityView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_view_profile.*
@@ -67,7 +67,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
 
         profileToolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.btnScanFace) {
-                val intent = Intent(activity, VuforiaActivity::class.java)
+                val intent = Intent(activity, VuforiaActivityView::class.java)
                 startActivity(intent)
                 true
             } else if (item.itemId == R.id.btnQRCode) {
