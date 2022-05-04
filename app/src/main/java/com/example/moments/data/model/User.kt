@@ -18,3 +18,17 @@ data class User(
 ) : Parcelable {
     override fun toString(): String = username
 }
+
+class OtherUser(user: User, following: Boolean) {
+    val id: String = user.id
+    var username: String = user.username
+    var email: String = user.email
+    var avatar: String = user.avatar
+    var bio: String = user.bio
+    var followingCount: Int = user.followingCount
+    var followerCount: Int = user.followerCount
+    var private: Boolean = user.private
+    var following: Boolean = following
+
+    override fun toString(): String = username
+}

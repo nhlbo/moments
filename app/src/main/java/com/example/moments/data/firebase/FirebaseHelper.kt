@@ -189,11 +189,71 @@ class FirebaseHelper @Inject constructor(
                             )
                         )
                         .addOnSuccessListener {
-                            emitter.onComplete()
+                            firebaseFirestore.document("user/$userId")
+                                .update("followerCount", FieldValue.increment(1))
+                                .addOnSuccessListener {
+                                    getCurrentUserReference().update(
+                                        "followingCount",
+                                        FieldValue.increment(1)
+                                    )
+                                        .addOnSuccessListener {
+                                            emitter.onComplete()
+                                        }
+                                        .addOnFailureListener {
+                                            emitter.onError(it)
+                                        }
+                                }
+                                .addOnFailureListener {
+                                    emitter.onError(it)
+
+                                }
                         }
                         .addOnFailureListener {
                             emitter.onError(it)
                         }
+                }
+        }
+
+    override fun performUnfollowUser(userId: String): Completable =
+        Completable.create{emitter ->
+            firebaseFirestore.document("/user/$userId").get()
+                .addOnSuccessListener { snapshot ->
+                    firebaseFirestore.document("/user/${getCurrentUserId()}/following/$userId")
+                        .delete()
+                        .addOnSuccessListener {
+                            firebaseFirestore.document("user/$userId")
+                                .update("followerCount", FieldValue.increment(-1))
+                                .addOnSuccessListener {
+                                    getCurrentUserReference().update(
+                                        "followingCount",
+                                        FieldValue.increment(-1)
+                                    )
+                                        .addOnSuccessListener {
+                                            emitter.onComplete()
+                                        }
+                                        .addOnFailureListener {
+                                            emitter.onError(it)
+                                        }
+                                }
+                                .addOnFailureListener {
+                                    emitter.onError(it)
+
+                                }
+                        }
+                        .addOnFailureListener {
+                            emitter.onError(it)
+                        }
+                }
+        }
+
+    override fun performQueryUserIsFollowed(userId: String): Single<Boolean> =
+        Single.create { emitter ->
+            firebaseFirestore.document("/user/${getCurrentUserId()}/following/$userId").get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.exists())
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
                 }
         }
 
