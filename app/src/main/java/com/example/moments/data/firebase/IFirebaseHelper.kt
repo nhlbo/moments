@@ -60,9 +60,11 @@ interface IFirebaseHelper {
 
     fun performDeletePost(postId: String): Completable
 
-    fun performUploadListMedia(listMedia: List<ByteArray>): Observable<Uri>
+    fun performUploadListImage(listImage: List<ByteArray>): Observable<Uri>
 
-    fun performUploadMedia(media: ByteArray): Single<Uri>
+    fun performUploadListVideo(listVideo: List<ByteArray>): Observable<Uri>
+
+    fun performUploadMedia(media: ByteArray, contentType: String = "image/jpeg"): Single<Uri>
 
     fun performAddPost(caption: String, media: List<String>): Single<Post>
 
