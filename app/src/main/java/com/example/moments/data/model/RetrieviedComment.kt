@@ -5,7 +5,6 @@ import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
 
 open class RetrieviedComment(comment: Comment, user: User) {
-    @DocumentId
     var id: String = comment.id
     var creator: User = user
     var content: String = comment.content
