@@ -6,6 +6,7 @@ import com.example.moments.data.model.OtherUser
 import com.example.moments.data.model.Post
 import com.example.moments.data.preference.PreferenceHelper
 import com.example.moments.ui.base.BaseInteractor
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -27,4 +28,12 @@ class OtherProfileActivityInteractor @Inject constructor(
         firebaseHelper.performQueryUserMoment(userId)
 
     override fun doGetCurrentUserId(): String = firebaseHelper.getCurrentUserId()
+
+    override fun doFollowingUser(userId: String): Completable =
+        firebaseHelper.performFollowUser(userId)
+
+
+    override fun doUnfollowingUser(userId: String): Completable =
+        firebaseHelper.performUnfollowUser(userId)
+
 }

@@ -25,14 +25,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="hoanglong2" />
+            android:text="hoanglong2"
+            android:textColor="?attr/colorPrimary"
+            tools:layout_editor_absoluteX="143dp"
+            tools:layout_editor_absoluteY="14dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_view_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:background="?attr/colorSecondary"
         app:layout_constraintEnd_toEndOf="@+id/tbFollowList"
         app:layout_constraintStart_toStartOf="@+id/tbFollowList"

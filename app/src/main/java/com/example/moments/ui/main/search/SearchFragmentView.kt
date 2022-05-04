@@ -130,7 +130,6 @@ class SearchFragmentView : BaseFragment(), ISearchView {
         svSearchOthers.setAdapter(userSearchAdapter)
         svSearchOthers.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(query: Editable?) {
-                //Log.d("debug", query.toString())
                 presenter.onSearchDispatch(query.toString())
             }
 
