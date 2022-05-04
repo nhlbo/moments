@@ -41,6 +41,8 @@ import com.example.moments.ui.signUp.SignUpActivityModule
 import com.example.moments.ui.signUp.SignUpActivityView
 import com.example.moments.ui.start.StartActivityModule
 import com.example.moments.ui.start.StartActivityView
+import com.example.moments.ui.vuforia.VuforiaActivityView
+import com.example.moments.ui.vuforia.VuforiaActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -100,4 +102,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(ViewPostActivityModule::class)])
     abstract fun bindViewPostActivity(): ViewPostActivityView
+
+    @ContributesAndroidInjector(modules = [(VuforiaActivityModule::class)])
+    abstract fun bindVuforiaActivity(): VuforiaActivityView
 }

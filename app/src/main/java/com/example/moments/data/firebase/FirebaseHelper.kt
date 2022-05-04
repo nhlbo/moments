@@ -155,6 +155,21 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
+    override fun performQueryUserByVuforiaId(vuforiaId: String): Single<User> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("user")
+                .whereEqualTo("vuforiaId", vuforiaId)
+                .get()
+                .addOnSuccessListener {
+                    val users = it.toObjects(User::class.java)
+                    if (users.isEmpty()) emitter.onSuccess(User())
+                    else emitter.onSuccess(users[0])
+                }
+                .addOnFailureListener { exception ->
+                    emitter.onError(exception)
+                }
+        }
+
     override fun performQueryUserByIds(ids: List<String>): Single<List<User>> =
         Single.create { emitter ->
             firebaseFirestore.collection("user")
@@ -704,7 +719,7 @@ class FirebaseHelper @Inject constructor(
                     caption = caption,
                     media = media,
                     creator = getCurrentUserReference(),
-                    post = if (postId != null) firebaseFirestore.document("/post/$postId") else null
+                    ref = if (postId != null) firebaseFirestore.document("/post/$postId") else null
                 )
             )
             .addOnSuccessListener {
