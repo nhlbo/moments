@@ -157,6 +157,11 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
     implementation 'com.github.yuriy-budiyev:code-scanner:2.1.2'
 
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:26.1.0'
+
     implementation 'com.google.ar:core:1.19.0'
     implementation files("..\\..\\build\\java\\Vuforia\\Vuforia.jar")
 
