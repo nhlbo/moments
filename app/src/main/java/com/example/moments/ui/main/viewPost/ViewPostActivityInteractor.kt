@@ -58,13 +58,17 @@ class ViewPostActivityInteractor @Inject constructor(
             }
             .toList()
 
-    override fun doLikePost(postId: String): Completable {
-        TODO("Not yet implemented")
-    }
+    override fun doLikePost(postId: String): Completable =
+        firebaseHelper.performLikePost(postId)
 
-    override fun doUnlikePost(postId: String): Completable {
-        TODO("Not yet implemented")
-    }
+    override fun doUnlikePost(postId: String): Completable =
+        firebaseHelper.performUnlikePost(postId)
+
+    override fun doBookmarkPost(postId: String): Completable =
+        firebaseHelper.performBookmarkPost(postId)
+
+    override fun doUnBookmarkPost(postId: String): Completable =
+        firebaseHelper.performUnBookmarkPost(postId)
 
     override fun doAddComment(postId: String, content: String): Single<RetrieviedRootComment> =
         firebaseHelper.performAddCommentToPost(postId, content).flatMap { comment ->

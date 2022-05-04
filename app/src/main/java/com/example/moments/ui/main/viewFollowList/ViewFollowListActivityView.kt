@@ -1,7 +1,9 @@
 package com.example.moments.ui.main.viewFollowList
 
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
@@ -32,20 +34,29 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
 
         tbFollowList.setNavigationOnClickListener { finish() }
         tvToolbarTittle.text = user.username
+
         vp2_view_follow.adapter = FollowGridViewPagerAdapter(
             supportFragmentManager,lifecycle, followersDataList, followingDataList
         )
+        vp2_view_follow.addOnAttachStateChangeListener(object: View.OnAttachStateChangeListener {
 
-        type?.let { vp2_view_follow?.setCurrentItem(it) }
+            override fun onViewAttachedToWindow(p0: View?) {
+                vp2_view_follow.offscreenPageLimit = 1
+            }
+
+            override fun onViewDetachedFromWindow(p0: View?) {}
+        })
+
         TabLayoutMediator(tab_layout_view_follow, vp2_view_follow!!) { tab, position ->
             when (position) {
                 0 -> tab.text = "${followersDataList.size} Followers"
                 1 -> tab.text = "${followingDataList.size} Following"
             }
         }.attach()
-
         presenter.onPerformQueryFollowerCurrentUser()
         presenter.onPerformQueryFollowingCurrentUser()
+        type?.let { vp2_view_follow?.setCurrentItem(it) }
+
     }
 
     override fun addFollowerUsers(users: List<User>) {
@@ -53,6 +64,7 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
         for (user in users) {
             followersDataList.add(Followers(user.id, user.avatar, user.username, true))
         }
+        val fragments = supportFragmentManager.fragments
         val followerFragment = supportFragmentManager.findFragmentByTag("f" + 0) as LinearFollowerFragment
         followerFragment.updateList(followersDataList)
         (tab_layout_view_follow.getTabAt(0) as TabLayout.Tab).text = "${followersDataList.size} Followers"
@@ -63,6 +75,7 @@ class ViewFollowListActivityView : BaseActivity(), IViewFollowListActivityView {
         for (user in users) {
             followingDataList.add(Following(user.id, user.avatar, user.username, user.email))
         }
+        val fragments = supportFragmentManager.fragments
         val followingFragment = supportFragmentManager.findFragmentByTag("f" + 1) as LinearFollowingFragment
         followingFragment.updateList(followingDataList)
         (tab_layout_view_follow.getTabAt(1) as TabLayout.Tab).text = "${followingDataList.size} Following"

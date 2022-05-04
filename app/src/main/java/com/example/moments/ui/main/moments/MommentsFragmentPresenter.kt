@@ -47,7 +47,7 @@ class MommentsFragmentPresenter<V : IMommentsView, I : IMommentsInteractor> @Inj
                 it.doQueryFeedMoment()
                     .compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
-//                        getView()?.getListMoment(it)
+                        getView()?.getListMoment(it)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })

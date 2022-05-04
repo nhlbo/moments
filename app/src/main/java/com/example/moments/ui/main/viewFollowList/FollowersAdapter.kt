@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -22,7 +23,7 @@ class FollowersAdapter(var context: Context, private val followersList: List<Fol
         val ava = listItemView.findViewById<ImageView>(R.id.ivAvatarFollowers)
         val avaName = listItemView.findViewById<TextView>(R.id.tvNameFollowers)
         val layout = listItemView.findViewById<LinearLayout>(R.id.llRowFollowers)
-
+        val button: Button = listItemView.findViewById(R.id.btnRemoveFollowers)
         init {
             listItemView.setOnClickListener { onItemClick?.invoke(followersList[adapterPosition]) }
         }
@@ -39,10 +40,14 @@ class FollowersAdapter(var context: Context, private val followersList: List<Fol
         val temp: Followers = followersList[position]
         Glide.with(context).load(temp.avatar).into(holder.ava)
         val textView = holder.avaName
-        textView.setText(temp.name)
-        if (temp.type == true) {
+        textView.text = temp.name
+        if (temp.type) {
             val tmp = holder.layout
             tmp.isVisible = false
+            holder.button.text = "Following"
+        }
+        else {
+            holder.button.text = "Follow back"
         }
     }
 

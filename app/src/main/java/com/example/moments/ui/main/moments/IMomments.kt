@@ -1,6 +1,8 @@
 package com.example.moments.ui.main.moments
 
 import com.example.moments.data.model.RetrievedMoment
+import com.example.moments.data.model.RetrieviedComment
+import com.example.moments.data.model.RetrieviedRootComment
 import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
 import com.example.moments.ui.base.IBaseView
@@ -13,7 +15,9 @@ interface IMommentsInteractor : IBaseInteractor {
     fun doQueryFeedMoment(): Single<List<RetrievedMoment>>
 }
 
-interface IMommentsView : IBaseView
+interface IMommentsView : IBaseView{
+    fun getListMoment(list: List<RetrievedMoment>)
+}
 
 interface IMommentsPresenter<V : IMommentsView, I : IMommentsInteractor> : IBasePresenter<V, I> {
     fun onLikeMoment(momentId: String)

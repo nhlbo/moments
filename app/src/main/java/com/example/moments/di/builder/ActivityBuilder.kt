@@ -13,6 +13,8 @@ import com.example.moments.ui.main.editProfile.EditProfileActivityModule
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityModule
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
+import com.example.moments.ui.main.moments.MomentsFragmentView
+import com.example.moments.ui.main.moments.MommentsFragmentProvider
 import com.example.moments.ui.main.newMessage.NewMessageActivityModule
 import com.example.moments.ui.main.newMessage.NewMessageActivityView
 import com.example.moments.ui.main.newsFeed.NewsFeedFragmentProvider
@@ -69,7 +71,7 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [(EditProfileActivityModule::class)])
     abstract fun bindEditProfileActivity(): EditProfileActivityView
 
-    @ContributesAndroidInjector(modules = [(NewsFeedFragmentProvider::class), (SearchFragmentProvider::class), (NotificationFragmentProvider::class), (ProfileFragmentProvider::class)])
+    @ContributesAndroidInjector(modules = [(NewsFeedFragmentProvider::class), (SearchFragmentProvider::class),(MommentsFragmentProvider::class), (NotificationFragmentProvider::class), (ProfileFragmentProvider::class)])
     abstract fun bindMainActivity(): MainActivityView
 
     @ContributesAndroidInjector(modules = [(ChangePasswordActivityModule::class)])

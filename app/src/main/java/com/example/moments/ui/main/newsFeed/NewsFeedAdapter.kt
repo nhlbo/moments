@@ -91,7 +91,8 @@ class NewsFeedAdapter(
 //        holder.add.text = tmp.address
         holder.tvPostCreated.text = DateFormat.getDateInstance().format(tmp.createdAt.toDate())
         holder.headerUsername.text = tmp.creator.username
-
+        holder.btnLike.isChecked = tmp.liked
+        holder.btnSave.isChecked = tmp.bookmarked
 
         holder.btnComment.setOnClickListener {
             adapterCallBack.onItemTouch(position, "showComment")
@@ -101,6 +102,26 @@ class NewsFeedAdapter(
         }
         holder.headerUsername.setOnClickListener {
             adapterCallBack.onItemTouch(position, "viewProfile")
+        }
+        holder.btnLike.setOnClickListener {
+            if(tmp.liked){
+                adapterCallBack.onItemTouch(position, "unlikePost")
+                tmp.likeCount--
+            }
+            else{
+                adapterCallBack.onItemTouch(position, "likePost")
+                tmp.likeCount++
+            }
+            tmp.liked = !tmp.liked
+            holder.tvLikeCount.text = "${tmp.likeCount} likes"
+        }
+        holder.btnSave.setOnClickListener {
+            if(tmp.bookmarked){
+                adapterCallBack.onItemTouch(position, "unsavePost")
+            }
+            else{
+                adapterCallBack.onItemTouch(position, "savePost")
+            }
         }
     }
 

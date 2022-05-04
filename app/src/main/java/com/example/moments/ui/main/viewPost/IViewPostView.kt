@@ -22,6 +22,8 @@ interface IViewPostInteractor : IBaseInteractor {
     fun doQueryPostComment(postId: String): Single<List<RetrieviedRootComment>>
     fun doLikePost(postId: String): Completable
     fun doUnlikePost(postId: String): Completable
+    fun doBookmarkPost(postId: String): Completable
+    fun doUnBookmarkPost(postId: String): Completable
     fun doAddComment(postId: String, content: String): Single<RetrieviedRootComment>
     fun doAddReply(postId: String, commentId: String, content: String): Single<RetrieviedComment>
 }
@@ -31,6 +33,8 @@ interface IViewPostPresenter<V : IViewPostView, I : IViewPostInteractor> :
     fun onViewPrepared(postId: String)
     fun onLikePost(postId: String)
     fun onUnlikePost(postId: String)
+    fun onBookmarkPost(postId: String)
+    fun onUnBookmarkPost(postId: String)
     fun onUploadComment(postId: String, content:String)
     fun onUploadReply(postId: String, parentCommentId: String, content:String)
 }

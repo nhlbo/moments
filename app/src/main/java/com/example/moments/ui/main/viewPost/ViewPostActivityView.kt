@@ -30,7 +30,7 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         presenter.onAttach(this)
         initLayouts()
 
-        postId = intent?.extras!!["postId"] as String
+        val postId = intent?.extras!!["postId"] as String
         presenter.onViewPrepared(postId)
     }
     @Inject
@@ -44,11 +44,12 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         TODO("Not yet implemented")
     }
 
-    private lateinit var postId: String
+    private lateinit var post: RetrievedPost
     override fun updatePost(post: RetrievedPost) {
+        this.post = post
         Glide.with(this).load(post.creator.avatar).into(ivAvatarHeaderPost)
         tvUsername.text = post.creator.username
-        tvOnePostLikeCount.text = "${post.likeCount}"
+        tvOnePostLikeCount.text = "${post.likeCount} likes"
         tvOnePostCaption.text = post.caption
         tvOnePostCreated.text = post.createdAt.toDate().toString()
 
@@ -58,6 +59,8 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         imagePager.offscreenPageLimit = 3
         TabLayoutMediator(tabLayout, imagePager)
         { _, _ -> }.attach()
+
+        interactionButtonsClicked()
     }
 
     private val listener = object : CommentsButtonClickListener {
@@ -133,7 +136,7 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         expandableListViewAdapter = initAdapter()
         expandableListView.setAdapter(expandableListViewAdapter)
 
-        interactionButtonsClicked()
+
     }
 
     private fun initAdapter(): CustomExpandableListViewAdapter =
@@ -162,7 +165,7 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         postButton?.setOnClickListener {
             if(commentBox.text!!.isEmpty()) return@setOnClickListener
 
-            presenter.onUploadReply(postId, listParent[position].commentId, commentBox.text.toString())
+            presenter.onUploadReply(post.id, listParent[position].commentId, commentBox.text.toString())
         }
     }
 
@@ -172,7 +175,7 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         postButton?.setOnClickListener {
             if(commentBox.text!!.isEmpty()) return@setOnClickListener
 
-            presenter.onUploadComment(postId, commentBox.text.toString())
+            presenter.onUploadComment(post.id, commentBox.text.toString())
         }
     }
 
@@ -237,10 +240,29 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         val shareBtn = findViewById<ImageButton>(R.id.btnShare)
         val saveBtn = findViewById<ToggleButton>(R.id.btnSave)
 
-        likeBtn.setOnClickListener { /*TODO notify server post has been liked*/ }
+        likeBtn.isChecked = post.liked
+        likeBtn.setOnClickListener {
+            if(post.liked){
+                post.likeCount--
+                presenter.onUnlikePost(post.id)
+            }else{
+                post.likeCount++
+                presenter.onLikePost(post.id)
+            }
+            post.liked = !post.liked
+            tvOnePostLikeCount.text = "${post.likeCount} likes"
+        }
         commentBtn.setOnClickListener{ commentBox.requestFocus() }
         shareBtn.setOnClickListener{/*TODO share post*/}
-        saveBtn.setOnClickListener{/*TODO save post*/}
+
+        saveBtn.isChecked = post.bookmarked
+        saveBtn.setOnClickListener{
+            if(post.bookmarked){
+                presenter.onUnlikePost(post.id)
+            }else{
+                presenter.onBookmarkPost(post.id)
+            }
+        }
     }
 
     private fun startViewProfileActivity(userId:String){

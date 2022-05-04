@@ -3,6 +3,7 @@ package com.example.moments.ui.main
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import dagger.android.AndroidInjector
@@ -21,8 +22,8 @@ class MainActivityView : BaseActivity(), HasAndroidInjector, IMainActivityView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        viewPagerAdapter = FragmentAdapter(supportFragmentManager)
-        viewPagerAdapter.count = 5
+        viewPagerAdapter = FragmentAdapter(supportFragmentManager, lifecycle)
+        viewPagerAdapter.setCount(5)
         setUp()
     }
 
@@ -47,7 +48,7 @@ class MainActivityView : BaseActivity(), HasAndroidInjector, IMainActivityView {
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
     private fun setUp() {
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navFeedMenu -> switchPage(0)
                 R.id.navSearchMenu -> switchPage(1)
@@ -59,7 +60,8 @@ class MainActivityView : BaseActivity(), HasAndroidInjector, IMainActivityView {
         }
 
         fragmentViewPager.adapter = viewPagerAdapter
-        fragmentViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        fragmentViewPager.offscreenPageLimit = 4
+        fragmentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> bottomNavigationView.menu.findItem(R.id.navFeedMenu).isChecked = true
