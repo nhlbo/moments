@@ -15,6 +15,17 @@ class SavedPostActivityPresenter<V : ISavedPostActivityView, I : ISavedPostActiv
     compositeDisposable = disposable
 ),
     ISavedPostActivityPresenter<V, I> {
-
+    override fun onViewPrepared() {
+        interactor?.let { it ->
+            compositeDisposable.addAll(
+                it.doPerformQueryBookmarkPost().compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.getBookmarkPosts(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    }),
+            )
+        }
+    }
 
 }

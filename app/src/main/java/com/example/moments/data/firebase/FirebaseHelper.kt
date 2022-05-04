@@ -463,28 +463,21 @@ class FirebaseHelper @Inject constructor(
                 }
         }
 
-    override fun performQueryBookmarkPost(): Single<List<DocumentSnapshot>> =
-        Single.create { emitter ->
+    override fun performQueryBookmarkPost(): Single<List<Post>> =
+        Single.create<List<String>> { emitter ->
             firebaseFirestore.collection("/user/${getCurrentUserId()}/bookmark")
                 .orderBy("createdAt", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener { bookmarkedPosts ->
-                    val res: MutableList<DocumentSnapshot> = mutableListOf()
-                    for (post in bookmarkedPosts.documents) {
-                        firebaseFirestore.document("/post/${post.id}")
-                            .get()
-                            .addOnSuccessListener {
-                                if (it.exists()) {
-                                    res.add(it)
-                                }
-                            }
-                    }
-                    emitter.onSuccess(res.toList())
+                    emitter.onSuccess(bookmarkedPosts.map { it.id })
                 }
                 .addOnFailureListener {
                     emitter.onError(it)
                 }
-        }
+        }.flattenAsObservable { it }
+            .flatMapSingle {
+                performQueryPostById(it)
+            }.toList()
 
     override fun performQueryPostIsLiked(postId: String): Single<Boolean> =
         Single.create { emitter ->
