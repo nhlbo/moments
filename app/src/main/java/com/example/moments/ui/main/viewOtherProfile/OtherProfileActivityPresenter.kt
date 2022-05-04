@@ -42,4 +42,6 @@ class OtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOtherPro
         }
     }
 
+    override fun isMyself(userId: String): Boolean = userId == interactor?.doGetCurrentUserId()
+
 }
