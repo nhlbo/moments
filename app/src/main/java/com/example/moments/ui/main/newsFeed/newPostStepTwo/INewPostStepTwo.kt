@@ -19,4 +19,5 @@ interface INewPostStepTwoInteractor : IBaseInteractor {
 interface INewPostStepTwoPresenter<V : INewPostStepTwoView, I : INewPostStepTwoInteractor> :
     IBasePresenter<V, I> {
     fun onCreatePost(caption: String, listMedia: List<ByteArray>)
+    fun onCreateMoment(caption: String, media: ByteArray)
 }

@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
+import com.example.moments.ui.main.viewPost.ViewPostActivityView
 import com.example.moments.ui.main.viewProfile.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
@@ -61,17 +63,28 @@ class SearchFragmentView : BaseFragment(), ISearchView {
         svSearchOthers.showDropDown()
     }
 
+    override fun updateGrid(listPosts: List<Post>) {
+        listPost = listPosts
+        listPost.forEach {
+            x -> dataList.add(x.listMedia[0])
+        }
+        val adapter = rvOthersList.adapter as ImagesAdapter
+    }
+
     override fun setUp() {
 
     }
 
+    private lateinit var listPost: List<Post>
     private val dataList: ArrayList<String> = fakeData()
     private var loading: Boolean = true
     private fun initGridView(){
         rvOthersList.adapter = ImagesAdapter(requireContext(), ArrayList(dataList.subList(0,20)),
             object:IOnRecyclerViewItemTouchListener{
                 override fun onItemClick(position: Int) {
-                    Toast.makeText(context, dataList[position], Toast.LENGTH_SHORT).show()
+                    val intent = Intent(requireContext(), ViewPostActivityView::class.java)
+                    intent.putExtra("postId", listPost[position].id)
+                    startActivity(intent)
                 }
             })
         rvOthersList.layoutManager = GridLayoutManager(context, 3)

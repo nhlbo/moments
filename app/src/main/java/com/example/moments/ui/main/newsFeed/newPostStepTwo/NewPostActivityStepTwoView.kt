@@ -1,26 +1,24 @@
 package com.example.moments.ui.main.newsFeed.newPostStepTwo
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
-import android.widget.ImageView
 import com.example.moments.R
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.main.MainActivityView
-import com.example.moments.ui.main.newsFeed.newPost.ImageChoosingAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
 import javax.inject.Inject
 
 class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
 
     private var imageData: ArrayList<ByteArray> = arrayListOf()
+    private var videoUri: String = ""
     private lateinit var toolBar: MaterialToolbar
     private lateinit var caption: EditText
-
+    private var uploadType: Int = 0
     @Inject
     lateinit var presenter: INewPostStepTwoPresenter<INewPostStepTwoView, INewPostStepTwoInteractor>
 
@@ -29,10 +27,7 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         setContentView(R.layout.activity_new_post_step2)
         presenter.onAttach(this)
 
-        val size = intent.extras?.getInt("size")!!
-        for(i:Int in 0 until size){
-            intent.extras?.getByteArray("imageData $i")?.let { imageData.add(it) }
-        }
+        analyzeTypeUpload()
         caption = findViewById(R.id.et_NewPost2)
         initToolBar()
     }
@@ -42,7 +37,19 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         super.onDestroy()
     }
 
+    private fun analyzeTypeUpload(){
+        uploadType = intent.extras?.getInt("uploadType")!!
 
+        if(uploadType == 0){ // up images{
+            val size = intent.extras?.getInt("size")!!
+            for(i:Int in 0 until size){
+                intent.extras?.getByteArray("imageData $i")?.let { imageData.add(it) }
+            }
+        }
+        else if(uploadType == 1){
+            videoUri = intent.extras?.getString("videoLink")!!
+        }
+    }
 
     override fun onFragmentAttached() {
         TODO("Not yet implemented")
@@ -57,7 +64,8 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
         toolBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.confirmNewPost -> {
-                    presenter.onCreatePost(caption.text.toString(), imageData!!)
+                    if(uploadType == 0) presenter.onCreatePost(caption.text.toString(), imageData)
+                    else presenter.onCreateMoment(caption.text.toString(), convertStringToByteArray())
                     true
                 }
                 else -> false
@@ -71,5 +79,16 @@ class NewPostActivityStepTwoView : BaseActivity(), INewPostStepTwoView {
     override fun backToFeedActivity() {
         val intent = Intent(this, MainActivityView::class.java)
         startActivity(intent)
+    }
+
+    private fun convertStringToByteArray():ByteArray{
+        val baos = ByteArrayOutputStream()
+        val fis = FileInputStream(File(videoUri))
+
+        val buf = ByteArray(1024)
+        var n: Int
+        while (-1 != fis.read(buf).also { n = it }) baos.write(buf, 0, n)
+
+        return baos.toByteArray()
     }
 }

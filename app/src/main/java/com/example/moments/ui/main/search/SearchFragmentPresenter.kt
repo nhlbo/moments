@@ -29,4 +29,18 @@ class SearchFragmentPresenter<V : ISearchView, I : ISearchInteractor> @Inject in
             }
         }
     }
+
+    override fun onQueryAllPost() {
+        interactor?.let {
+            compositeDisposable.add(
+                it.queryAllPost()
+                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.updateGrid(it)
+                    },{
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
 }

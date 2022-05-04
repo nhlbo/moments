@@ -95,6 +95,7 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
                 R.id.new_post_post -> {
                     val intent = Intent(this, NewPostActivityStepTwoView::class.java)
                     val listData = getSelectedImageByteArray()
+                    intent.putExtra("uploadType",0)
                     intent.putExtra("size", listData.size)
                     for(i :Int in 0 until listData.size){
                         intent.putExtra("imageData $i", listData[i])
@@ -237,6 +238,7 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
                     val data = convertImageToByteArray(imageBitmap)
 
                     val newPostIntent = Intent(this, NewPostActivityStepTwoView::class.java)
+                    newPostIntent.putExtra("uploadType",0)
                     newPostIntent.putExtra("size", 1)
                     newPostIntent.putExtra("imageData 0", data)
                     startActivity(newPostIntent)
