@@ -1,8 +1,6 @@
 package com.example.moments.ui.main
 
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.moments.R
@@ -51,11 +49,11 @@ class MainActivityView : BaseActivity(), HasAndroidInjector, IMainActivityView {
     private fun setUp() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navFeedMenu -> fragmentViewPager.currentItem = 0
-                R.id.navSearchMenu -> fragmentViewPager.currentItem = 1
-                R.id.navMomentMenu -> fragmentViewPager.currentItem = 2
-                R.id.navNotificationMenu -> fragmentViewPager.currentItem = 3
-                R.id.navProfileMenu -> fragmentViewPager.currentItem = 4
+                R.id.navFeedMenu -> switchPage(0)
+                R.id.navSearchMenu -> switchPage(1)
+                R.id.navMomentMenu -> switchPage(2)
+                R.id.navNotificationMenu -> switchPage(3)
+                R.id.navProfileMenu -> switchPage(4)
             }
             true
         }
@@ -67,8 +65,7 @@ class MainActivityView : BaseActivity(), HasAndroidInjector, IMainActivityView {
                     0 -> bottomNavigationView.menu.findItem(R.id.navFeedMenu).isChecked = true
                     1 -> bottomNavigationView.menu.findItem(R.id.navSearchMenu).isChecked = true
                     2 -> bottomNavigationView.menu.findItem(R.id.navMomentMenu).isChecked = true
-                    3 -> bottomNavigationView.menu.findItem(R.id.navNotificationMenu)
-                        .isChecked = true
+                    3 -> bottomNavigationView.menu.findItem(R.id.navNotificationMenu).isChecked = true
                     4 -> bottomNavigationView.menu.findItem(R.id.navProfileMenu).isChecked = true
                 }
             }
@@ -83,5 +80,8 @@ class MainActivityView : BaseActivity(), HasAndroidInjector, IMainActivityView {
             override fun onPageScrollStateChanged(state: Int) {
             }
         })
+    }
+    private fun switchPage(navigatePosition: Int){
+        fragmentViewPager.postDelayed({ fragmentViewPager.currentItem = navigatePosition }, 10)
     }
 }

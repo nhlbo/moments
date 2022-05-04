@@ -6,24 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.viewPost.ViewPostActivityView">
 
-    <include
-        android:id="@+id/postHeaderGroup"
-        layout="@layout/header_post"
-        android:layout_width="0dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_viewPost"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorSecondary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:contentInsetStartWithNavigation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_left">
+
+        <include
+            android:id="@+id/postHeaderGroup"
+            layout="@layout/header_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tb_viewPost" />
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsv_ViewOnePost"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="false"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/include8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postHeaderGroup">
+        app:layout_constraintTop_toBottomOf="@+id/tb_viewPost">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,9 +73,9 @@
                     android:id="@+id/tvOnePostLikeCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="16dp"
                     android:text="-1 like"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/tvOnePostCaption"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -102,7 +117,8 @@
                 android:childIndicatorLeft="16dp"
                 android:divider="@null"
                 android:dividerHeight="0dp"
-                android:groupIndicator="@null" />
+                android:groupIndicator="@null"
+                android:nestedScrollingEnabled="true" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

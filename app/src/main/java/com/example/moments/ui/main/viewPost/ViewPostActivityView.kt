@@ -231,6 +231,7 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
     }
 
     private fun interactionButtonsClicked(){
+        tb_viewPost.setNavigationOnClickListener { finish() }
         val likeBtn = findViewById<ToggleButton>(R.id.btnLike)
         val commentBtn = findViewById<ImageButton>(R.id.btnComment)
         val shareBtn = findViewById<ImageButton>(R.id.btnShare)
