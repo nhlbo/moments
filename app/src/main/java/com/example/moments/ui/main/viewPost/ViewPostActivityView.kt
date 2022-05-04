@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_view_post.*
 import kotlinx.android.synthetic.main.header_post.*
+import java.text.DateFormat
 import javax.inject.Inject
 
 class ViewPostActivityView : BaseActivity(), IViewPostView {
@@ -51,7 +52,7 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
         tvUsername.text = post.creator.username
         tvOnePostLikeCount.text = "${post.likeCount} likes"
         tvOnePostCaption.text = post.caption
-        tvOnePostCreated.text = post.createdAt.toDate().toString()
+        tvOnePostCreated.text = DateFormat.getDateInstance().format(post.createdAt.toDate())
 
         val imagePager = findViewById<ViewPager2>(R.id.vpViewOnePost)
         val tabLayout = findViewById<TabLayout>(R.id.indicatorNewsFeed)
