@@ -2,6 +2,7 @@ package com.example.moments.ui.main.comment
 
 import com.example.moments.data.model.RetrieviedComment
 import com.example.moments.data.model.RetrieviedRootComment
+import java.text.DateFormat
 
 class CommentDataGroup(
     rootUserId: String,
@@ -22,7 +23,7 @@ class CommentDataGroup(
                 rootCommentId = input.id,
                 rootContent = input.content,
                 rootReactions = input.likeCount,
-                rootTimeUpload = input.createdAt.toDate().toString(),
+                rootTimeUpload = DateFormat.getDateInstance().format(input.createdAt.toDate()),
                 replies = parseRetrieveComments(input.replies)
             )
 

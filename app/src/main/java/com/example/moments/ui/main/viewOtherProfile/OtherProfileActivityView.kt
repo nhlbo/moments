@@ -44,6 +44,10 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_profile)
         presenter.onAttach(this)
+
+        //check is myself???
+        //
+
         initMediaGrid()
         initLayout()
         toolBarAction()
