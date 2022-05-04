@@ -128,7 +128,14 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
 
     private fun buttonsAction() {
         btnFollowOtherProfile.setOnClickListener {
-            //TODO Follow or unfollow
+            if(userModel.following){
+                presenter.onUnfollow(userModel.id)
+                btnFollowOtherProfile.text = "Follow"
+            }
+            else {
+                presenter.onFollow(userModel.id)
+                btnFollowOtherProfile.text = "Following"
+            }
         }
         btnMessageOtherProfile.setOnClickListener {
             val intent = Intent(this, ChatActivityView::class.java)
@@ -149,7 +156,6 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
 
         if (user.following) {
             btnFollowOtherProfile.text = "Following"
-            btnFollowOtherProfile.setBackgroundColor(getColor(R.color.bleu_de_france))
         } else {
             btnFollowOtherProfile.text = "Follow"
         }
