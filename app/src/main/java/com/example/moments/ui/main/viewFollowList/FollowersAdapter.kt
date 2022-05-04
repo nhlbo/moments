@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moments.R
 
-data class Followers(val avatar: String, val name: String, val type: Boolean)
+data class Followers(val userId:String, val avatar: String, val name: String, val type: Boolean)
 
 class FollowersAdapter(var context: Context, private val followersList: List<Followers>) :
     RecyclerView.Adapter<FollowersAdapter.ViewHolder>() {
