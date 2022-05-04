@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.example.moments.R
-import com.example.moments.data.model.Notification
 import com.example.moments.data.model.RetrievedNotification
 import com.example.moments.databinding.RowCommonNotificationBinding
 import com.example.moments.databinding.RowFollowNotificationBinding
+import com.google.firebase.Timestamp
+import java.text.DateFormat
 
 
 sealed class NotificationRecyclerViewItem {
@@ -24,9 +25,10 @@ sealed class NotificationRecyclerViewItem {
     ) : NotificationRecyclerViewItem()
 
     class followNotification(
+        val name : String,
         val avatar: String,
         val content: String,
-        val time: String,
+        val time: Timestamp,
     ) : NotificationRecyclerViewItem()
 
     companion object{
@@ -39,9 +41,10 @@ sealed class NotificationRecyclerViewItem {
                     avatarOther = input.media
                 )
             return followNotification(
+                name = input.creator!!.username,
                 avatar = input.creator!!.avatar,
                 content = "", //TODO add post to this content
-                time = input.createdAt.toString(),
+                time = input.createdAt,
             )
         }
     }
@@ -76,11 +79,9 @@ sealed class NotificationRecyclerViewHolder(binding: ViewBinding) :
         NotificationRecyclerViewHolder(binding) {
         fun bind(follow: NotificationRecyclerViewItem.followNotification) {
             Glide.with(context).load(follow.avatar).into(binding.ivAvatarFollowNotification)
-            binding.tvContentFollow.text = follow.content
-            binding.tvTimeFollowNotification.text = follow.time
-            binding.btnAcceptFollow.setOnClickListener{
-                onButtonClick?.invoke(it, follow, adapterPosition)
-            }
+            binding.tvContentFollow.text = "${follow.name} likes your post"
+            binding.tvTimeFollowNotification.text =  DateFormat.getDateInstance().format(follow.time.toDate())
+
             binding.root.setOnClickListener{
                 itemClickListener?.invoke(it, follow, adapterPosition)
             }
