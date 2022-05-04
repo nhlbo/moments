@@ -719,7 +719,7 @@ class FirebaseHelper @Inject constructor(
                     caption = caption,
                     media = media,
                     creator = getCurrentUserReference(),
-                    post = if (postId != null) firebaseFirestore.document("/post/$postId") else null
+                    ref = if (postId != null) firebaseFirestore.document("/post/$postId") else null
                 )
             )
             .addOnSuccessListener {
