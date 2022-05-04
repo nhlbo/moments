@@ -36,6 +36,8 @@ interface IFirebaseHelper {
 
     fun performQueryUserByUsername(username: String): Observable<List<User>>
 
+    fun performQueryUserByVuforiaId(vuforiaId: String): Single<User>
+
     fun performQueryUserByIds(ids: List<String>): Single<List<User>>
 
     fun performQueryUserByReference(user: DocumentReference): Single<User>
