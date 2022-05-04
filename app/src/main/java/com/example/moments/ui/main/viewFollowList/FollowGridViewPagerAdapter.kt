@@ -1,39 +1,35 @@
 package com.example.moments.ui.main.viewFollowList
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moments.R
 
 class FollowGridViewPagerAdapter(
     fragment: FragmentActivity,
-    val dataFollowersList: List<Followers>,
-    val dataFollowingList: List<Following>
+    private val dataFollowersList: List<Followers>,
+    private val dataFollowingList: List<Following>
 ) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> return LinearFollowerFragment(dataFollowersList)
-            else -> {return LinearFollowingFragment(dataFollowingList)}
+            0 -> LinearFollowerFragment(dataFollowersList)
+            else -> {
+                LinearFollowingFragment(dataFollowingList)
+            }
         }
-
     }
-
 }
 
-class LinearFollowerFragment(val dataList: List<Followers>) : Fragment() {
+class LinearFollowerFragment(private var dataList: List<Followers>) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,16 +43,22 @@ class LinearFollowerFragment(val dataList: List<Followers>) : Fragment() {
         initRecyclerView(view)
     }
 
+    private lateinit var recyclerView: RecyclerView
     private fun initRecyclerView(view: View?) {
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.rcFollowView)
-        recyclerView?.setHasFixedSize(true);
-        recyclerView?.layoutManager = LinearLayoutManager(activity)
-        var adapter = context?.let { FollowersAdapter(it, dataList) }
-        recyclerView?.adapter = adapter
+        recyclerView = view?.findViewById(R.id.rcFollowView)!!
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        val adapter = context?.let { FollowersAdapter(it, dataList) }
+        recyclerView.adapter = adapter
+    }
+
+    fun updateList(input: List<Followers>){
+        dataList = input
+        recyclerView.adapter = FollowersAdapter(requireContext(), dataList)
     }
 }
 
-class LinearFollowingFragment(val dataList: List<Following>) : Fragment() {
+class LinearFollowingFragment(private var dataList: List<Following>) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,11 +72,16 @@ class LinearFollowingFragment(val dataList: List<Following>) : Fragment() {
         initRecyclerView(view)
     }
 
+    private lateinit var recyclerView: RecyclerView
     private fun initRecyclerView(view: View?) {
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.rcFollowView)
-        recyclerView?.setHasFixedSize(true);
-        recyclerView?.layoutManager = LinearLayoutManager(activity)
-        var adapter = context?.let { FollowingAdapter(it, dataList) }
-        recyclerView?.adapter = adapter
+        recyclerView = view?.findViewById(R.id.rcFollowView)!!
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        val adapter = context?.let { FollowingAdapter(it, dataList) }
+        recyclerView.adapter = adapter
+    }
+    fun updateList(input: List<Following>){
+        dataList = input
+        recyclerView.adapter = FollowingAdapter(requireContext(), dataList)
     }
 }

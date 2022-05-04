@@ -40,15 +40,12 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     @Inject
     internal lateinit var presenter: IProfilePresenter<IProfileView, IProfileInteractor>
 
-    private var toolBar: Toolbar? = null
-
     private var viewPager: ViewPager2? = null
 
     private lateinit var userModel: User
 
     override fun setUp() {
         presenter.onViewPrepared()
-        initMediaGrid(requireView())
     }
 
     override fun onCreateView(
@@ -58,6 +55,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     ): View? {
         val view = inflater.inflate(R.layout.activity_view_profile, container, false)
         setHasOptionsMenu(true)
+        initMediaGrid(view)
         return view
     }
 
@@ -69,13 +67,11 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
             if (item.itemId == R.id.profileSettingBtn) {
                 val intent = Intent(activity, SettingsActivityView::class.java)
                 startActivity(intent)
-                true
             }
             else if(item.itemId == R.id.btnQRCode){
                 val intent = Intent(activity, QRCodeActivityView::class.java)
                 intent.putExtra(USER_KEY, userModel)
                 startActivity(intent)
-                true
             }
             false
         }
@@ -145,14 +141,6 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         }.attach()
     }
 
-
-    private fun initToolBar() {
-//        toolBar = view?.findViewById(R.id.profile_header_toolbar)
-//        toolBar?.inflateMenu(R.menu.header_profile)
-//        toolBar?.title = "Your profile"
-//        onItemSelected()
-    }
-
     private fun initLayout(view: View) {
         val linearLayoutFollowers = view.findViewById<LinearLayout>(R.id.llFollowers)
         val linearLayoutFollowing = view.findViewById<LinearLayout>(R.id.llOtherFollowing)
@@ -169,23 +157,6 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
             intent.putExtra("FollowViewType", "1")
             startActivity(intent)
         })
-    }
-
-    private fun onItemSelected() {
-        toolBar?.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.profileSettingBtn -> {
-                    // Navigate to settings screen
-                    true
-                }
-                R.id.storyBtn -> {
-                    // Save profile changes
-
-                    true
-                }
-                else -> false
-            }
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

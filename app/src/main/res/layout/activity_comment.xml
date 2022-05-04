@@ -30,57 +30,31 @@
             tools:layout_editor_absoluteY="9dp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ExpandableListView
+        android:id="@+id/elv_comment_post"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:childDivider="@null"
+        android:childIndicatorLeft="16dp"
+        android:childIndicatorRight="16dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:groupIndicator="@null"
+        android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/include8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbCommentHeader">
-
-        <ScrollView
-            android:id="@+id/nestedScrollView2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <include
-                    android:id="@+id/include7"
-                    layout="@layout/component_post_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <com.example.moments.ui.customClasses.NonScrollExpandableListView
-                    android:id="@+id/elv_comment_post"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:background="@android:color/transparent"
-                    android:childDivider="@null"
-                    android:childIndicatorLeft="16dp"
-                    android:childIndicatorRight="16dp"
-                    android:divider="@null"
-                    android:dividerHeight="0dp"
-                    android:groupIndicator="@null"
-                    android:scrollbarAlwaysDrawVerticalTrack="false" />
-
-            </LinearLayout>
-        </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/tbCommentHeader" />
 
     <include
         android:id="@+id/include8"
         layout="@layout/footer_post_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

@@ -129,8 +129,14 @@ class ImageChoosingAdapter(var context: Context, private val imagesList : ArrayL
 
     private fun resetItems(){
         if(selectedItems.size == 0) return
-
-        val firstItem = selectedItems[currentSelectedItem]
+        val firstItem : ImageView
+        if(isMultipleSelect) {
+            firstItem = selectedItems[currentSelectedItem]
+        }
+        else{
+            firstItem = selectedItems[0]
+            currentSelectedItem = 0
+        }
         selectedItems.clear()
         selectedItems.add(firstItem)
 

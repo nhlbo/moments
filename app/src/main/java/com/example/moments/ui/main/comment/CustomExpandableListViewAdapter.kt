@@ -208,7 +208,7 @@ class CustomExpandableListViewAdapter(private val context: Context,
         for(tag in tagPeople){
             val userProfileLink: ClickableSpan = object : ClickableSpan(){
                 override fun onClick(p0: View) {
-                    onButtonClickListener.onUserNameClicked(tag, position)
+                    onButtonClickListener.onUserNameClicked(tag.subSequence(1, tag.length).toString(), position)
                 }
 
                 override fun updateDrawState(ds: TextPaint) {

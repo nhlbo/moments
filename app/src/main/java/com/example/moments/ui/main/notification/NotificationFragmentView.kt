@@ -37,12 +37,12 @@ class NotificationFragmentView : BaseFragment(), INotificationView {
     ): View? = inflater.inflate(R.layout.activity_notification, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initRecycleView(view)
         presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun setUp() {
-        initRecycleView(view)
         presenter.onViewPrepared()
     }
 
