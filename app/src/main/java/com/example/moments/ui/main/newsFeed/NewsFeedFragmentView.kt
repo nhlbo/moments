@@ -6,20 +6,20 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
+import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.comment.CommentActivityView
-import com.example.moments.ui.main.comment.CommentFragmentView
-import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
+import com.example.moments.ui.main.newsFeed.sharePost.BottomSheetFragment
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
 import javax.inject.Inject
+
 
 class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
 
@@ -98,6 +98,17 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
             val intent = Intent(activity, OtherProfileActivityView::class.java)
             intent.putExtra("USER_ID", data[position].creator.id)
             startActivity(intent)
+        }
+        if(command == "sharePost"){
+            val fakeData = arrayListOf<User>()
+            fakeData.add(User("","An Duy","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
+            fakeData.add(User("","Son Tran","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
+            fakeData.add(User("","Hoang Long","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
+            fakeData.add(User("","Quang Huy","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
+            fakeData.add(User("","An Duy","","https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/default_avatar.png?alt=media&token=0adf8096-f67f-4209-985c-7a5dff38a4d4",""))
+            val bottomSheetFragment = BottomSheetFragment(fakeData)
+            getFragmentManager()?.let { bottomSheetFragment.show(it, bottomSheetFragment.tag) }
+
         }
     }
 
