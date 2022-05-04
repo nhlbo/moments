@@ -163,7 +163,7 @@ class FirebaseHelper @Inject constructor(
                 .addOnSuccessListener {
                     val users = it.toObjects(User::class.java)
                     if (users.isEmpty()) emitter.onSuccess(User())
-                    emitter.onSuccess(users[0])
+                    else emitter.onSuccess(users[0])
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
