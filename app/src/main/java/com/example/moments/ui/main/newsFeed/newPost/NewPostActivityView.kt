@@ -3,6 +3,7 @@ package com.example.moments.ui.main.newsFeed.newPost
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Instrumentation
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
@@ -21,9 +22,11 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ToggleButton
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.graphics.decodeBitmap
+import androidx.core.view.children
+import androidx.core.view.get
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -35,6 +38,7 @@ import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTwoView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
+import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_new_post_view.*
 import java.io.ByteArrayOutputStream
 import kotlin.math.min
@@ -50,6 +54,8 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
     private lateinit var imageList: ArrayList<String>
     private var recyclerView: RecyclerView? = null
     private var toggleSelection: ToggleButton? = null
+
+    private val mediaStorageIO: MediaStorageIO = MediaStorageIO()
 
     private val listener: IOnRecyclerViewItemTouchListener =
         object : IOnRecyclerViewItemTouchListener {
@@ -141,33 +147,8 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         }
     }
 
-    @SuppressLint("Recycle")
-    private fun getAllShownImagesPath(activity: Activity): ArrayList<String> {
-        val cursor: Cursor?
-        val listOfAllImages = ArrayList<String>()
-        var absolutePathOfImage: String?
-
-        val uri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        val projection = arrayOf(
-            MediaColumns.DATA,
-            MediaStore.Images.Media.BUCKET_DISPLAY_NAME
-        )
-        cursor = activity.contentResolver.query(
-            uri, projection, null,
-            null, MediaStore.Images.ImageColumns.DATE_TAKEN
-        )
-        val columnIndexData: Int? = cursor?.getColumnIndexOrThrow(MediaColumns.DATA)
-        while (cursor?.moveToNext() == true) {
-            absolutePathOfImage = columnIndexData?.let { cursor.getString(it) }
-            if (absolutePathOfImage != null) {
-                listOfAllImages.add(absolutePathOfImage)
-            }
-        }
-        return ArrayList(listOfAllImages.reversed())
-    }
-
     private fun initRecyclerView(view: View?) {
-        imageList = getAllShownImagesPath(this)
+        imageList = mediaStorageIO.getAllShownImagesPath(this)
 
         recyclerView = view?.findViewById(R.id.rcMediaGrid)
         recyclerView?.setHasFixedSize(true);
@@ -242,12 +223,11 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
     }
 
 
-    // capture image
-    val REQUEST_IMAGE_CAPTURE = 1
+    // capture activities
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private val REQUEST_VIDEO_CAPTURE = 2
     private lateinit var imageUri: Uri
-    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            result: ActivityResult -> onActivityResult(REQUEST_IMAGE_CAPTURE, result)
-    }
+    private lateinit var startForResult: ActivityResultLauncher<Intent>
 
     private fun onActivityResult(requestCode: Int, result: ActivityResult) {
         if (result.resultCode == Activity.RESULT_OK) {
@@ -261,6 +241,10 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
                     newPostIntent.putExtra("size", 1)
                     newPostIntent.putExtra("imageData 0", data)
                     startActivity(newPostIntent)
+                }
+                REQUEST_VIDEO_CAPTURE->{
+                    val intent = result.data
+                    val videoUri: Uri = intent?.data!!
                 }
             }
         }
@@ -280,10 +264,25 @@ class NewPostActivityView : BaseActivity(), INewPostActivityView {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         try {
+            startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                    result: ActivityResult -> onActivityResult(REQUEST_IMAGE_CAPTURE, result)
+            }
             startForResult.launch(takePictureIntent)
 
         } catch (e: ActivityNotFoundException) {
             // display error state to the user
+        }
+    }
+
+    //src: https://developer.android.com/training/camera/videobasics
+    private fun dispatchTakeVideoIntent() {
+        Intent(MediaStore.ACTION_VIDEO_CAPTURE).also { takeVideoIntent ->
+            takeVideoIntent.resolveActivity(packageManager)?.also {
+                startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                        result: ActivityResult -> onActivityResult(REQUEST_VIDEO_CAPTURE, result)
+                }
+                startForResult.launch(takeVideoIntent)
+            }
         }
     }
 }
