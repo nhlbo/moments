@@ -59,7 +59,6 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
 
         toolBar = findViewById(R.id.tbCommentHeader)
         onItemSelected()
-
         commentBox = findViewById(R.id.etCommentBox)
         commentBox?.setOnFocusChangeListener { _, _ ->
             if(commentBox?.text!!.isNotEmpty()) return@setOnFocusChangeListener // reply to someone not a standard comment
@@ -70,6 +69,9 @@ class CommentActivityView : BaseActivity(), ICommentActivityView {
         expandableListView = findViewById(R.id.elv_comment_post)
         expandableListViewAdapter = initAdapter()
         expandableListView?.setAdapter(expandableListViewAdapter)
+
+        val postDescription = layoutInflater.inflate(R.layout.component_post_description, null)
+        expandableListView?.addHeaderView(postDescription)
 
         postId = intent.extras!!["postId"] as String
         presenter.onPreparedView(postId)

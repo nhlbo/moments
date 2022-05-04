@@ -2,24 +2,20 @@ package com.example.moments.ui.main.newsFeed
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.view.*
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.comment.CommentActivityView
-import com.example.moments.ui.main.comment.CommentFragmentView
-import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
 import com.example.moments.ui.main.newsFeed.newPost.NewPostActivityView
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
 import kotlinx.android.synthetic.main.activity_news_feed.*
 import javax.inject.Inject
+
 
 class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
 
@@ -48,6 +44,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
         newsfeed_header_bar.inflateMenu(R.menu.header_newsfeeds)
+        initPopupMenu()
     }
 
     override fun setUp() {
@@ -112,8 +109,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         newsfeed_header_bar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.storyBtn -> {
-                    val intent = Intent(activity, NewPostActivityView::class.java)
-                    startActivity(intent)
+                    popup.show()
                     true
                 }
                 R.id.msgBtn -> {
@@ -126,4 +122,27 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
         }
     }
 
+    private lateinit var popup: PopupMenu
+    private fun initPopupMenu(){
+        popup = PopupMenu(requireContext(), newsfeed_header_bar.getChildAt(0))
+        popup.inflate(R.menu.menu_upload_selection)
+        popup.setOnMenuItemClickListener(menuListener)
+    }
+
+    private val menuListener = PopupMenu.OnMenuItemClickListener {
+        when (it.itemId) {
+            R.id.upload_post_item->{
+                val intent = Intent(activity, NewPostActivityView::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.upload_moment_item -> {
+
+                true
+            }
+            else -> false
+        }
+    }
 }
+
+
