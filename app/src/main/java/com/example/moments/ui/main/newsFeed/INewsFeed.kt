@@ -17,10 +17,14 @@ interface INewsFeedInteractor : IBaseInteractor {
     fun doQueryFeedPost(): Single<List<RetrievedPost>>
     fun doLikePost(postId: String): Completable
     fun doUnlikePost(postId: String): Completable
+    fun doBookmarkPost(postId: String): Completable
+    fun doUnBookmarkPost(postId: String): Completable
 }
 
 interface INewsFeedPresenter<V : INewsFeedView, I : INewsFeedInteractor> : IBasePresenter<V, I> {
     fun onViewPrepared()
-    fun onLikePost()
-    fun onUnlikePost()
+    fun onLikePost(postId: String)
+    fun onUnlikePost(postId: String)
+    fun onBookmarkPost(postId: String)
+    fun onUnBookmarkPost(postId: String)
 }

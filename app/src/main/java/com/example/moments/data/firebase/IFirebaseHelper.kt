@@ -56,11 +56,15 @@ interface IFirebaseHelper {
 
     fun performQueryLikedPostUser(postId: String): Single<List<User>>
 
+    fun performQueryPostIsLiked(postId: String): Single<Boolean>
+
     fun performDeletePost(postId: String): Completable
 
-    fun performUploadListMedia(listMedia: List<ByteArray>): Observable<Uri>
+    fun performUploadListImage(listImage: List<ByteArray>): Observable<Uri>
 
-    fun performUploadMedia(media: ByteArray): Single<Uri>
+    fun performUploadListVideo(listVideo: List<ByteArray>): Observable<Uri>
+
+    fun performUploadMedia(media: ByteArray, contentType: String = "image/jpeg"): Single<Uri>
 
     fun performAddPost(caption: String, media: List<String>): Single<Post>
 
@@ -69,6 +73,8 @@ interface IFirebaseHelper {
     fun performUnBookmarkPost(postId: String): Completable
 
     fun performQueryBookmarkPost(): Single<List<DocumentSnapshot>>
+
+    fun performQueryPostIsBookmarked(postId: String): Single<Boolean>
 
     fun performQueryFollowingCurrentUser(): Single<List<User>>
 

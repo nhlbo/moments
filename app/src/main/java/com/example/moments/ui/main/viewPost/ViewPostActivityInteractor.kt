@@ -14,36 +14,49 @@ class ViewPostActivityInteractor @Inject constructor(
     preferenceHelper: PreferenceHelper,
     firebaseHelper: FirebaseHelper
 ) : BaseInteractor(preferenceHelper, firebaseHelper), IViewPostInteractor {
-    override fun doQueryFeedPost(postId: String) : Single<RetrievedPost> =
-        firebaseHelper.performQueryPostById(postId).flatMap { post ->
-            firebaseHelper.performQueryUserByReference(post.creator!!).map { user ->
-                RetrievedPost(post, user)
+    override fun doQueryFeedPost(postId: String): Single<RetrievedPost> =
+        firebaseHelper.performQueryPostById(postId)
+            .flatMap { post ->
+                firebaseHelper.performQueryUserByReference(post.creator!!).map { user ->
+                    RetrievedPost(post, user)
+                }
             }
-        }
+            .flatMap { post ->
+                firebaseHelper.performQueryPostIsLiked(post.id).map { isLiked ->
+                    post.liked = isLiked
+                    post
+                }
+            }
+            .flatMap { post ->
+                firebaseHelper.performQueryPostIsBookmarked(post.id).map { bookmarked ->
+                    post.bookmarked = bookmarked
+                    post
+                }
+            }
 
     override fun doQueryPostComment(postId: String): Single<List<RetrieviedRootComment>> =
         firebaseHelper.performQueryPostComment(postId).flattenAsObservable { it }
-        .flatMapSingle { rootComment ->
-            firebaseHelper.performQueryUserByReference(rootComment.creator!!).map { user ->
-                RetrieviedRootComment(rootComment, user)
+            .flatMapSingle { rootComment ->
+                firebaseHelper.performQueryUserByReference(rootComment.creator!!).map { user ->
+                    RetrieviedRootComment(rootComment, user)
+                }
             }
-        }
-        .flatMapSingle { retrievedRootComment ->
-            firebaseHelper.performQueryPostCommentReply(postId, retrievedRootComment.id)
-                .flattenAsObservable { it }
-                .flatMapSingle { comment ->
-                    firebaseHelper.performQueryUserByReference(comment.creator!!).map { user ->
-                        RetrieviedComment(comment, user)
+            .flatMapSingle { retrievedRootComment ->
+                firebaseHelper.performQueryPostCommentReply(postId, retrievedRootComment.id)
+                    .flattenAsObservable { it }
+                    .flatMapSingle { comment ->
+                        firebaseHelper.performQueryUserByReference(comment.creator!!).map { user ->
+                            RetrieviedComment(comment, user)
+                        }
                     }
-                }
-                .toList()
-                .map { listReply ->
-                    retrievedRootComment.replies = listReply
-                    retrievedRootComment
-                }
+                    .toList()
+                    .map { listReply ->
+                        retrievedRootComment.replies = listReply
+                        retrievedRootComment
+                    }
 
-        }
-        .toList()
+            }
+            .toList()
 
     override fun doLikePost(postId: String): Completable {
         TODO("Not yet implemented")
