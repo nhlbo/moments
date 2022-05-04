@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moments"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.main.savedPost.SavedPostActivityView"
+            android:exported="false" />
         <activity
             android:name=".ui.main.editProfile.uploadAvatar.UploadAvatarActivityView"
             android:exported="false" />
@@ -75,6 +78,10 @@
         <activity
             android:name=".ui.main.qrCode.QRCodeActivityView"
             android:exported="false" />
+        <meta-data android:name="com.google.ar.core" android:value="required" />
+        <activity
+            android:name=".ui.vuforia.VuforiaActivityView"
+            android:exported="false" />
         <activity
             android:name=".ui.start.StartActivityView"
             android:exported="true"
@@ -86,6 +93,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
 
 </manifest>

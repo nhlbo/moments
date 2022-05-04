@@ -13,7 +13,7 @@ interface INewPostStepTwoView : IBaseView {
 
 interface INewPostStepTwoInteractor : IBaseInteractor {
     fun doCreatePost(caption: String, listMedia: List<ByteArray>): Single<RetrievedPost>
-    fun doCreateMoment(caption: String, media:String):Completable
+    fun doCreateMoment(caption: String, media: ByteArray): Completable
 }
 
 interface INewPostStepTwoPresenter<V : INewPostStepTwoView, I : INewPostStepTwoInteractor> :
