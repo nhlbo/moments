@@ -102,6 +102,9 @@ class NewsFeedAdapter(
         holder.headerUsername.setOnClickListener {
             adapterCallBack.onItemTouch(position, "viewProfile")
         }
+        holder.btnShare.setOnClickListener {
+            adapterCallBack.onItemTouch(position, "sharePost")
+        }
     }
 
     fun updatePost(listPost: List<RetrievedPost>) {
