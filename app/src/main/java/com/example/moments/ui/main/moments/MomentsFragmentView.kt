@@ -13,9 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.example.moments.R
 import com.example.moments.data.model.MomentsData
+import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.comment.CommentFragmentView
 
-class MomentsFragmentView : Fragment() {
+class MomentsFragmentView : BaseFragment(), IMommentsView {
     companion object {
         fun newInstance(): MomentsFragmentView {
             return MomentsFragmentView()
@@ -39,6 +40,10 @@ class MomentsFragmentView : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView(view)
         commentContainerView = view.findViewById(R.id.commentMomentsFragmentContainer)
+    }
+
+    override fun setUp() {
+        TODO("Not yet implemented")
     }
 
     private fun initRecyclerView(view: View) {

@@ -23,7 +23,7 @@ class ViewFollowListActivityPresenter<V : IViewFollowListActivityView, I : IView
                 it.doPerformQueryFollowerCurrentUser()
                     .compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
-                        getView()?.addFollowingUsers(it)
+                        getView()?.addFollowerUsers(it)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })
