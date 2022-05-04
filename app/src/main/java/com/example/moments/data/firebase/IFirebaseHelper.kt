@@ -44,6 +44,10 @@ interface IFirebaseHelper {
 
     fun performFollowUser(userId: String): Completable
 
+    fun performUnfollowUser(userId: String): Completable
+
+    fun performQueryUserIsFollowed(userId: String): Single<Boolean>
+
     fun performAcceptFollower(userId: String): Completable
 
     fun performQueryFeedPost(): Single<List<Post>>

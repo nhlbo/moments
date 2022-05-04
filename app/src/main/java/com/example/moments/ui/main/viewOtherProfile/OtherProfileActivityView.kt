@@ -7,8 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.example.moments.data.model.OtherUser
 import com.example.moments.data.model.Post
-import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
 import com.example.moments.ui.customClasses.IOnRecyclerViewItemTouchListener
 import com.example.moments.ui.main.chat.ChatActivityView
@@ -37,7 +37,7 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
 
     private var viewPager: ViewPager2? = null
 
-    private lateinit var userModel: User
+    private lateinit var userModel: OtherUser
     private lateinit var userPosts: List<Post>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,18 +55,19 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
     }
 
 
-    private val onPostClickListener = object: IOnRecyclerViewItemTouchListener {
+    private val onPostClickListener = object : IOnRecyclerViewItemTouchListener {
         override fun onItemClick(position: Int) {
             val intent = Intent(this@OtherProfileActivityView, ViewPostActivityView::class.java)
             intent.putExtra("postId", userPosts[position].id)
             startActivity(intent)
         }
     }
-    private val onVideoClickListener = object: IOnRecyclerViewItemTouchListener {
+    private val onVideoClickListener = object : IOnRecyclerViewItemTouchListener {
         override fun onItemClick(position: Int) {
 
         }
     }
+
     private fun initMediaGrid() {
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout_view_other_profile)
         viewPager = findViewById(R.id.vp2_view_other_profile)
@@ -98,13 +99,13 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         val linearLayoutFollowers = findViewById<LinearLayout>(R.id.llOtherFollowers)
         val linearLayoutFollowing = findViewById<LinearLayout>(R.id.llOtherFollowing)
 
-        linearLayoutFollowers.setOnClickListener{
+        linearLayoutFollowers.setOnClickListener {
             val intent = Intent(this, ViewFollowListActivityView::class.java)
             intent.putExtra(ProfileFragmentView.USER_KEY, userModel)
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         }
-        linearLayoutFollowing.setOnClickListener{
+        linearLayoutFollowing.setOnClickListener {
             val intent = Intent(this, ViewFollowListActivityView::class.java)
             intent.putExtra(ProfileFragmentView.USER_KEY, userModel)
             intent.putExtra("FollowViewType", "1")
@@ -112,10 +113,10 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         }
     }
 
-    private fun toolBarAction(){
+    private fun toolBarAction() {
         otherProfileToolbar.setNavigationOnClickListener { finish() }
         otherProfileToolbar.setOnMenuItemClickListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.moreOption_otherProfile -> {
                     // pop menu (block, ...)
                     true
@@ -125,7 +126,7 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         }
     }
 
-    private fun buttonsAction(){
+    private fun buttonsAction() {
         btnFollowOtherProfile.setOnClickListener {
             //TODO Follow or unfollow
         }
@@ -137,20 +138,20 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         }
     }
 
-    override fun getCurrentUserModel(user: User) {
+    override fun getCurrentUserModel(user: OtherUser) {
         tvOtherUsernameProfile.text = user.username
         tvOtherHashtagProfile.text = user.email
         tvOtherBioProfile.text = user.bio
         tv_otherProfileName.text = user.username
-        tvOtherFollowersNumber.text = ""+user.followerCount
-        tvOtherFollowingNumber.text = ""+user.followingCount
+        tvOtherFollowersNumber.text = "" + user.followerCount
+        tvOtherFollowingNumber.text = "" + user.followingCount
         Glide.with(this).load(user.avatar).into(ivOtherAvatarProfile)
         userModel = user
     }
 
     override fun getCurrentUserPosts(posts: List<Post>) {
         userPosts = posts
-        tvOtherPostsNumber.text = ""+posts.size
+        tvOtherPostsNumber.text = "" + posts.size
 
         val listImages = arrayListOf<String>()
         posts.forEach { x -> listImages.add(x.listMedia[0]) }

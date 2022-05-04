@@ -1,9 +1,6 @@
 package com.example.moments.ui.main.viewOtherProfile
 
-import com.example.moments.data.model.Moment
-import com.example.moments.data.model.Post
-import com.example.moments.data.model.RetrievedPost
-import com.example.moments.data.model.User
+import com.example.moments.data.model.*
 import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
 import com.example.moments.ui.base.IBaseView
@@ -11,7 +8,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface IOtherProfileActivityView : IBaseView {
-    fun getCurrentUserModel(user: User)
+    fun getCurrentUserModel(user: OtherUser)
     fun getCurrentUserPosts(posts:List<Post>)
 }
 
@@ -22,6 +19,6 @@ interface IOtherProfileActivityPresenter<V : IOtherProfileActivityView, I : IOth
 
 interface IOtherProfileActivityInteractor : IBaseInteractor {
     fun doQueryUserPostByUserId(userId: String): Single<List<Post>>
-    fun doQueryUserById(userId: String): Single<User>
+    fun doQueryUserById(userId: String): Single<OtherUser>
     fun doQueryUserMoment(userId: String): Single<List<Moment>>
 }
