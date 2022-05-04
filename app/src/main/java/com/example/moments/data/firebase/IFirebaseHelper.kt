@@ -6,7 +6,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -79,7 +78,7 @@ interface IFirebaseHelper {
 
     fun performUnBookmarkPost(postId: String): Completable
 
-    fun performQueryBookmarkPost(): Single<List<DocumentSnapshot>>
+    fun performQueryBookmarkPost(): Single<List<Post>>
 
     fun performQueryPostIsBookmarked(postId: String): Single<Boolean>
 

@@ -13,7 +13,6 @@ import com.example.moments.ui.main.editProfile.EditProfileActivityModule
 import com.example.moments.ui.main.editProfile.EditProfileActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityModule
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
-import com.example.moments.ui.main.moments.MomentsFragmentView
 import com.example.moments.ui.main.moments.MommentsFragmentProvider
 import com.example.moments.ui.main.newMessage.NewMessageActivityModule
 import com.example.moments.ui.main.newMessage.NewMessageActivityView
@@ -25,11 +24,13 @@ import com.example.moments.ui.main.newsFeed.newPostStepTwo.NewPostActivityStepTw
 import com.example.moments.ui.main.notification.NotificationFragmentProvider
 import com.example.moments.ui.main.qrCode.QRCodeActivityModule
 import com.example.moments.ui.main.qrCode.QRCodeActivityView
+import com.example.moments.ui.main.savedPost.SavedPostActivityModule
+import com.example.moments.ui.main.savedPost.SavedPostActivityView
 import com.example.moments.ui.main.search.SearchFragmentProvider
 import com.example.moments.ui.main.settings.SettingsActivityModule
 import com.example.moments.ui.main.settings.SettingsActivityView
-import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityView
 import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityModule
+import com.example.moments.ui.main.settings.changePassword.ChangePasswordActivityView
 import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityModule
 import com.example.moments.ui.main.viewFollowList.ViewFollowListActivityView
 import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityModule
@@ -41,8 +42,8 @@ import com.example.moments.ui.signUp.SignUpActivityModule
 import com.example.moments.ui.signUp.SignUpActivityView
 import com.example.moments.ui.start.StartActivityModule
 import com.example.moments.ui.start.StartActivityView
-import com.example.moments.ui.vuforia.VuforiaActivityView
 import com.example.moments.ui.vuforia.VuforiaActivityModule
+import com.example.moments.ui.vuforia.VuforiaActivityView
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -105,4 +106,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(VuforiaActivityModule::class)])
     abstract fun bindVuforiaActivity(): VuforiaActivityView
+
+    @ContributesAndroidInjector(modules = [(SavedPostActivityModule::class)])
+    abstract fun bindSavedPostActivity(): SavedPostActivityView
 }
