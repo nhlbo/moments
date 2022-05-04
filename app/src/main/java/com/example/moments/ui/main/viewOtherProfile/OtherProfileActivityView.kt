@@ -1,7 +1,6 @@
 package com.example.moments.ui.main.viewOtherProfile
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -102,13 +101,13 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
 
         linearLayoutFollowers.setOnClickListener {
             val intent = Intent(this, ViewFollowListActivityView::class.java)
-            intent.putExtra(ProfileFragmentView.USER_KEY, userModel)
+            intent.putExtra(ProfileFragmentView.USER_KEY, userModel.getUser())
             intent.putExtra("FollowViewType", "0")
             startActivity(intent)
         }
         linearLayoutFollowing.setOnClickListener {
             val intent = Intent(this, ViewFollowListActivityView::class.java)
-            intent.putExtra(ProfileFragmentView.USER_KEY, userModel)
+            intent.putExtra(ProfileFragmentView.USER_KEY, userModel.getUser())
             intent.putExtra("FollowViewType", "1")
             startActivity(intent)
         }
@@ -133,7 +132,7 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         }
         btnMessageOtherProfile.setOnClickListener {
             val intent = Intent(this, ChatActivityView::class.java)
-            intent.putExtra(LatestMessageActivityView.USER_KEY, userModel)
+            intent.putExtra(LatestMessageActivityView.USER_KEY, userModel.getUser())
             startActivity(intent)
             finish()
         }
@@ -148,11 +147,10 @@ class OtherProfileActivityView : BaseActivity(), IOtherProfileActivityView {
         tvOtherFollowingNumber.text = "" + user.followingCount
         Glide.with(this).load(user.avatar).into(ivOtherAvatarProfile)
 
-        if(user.following){
+        if (user.following) {
             btnFollowOtherProfile.text = "Following"
             btnFollowOtherProfile.setBackgroundColor(getColor(R.color.bleu_de_france))
-        }
-        else{
+        } else {
             btnFollowOtherProfile.text = "Follow"
         }
 

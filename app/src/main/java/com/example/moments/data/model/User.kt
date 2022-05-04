@@ -19,8 +19,7 @@ data class User(
     override fun toString(): String = username
 }
 
-@Parcelize
-class OtherUser(val user: User, val isFollowing: Boolean) : Parcelable{
+class OtherUser(user: User, isFollowing: Boolean) {
     val id: String = user.id
     var username: String = user.username
     var email: String = user.email
@@ -32,4 +31,5 @@ class OtherUser(val user: User, val isFollowing: Boolean) : Parcelable{
     var following: Boolean = isFollowing
 
     override fun toString(): String = username
+    fun getUser(): User = User(id, username, email, avatar, bio, followingCount, followerCount, private)
 }
