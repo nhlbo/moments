@@ -1,6 +1,7 @@
 package com.example.moments.data.firebase
 
 import android.net.Uri
+import android.util.Log
 import com.example.moments.data.model.*
 import com.example.moments.di.FirebaseAuthInstance
 import com.example.moments.di.FirebaseCloudStorageInstance
@@ -182,7 +183,12 @@ class FirebaseHelper @Inject constructor(
             firebaseFirestore.document("/user/$userId").get()
                 .addOnSuccessListener { snapshot ->
                     firebaseFirestore.document("/user/${getCurrentUserId()}/following/$userId")
-                        .set(hashMapOf("accepted" to !(snapshot?.data!!["private"] as Boolean)))
+                        .set(
+                            hashMapOf(
+                                "accepted" to !(snapshot?.data!!["private"] as Boolean),
+                                "followerId" to getCurrentUserId()
+                            )
+                        )
                         .addOnSuccessListener {
                             emitter.onComplete()
                         }
@@ -231,7 +237,9 @@ class FirebaseHelper @Inject constructor(
     override fun performQueryFollower(userId: String): Single<List<User>> =
         Single.create<List<String>> { emitter ->
             firebaseFirestore.collectionGroup("following")
-                .whereEqualTo(FieldPath.documentId(), userId).get()
+                .whereEqualTo("followerId", userId)
+                .whereEqualTo("accepted", true)
+                .get()
                 .addOnSuccessListener { followerList ->
                     emitter.onSuccess(followerList.map { it.id })
                 }
