@@ -123,6 +123,9 @@ class NewsFeedAdapter(
                 adapterCallBack.onItemTouch(position, "savePost")
             }
         }
+        holder.btnShare.setOnClickListener {
+            adapterCallBack.onItemTouch(position, "sharePost")
+        }
     }
 
     fun updatePost(listPost: List<RetrievedPost>) {
