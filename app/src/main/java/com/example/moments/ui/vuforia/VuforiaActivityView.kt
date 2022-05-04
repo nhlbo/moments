@@ -2,6 +2,7 @@ package com.example.moments.ui.vuforia
 
 import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.AssetManager
 import android.opengl.GLSurfaceView
 import android.os.Build
@@ -13,9 +14,12 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NavUtils
 import androidx.core.view.GestureDetectorCompat
+import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseActivity
+import com.example.moments.ui.main.viewOtherProfile.OtherProfileActivityView
+import kotlinx.android.synthetic.main.activity_vuforia.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,7 +36,8 @@ import kotlin.concurrent.schedule
  * Activity to demonstrate how to use Vuforia Image Target and Model Target features,
  * Video Background rendering and Vuforia lifecycle.
  */
-class VuforiaActivityView : BaseActivity(), IVuforiaActivityView, GLSurfaceView.Renderer, SurfaceHolder.Callback {
+class VuforiaActivityView : BaseActivity(), IVuforiaActivityView, GLSurfaceView.Renderer,
+    SurfaceHolder.Callback {
     @Inject
     lateinit var presenter: IVuforiaActivityPresenter<IVuforiaActivityView, IVuforiaActivityInteractor>
 
@@ -295,18 +300,8 @@ class VuforiaActivityView : BaseActivity(), IVuforiaActivityView, GLSurfaceView.
             if (didRender.isNotEmpty()) {
                 GlobalScope.launch(Dispatchers.Main) {
                     if (vuforiaId != didRender) {
-                        mMsg.visibility = View.INVISIBLE
-                        if (mPanel.visibility != View.VISIBLE)
-                            mPanel.visibility = View.VISIBLE
-
-                        // mName.text = didRender
                         vuforiaId = didRender
-                        
-                       // var p = getProfileById(didRender)
-//                        if (p != null) {
-//                            renderInformation(vuforiaId)
-//                        }
-                        renderInformation(vuforiaId)
+                       renderInformation(vuforiaId)
 
                     }
                 }
@@ -352,6 +347,21 @@ class VuforiaActivityView : BaseActivity(), IVuforiaActivityView, GLSurfaceView.
     }
 
     override fun getUserByVuforiaId(user: User) {
+        if (user.id == "") {
+            mMsg.visibility = View.VISIBLE
+            mPanel.visibility = View.INVISIBLE
+            return
+        }
+        Glide.with(this).load(user.avatar).into(mImage)
         mName.text = user.username
+        tvBioVuforia.text = user.bio
+        btnViewProfileVuforia.setOnClickListener {
+            val intent = Intent(this, OtherProfileActivityView::class.java)
+            intent.putExtra("USER_ID", user.id)
+            startActivity(intent)
+        }
+        mMsg.visibility = View.INVISIBLE
+        if (mPanel.visibility != View.VISIBLE)
+            mPanel.visibility = View.VISIBLE
     }
 }
