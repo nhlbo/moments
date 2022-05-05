@@ -48,4 +48,7 @@ class NewsFeedFragmentInteractor @Inject constructor(
 
     override fun doGetCurrentUserModel(): Single<User> = firebaseHelper.getCurrentUserModel()
 
+    override fun doDeletePost(postId: String): Completable =
+        firebaseHelper.performDeletePost(postId)
+
 }
