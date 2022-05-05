@@ -7,7 +7,7 @@ class MomentsData(
     val post_id : String,
     val content: String,
     val audio: String,
-    val likes: Int,
+    var likes: Int,
     val video: String,
     val createAt: String
 ) {

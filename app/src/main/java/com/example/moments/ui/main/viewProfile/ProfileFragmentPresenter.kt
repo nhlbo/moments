@@ -31,7 +31,7 @@ class ProfileFragmentPresenter<V : IProfileView, I : IProfileInteractor> @Inject
                     }),
                 it.doQueryCurrentUserMoment().compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
-//                        getView()?.getCurrentUserMoments(it)
+                        getView()?.getCurrentUserMoments(it)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })

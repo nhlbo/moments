@@ -112,32 +112,32 @@ class MomentsFragmentView : BaseFragment(), IMommentsView {
 
     private fun fakeData(): ArrayList<MomentsData> {
         val res = arrayListOf<MomentsData>()
-        res.add(
-            MomentsData(
-                user_id = "1",
-                user_ava = "1",
-                username = "",
-                post_id = "1",
-                content = "askdljljqwe",
-                audio = "Fake Love",
-                likes = 100,
-                video = "https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/videos%2F3.mp4?alt=media&token=511cd55c-c30a-46e7-81c2-eb048232f1ee",
-                createAt = "1s ago"
-            )
-        )
-        res.add(
-            MomentsData(
-                user_id = "1",
-                user_ava = "1",
-                username = "",
-                post_id = "1",
-                content = "askdljljqwe",
-                audio = "Fake Love",
-                likes = 100,
-                video = "https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/videos%2F2.mp4?alt=media&token=1e1201d4-f6a5-4873-8714-94d8eb7cf8ad",
-                createAt = "1s ago"
-            )
-        )
+//        res.add(
+//            MomentsData(
+//                user_id = "1",
+//                user_ava = "1",
+//                username = "",
+//                post_id = "1",
+//                content = "askdljljqwe",
+//                audio = "Fake Love",
+//                likes = 100,
+//                video = "https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/videos%2F3.mp4?alt=media&token=511cd55c-c30a-46e7-81c2-eb048232f1ee",
+//                createAt = "1s ago"
+//            )
+//        )
+//        res.add(
+//            MomentsData(
+//                user_id = "1",
+//                user_ava = "1",
+//                username = "",
+//                post_id = "1",
+//                content = "askdljljqwe",
+//                audio = "Fake Love",
+//                likes = 100,
+//                video = "https://firebasestorage.googleapis.com/v0/b/moments-167ed.appspot.com/o/videos%2F2.mp4?alt=media&token=1e1201d4-f6a5-4873-8714-94d8eb7cf8ad",
+//                createAt = "1s ago"
+//            )
+//        )
 //        res.add(
 //            MomentsData(
 //            user_id = 1,
