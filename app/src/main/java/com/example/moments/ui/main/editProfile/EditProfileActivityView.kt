@@ -47,7 +47,9 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
             if (item.itemId == R.id.btnDoneEditProfile) {
                 runBlocking { // upload changes to db
                     val job = launch(Dispatchers.Default) {
-                        presenter.uploadAvatar(byteArray)
+                        if(byteArray != null){
+                            presenter.uploadAvatar(byteArray!!)
+                        }
                         presenter.onPerformEditProfile(
                             etUsernameEditProfile.text.toString(),
                             etBioEditProfile.text.toString()
@@ -79,18 +81,18 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
         }
     }
 
-    private lateinit var byteArray: ByteArray
+    private var byteArray: ByteArray? = null
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // get bytearray from image and show on imageview
                 val intent: Intent? = result.data
-                var path = intent?.extras!!["path"] as String
-                byteArray = intent?.extras!!["ava"] as ByteArray
+                val path = intent?.extras!!["path"] as String
+                byteArray = intent.extras!!["ava"] as ByteArray
                 val thread = Thread {
                     try {
                         //Your code goes here
-                        var p = PostNewTarget(
+                        val p = PostNewTarget(
                             DateTimeFormatter.ISO_INSTANT.format(Instant.now()) + ".jpg",
                             path
                         )
@@ -102,7 +104,7 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
 
                 thread.start()
 
-                val bitmap = convertByteArrayToBitmap(byteArray)
+                val bitmap = convertByteArrayToBitmap(byteArray!!)
                 Glide.with(this).load(bitmap).into(ivAvatarEditProfile)
             }
         }

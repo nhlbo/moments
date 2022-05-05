@@ -4,6 +4,7 @@
     <item android:title="face"
         android:id="@+id/btnScanFace"
         android:icon="@drawable/ic_face"
+        app:iconTint="?attr/colorPrimary"
         app:showAsAction="always"
         android:orderInCategory="1"/>
     <item android:title="qrcode"
