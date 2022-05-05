@@ -37,15 +37,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/ivAvatarHeaderPost"
         app:layout_constraintStart_toStartOf="@+id/tvUsername" />
 
-    <ImageButton
-        android:id="@+id/btnMorePostComponent"
+    <TextView
+        android:id="@+id/tvOptionsNewfeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
+        android:text="&#8943;"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_more_vertical"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.moments.ui.main.newsFeed
 
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ class NewsFeedAdapter(
         val headerAvatar = headerPost.findViewById<ImageView>(R.id.ivAvatarHeaderPost)
         val headerUsername = headerPost.findViewById<TextView>(R.id.tvUsername)
         val headerAddress = headerPost.findViewById<TextView>(R.id.tvAddress)
+        val headerMenu = headerPost.findViewById<TextView>(R.id.tvOptionsNewfeed)
 
         var viewPager = listItemView.findViewById<ViewPager2>(R.id.vpNewsFeed)
         val linearLayout = listItemView.findViewById<TabLayout>(R.id.indicatorNewsFeed)
@@ -83,6 +85,23 @@ class NewsFeedAdapter(
         holder.viewPager.offscreenPageLimit = 3
         TabLayoutMediator(holder.linearLayout, holder.viewPager)
         { _, _ -> }.attach()
+        if(thisUser!!.id == tmp.creator.id){
+            holder.headerMenu.setOnClickListener(View.OnClickListener { //creating a popup menu
+                val popup = PopupMenu(context, holder.headerMenu, Gravity.BOTTOM)
+                popup.inflate(R.menu.option_newfeed_menu)
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.menuDelete -> {}
+                    }
+                    false
+                }
+                popup.show()
+            })
+
+        }
+        else{
+            holder.headerMenu.setText("")
+        }
 
         Glide.with(context).load(tmp.creator.avatar).into(holder.headerAvatar)
         Glide.with(context).load(thisUser?.avatar).into(holder.postCommentInputAvatar)
