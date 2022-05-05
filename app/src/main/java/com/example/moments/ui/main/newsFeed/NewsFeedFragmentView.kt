@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
+import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
 import com.example.moments.ui.main.comment.CommentActivityView
 import com.example.moments.ui.main.latestMessage.LatestMessageActivityView
@@ -65,7 +66,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     override fun setUp() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rcNewsfeedPanel.layoutManager = layoutManager
-        val adapter = NewsFeedAdapter(requireContext(), mutableListOf(), this)
+        val adapter = NewsFeedAdapter(requireContext(), mutableListOf(), null,this)
         rcNewsfeedPanel.adapter = adapter
         rcNewsfeedPanel.isNestedScrollingEnabled = false
 
@@ -97,6 +98,12 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
     override fun updatePost(listPost: List<RetrievedPost>) {
         data = listPost
         (rcNewsfeedPanel.adapter as NewsFeedAdapter).updatePost(listPost)
+    }
+
+    private lateinit var thisUser:User
+    override fun getCurrentUser(user: User) {
+        thisUser = user
+        (rcNewsfeedPanel.adapter as NewsFeedAdapter).updateUser(user)
     }
 
     override fun onItemTouch(position: Int, command: String) {
