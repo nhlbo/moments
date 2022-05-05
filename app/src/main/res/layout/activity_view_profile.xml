@@ -170,6 +170,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/gothic_bold"
                         android:text="Son Tran"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toTopOf="@+id/tvHashtagProfile"
                         app:layout_constraintStart_toStartOf="@+id/tvHashtagProfile" />
@@ -180,6 +181,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/gothic_light"
                         android:text="\@son.tran"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/tvBioProfile"
                         app:layout_constraintStart_toStartOf="@+id/tvBioProfile" />
@@ -191,6 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="Bio"
+                        android:textColor="?attr/colorPrimary"
                         app:layout_constraintBottom_toTopOf="@+id/btnEditProfile"
                         app:layout_constraintStart_toStartOf="@+id/btnEditProfile" />
 
