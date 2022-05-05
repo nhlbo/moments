@@ -120,10 +120,11 @@ class ImageChoosingAdapter(var context: Context, private val imagesList : ArrayL
 
     fun setChosingType(value: Boolean){
         if(isMultipleSelect != value){
-            isMultipleSelect = value
             resetItems()
             // show the toggle selector
+            isMultipleSelect = value
             this.notifyDataSetChanged()
+
         }
     }
 
