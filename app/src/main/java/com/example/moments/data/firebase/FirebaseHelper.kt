@@ -201,7 +201,7 @@ class FirebaseHelper @Inject constructor(
                         .set(
                             hashMapOf(
                                 "accepted" to !(snapshot?.data!!["private"] as Boolean),
-                                "followerId" to getCurrentUserId()
+                                "followerId" to userId
                             )
                         )
                         .addOnSuccessListener {
