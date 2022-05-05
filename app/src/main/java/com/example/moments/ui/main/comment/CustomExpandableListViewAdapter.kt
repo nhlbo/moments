@@ -17,7 +17,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.example.moments.R
-import java.lang.StringBuilder
+
 
 class Converter{
     companion object{
@@ -88,8 +88,8 @@ class CustomExpandableListViewAdapter(private val context: Context,
         userCommentContent.highlightColor = Color.TRANSPARENT
         // likes
         userCommentLikes.text = "${commentData.reactions} likes"
-        timeUpload.text = commentData.timeUpload + " ago"
 
+        timeUpload.text = commentData.timeUpload
         // show replies button behaviours
         val showReplies = convertView.findViewById<TextView>(R.id.view_more_comments_btn)
         if (commentData.replies.size == 0) showReplies.visibility = View.GONE
@@ -162,7 +162,7 @@ class CustomExpandableListViewAdapter(private val context: Context,
         userCommentContent.highlightColor = Color.TRANSPARENT
         //like and date
         userCommentLikes.text = "${commentData.reactions} likes"
-        timeUpload.text = commentData.timeUpload + " ago"
+        timeUpload.text = commentData.timeUpload
 
         //like button in child comment
         reactBtn.setOnClickListener {
