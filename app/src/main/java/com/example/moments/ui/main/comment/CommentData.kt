@@ -1,6 +1,7 @@
 package com.example.moments.ui.main.comment
 import com.example.moments.data.model.RetrieviedComment
 import com.example.moments.util.AppConstants
+import java.text.DateFormat
 
 open class CommentData(
     val userId: String,
@@ -41,7 +42,7 @@ open class CommentData(
                 commentId = input.id,
                 content = input.content,
                 reactions = input.likeCount,
-                timeUpload = input.createdAt.toString()
+                timeUpload =  DateFormat.getDateInstance().format(input.createdAt.toDate())
             )
     }
 }
