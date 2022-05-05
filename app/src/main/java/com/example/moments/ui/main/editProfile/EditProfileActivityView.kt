@@ -67,7 +67,7 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
 
         val user = intent.getParcelableExtra<User>(ProfileFragmentView.USER_KEY)!!
         etUsernameEditProfile.setText(user.username)
-        etBioEditProfile.setText(user.username)
+        etBioEditProfile.setText(user.bio)
         Glide.with(this).load(user.avatar).into(ivAvatarEditProfile)
         onUploadBtnClicked()
     }
