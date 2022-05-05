@@ -17,10 +17,17 @@ class NewsFeedFragmentPresenter<V : INewsFeedView, I : INewsFeedInteractor> @Inj
 ), INewsFeedPresenter<V, I> {
     override fun onViewPrepared() {
         interactor?.let { it ->
-            compositeDisposable.add(
+            compositeDisposable.addAll(
                 it.doQueryFeedPost().compose(schedulerProvider.ioToMainSingleScheduler())
                     .subscribe({
                         getView()?.updatePost(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    }),
+                it.doGetCurrentUserModel().compose(
+                    schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.getCurrentUser(it)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })
@@ -72,6 +79,20 @@ class NewsFeedFragmentPresenter<V : INewsFeedView, I : INewsFeedInteractor> @Inj
                 it.doUnBookmarkPost(postId).compose(schedulerProvider.ioToMainCompletableScheduler())
                     .subscribe({
 //                        getView()?.updateUnLikePost(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+
+    override fun onGetCurrentUserModel() {
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doGetCurrentUserModel().compose(
+                    schedulerProvider.ioToMainSingleScheduler())
+                    .subscribe({
+                        getView()?.getCurrentUser(it)
                     }, {
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })

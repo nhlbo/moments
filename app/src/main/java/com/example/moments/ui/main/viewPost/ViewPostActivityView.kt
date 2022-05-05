@@ -49,7 +49,9 @@ class ViewPostActivityView : BaseActivity(), IViewPostView {
     override fun updatePost(post: RetrievedPost) {
         this.post = post
         Glide.with(this).load(post.creator.avatar).into(ivAvatarHeaderPost)
+        ivAvatarHeaderPost.setOnClickListener{startViewProfileActivity(post.creator.id) }
         tvUsername.text = post.creator.username
+        tvUsername.setOnClickListener { startViewProfileActivity(post.creator.id) }
         tvOnePostLikeCount.text = "${post.likeCount} likes"
         tvOnePostCaption.text = post.caption
         tvOnePostCreated.text = DateFormat.getDateInstance().format(post.createdAt.toDate())

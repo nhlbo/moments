@@ -2,6 +2,7 @@ package com.example.moments.ui.main.newsFeed
 
 import com.example.moments.data.firebase.FirebaseHelper
 import com.example.moments.data.model.RetrievedPost
+import com.example.moments.data.model.User
 import com.example.moments.data.preference.PreferenceHelper
 import com.example.moments.ui.base.BaseInteractor
 import io.reactivex.Completable
@@ -44,4 +45,7 @@ class NewsFeedFragmentInteractor @Inject constructor(
 
     override fun doUnBookmarkPost(postId: String): Completable =
         firebaseHelper.performUnBookmarkPost(postId)
+
+    override fun doGetCurrentUserModel(): Single<User> = firebaseHelper.getCurrentUserModel()
+
 }
