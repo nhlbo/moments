@@ -42,6 +42,21 @@ class MomentsRecyclerViewAdapter(
                 btnCommentMoments.id -> {
                     option = ClickedButton.COMMENT
                 }
+                btnLikeMoments.id->{
+                    if(!btnLikeMoments.isChecked) {
+                        option = ClickedButton.UNLIKE
+                        listData[adapterPosition].likes--
+                        tvLikesMoments.text = "${listData[adapterPosition].likes}"
+                    }
+                    else {
+                        option = ClickedButton.LIKE
+                        listData[adapterPosition].likes++
+                        tvLikesMoments.text = "${listData[adapterPosition].likes}"
+                    }
+                }
+                tvUserUsername.id->{
+                    option = ClickedButton.VIEW_PROFILE
+                }
                 else -> option = null
             }
             if (option == null) return

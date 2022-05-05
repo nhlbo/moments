@@ -58,8 +58,11 @@ class EditProfileActivityView : BaseActivity(), IEditProfileActivityView {
                     job.start()
                 }
                 val replyIntent = Intent()
+
                 replyIntent.putExtra("USERNAME", etUsernameEditProfile.text.toString())
                 replyIntent.putExtra("BIO", etBioEditProfile.text.toString())
+                if(byteArray != null) replyIntent.putExtra("AVA", byteArray)
+
                 setResult(DONE, replyIntent)
                 finish()
                 return@setOnMenuItemClickListener true
