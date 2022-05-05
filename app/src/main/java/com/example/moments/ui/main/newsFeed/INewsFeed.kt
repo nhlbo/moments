@@ -22,6 +22,7 @@ interface INewsFeedInteractor : IBaseInteractor {
     fun doBookmarkPost(postId: String): Completable
     fun doUnBookmarkPost(postId: String): Completable
     fun doGetCurrentUserModel(): Single<User>
+    fun doDeletePost(postId: String): Completable
 }
 
 interface INewsFeedPresenter<V : INewsFeedView, I : INewsFeedInteractor> : IBasePresenter<V, I> {
@@ -31,4 +32,5 @@ interface INewsFeedPresenter<V : INewsFeedView, I : INewsFeedInteractor> : IBase
     fun onBookmarkPost(postId: String)
     fun onUnBookmarkPost(postId: String)
     fun onGetCurrentUserModel()
+    fun onDeletePost(postId: String)
 }

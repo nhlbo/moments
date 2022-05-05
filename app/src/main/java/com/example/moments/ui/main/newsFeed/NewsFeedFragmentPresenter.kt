@@ -73,6 +73,19 @@ class NewsFeedFragmentPresenter<V : INewsFeedView, I : INewsFeedInteractor> @Inj
         }
     }
 
+    override fun onDeletePost(postId: String) {
+        interactor?.let { it ->
+            compositeDisposable.add(
+                it.doDeletePost(postId).compose(schedulerProvider.ioToMainCompletableScheduler())
+                    .subscribe({
+//                        getView()?.delete?(it)
+                    }, {
+                        getView()?.showCustomToastMessage(it.localizedMessage)
+                    })
+            )
+        }
+    }
+
     override fun onUnBookmarkPost(postId: String) {
         interactor?.let { it ->
             compositeDisposable.add(
