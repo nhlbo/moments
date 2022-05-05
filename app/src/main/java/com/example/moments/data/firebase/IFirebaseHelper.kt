@@ -145,4 +145,6 @@ interface IFirebaseHelper {
     fun performUnlikeMoment(momentId: String): Completable
 
     fun performQueryMomentIsLiked(momentId: String): Single<Boolean>
+
+    fun performQueryAllPost(): Single<List<Post>>
 }

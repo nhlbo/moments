@@ -25,4 +25,6 @@ class OtherProfileActivityInteractor @Inject constructor(
 
     override fun doQueryUserMoment(userId: String): Single<List<Moment>> =
         firebaseHelper.performQueryUserMoment(userId)
+
+    override fun doGetCurrentUserId(): String = firebaseHelper.getCurrentUserId()
 }

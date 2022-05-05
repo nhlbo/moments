@@ -18,5 +18,5 @@ class SearchFragmentInteractor @Inject constructor(
         firebaseHelper.performQueryUserByUsername(query).debounce(1, TimeUnit.SECONDS)
 
     override fun queryAllPost(): Single<List<Post>> =
-        firebaseHelper.performQueryFeedPost()
+        firebaseHelper.performQueryAllPost()
 }
