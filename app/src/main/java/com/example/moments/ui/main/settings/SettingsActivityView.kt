@@ -32,12 +32,6 @@ class SettingsActivityView : BaseActivity(), ISettingsActivityView {
             startActivity(intent)
         }
 
-        btnDeleteAccount.setOnClickListener {
-            presenter.onPerformLogOut()
-            val intent: Intent = Intent(this, LoginActivityView::class.java)
-            startActivity(intent)
-            finishAffinity()
-        }
         btnSaved.setOnClickListener{
             val intent: Intent = Intent(this, SavedPostActivityView::class.java)
             startActivity(intent)

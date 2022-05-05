@@ -881,4 +881,16 @@ class FirebaseHelper @Inject constructor(
                         }
                 }
         }
+
+    override fun performQueryAllPost(): Single<List<Post>> =
+        Single.create { emitter ->
+            firebaseFirestore.collection("post")
+                .get()
+                .addOnSuccessListener {
+                    emitter.onSuccess(it.toObjects(Post::class.java))
+                }
+                .addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
 }

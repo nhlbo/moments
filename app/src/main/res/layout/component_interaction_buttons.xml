@@ -36,18 +36,6 @@
         app:srcCompat="@drawable/ic_message_square"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-    <ImageButton
-        android:id="@+id/btnShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnComment"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_share"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/indicatorNewsFeed"
         android:layout_width="wrap_content"
@@ -56,7 +44,7 @@
         android:layout_marginStart="8dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnShare"
+        app:layout_constraintStart_toEndOf="@+id/btnComment"
         app:tabBackground="@drawable/toggle_indicator_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
