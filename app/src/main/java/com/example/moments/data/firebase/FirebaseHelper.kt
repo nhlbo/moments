@@ -572,7 +572,7 @@ class FirebaseHelper @Inject constructor(
                 .delete()
                 .addOnSuccessListener {
                     firebaseFirestore.document("/moment/$momentId")
-                        .update("likeCount", FieldValue.increment(1))
+                        .update("likeCount", FieldValue.increment(-1))
                         .addOnSuccessListener {
                             emitter.onComplete()
                         }
