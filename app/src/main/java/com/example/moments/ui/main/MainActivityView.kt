@@ -60,7 +60,7 @@ class MainActivityView : BaseActivity(), HasAndroidInjector, IMainActivityView {
         }
 
         fragmentViewPager.adapter = viewPagerAdapter
-        fragmentViewPager.offscreenPageLimit = 4
+        fragmentViewPager.offscreenPageLimit = 3
         fragmentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 when (position) {

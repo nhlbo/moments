@@ -13,6 +13,7 @@ import io.reactivex.Single
 interface IProfileView : IBaseView {
     fun getCurrentUserModel(user: User)
     fun getCurrentUserPosts(posts:List<Post>)
+    fun getCurrentUserMoments(posts:List<Moment>)
 }
 
 interface IProfileInteractor : IBaseInteractor {

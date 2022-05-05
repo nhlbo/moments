@@ -123,6 +123,9 @@ class NewsFeedAdapter(
                 adapterCallBack.onItemTouch(position, "savePost")
             }
         }
+        holder.etPostCommentInput.setOnFocusChangeListener { _, _ ->
+            adapterCallBack.onItemTouch(position, "showComment")
+        }
     }
 
     fun updatePost(listPost: List<RetrievedPost>) {

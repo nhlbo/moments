@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.moments.R
+import com.example.moments.data.model.Moment
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.User
 import com.example.moments.ui.base.BaseFragment
@@ -117,6 +118,20 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
 
         val fragment = childFragmentManager.findFragmentByTag("f" + 0) as GridMediaFragment
         fragment.updateData(listImages)
+
+
+    }
+
+    private lateinit var userMoments: List<Moment>
+    override fun getCurrentUserMoments(moments: List<Moment>) {
+        userMoments = moments
+        val capacity = Math.max(12, moments.size)
+        val listData = MutableList(capacity) { "" }
+        for (i in moments.indices) {
+            listData[i] = moments[i].media
+        }
+        val fragment = childFragmentManager.findFragmentByTag("f" + 1) as GridMediaFragment
+        fragment.updateData(listData)
     }
 
     override fun onDestroyView() {
@@ -134,7 +149,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
     }
     private val onVideoClickListener = object : IOnRecyclerViewItemTouchListener {
         override fun onItemClick(position: Int) {
-
+            //View moment
         }
     }
 
@@ -144,6 +159,7 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         viewPager?.adapter =
             MediaGridViewPagerAdapter(this, onPostClickListener, onVideoClickListener)
         viewPager?.isUserInputEnabled = false
+        viewPager?.offscreenPageLimit = 1
         TabLayoutMediator(tabLayout, viewPager!!) { tab, position ->
             when (position) {
                 0 -> tab.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_grid)
@@ -178,8 +194,10 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
             if (resultCode == EditProfileActivityView.DONE) {
                 val username = data?.getStringExtra("USERNAME")
                 val bio = data?.getStringExtra("BIO")
+                val image = data?.extras!!["AVA"]
                 tvUsernameProfile.text = username
                 tvBioProfile.text = bio
+                Glide.with(this).load(image).into(ivAvatarProfile)
             }
         }
     }
