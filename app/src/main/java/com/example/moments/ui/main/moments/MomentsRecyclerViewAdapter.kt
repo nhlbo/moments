@@ -1,11 +1,13 @@
 package com.example.moments.ui.main.moments
 
+import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.MomentsData
 import com.mikhaellopez.circularimageview.CircularImageView
@@ -23,6 +25,7 @@ class MomentsRecyclerViewAdapter(
     ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val vvMoments = itemView.findViewById<VideoView>(R.id.vvMoments)
         val ivUserAvaMoments = itemView.findViewById<CircularImageView>(R.id.ivUserAvaMoments)
+        val tvUserUsername = itemView.findViewById<TextView>(R.id.tvUsernameMoments)
         val tvContentMoments = itemView.findViewById<TextView>(R.id.tvContentMoments)
         val tvAudioMoments = itemView.findViewById<TextView>(R.id.tvAudioMoments)
         val tvLikesMoments = itemView.findViewById<TextView>(R.id.tvLikesMoments)
@@ -59,6 +62,8 @@ class MomentsRecyclerViewAdapter(
         val audio = holder.tvAudioMoments
         val likes = holder.tvLikesMoments
 
+        Glide.with(holder.itemView).load(data.user_ava).into(holder.ivUserAvaMoments)
+        holder.tvUserUsername.text = data.username
         content.text = data.content
         audio.text = data.audio
         likes.text = data.likes.toString()
