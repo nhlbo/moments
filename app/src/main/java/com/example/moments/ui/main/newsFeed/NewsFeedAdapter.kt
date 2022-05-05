@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.moments.R
 import com.example.moments.data.model.RetrievedPost
+import com.example.moments.data.model.User
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.text.DateFormat
@@ -17,6 +18,7 @@ import java.text.DateFormat
 class NewsFeedAdapter(
     var context: Context,
     private var newsFeedList: MutableList<RetrievedPost>,
+    private var thisUser: User?,
     callback: IAdapterCallBack
 ) :
     RecyclerView.Adapter<NewsFeedAdapter.ViewHolder>() {
@@ -45,8 +47,7 @@ class NewsFeedAdapter(
         val tvShowAllComment = listItemView.findViewById<TextView>(R.id.tvShowAllComment)
 
         val postCommentInputGroup = listItemView.findViewById<View>(R.id.postCommentInputGroup)
-        val postCommentInputAvatar =
-            postCommentInputGroup.findViewById<ImageView>(R.id.ivAvatarPostCommentSelf)
+        val postCommentInputAvatar = postCommentInputGroup.findViewById<ImageView>(R.id.ivAvatarPostCommentSelf)
         val etPostCommentInput = postCommentInputGroup.findViewById<EditText>(R.id.etCommentBox)
         val btnPostCommentInput = postCommentInputGroup.findViewById<Button>(R.id.btnPostComment)
 
@@ -84,7 +85,7 @@ class NewsFeedAdapter(
         { _, _ -> }.attach()
 
         Glide.with(context).load(tmp.creator.avatar).into(holder.headerAvatar)
-        Glide.with(context).load(tmp.creator.avatar).into(holder.postCommentInputAvatar)
+        Glide.with(context).load(thisUser?.avatar).into(holder.postCommentInputAvatar)
         holder.tvLikeCount.text = "${tmp.likeCount} likes"
         holder.tvCaption.text = tmp.caption
 //        holder.add.text = tmp.address
@@ -128,6 +129,10 @@ class NewsFeedAdapter(
         newsFeedList.clear()
         newsFeedList.addAll(listPost.toMutableList())
         notifyItemRangeChanged(0, newsFeedList.size)
+    }
+    fun updateUser(user:User){
+        thisUser = user
+        notifyDataSetChanged()
     }
 
     fun prependPost(post: RetrievedPost) {

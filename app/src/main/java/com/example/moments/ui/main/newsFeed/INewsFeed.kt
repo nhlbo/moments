@@ -2,6 +2,7 @@ package com.example.moments.ui.main.newsFeed
 
 import com.example.moments.data.model.Post
 import com.example.moments.data.model.RetrievedPost
+import com.example.moments.data.model.User
 import com.example.moments.ui.base.IBaseInteractor
 import com.example.moments.ui.base.IBasePresenter
 import com.example.moments.ui.base.IBaseView
@@ -11,6 +12,7 @@ import io.reactivex.Single
 
 interface INewsFeedView : IBaseView {
     fun updatePost(listPost: List<RetrievedPost>)
+    fun getCurrentUser(user:User)
 }
 
 interface INewsFeedInteractor : IBaseInteractor {
@@ -19,6 +21,7 @@ interface INewsFeedInteractor : IBaseInteractor {
     fun doUnlikePost(postId: String): Completable
     fun doBookmarkPost(postId: String): Completable
     fun doUnBookmarkPost(postId: String): Completable
+    fun doGetCurrentUserModel(): Single<User>
 }
 
 interface INewsFeedPresenter<V : INewsFeedView, I : INewsFeedInteractor> : IBasePresenter<V, I> {
@@ -27,4 +30,5 @@ interface INewsFeedPresenter<V : INewsFeedView, I : INewsFeedInteractor> : IBase
     fun onUnlikePost(postId: String)
     fun onBookmarkPost(postId: String)
     fun onUnBookmarkPost(postId: String)
+    fun onGetCurrentUserModel()
 }
