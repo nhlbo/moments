@@ -2,6 +2,7 @@ package com.example.moments.ui.main.newsFeed
 
 import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -183,7 +184,7 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                     val intentToStepTwo =
                         Intent(requireContext(), NewPostActivityStepTwoView::class.java)
                     intentToStepTwo.putExtra("uploadType", 1)
-                    intentToStepTwo.putExtra("videoLink", videoUri.toString())
+                    intentToStepTwo.putExtra("videoLink", getRealPathFromURI(videoUri))
                     startActivity(intentToStepTwo)
                 }
             }
@@ -197,6 +198,21 @@ class NewsFeedFragmentView : BaseFragment(), INewsFeedView, IAdapterCallBack {
                 startForResult.launch(takeVideoIntent)
             }
         }
+    }
+
+    private fun getRealPathFromURI(contentURI: Uri): String? {
+        val result: String?
+        val cursor: Cursor? =
+            requireContext().contentResolver.query(contentURI, null, null, null, null)
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.path
+        } else {
+            cursor.moveToFirst()
+            val idx = cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATA)
+            result = cursor.getString(idx)
+            cursor.close()
+        }
+        return result
     }
 }
 

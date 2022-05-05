@@ -35,7 +35,7 @@ class NewPostActivityStepTwoPresenter<V : INewPostStepTwoView, I : INewPostStepT
                 it.doCreateMoment(caption, media)
                     .compose(schedulerProvider.ioToMainCompletableScheduler())
                     .subscribe({
-                        //DO nothing
+                        getView()?.backToFeedActivity()
                     },{
                         getView()?.showCustomToastMessage(it.localizedMessage)
                     })
