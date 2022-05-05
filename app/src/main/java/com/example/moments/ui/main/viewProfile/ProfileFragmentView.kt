@@ -63,20 +63,22 @@ class ProfileFragmentView : BaseFragment(), IProfileView {
         super.onViewCreated(view, savedInstanceState)
 
         profileToolbar.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.btnScanFace) {
-                val intent = Intent(activity, VuforiaActivityView::class.java)
-                startActivity(intent)
-            } else if (item.itemId == R.id.btnQRCode) {
-                if (userModel != null) {
-                    val intent = Intent(activity, QRCodeActivityView::class.java)
-                    intent.putExtra(USER_KEY, userModel)
+            when (item.itemId) {
+                R.id.btnScanFace -> {
+                    val intent = Intent(activity, VuforiaActivityView::class.java)
                     startActivity(intent)
                 }
-                true
-            } else if (item.itemId == R.id.profileSettingBtn) {
-                val intent = Intent(activity, SettingsActivityView::class.java)
-                startActivity(intent)
-                true
+                R.id.btnQRCode -> {
+                    if (userModel != null) {
+                        val intent = Intent(activity, QRCodeActivityView::class.java)
+                        intent.putExtra(USER_KEY, userModel)
+                        startActivity(intent)
+                    }
+                }
+                R.id.profileSettingBtn -> {
+                    val intent = Intent(activity, SettingsActivityView::class.java)
+                    startActivity(intent)
+                }
             }
             false
         }
